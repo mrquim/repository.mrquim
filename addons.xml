@@ -14,7 +14,7 @@
 	</extension>
 </addon>
 
-<addon id="plugin.video.MrSportTV" name="Mr. Sport TV (Portugal)" version="1.0.2" provider-name="Mr. Quim">
+<addon id="plugin.video.MrSportTV" name="Mr. Sport TV (Portugal)" version="1.0.3" provider-name="Mr. Quim">
   <requires>
     <import addon="xbmc.python" version="2.1.0" />
   </requires>
@@ -27,7 +27,8 @@
     <summary>Canais Sport TV Online</summary>
     <description>Os canais/este add-on sÃ£o gratuitos.
 	NÃ£o transmito qualquer dos canais aqui disponibilizados!
-	SÃ£o todos retirados da Internet!</description>
+	SÃ£o todos retirados da Internet!
+	Todos os canais necessitam do add-on PLEXUS</description>
   </extension>
 </addon>
 </addons>
