@@ -32,6 +32,37 @@
   </extension>
 </addon>
 
+<addon id="plugin.video.pancas"
+       name="Pancas"
+       version="1.0.4"
+       provider-name="Mario">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.beautifulsoup" version="3.2.1"/>
+    <import addon="script.module.simple.downloader" version="0.9.4"/>
+    <import addon="script.module.beautifulsoup4" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.httplib2" />
+    <import addon="script.module.youtube.dl" optional="true"/>
+    <import addon="plugin.video.youtube" />
+    <import addon="script.module.urlresolver" optional="true"/>
+    <import addon="script.module.simplejson" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>Pancadas TV</summary>
+    <description>
+        Lista de canais portugueses e europeus com desporto, noticias, mÃºsica e rÃ¡dios portugueses.
+Esta lista 80% sÃ£o links acestream, por isso tem de ter o plexus instalado e a funcionar para ela funcionar a 100%.
+.
+
+    </description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="plugin.video.playlistLoader" name="Playlist Loader" version="1.0.6" provider-name="Avigdor">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
