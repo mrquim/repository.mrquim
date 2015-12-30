@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.playlistLoaderPT" name="Playlist Loader" version="2.0.0" provider-name="Avigdor & Mr. Quim">
+<addon id="plugin.video.playlistLoader" name="Playlist Loader" version="1.0.6" provider-name="Avigdor">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
@@ -7,8 +7,10 @@
         <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">Playlist Loader - Traduzido para Portugues de Portugal</summary>
-    <description lang="en">Este add-on não é da minha autoria, só me limitei a traduzir para português.</description>
+    <summary lang="en">Playlist Loader - downloaded for free from:
+http://www.hometheater.co.il</summary>
+    <description lang="en">Playlist Loader - downloaded for free from:
+http://www.hometheater.co.il</description>
     <platform>all</platform>
   </extension>
 </addon>

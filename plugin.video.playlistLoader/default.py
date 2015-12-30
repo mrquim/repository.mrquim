@@ -3,7 +3,7 @@
 import urllib, sys, xbmcplugin ,xbmcgui, xbmcaddon, xbmc, os, json
 import repoCheck
 
-AddonID = 'plugin.video.playlistLoaderPT'
+AddonID = 'plugin.video.playlistLoader'
 Addon = xbmcaddon.Addon(AddonID)
 localizedString = Addon.getLocalizedString
 AddonName = Addon.getAddonInfo("name")
