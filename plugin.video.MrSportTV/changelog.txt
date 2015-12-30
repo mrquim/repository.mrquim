@@ -1,3 +1,5 @@
 [b]1.0.0[/b]
 - New kodi add-on. This is a beta version.
 
+[b]2.0.0[/b]
+Add-on complete, all bugs fixed and all channels included.
