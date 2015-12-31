@@ -79,6 +79,24 @@ http://www.hometheater.co.il</description>
   </extension>
 </addon>
 
+<addon id="program.mrspeedtest"
+       name="Mr. Quim Speed Tester"
+       version="0.0.3"
+       provider-name="Mr. Quim">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+<extension point="xbmc.python.pluginsource"
+             library="default.py">
+        <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Mr. Quim Speed Tester</summary>
+    <description lang="en">This is a clone of ARNU Box Speed Tester. No you can know how much speed your internet provider gives to you.</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="program.plexus"
        name="Plexus"
        version="0.1.4"
@@ -99,24 +117,6 @@ http://www.hometheater.co.il</description>
     <disclaimer lang="en">The author does not host nor distribute any of the content you may watch using this addon. The author has no part in the development of any included technologies. When seeking help in Kodi's forum please respect rules (http://kodi.wiki/view/Forum_rules).</disclaimer>
     <disclaimer lang="pt">Os autores nÃ£o alojam nem distribuem nenhum do conteÃºdo que poderÃ¡ ser reproduzido a partir deste addon. Os autores nÃ£o tÃªm qualquer parte no desenvolvimento de qualquer uma das tecnologias. Se procurar ajuda no fÃ³rum oficial do Kodi por favor respeite as regras do fÃ³rum (http://kodi.wiki/view/Forum_rules).</disclaimer>
     <forum>http://forums.tvaddons.ag</forum>
-    <platform>all</platform>
-  </extension>
-</addon>
-
-<addon id="program.speedtest"
-       name="ARNU Box Speed Tester"
-       version="0.0.3"
-       provider-name="ARNU Box / Josh.5">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-  </requires>
-<extension point="xbmc.python.pluginsource"
-             library="default.py">
-        <provides>executable</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">ARNU Box Speed Tester</summary>
-    <description lang="en">ARNU Box Speed Tester powered by speedtest.net will give you accurate Internet speed/ping test results. \n Brought to you by http://www.arnubox.com</description>
     <platform>all</platform>
   </extension>
 </addon>

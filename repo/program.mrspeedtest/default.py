@@ -46,7 +46,7 @@ except ImportError :
   ET = None
   if 73 - 73: II111iiii
   if 22 - 22: I1IiiI * Oo0Ooo / OoO0O00 . OoOoOO00 . o0oOOo0O0Ooo / I1ii11iIi11i
-I1IiI = 'program.speedtest'
+I1IiI = 'program.mrspeedtest'
 o0OOO = xbmcaddon . Addon ( I1IiI )
 iIiiiI = o0OOO . getAddonInfo ( 'id' )
 Iii1ii1II11i = o0OOO . getAddonInfo ( 'name' )
@@ -627,10 +627,10 @@ def i1Ii1i1I11Iii ( list = False , mini = None , server = None , share = False ,
  else :
   Oo0OO = oO00oOOoooO ( OOoO [ 'client' ] )
   if 96 - 96: OoooooooOO + o0OO0
- OoO0O00O0oo0O [ 2 ] = 'Testing from %(isp)s (%(ip)s)...' % OOoO [ 'client' ]
+ OoO0O00O0oo0O [ 2 ] = 'O teu ISP %(isp)s (%(ip)s)...' % OOoO [ 'client' ]
  I1i1i1 . update ( 25 , OoO0O00O0oo0O [ 0 ] , OoO0O00O0oo0O [ 1 ] , OoO0O00O0oo0O [ 2 ] )
  if not simple :
-  Ii11iI1i ( 'Testing from %(isp)s (%(ip)s)...' % OOoO [ 'client' ] )
+  Ii11iI1i ( 'O teu ISP %(isp)s (%(ip)s)...' % OOoO [ 'client' ] )
   if 44 - 44: o0OO0
  if server :
   try :
@@ -691,9 +691,9 @@ def i1Ii1i1I11Iii ( list = False , mini = None , server = None , share = False ,
   if not simple :
    OoO0O00O0oo0O [ 0 ] = OoO0O00O0oo0O [ 1 ]
    OoO0O00O0oo0O [ 1 ] = OoO0O00O0oo0O [ 2 ]
-   OoO0O00O0oo0O [ 2 ] = 'Selecting best server based on latency...'
+   OoO0O00O0oo0O [ 2 ] = 'A selecionar os melhores servidores baseado na sua latencia...'
    I1i1i1 . update ( 30 , OoO0O00O0oo0O [ 0 ] , OoO0O00O0oo0O [ 1 ] , OoO0O00O0oo0O [ 2 ] )
-   Ii11iI1i ( 'Selecting best server based on latency...' )
+   Ii11iI1i ( 'Selecionar os melhores servidores baseado na sua latencia...' )
   OOoooO00o0oo0 = i11ii1iI ( Oo0OO )
   if 31 - 31: o0oOOo0O0Ooo % OoO0O00
  if not simple :
@@ -704,16 +704,16 @@ def i1Ii1i1I11Iii ( list = False , mini = None , server = None , share = False ,
    unicode ( )
    OoO0O00O0oo0O [ 0 ] = OoO0O00O0oo0O [ 1 ]
    OoO0O00O0oo0O [ 1 ] = OoO0O00O0oo0O [ 2 ]
-   OoO0O00O0oo0O [ 2 ] = ( 'Hosted by %(sponsor)s (%(name)s) [%(d)0.2f km]: %(latency)s ms' % OOoooO00o0oo0 ) . encode ( 'utf-8' , 'ignore' )
+   OoO0O00O0oo0O [ 2 ] = ( 'Alojado por %(sponsor)s (%(name)s) [%(d)0.2f km]: %(latency)s ms' % OOoooO00o0oo0 ) . encode ( 'utf-8' , 'ignore' )
    I1i1i1 . update ( 40 , OoO0O00O0oo0O [ 0 ] , OoO0O00O0oo0O [ 1 ] , OoO0O00O0oo0O [ 2 ] )
-   Ii11iI1i ( ( 'Hosted by %(sponsor)s (%(name)s) [%(d)0.2f km]: '
+   Ii11iI1i ( ( 'Alojado por %(sponsor)s (%(name)s) [%(d)0.2f km]: '
  '%(latency)s ms' % OOoooO00o0oo0 ) . encode ( 'utf-8' , 'ignore' ) )
   except NameError :
    OoO0O00O0oo0O [ 0 ] = OoO0O00O0oo0O [ 1 ]
    OoO0O00O0oo0O [ 1 ] = OoO0O00O0oo0O [ 2 ]
-   OoO0O00O0oo0O [ 2 ] = 'Hosted by %(sponsor)s (%(name)s) [%(d)0.2f km]: %(latency)s ms' % OOoooO00o0oo0
+   OoO0O00O0oo0O [ 2 ] = 'Alojado por %(sponsor)s (%(name)s) [%(d)0.2f km]: %(latency)s ms' % OOoooO00o0oo0
    I1i1i1 . update ( 40 , OoO0O00O0oo0O [ 0 ] , OoO0O00O0oo0O [ 1 ] , OoO0O00O0oo0O [ 2 ] )
-   Ii11iI1i ( 'Hosted by %(sponsor)s (%(name)s) [%(d)0.2f km]: '
+   Ii11iI1i ( 'Alojado por %(sponsor)s (%(name)s) [%(d)0.2f km]: '
  '%(latency)s ms' % OOoooO00o0oo0 )
  else :
   OoO0O00O0oo0O [ 0 ] = OoO0O00O0oo0O [ 1 ]
@@ -731,10 +731,10 @@ def i1Ii1i1I11Iii ( list = False , mini = None , server = None , share = False ,
    if 77 - 77: iIii1I11I1II1 . o00 % o00 + i11iIiiIii
  OoO0O00O0oo0O [ 0 ] = OoO0O00O0oo0O [ 1 ]
  OoO0O00O0oo0O [ 1 ] = OoO0O00O0oo0O [ 2 ]
- OoO0O00O0oo0O [ 2 ] = 'Testing download speed...'
+ OoO0O00O0oo0O [ 2 ] = 'A testar velocidade de download...'
  I1i1i1 . update ( 50 , OoO0O00O0oo0O [ 0 ] , OoO0O00O0oo0O [ 1 ] , OoO0O00O0oo0O [ 2 ] )
  if not simple :
-  Ii11iI1i ( 'Testing download speed' , end = '' )
+  Ii11iI1i ( 'Testar velocidade de download' , end = '' )
  Oo00o0OO0O00o = i1iI11i1ii11 ( iI1111iiii , simple )
  if not simple :
   Ii11iI1i ( )
@@ -753,10 +753,10 @@ def i1Ii1i1I11Iii ( list = False , mini = None , server = None , share = False ,
    if 27 - 27: Oo0ooO0oo0oO * O0OOo . ooO00oOoo % Oo0oO0ooo * Oo0oO0ooo . i1IIi
  OoO0O00O0oo0O [ 0 ] = OoO0O00O0oo0O [ 1 ]
  OoO0O00O0oo0O [ 1 ] = OoO0O00O0oo0O [ 2 ]
- OoO0O00O0oo0O [ 2 ] = 'Testing upload speed...'
+ OoO0O00O0oo0O [ 2 ] = 'A testar velocidade de upload...'
  I1i1i1 . update ( 80 , OoO0O00O0oo0O [ 0 ] , OoO0O00O0oo0O [ 1 ] , OoO0O00O0oo0O [ 2 ] )
  if not simple :
-  Ii11iI1i ( 'Testing upload speed' , end = '' )
+  Ii11iI1i ( 'Testar velociade de Upload' , end = '' )
  O0OOoOOO0oO = oO0OOOO0 ( OOoooO00o0oo0 [ 'url' ] , oOoO0 , simple )
  if not simple :
   Ii11iI1i ( )
@@ -813,7 +813,7 @@ def i1Ii1i1I11Iii ( list = False , mini = None , server = None , share = False ,
    Ii11iI1i ( 'Could not submit results to speedtest.net' )
    sys . exit ( 1 )
    if 9 - 9: o0OO0 + I1i1iI1i / I1i1iI1i
-  Ii11iI1i ( 'Share results: https://www.speedtest.net/result/%s.png' %
+  Ii11iI1i ( 'Partilhar resultados: https://www.speedtest.net/result/%s.png' %
  oOOO00o000o [ 0 ] )
   global oo00o0Oo0oo
   oo00o0Oo0oo = oOOO00o000o [ 0 ]
@@ -844,16 +844,16 @@ class O0iIiIIIIIii ( xbmcgui . WindowDialog ) :
    if 20 - 20: i1IIi % OoO0O00 . I1IiiI / Oo0oO0ooo * i11iIiiIii * Oo0ooO0oo0oO
  def saveClose ( self ) :
   OOo = xbmcgui . Dialog ( )
-  i1i11I1I1iii1 = OOo . yesno ( "Save Result" , "Would you like to save a copy of this speed test?" , "" , "" )
+  i1i11I1I1iii1 = OOo . yesno ( "Guardar resultado" , "Gostaria de guardar uma copia deste teste?" , "" , "" )
   if i1i11I1I1iii1 :
-   self . location = OOo . browse ( 3 , 'Where would you like to save the result?' , 'files' , '' , False , False , '' )
+   self . location = OOo . browse ( 3 , 'Onde gostaria de guardar o resultado do teste??' , 'files' , '' , False , False , '' )
    print 'self.location'
    print self . location
    import urllib
    I1iii11 = urllib . URLopener ( )
    I1iii11 . retrieve ( 'https://www.speedtest.net/result/%s.png' % oo00o0Oo0oo , self . location + "%s.png" % oo00o0Oo0oo )
-   OOo . ok ( "Result Saved!" , "'%s.png'" % oo00o0Oo0oo + " was saved to '" + self . location + "'" )
-  OOo . ok ( "Result Saved!" , "Brought to you by http://www.arnubox.com \n Try our new ARNU Box Mach 10, the fastest set top box on the market" )
+   OOo . ok ( "Resultado guardado!" , "'%s.png'" % oo00o0Oo0oo + " was saved to '" + self . location + "'" )
+  OOo . ok ( "Resultado guardado!" , "Brought to you by Mr. Quim" )
   self . close ( )
   if 74 - 74: O0 / i1IIi
   if 78 - 78: OoooooooOO . OoO0O00 + O0OOo - i1IIi
@@ -877,16 +877,16 @@ class ii1O0 ( xbmcgui . WindowDialog ) :
   if 14 - 14: o0OO0 + I1ii11iIi11i - o00 / O0 . ooO00oOoo
   if 45 - 45: ooO00oOoo
   OOo = xbmcgui . Dialog ( )
-  i1i11I1I1iii1 = OOo . yesno ( "Save Result" , "Would you like to save a copy of this speed test?" , "" , "" )
+  i1i11I1I1iii1 = OOo . yesno ( "Guardar resultado" , "Gostaria de guardar uma copia deste teste?" , "" , "" )
   if i1i11I1I1iii1 :
-   self . location = OOo . browse ( 3 , 'Where would you like to save the result?' , 'files' , '' , False , False , '' )
+   self . location = OOo . browse ( 3 , 'Onde gostaria de guardar o resultado do teste?' , 'files' , '' , False , False , '' )
    print 'self.location'
    print self . location
    import urllib
    I1iii11 = urllib . URLopener ( )
    I1iii11 . retrieve ( 'https://www.speedtest.net/result/4670696458.png' , self . location + "4670696458.png" )
-   OOo . ok ( "Result Saved!" , "'4670696458.png'" + " was saved to '" + self . location + "'" )
-  OOo . ok ( "Result Saved!" , "Brought to you by http://www.arnubox.com \n Try our new ARNU Box Mach 10, the fastest set top box on the market" )
+   OOo . ok ( "Resultado guardado!" , "'4670696458.png'" + " foi guardado em '" + self . location + "'" )
+  OOo . ok ( "Resultado guardado!" , "Brought to you by Mr. Quim" )
   self . close ( )
   if 83 - 83: OoOoOO00 . OoooooooOO
   if 58 - 58: i11iIiiIii + OoooooooOO % OoooooooOO / Oo0oO0ooo / i11iIiiIii

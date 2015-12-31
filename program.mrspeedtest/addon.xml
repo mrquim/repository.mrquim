@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="program.speedtest"
-       name="ARNU Box Speed Tester"
+<addon id="program.mrspeedtest"
+       name="Mr. Quim Speed Tester"
        version="0.0.3"
-       provider-name="ARNU Box / Josh.5">
+       provider-name="Mr. Quim">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
@@ -11,8 +11,8 @@
         <provides>executable</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">ARNU Box Speed Tester</summary>
-    <description lang="en">ARNU Box Speed Tester powered by speedtest.net will give you accurate Internet speed/ping test results. \n Brought to you by http://www.arnubox.com</description>
+    <summary lang="en">Mr. Quim Speed Tester</summary>
+    <description lang="en">This is a clone of ARNU Box Speed Tester. No you can know how much speed your internet provider gives to you.</description>
     <platform>all</platform>
   </extension>
 </addon>
