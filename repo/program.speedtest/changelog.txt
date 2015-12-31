@@ -1,0 +1,9 @@
+[B][COLOR=FF56ADDA]0.0.3 - 01OCT15[/COLOR][/B]
+• Rebrand with sponsor information.
+
+[B][COLOR=FF56ADDA]0.0.2 - 17SEP15[/COLOR][/B]
+• Fix issue causing speedtest to only run once and then fail.
+• Fix issue with results not displaying correctly on all displays
+
+[B][COLOR=FF56ADDA]0.0.1 - 17SEP15[/COLOR][/B]
+• initial Release
