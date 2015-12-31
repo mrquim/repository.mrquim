@@ -80,7 +80,7 @@ http://www.hometheater.co.il</description>
 </addon>
 
 <addon id="program.mrspeedtest"
-       name="Mr. Quim Speed Tester"
+       name="Mr. Speed Tester"
        version="0.0.3"
        provider-name="Mr. Quim">
   <requires>
@@ -91,7 +91,7 @@ http://www.hometheater.co.il</description>
         <provides>executable</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">Mr. Quim Speed Tester</summary>
+    <summary lang="en">Mr. Speed Tester</summary>
     <description lang="en">This is a clone of ARNU Box Speed Tester. No you can know how much speed your internet provider gives to you.</description>
     <platform>all</platform>
   </extension>
