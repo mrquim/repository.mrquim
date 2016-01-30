@@ -79,6 +79,27 @@ http://www.hometheater.co.il</description>
   </extension>
 </addon>
 
+<addon id="plugin.video.sembilhete.tv" name="SemBilhete.tv" provider-name="SemBilhete.tv" version="0.1">
+ <requires>
+  <import addon="xbmc.python" version="2.7.10"/>
+ </requires>
+ <extension library="addon.py" point="xbmc.python.pluginsource">
+  <provides>video</provides>
+ </extension>
+ <extension point="xbmc.addon.metadata">
+    <summary>SemBilhete.tv</summary>
+    <description>Addon oficial do SemBilhete.tv, os teus Filmes e Séries do Sem Bilhete agora no Kodi.</description>
+    <disclaimer>Addon oficial do Sem Bilhete, qualquer duvida ou questão contacte-nos pelo site ou pelo Facebook.</disclaimer>
+    <language>pt</language>
+    <platform>all</platform>
+    <license></license>
+    <forum></forum>
+    <website>https://sembilhete.tv</website>
+    <email></email>
+    <source></source>
+ </extension>
+</addon>
+
 <addon id="program.mrspeedtest"
        name="Mr. Speed Tester"
        version="0.0.3"
@@ -135,49 +156,19 @@ http://www.hometheater.co.il</description>
 	</extension>
 </addon>
 
-<addon id="service.subtitles.opensubtitles"
-       name="OpenSubtitles.org"
-       version="5.0.14"
-       provider-name="amet">
+<addon id="plugin.video.playlistLoader" name="Playlist Loader" version="1.0.6" provider-name="Avigdor">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
-  <extension point="xbmc.subtitle.module"
-             library="service.py" />
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">OpenSubtitles</summary>
-    <description lang="en">Search and download subtitles from opensubtitles.org</description>
-    <addon id="service.subtitles.opensubtitles"
-       name="OpenSubtitles.org"
-       version="5.0.14"
-       provider-name="amet">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-  </requires>
-  <extension point="xbmc.subtitle.module"
-             library="service.py" />
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">OpenSubtitles</summary>
-    <description lang="en">Search and download subtitles from opensubtitles.org</description>
-    <description lang="zh">从 opensubtitles.org 搜索并下载字幕</description>
-	<description lang="pt">Pesquisa e descarrega legendas do site opensubtitles.org</description>
-	
-    <disclaimer lang="en"></disclaimer>
-    <platform>all</platform>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-    <forum>http://forum.xbmc.org/showthread.php?tid=183114</forum>
-    <website></website>
-    <email></email>
-    <source>https://github.com/amet/service.subtitles.opensubtitles</source>    
+  <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
   </extension>
-</addon>
-    <disclaimer lang="en"></disclaimer>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Playlist Loader - downloaded for free from:
+http://www.hometheater.co.il</summary>
+    <description lang="en">Playlist Loader - downloaded for free from:
+http://www.hometheater.co.il</description>
     <platform>all</platform>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-    <forum>http://forum.xbmc.org/showthread.php?tid=183114</forum>
-    <website></website>
-    <email></email>
-    <source>https://github.com/amet/service.subtitles.opensubtitles</source>    
   </extension>
 </addon>
 </addons>

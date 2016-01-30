@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings>
+    <category label="Definições Gerais">
+        <setting label="Dados SemBilhete.tv:" type="lsep" />
+        <setting id="email" type="text" label="Email/Username" default=""/>
+        <setting id="password" type="text" label="Password" default="" option="hidden" enable="!eq(-1,false)"/>
+        <setting id="apikey" type="text" label="" default="" visible="false"/>
+        <setting id="username" type="text" label="" default="" visible="false"/>
+        <setting type="sep" />  
+    </category>
+    <category label="Download">
+    	<setting label="Pasta de downloads:" type="lsep" />
+    	<setting label="" type="folder" id="DownloadFolder" source="auto" option="writeable" default="" enable="!eq(-2,false)"/>
+    </category>
+    <category label="Biblioteca">
+        <setting id="bibliotecaFilmes" type="folder" label="Filmes" default="special://userdata/addon_data/plugin.video.sembilhete.tv/movies"/>
+        <setting id="bibliotecaSeries" type="folder" label="Series" default="special://userdata/addon_data/plugin.video.sembilhete.tv/series"/>
+    </category>
+    <category label="Tipos de vista">
+      <setting label="Definições de vista:" type="lsep" />
+     <setting id="menuView" type="enum" label="Vista de Menu" values="Lista|Lista Grande" default="0"/>
+     <setting id="filmesSeriesView" type="enum" label="Vista de Filmes e Séries" values="Lista|Lista Grande|Miniatura|Posters|Fanart|Media Info 1|Media Info 2|Media Info 3" default="5"/>
+     <setting id="temporadasView" type="enum" label="Vista de temporadas" values="Lista|Lista Grande|Miniatura|Posters|Fanart|Media Info 1|Media Info 2|Media Info 3" default="3"/>
+     <setting id="episodiosView" type="enum" label="Vista de episodios" values="Lista|Lista Grande|Miniatura|Posters|Fanart|Media Info 1|Media Info 2|Media Info 3" default="5"/>
+   </category>
+</settings>
