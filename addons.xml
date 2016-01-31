@@ -192,4 +192,41 @@ http://www.hometheater.co.il</description>
     <source>https://github.com/amet/service.subtitles.opensubtitles</source>    
   </extension>
 </addon>
+
+<addon id="repository.tknorris.release" name="tknorris Release Repository" version="1.0.2" provider-name="tknorris">
+    <extension point="xbmc.addon.repository" name="tknorris release repository">
+        <dir>
+            <info compressed="false">https://offshoregit.com/tvaresolvers/tva-common-repository/raw/master/addons.xml</info>
+            <checksum>https://offshoregit.com/tvaresolvers/tva-common-repository/raw/master/addons.xml.md5</checksum>
+            <datadir zip="true">https://offshoregit.com/tvaresolvers/tva-common-repository/raw/master/zips/</datadir>
+        </dir>
+        <info compressed="false">https://offshoregit.com/tknorris/tknorris-release-repo/raw/master/addons.xml</info>
+        <checksum>https://offshoregit.com/tknorris/tknorris-release-repo/raw/master/addons.xml.md5</checksum>
+        <datadir zip="true">https://offshoregit.com/tknorris/tknorris-release-repo/raw/master/zips/</datadir>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>This is tknorris's release repository</summary>
+        <description>This repository contains official releases of my Kodi/XBMC addons
+
+Addons Included        	
+    - Stream All The Sources
+    - 1Channel
+    - 1Channel Themepaks
+        </description>
+        <platform>all</platform>
+    </extension>
+</addon>
+
+<addon id="repository.fightnight" name="fightnight repo" version="1.6" provider-name="fightnight">
+	<extension point="xbmc.addon.repository" name="fightnight">
+		<info compressed="false">https://raw.githubusercontent.com/fightnight/f-base/master/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/fightnight/f-base/master/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/fightnight/f-base/master</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Os meus addons para o XBMC</summary>
+		<description>Os meus addons para o XBMC</description>
+		<platform>all</platform>
+	</extension>
+</addon>
 </addons>
