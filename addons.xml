@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addons>
 <addon id="mrquimrepo" name="Mr. Quim repository" version="1.0.2" provider-name="Mr. Quim">
 	<extension point="xbmc.addon.repository" name="Mr. Quim Add-on Repository">
 		<info compressed="false">http://raw.github.com/mrquim/mrquimrepo/master/addons.xml</info>
@@ -79,7 +80,29 @@ http://www.hometheater.co.il</description>
   </extension>
 </addon>
 
-<addon id="plugin.video.sembilhete.tv" name="SemBilhete.tv" provider-name="SemBilhete.tv" version="0.1">
+<addon id="plugin.video.ratotv" name="RatoTv" version="2.2.1" provider-name="RatoTV.net">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.t0mm0.common" version="2.1.1"/>
+    <import addon="plugin.video.youtube" version="2.9.2"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.service" library="service.py" start="startup">
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <language>pt</language>
+    <platform>all</platform>
+    <summary lang="en">Rato TV</summary>
+    <description lang="en">Filmes e series no Kodi em HD. Visita o site oficial em http://www.ratotv.net. É necessária conta no site para aceder aos conteúdos do addon.</description>
+    <disclaimer lang="en">Os autores não alojam nem distribuem nenhum do conteúdo acessível a partir deste addon. Os autores não têm qualquer afiliação com o site em questão. O addon não contem nenhuma ferramenta de tracking.</disclaimer>
+    <website>http://www.ratotv.net/</website>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.sembilhete.tv" name="SemBilhete.tv" provider-name="SemBilhete.tv" version="0.1.1">
  <requires>
   <import addon="xbmc.python" version="2.7.10"/>
  </requires>
@@ -89,7 +112,7 @@ http://www.hometheater.co.il</description>
  <extension point="xbmc.addon.metadata">
     <summary>SemBilhete.tv</summary>
     <description>Addon oficial do SemBilhete.tv, os teus Filmes e Séries do Sem Bilhete agora no Kodi.</description>
-    <disclaimer>Addon oficial do Sem Bilhete, qualquer dúvida ou questão contacte-nos pelo site ou pelo Facebook.</disclaimer>
+    <disclaimer>Addon oficial do Sem Bilhete, qualquer duvida ou questão contacte-nos pelo site ou pelo Facebook.</disclaimer>
     <language>pt</language>
     <platform>all</platform>
     <license></license>
@@ -142,6 +165,32 @@ http://www.hometheater.co.il</description>
   </extension>
 </addon>
 
+<addon id="repository.BlazeRepo" name="Blazetamer's Repository" version="3.1" provider-name="Blazetamer">
+<extension point="xbmc.addon.repository" name="Blaztamer's Addon Repository">
+<info compressed="false">https://offshoregit.com/Blazetamer/repo/raw/master/addons.xml</info>
+<checksum>https://offshoregit.com/Blazetamer/repo/raw/master/addons.xml.md5</checksum>
+<datadir zip="true">https://offshoregit.com/Blazetamer/repo/raw/master/zips</datadir>
+</extension>
+<extension point="xbmc.addon.metadata">
+<summary>Install all of Blazetamer's Addons</summary>
+<description>Download and install addons from Blazetamer.......For Official Support Visit TVADDONS.AG</description>
+<platform>all</platform>
+</extension>
+</addon>
+
+<addon id="repository.fightnight" name="fightnight repo" version="1.6" provider-name="fightnight">
+	<extension point="xbmc.addon.repository" name="fightnight">
+		<info compressed="false">https://raw.githubusercontent.com/fightnight/f-base/master/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/fightnight/f-base/master/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/fightnight/f-base/master</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Os meus addons para o XBMC</summary>
+		<description>Os meus addons para o XBMC</description>
+		<platform>all</platform>
+	</extension>
+</addon>
+
 <addon id="repository.pancas" name="Pancas repository" version="1.0.2" provider-name="Mario">
 	<extension point="xbmc.addon.repository" name="Pancas Add-on Repository">
 		<info compressed="false">http://raw.github.com/Sup3Roque/Pancas/master/addons.xml</info>
@@ -164,10 +213,34 @@ http://www.hometheater.co.il</description>
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<summary>Sem Bilhete Addon</summary>
-		<description>Addon Description</description>
+		<description>Add-on Oficial do Site sembilhete.tv</description>
 		<disclaimer></disclaimer>
 		<platform>all</platform>
 	</extension>
+</addon>
+
+<addon id="repository.tknorris.release" name="tknorris Release Repository" version="1.0.2" provider-name="tknorris">
+    <extension point="xbmc.addon.repository" name="tknorris release repository">
+        <dir>
+            <info compressed="false">https://offshoregit.com/tvaresolvers/tva-common-repository/raw/master/addons.xml</info>
+            <checksum>https://offshoregit.com/tvaresolvers/tva-common-repository/raw/master/addons.xml.md5</checksum>
+            <datadir zip="true">https://offshoregit.com/tvaresolvers/tva-common-repository/raw/master/zips/</datadir>
+        </dir>
+        <info compressed="false">https://offshoregit.com/tknorris/tknorris-release-repo/raw/master/addons.xml</info>
+        <checksum>https://offshoregit.com/tknorris/tknorris-release-repo/raw/master/addons.xml.md5</checksum>
+        <datadir zip="true">https://offshoregit.com/tknorris/tknorris-release-repo/raw/master/zips/</datadir>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>This is tknorris's release repository</summary>
+        <description>This repository contains official releases of my Kodi/XBMC addons
+
+Addons Included
+    - Stream All The Sources
+    - 1Channel
+    - 1Channel Themepaks
+        </description>
+        <platform>all</platform>
+    </extension>
 </addon>
 
 <addon id="service.subtitles.opensubtitles"
@@ -190,78 +263,6 @@ http://www.hometheater.co.il</description>
     <website></website>
     <email></email>
     <source>https://github.com/amet/service.subtitles.opensubtitles</source>    
-  </extension>
-</addon>
-
-<addon id="repository.tknorris.release" name="tknorris Release Repository" version="1.0.2" provider-name="tknorris">
-    <extension point="xbmc.addon.repository" name="tknorris release repository">
-        <dir>
-            <info compressed="false">https://offshoregit.com/tvaresolvers/tva-common-repository/raw/master/addons.xml</info>
-            <checksum>https://offshoregit.com/tvaresolvers/tva-common-repository/raw/master/addons.xml.md5</checksum>
-            <datadir zip="true">https://offshoregit.com/tvaresolvers/tva-common-repository/raw/master/zips/</datadir>
-        </dir>
-        <info compressed="false">https://offshoregit.com/tknorris/tknorris-release-repo/raw/master/addons.xml</info>
-        <checksum>https://offshoregit.com/tknorris/tknorris-release-repo/raw/master/addons.xml.md5</checksum>
-        <datadir zip="true">https://offshoregit.com/tknorris/tknorris-release-repo/raw/master/zips/</datadir>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <summary>This is tknorris's release repository</summary>
-        <description>This repository contains official releases of my Kodi/XBMC addons
-
-Addons Included        	
-    - Stream All The Sources
-    - 1Channel
-    - 1Channel Themepaks
-        </description>
-        <platform>all</platform>
-    </extension>
-</addon>
-
-<addon id="repository.fightnight" name="fightnight repo" version="1.6" provider-name="fightnight">
-	<extension point="xbmc.addon.repository" name="fightnight">
-		<info compressed="false">https://raw.githubusercontent.com/fightnight/f-base/master/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/fightnight/f-base/master/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/fightnight/f-base/master</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary>Os meus addons para o XBMC</summary>
-		<description>Os meus addons para o XBMC</description>
-		<platform>all</platform>
-	</extension>
-</addon>
-
-<addon id="repository.BlazeRepo" name="Blazetamer's Repository" version="3.1" provider-name="Blazetamer">
-<extension point="xbmc.addon.repository" name="Blaztamer's Addon Repository">
-<info compressed="false">https://offshoregit.com/Blazetamer/repo/raw/master/addons.xml</info>
-<checksum>https://offshoregit.com/Blazetamer/repo/raw/master/addons.xml.md5</checksum>
-<datadir zip="true">https://offshoregit.com/Blazetamer/repo/raw/master/zips</datadir>
-</extension>
-<extension point="xbmc.addon.metadata">
-<summary>Install all of Blazetamer's Addons</summary>
-<description>Download and install addons from Blazetamer.......For Official Support Visit TVADDONS.AG</description>
-<platform>all</platform>
-</extension>
-</addon>
-
-<addon id="plugin.video.ratotv" name="RatoTv" version="2.2.1" provider-name="RatoTV.net">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-    <import addon="script.module.t0mm0.common" version="2.1.1"/>
-    <import addon="plugin.video.youtube" version="2.9.2"/>
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="addon.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.service" library="service.py" start="startup">
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <language>pt</language>
-    <platform>all</platform>
-    <summary lang="en">Rato TV</summary>
-    <description lang="en">Filmes e series no Kodi em HD. Visita o site oficial em http://www.ratotv.net. É necessária conta no site para aceder aos conteúdos do addon.</description>
-    <disclaimer lang="en">Os autores não alojam nem distribuem nenhum do conteúdo acessível a partir deste addon. Os autores não têm qualquer afiliação com o site em questão. O addon não contem nenhuma ferramenta de tracking.</disclaimer>
-    <website>http://www.ratotv.net/</website>
-    <platform>all</platform>
   </extension>
 </addon>
 
