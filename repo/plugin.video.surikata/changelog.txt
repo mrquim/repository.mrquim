@@ -1,0 +1,52 @@
+-------------------------------
+Versão 0.0.8 (02-02-2016)
+-------------------------------
+
+Adicionado sistema de busca para as listas myIPTVchannels
+
+-------------------------------
+Versão 0.0.7 (12-01-2016)
+-------------------------------
+
+Adicionado Canais Internacionais
+
+-------------------------------
+Versão 0.0.6 (08-01-2016)
+-------------------------------
+
+Adicionado Listas Externas kitina,martunis,argivai
+
+-------------------------------
+Versão 0.0.5.1 (05-01-2016)
+-------------------------------
+
+Adicionado Radios
+
+-------------------------------
+Versão 0.0.4 (04-01-2016)
+-------------------------------
+
+Adicionado opcao de inserir ficheiros pessoais:
+Lista propria XML em http
+Lista propria XML em ficheiro (nas definicoes)
+
+-------------------------------
+Versão 0.0.3 (30-12-2015)
+-------------------------------
+
+Adicionado opcao de inserir ficheiros pessoais:
+Lista propria m3u em http
+Lista propria m3u em ficheiro local (nas definicoes)
+
+-------------------------------
+Versão 0.0.2 (27-12-2015)
+-------------------------------
+
+Corrigido erros da template
+Adicionado todos os links myIPTVChannels
+
+-------------------------------
+Versão 0.0.1 (20-12-2015)
+-------------------------------
+
+Inicio da ideia

@@ -448,4 +448,34 @@ Addons Included
 		<platform>all</platform>
 	</extension>
 </addon>
+
+<addon id="discave.repo" name="Discave Repositorio" version="0.0.3" provider-name="Discave">
+	<extension point="xbmc.addon.repository" name="Discave Repositorio">
+		<info compressed="false">http://raw.github.com/discave/discave.repo/master/addons.xml</info>
+		<checksum>http://raw.github.com/discave/discave.repo/master/addons.xml.md5</checksum>
+		<datadir zip="true">http://raw.github.com/discave/discave.repo/master/repo/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Discave Repo</summary>
+		<description>Discave Repositorio</description>
+		<disclaimer></disclaimer>
+		<platform>all</platform>
+	</extension>
+</addon>
+
+<addon id="plugin.video.surikata" name="surikata TV" version="0.0.8" provider-name="Discave">
+    <requires>
+    </requires>
+    <extension point="xbmc.python.pluginsource"
+               library="player.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary>A tua lista de IPTV</summary>
+        <description>Junta-te a nos, no GitHub em https://github.com/adrianoafonso/myIPTVchannels, adiciona, edita, faz esta lista ser tua tambem. Comenta em https://www.facebook.com/groups/listasiptv/</description>
+		<disclaimer lang="pt">Nenhum dos intervenientes difunde, retransmite qualquer canal exposto, nem obtem quaisquer rendimentos do trabalho elaborado</disclaimer>
+
+	</extension>
+</addon>
 </addons>

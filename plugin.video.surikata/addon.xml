@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.surikata" name="surikata TV" version="0.0.8" provider-name="Discave">
+    <requires>
+    </requires>
+    <extension point="xbmc.python.pluginsource"
+               library="player.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary>A tua lista de IPTV</summary>
+        <description>Junta-te a nos, no GitHub em https://github.com/adrianoafonso/myIPTVchannels, adiciona, edita, faz esta lista ser tua tambem. Comenta em https://www.facebook.com/groups/listasiptv/</description>
+		<disclaimer lang="pt">Nenhum dos intervenientes difunde, retransmite qualquer canal exposto, nem obtem quaisquer rendimentos do trabalho elaborado</disclaimer>
+
+	</extension>
+</addon>
