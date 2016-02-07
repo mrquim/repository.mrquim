@@ -35,7 +35,7 @@
 
 <addon id="plugin.video.pancas"
        name="Pancas"
-       version="1.0.4"
+       version="1.0.5"
        provider-name="Mario">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -47,7 +47,7 @@
     <import addon="script.module.youtube.dl" optional="true"/>
     <import addon="plugin.video.youtube" />
     <import addon="script.module.urlresolver" optional="true"/>
-    <import addon="script.module.simplejson" />
+    <import addon="script.module.simplejson" />    
   </requires>
   <extension point="xbmc.python.pluginsource" library="default.py">
     <provides>video</provides>
@@ -56,9 +56,9 @@
     <summary>Pancadas TV</summary>
     <description>
         Lista de canais portugueses e europeus com desporto, noticias, música e rádios portugueses.
-Esta lista 80% são links acestream, por isso tem de ter o plexus instalado e a funcionar para ela funcionar a 100%.
-.
+Maniac Team / Pancas TV
 
+        
     </description>
     <platform>all</platform>
   </extension>
