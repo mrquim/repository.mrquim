@@ -646,4 +646,52 @@ Addons Included
     <website>http://repo.bbtsip.tv/</website>
   </extension>   
 </addon>
+
+<addon id="repository.livetv" name="LiveTV" version="2.2.5" provider-name="TV Direto">
+<requires>
+    <import addon="xbmc.addon" version="12.0.0" />
+</requires>
+        <extension point="xbmc.addon.repository" name="Live TV Repo">     
+                <info compressed="false">https://raw.githubusercontent.com/joelgrace1/repository.livetv/master/addons.xml</info>
+                <checksum>https://raw.githubusercontent.com/joelgrace1/repository.livetv/master/addons.xml.md5</checksum>
+                <datadir zip="true">https://raw.githubusercontent.com/joelgrace1/repository.livetv/master/addons/</datadir>
+                <hashes>true</hashes>
+        </extension>
+        <extension point="xbmc.addon.metadata">
+                <summary>Install add-ons from Live TV Repository</summary>
+                <description>Download and install add-ons from the Live Tv Repository</description>
+                <disclaimer></disclaimer>
+                <platform>all</platform>
+                <website></website>
+        </extension>   
+</addon>
+
+<addon id="plugin.video.LiveTV" name="Live!t TV" provider-name="Live!t TV" version="4.8.7">
+  <requires>
+    <import addon="xbmc.python" version="2.19.0"/>
+	<import addon="script.module.t0mm0.common" version="1.0.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="defaut.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Live!t TV</summary>
+    <description lang="en">Addon para todos os membros do grupo Live!t TV.
+	Espero que gostem e disfrutem.
+	Realizado por: Administrador (J.R).
+	Sempre Atualizado 24 horas por dia.
+	
+	Os programadores deste addon nada tem a ver com os links disponibilizados.
+	Limitamo-nos a ler o seu conteudo dos links e disponibiliza-lo.
+
+	</description>
+	<language>pt</language>
+    <platform>all</platform>
+    <license></license>
+    <forum>http://www.pcteckserv.com/Forum/</forum>
+    <website>https://www.facebook.com/groups/LIVEITTV/</website>
+    <email></email>
+    <source></source>
+  </extension>
+</addon>
 </addons>
