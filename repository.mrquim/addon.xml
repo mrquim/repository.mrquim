@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="mrquimrepo" name="Mr. Quim repository" version="1.0.2" provider-name="Mr. Quim">
+<addon id="repository.mrquim" name="Mr. Quim repository" version="1.0.3" provider-name="Mr. Quim">
 	<extension point="xbmc.addon.repository" name="Mr. Quim Add-on Repository">
-		<info compressed="false">http://raw.github.com/mrquim/mrquimrepo/master/addons.xml</info>
-		<checksum>http://raw.github.com/mrquim/mrquimrepo/master/addons.xml.md5</checksum>
-		<datadir zip="true">http://raw.github.com/mrquim/mrquimrepo/master/repo/</datadir>
+		<info compressed="false">http://raw.github.com/mrquim/repository.mrquim/master/addons.xml</info>
+		<checksum>http://raw.github.com/mrquim/repository.mrquim/master/addons.xml.md5</checksum>
+		<datadir zip="true">http://raw.github.com/mrquim/repository.mrquim/master/repo/</datadir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<summary>Mr. Quim Repository</summary>
