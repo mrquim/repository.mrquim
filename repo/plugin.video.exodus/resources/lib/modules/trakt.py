@@ -19,7 +19,7 @@
 '''
 
 
-import json,urlparse
+import re,json,urlparse
 
 from resources.lib.modules import cache
 from resources.lib.modules import control
@@ -108,7 +108,7 @@ def authTrakt():
 
 
 def getTraktCredentialsInfo():
-    user = control.setting('trakt.user')
+    user = re.sub('[^a-z0-9]', '-', control.setting('trakt.user').strip().lower())
     token = control.setting('trakt.token')
     refresh = control.setting('trakt.refresh')
     if (user == '' or token == '' or refresh == ''): return False
@@ -145,7 +145,7 @@ def getTraktAddonEpisodeInfo():
 
 def manager(name, imdb, tvdb, content):
     try:
-        user = control.setting('trakt.user')
+        user = re.sub('[^a-z0-9]', '-', control.setting('trakt.user').strip().lower())
         post = {"movies": [{"ids": {"imdb": imdb}}]} if content == 'movie' else {"shows": [{"ids": {"tvdb": tvdb}}]}
 
         items = [(control.lang(30472).encode('utf-8'), '/sync/collection')]
@@ -211,7 +211,7 @@ def getActivity():
 
 
 def cachesyncMovies(timeout=0):
-    indicators = cache.get(syncMovies, timeout, control.setting('trakt.user'), table='trakt')
+    indicators = cache.get(syncMovies, timeout, re.sub('[^a-z0-9]', '-', control.setting('trakt.user').strip().lower()), table='trakt')
     return indicators
 
 
@@ -228,7 +228,7 @@ def syncMovies(user):
 
 
 def cachesyncTVShows(timeout=0):
-    indicators = cache.get(syncTVShows, timeout, control.setting('trakt.user'), table='trakt')
+    indicators = cache.get(syncTVShows, timeout, re.sub('[^a-z0-9]', '-', control.setting('trakt.user').strip().lower()), table='trakt')
     return indicators
 
 

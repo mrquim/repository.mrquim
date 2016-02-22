@@ -35,7 +35,7 @@ class seasons:
     def __init__(self):
         self.list = []
 
-        self.tmdb_key = base64.urlsafe_b64decode('NTc5ODNlMzFmYjQzNWRmNGRmNzdhZmI4NTQ3NDBlYTk=')
+        self.tmdb_key = base64.urlsafe_b64decode('OWI5MzlhZWUwYWFhZmMxMmE2NWJmNDQ4ZTRhZjk1NDM==')
         self.tvdb_key = base64.urlsafe_b64decode('MUQ2MkYyRjkwMDMwQzQ0NA==')
         self.datetime = (datetime.datetime.utcnow() - datetime.timedelta(hours = 5))
         self.today_date = (self.datetime).strftime('%Y-%m-%d')
@@ -542,7 +542,7 @@ class episodes:
         self.datetime = (datetime.datetime.utcnow() - datetime.timedelta(hours = 5))
         self.systime = (self.datetime).strftime('%Y%m%d%H%M%S%f')
         self.today_date = (self.datetime).strftime('%Y-%m-%d')
-        self.trakt_user = control.setting('trakt.user')
+        self.trakt_user = re.sub('[^a-z0-9]', '-', control.setting('trakt.user').strip().lower())
         self.tvdb_lang = control.apiLanguage()['tvdb']
 
         self.tvdb_info_link = 'http://thetvdb.com/api/%s/series/%s/all/%s.zip' % (self.tvdb_key, '%s', '%s')

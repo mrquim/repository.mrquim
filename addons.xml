@@ -751,7 +751,7 @@ Addons Included
 	</extension>
 </addon>
 
-<addon id="plugin.video.exodus" version="1.0.0" name="Exodus" provider-name="l*m*d*">
+<addon id="plugin.video.exodus" version="1.0.1" name="Exodus" provider-name="l*m*d*">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0" />
 		<import addon="repository.exodus" version="1.0.0" />

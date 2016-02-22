@@ -38,10 +38,10 @@ class tvshows:
         self.tmdb_link = 'http://api.themoviedb.org'
         self.trakt_link = 'http://api-v2launch.trakt.tv'
         self.imdb_link = 'http://www.imdb.com'
-        self.tmdb_key = base64.urlsafe_b64decode('NTc5ODNlMzFmYjQzNWRmNGRmNzdhZmI4NTQ3NDBlYTk=')
+        self.tmdb_key = base64.urlsafe_b64decode('OWI5MzlhZWUwYWFhZmMxMmE2NWJmNDQ4ZTRhZjk1NDM==')
         self.tvdb_key = base64.urlsafe_b64decode('MUQ2MkYyRjkwMDMwQzQ0NA==')
         self.datetime = (datetime.datetime.utcnow() - datetime.timedelta(hours = 5))
-        self.trakt_user = control.setting('trakt.user')
+        self.trakt_user = re.sub('[^a-z0-9]', '-', control.setting('trakt.user').strip().lower())
         self.imdb_user = control.setting('imdb.user').replace('ur', '')
         self.tmdb_lang = control.apiLanguage()['tmdb']
         self.tvdb_lang = control.apiLanguage()['tvdb']
