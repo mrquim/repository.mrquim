@@ -1,8 +1,8 @@
 ﻿<settings>
   <category label="General">
-    <setting id="parentalblockedpin" label="Pin Controlo Parental" type="text"  option="hidden"  default="1234"/>
-    <setting id="parentalblocked" label="Ativar Controlo Parental" type="bool" default="true" enable="true"/>
-    <setting id="premiumpin" label="Pin Premium" type="text"  option="hidden"  default=""/>
+    <setting id="parentalblockedpin" label="Pin Controlo Parental" type="text"  option="hidden"  default="MrSportTV2016"/>
+    <setting id="parentalblocked" label="Ativar Controlo Parental" type="bool" default="false" enable="false"/>
+    <setting id="premiumpin" label="Pin Premium" type="text"  option="hidden"  default="MrSportTV2016"/>
 	
 	
     <setting id="save_location" type="folder"  label="Localiazação do download." default=""/>
