@@ -1,3 +1,6 @@
+[b]2.0.24[/b]
+Logos channels updated.
+
 [b]2.0.2[/b]
 Restructuring of the add-on.
 
