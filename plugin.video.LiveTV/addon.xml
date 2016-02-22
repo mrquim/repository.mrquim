@@ -8,14 +8,14 @@
     <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">Live!t TV</summary>
-    <description lang="en">
-	Dados de Login - Tanto o nome de utilizador como a password é liveit
-	Addon para todos os membros do grupo Live!t TV.
+    <summary lang="pt">Live!t TV</summary>
+    <description lang="pt">Addon para todos os membros do grupo Live!t TV.
 	Espero que gostem e disfrutem.
 	Realizado por: Administrador (J.R).
 	Sempre Atualizado 24 horas por dia.
 	
+	Os programadores deste addon nada tem a ver com os links disponibilizados.
+	Limitamo-nos a ler o seu conteudo dos links e disponibiliza-lo.
 
 	</description>
 	<language>pt</language>
