@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="Logins">
+		<setting id="abelhas-enable" type="bool" label="Activar abelhas.pt" default="false"/>
+		<setting id="abelhas-username" type="text" label="Username abelhas.pt" default="" visible="!eq(-1,false)"/>
+		<setting id="abelhas-password" type="text" label="Password abelhas.pt" default="" option="hidden" visible="!eq(-2,false)"/>
+		<setting id="abelhas-check" type="bool" label="30000" default="false" visible="false"/>
+		<setting type="sep"/>
+		<setting id="minhateca-enable" type="bool" label="Activar minhateca.com.br" default="false"/>
+		<setting id="minhateca-username" type="text" label="Username minhateca" default="" visible="!eq(-1,false)"/>
+		<setting id="minhateca-password" type="text" label="Password minhateca" default="" option="hidden" visible="!eq(-2,false)"/>
+		<setting id="minhateca-check" type="bool" label="30000" default="false" visible="false"/>
+		<setting type="sep"/>
+		<setting id="lolabits-enable" type="bool" label="Activar lolabits.es" default="false"/>
+		<setting id="lolabits-username" type="text" label="Username lolabits" default="" visible="!eq(-1,false)"/>
+		<setting id="lolabits-password" type="text" label="Password lolabits" default="" option="hidden" visible="!eq(-2,false)"/>
+		<setting id="lolabits-check" type="bool" label="30000" default="false" visible="false"/>
+		<setting type="sep"/>
+		<setting id="toutbox-enable" type="bool" label="Activar Toutbox.fr" default="false"/>
+		<setting id="toutbox-username" type="text" label="Username Toutbox" default="" visible="!eq(-1,false)"/>
+		<setting id="toutbox-password" type="text" label="Password Toutbox" default="" option="hidden" visible="!eq(-2,false)"/>
+		<setting id="toutbox-check" type="bool" label="30000" default="false" visible="false"/>
+	</category>
+	<category label="Configurações Gerais">
+		<setting id="filesorder" label="Ordenação Ficheiros" type="enum" values="Nome|Tipo Ficheiro|Tamanho|Adicionado a" default="0"/>
+		<setting id="fileasc" label="Ordenação" type="enum" values="Ascendente|Descendente" default="0"/>
+		<setting type="sep"/>
+		<setting id="aviso-extensao" type="bool" label="30000" default="true"/>
+		<setting id="ultima-pesquisa" type="text" label="Ultima pesquisa" default="" visible="false"/>
+		<setting type="sep"/>
+		<setting id="track-player" type="bool" label="30149" default="true"/>
+		<setting id="resumefolder" type="folder" label="30151" default="special://userdata/addon_data/plugin.video.abelhas/trackplayer" enable="!eq(-1,false)"/>
+	</category>
+	<category label="Bibliotecas">
+		<setting id="libraryfolder" type="folder" label="30147" default="special://userdata/addon_data/plugin.video.abelhas/Movies"/>
+		<setting id="tvshowlibraryfolder" type="folder" label="30148" default="special://userdata/addon_data/plugin.video.abelhas/TVshows"/>
+		<setting id="musicvideolibraryfolder" type="folder" label="30150" default="special://userdata/addon_data/plugin.video.abelhas/Musicvideos"/>
+	</category>
+	<category label="Pesquisa">
+		<setting id="search-order" type="bool" label="Ordenar por Tamanho" default="false"/>
+		<setting type="sep"/>
+		<setting id="activate-size" type="bool" label="Limitar Tamanho" default="false"/>
+		<setting type="sep"/>
+		<setting id="min-size" type="number" label="Tamanho Mínimo (MB)" enable="!eq(-2,false)" default="0"/>
+		<setting id="max-size" type="number" label="Tamanho Máximo (MB)" enable="!eq(-3,false)" default="0"/>
+		<setting type="sep"/>
+		<setting id="folder-type" type="enum" label="Tipo de Pasta" default="0" values="Pasta|Dialogo"/>
+	</category>
+	<category label="30140">
+		<setting id="subtitles" type="bool" label="30143" default="false"/>
+		<setting type="sep"/>
+		<setting id="sublang1" type="select" label="30144" values="Afrikaans|Albanian|Arabic|Armenian|Basque|Bengali|Bosnian|Breton|Bulgarian|Burmese|Catalan|Chinese|Croatian|Czech|Danish|Dutch|English|Esperanto|Estonian|Finnish|French|Galician|Georgian|German|Greek|Hebrew|Hindi|Hungarian|Icelandic|Indonesian|Italian|Japanese|Kazakh|Khmer|Korean|Latvian|Lithuanian|Luxembourgish|Macedonian|Malay|Malayalam|Manipuri|Mongolian|Montenegrin|Norwegian|Occitan|Persian|Polish|Portuguese|Portuguese(Brazil)|Romanian|Russian|Serbian|Sinhalese|Slovak|Slovenian|Spanish|Swahili|Swedish|Syriac|Tagalog|Tamil|Telugu|Thai|Turkish|Ukrainian|Urdu" enable="!eq(-2,false)" default="English"/>
+		<setting id="sublang2" type="select" label="30145" values="Afrikaans|Albanian|Arabic|Armenian|Basque|Bengali|Bosnian|Breton|Bulgarian|Burmese|Catalan|Chinese|Croatian|Czech|Danish|Dutch|English|Esperanto|Estonian|Finnish|French|Galician|Georgian|German|Greek|Hebrew|Hindi|Hungarian|Icelandic|Indonesian|Italian|Japanese|Kazakh|Khmer|Korean|Latvian|Lithuanian|Luxembourgish|Macedonian|Malay|Malayalam|Manipuri|Mongolian|Montenegrin|Norwegian|Occitan|Persian|Polish|Portuguese|Portuguese(Brazil)|Romanian|Russian|Serbian|Sinhalese|Slovak|Slovenian|Spanish|Swahili|Swedish|Syriac|Tagalog|Tamil|Telugu|Thai|Turkish|Ukrainian|Urdu" enable="!eq(-3,false)" default="English"/>
+		<setting id="minsize" type="number" label="30146" default="20"/>		
+		<setting type="lsep" label="[CR]"/>
+		<setting type="lsep" label="30141"/>
+		<setting type="lsep" label="30142"/>
+	</category>		   
+</settings>
