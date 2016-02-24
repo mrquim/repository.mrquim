@@ -99,7 +99,7 @@ http://www.hometheater.co.il</description>
   </extension>
 </addon>
 
-<addon id="plugin.video.ratotv" name="RatoTv" version="2.2.1" provider-name="RatoTV.net">
+<addon id="plugin.video.ratotv" name="RatoTv" version="2.2.8" provider-name="RatoTV.net">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.t0mm0.common" version="2.1.1"/>
@@ -956,4 +956,24 @@ Addons Included
         <platform>all</platform>
     </extension>
 </addon>
+
+<addon id="repository.rato.tv"
+  version="1.0.0"
+  name="Rato-TV repository"
+  provider-name="Rato">
+  <extension point="xbmc.addon.repository"
+    name="repository with ratotv addons">
+    <info compressed="false">http://tralhas.xyz/kodi/addons.xml</info>
+    <checksum>http://tralhas.xyz/kodi/addons.xml.md5</checksum>
+    <datadir zip="true">http://tralhas.xyz/kodi/repo/</datadir>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>Rato-TV repository</summary>
+    <description>
+    </description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+
 </addons>

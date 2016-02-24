@@ -484,7 +484,7 @@ def filmes_homepage(name,url):
         mode = 10
         html_source_trunk = re.findall('<div id="rated3">(.*?)</div></div>', html_source, re.DOTALL)
     if html_source:
-        match = re.compile('<img .+? src="(.+?)" alt=".+?" style=".+?"/><span>(.+?)</span><a href="(.+?)"').findall(html_source_trunk[0])
+        match = re.compile('<img.+?src="(.+?)" alt=".+?"/><span>(.+?)</span><a href="(.+?)"').findall(html_source_trunk[0])
         totalit = len(match)
         progresso.create('RatoTV', 'A obter metadata... ')
         progresso.update(0,'A obter metadata...')
@@ -729,10 +729,9 @@ def rato_tv_get_media_info(html_trunk):
 
 def series_seasons_get_dictionary(url,name,fanart):
     try:
-        tvshow_dict = list_seasons(url, selfAddon.getSetting('login_name'), selfAddon.getSetting('login_password'))
+        tvshow_dict = list_tvshow(url, selfAddon.getSetting('login_name'), selfAddon.getSetting('login_password'))
     except LoginError:
         ok=mensagemok('RatoTV','Não foi possível abrir a página. Tente novamente \n ou contacte um dos administradores do site.'); match = ''
-    print tvshow_dict
     if selfAddon.getSetting('series-season-poster') == 'true':
         id_tvdb = thetvdb_api()._id(originaltitle,year)
         json_code = trakt_api().shows_seasons(id_tvdb)
@@ -2515,14 +2514,14 @@ def listar_temporadas_get_dictionary(name,url,fanart,iconimage,dicionario):
             year = re.compile('<strong>Ano: </strong><a href=".+?">(.+?)</a>').findall(html_source)[0]
     temporada = re.compile('.* (\d+)').findall(name)[0]
     dic = eval(dicionario)
-    episodes_dict = list_episodes(url, selfAddon.getSetting('login_name'), selfAddon.getSetting('login_password'), temporada, dic[temporada])
+    episodes_dict = list_episodes(url, selfAddon.getSetting('login_name'), selfAddon.getSetting('login_password'), temporada, dic)
     episodios_dict = {}
     for episode in episodes_dict.keys():
         episodios_dict[episode] = {}
-        episodios_dict[episode]['description'] = episodes_dict[episode]["options"][0].get('description','')
-        episodios_dict[episode]['thumbnail'] = base_url+episodes_dict[episode]["options"][0].get('image','')
-        episodios_dict[episode]['source'] = [eop for eop in episodes_dict[episode]["options"]]
-        episodios_dict[episode]['watched'] = episodes_dict[episode]['watched']
+        episodios_dict[episode]['description'] = episodes_dict[episode].get('description','')
+        episodios_dict[episode]['thumbnail'] = base_url + episodes_dict[episode].get('image','')
+        episodios_dict[episode]['source'] = [eop for eop in episodes_dict[episode]['options']]
+        episodios_dict[episode]['watched'] = episodes_dict[episode].get('watched', False)
     return temporada,year,episodios_dict
 
 def listar_temporadas(name,url,fanart,iconimage,dicionario):
@@ -2542,7 +2541,7 @@ def listar_temporadas(name,url,fanart,iconimage,dicionario):
             if aval == len(json_code) and screenimage == None: screenimage = str(episodios_dict[episodio]["thumbnail"])
             else:pass
         else: screenimage = str(episodios_dict[episodio]["thumbnail"])
-        addDir_episodio(name,"Episódio " + str(episodio),urllib.unquote_plus(str(episodios_dict[episodio]["description"])),url,temporada,episodio,str(episodios_dict[episodio]["source"]),screenimage,fanart, episodios_dict[episodio]["watched"])
+        addDir_episodio(name,"Episódio " + str(episodio),urllib.unquote_plus(episodios_dict[episodio]["description"].encode('utf-8')),url,temporada,episodio,str(episodios_dict[episodio]["source"]),screenimage,fanart, episodios_dict[episodio]["watched"])
     episodes_view()
 
 def keyfunc(key): return float(key.replace(" e ","."))

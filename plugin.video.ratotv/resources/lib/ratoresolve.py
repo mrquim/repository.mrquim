@@ -36,12 +36,15 @@ def post_page(url, user, password):
     return page
 
 
-def post_page_free(url, mydata):
+def post_page_free(url, mydata, headers=None):
     mydata = urllib.urlencode(mydata)
     req = urllib2.Request(url, mydata)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
     req.add_header("Content-type", "application/x-www-form-urlencoded")
     req.add_header('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8')
+    if headers:
+        for header in headers:
+            req.add_header(header[0],header[1])
     page = urllib2.urlopen(req).read()
     return page
 
@@ -89,7 +92,7 @@ def resolve_vmail(url):
 
 
 def resolve_vkcom(url):
-    rato_vk_url = "http://ratotv.xyz/zencrypt/pluginsw/plugins_vk.php"
+    rato_vk_url = "http://ratotv.net/zencrypt/pluginsw/plugins_vk.php"
     user_agent = "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3"
     post_data1 = [
         ("iagent", user_agent),
@@ -149,6 +152,7 @@ def resolve_vkcom(url):
 def resolve_ok(url):
     accept = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
     user_agent = "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3"
+    vid = url
     vid = url.split("/")[-1]
     print "[ok.ru] vid:", vid
     api_url = 'http://ok.ru/dk?cmd=videoPlayerMetadata&mid=' + vid
@@ -175,7 +179,7 @@ def resolve_ok(url):
         headers = {
             "User-Agent":user_agent,
             "Accept":accept,
-            "Referer":"http://ratotv.xyz"
+            "Referer":"http://ratotv.net"
         }
         result.append({"provider":"ok.ru", "quality":quality, "url":vurl, "headers":headers})
     return result
@@ -184,10 +188,15 @@ def resolve_ok(url):
 def resolve_upstream(url):
     video_req = urllib2.Request(url)
     video_req.add_header("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3")
-    video_data = re.search("<video id.+?</video>", urllib2.urlopen(video_req).read(), re.DOTALL).group(0)
+    video_page = urllib2.urlopen(video_req).read()
+    #print "[upstream] html = ", video_page
+    video_data = re.search(r"(<video).+?(</video>)", video_page, re.DOTALL).group()
     result = []
     for source in re.finditer("<source src=\'(.+?)\'.+?data-res=\'(.+?)\'", video_data, re.DOTALL):
-        result.append({"provider":"upstream.com", "url":source.group(1), "quality":source.group(2)})
+        url = source.group(1)
+        if url.startswith("//"):
+            url = "http:" + url
+        result.append({"provider":"upstream.com", "url":url, "quality":source.group(2)})
     return result
 
 
@@ -237,39 +246,32 @@ def resolve_gdrive(url):
         result.append({"provider":"gdrive", "url":fmt_url, "quality": height+"p", "ext":extension})
     return result
 
-def resolver_externos(hashstring):
+def resolver_externos(link_data):
     videos = []
+    decoded_url = link_data['link']
+    #print link_data
     try:
-        decoded_str = base64.decodestring(re.search("<div.+?>(.+?)</div>", abrir_url("http://ratotv.xyz/xbmc/xbmc2.php?hash=" + hashstring), re.DOTALL).group(1))
-        #print "decoded_str",decoded_str
+        request = link_data['request']
+        if request['method'] == 'POST':
+            headers = []
+            if 'referer' in request:
+                headers.append(('Referer', request['referer']))
+            if 'cookie' in request:
+                headers.append(('Cookie', request['cookie']))
+            data = json.loads(post_page_free(link_data['request']['url'], request['data'], headers))
+            #print '[resolve_externos] data = ', data
+            request_data = {}
+            request_data['link'] = link_data['link']
+            request_data['poscom'] = link_data['poscom']
+            request_data['response'] = data
+            post_data = [('data', base64.encodestring(json.dumps(request_data)))]
+            data2 = json.loads(post_page_free('http://ratotv.xyz/newplay/gkpluginsphp.php', post_data))
+            #print '[resolve_externos] data2 = ', data2
+            decoded_url = data2['link']
     except:
-        print "cannot decode rato*hash :("
-        raise
-    match1 = re.search(binascii.unhexlify(''.join('68 74 74 70 3a 2f 2f 76 6b 2e 63 6f 6d 2f'.split())), decoded_str) #vk
-    match2 = re.search(binascii.unhexlify(''.join('68 74 74 70 3a 2f 2f 6d 79 2e 6d 61 69 6c 2e 72 75 2f'.split())), decoded_str)  #mail
-    match3 = re.search(binascii.unhexlify(''.join('68 74 74 70 73 3a 2f 2f 75 70 74 6f 73 74 72 65 61 6d 2e 63 6f 6d 2f'.split())), decoded_str) #up
-    match4 = re.search(binascii.unhexlify(''.join('68 74 74 70 3a 2f 2f 77 77 77 2e 6f 64 6e 6f 6b 6c 61 73 73 6e 69 6b 69 2e 72 75 2f'.split())), decoded_str) #ok
-    match5 = re.search(binascii.unhexlify(''.join('68 74 74 70 73 3a 2f 2f 64 72 69 76 65 2e 67 6f 6f 67 6c 65 2e 63 6f 6d 2f'.split())), decoded_str) #gdrive
-    if match1:
-        #decoded_url = binascii.unhexlify(''.join('68 74 74 70 3a 2f 2f 76 6b 2e 63 6f 6d 2f'.split())) + (decoded_str)
-        decoded_url = decoded_str
-        #print "decoded_url_vk", decoded_url
-    elif match2:
-        decoded_url = decoded_str
-        #print "decoded_url_mail", decoded_url
-    elif match3:
-        decoded_url = decoded_str
-        #print "decoded_url_up", decoded_url
-    elif match4:
-        decoded_url = decoded_str
-        #print "decoded_url_ok", decoded_url
-    elif match5:
-        decoded_url = decoded_str
-        #print "decoded_url_gdrive", decoded_url
-    else:
-        print "cannot decode rato*string :("
+        traceback.print_exc()
+    #print "decoded url = ", decoded_url
 
-    #print "decoded url:", decoded_url
     if "my.mail.ru/mail/" in decoded_url:
         print "___resolving videomail.ru url___"
         try:
@@ -282,7 +284,7 @@ def resolver_externos(hashstring):
             videos = resolve_vkcom(decoded_url)
         except:
             traceback.print_exc()
-    elif "odnoklassniki.ru/video/" in decoded_url:
+    elif "odnoklassniki.ru/video/" in decoded_url or "ok.ru" in decoded_url:
         print "___resolving ok.ru url___"
         try:
             videos = resolve_ok(decoded_url)
@@ -317,13 +319,14 @@ def rm(m, u, p):
 
 
 def _get_gks_data(html_source):
+    #print html_source
     mstr_match = re.compile('var a = \d+').findall(html_source)
     mstr_match = mstr_match[0].replace('var a = ','')
     print "mstr_match:", mstr_match
     if len(mstr_match) == 0:
         print "mstr_match vazio!"
         return
-    gks_match = re.compile('"(/gks.php\?id=.+?\&a=)"').findall(html_source)
+    gks_match = re.compile('"(/gks2.php\?id=.+?\&a=)"').findall(html_source)
     print "gks_match:", gks_match
     if len(gks_match) == 0:
         print "gks_match vazio!!"
@@ -331,15 +334,14 @@ def _get_gks_data(html_source):
     gks_url = base_url + gks_match[0] + urllib.quote_plus(mstr_match)
     print "gks_url:", gks_url
     gks_data = xmlhttp_request(gks_url)
-    print "gks_data:", gks_data
+    #print "gks_data:", gks_data
     return gks_data
 
 
-def list_seasons(url, username, password):
+def list_tvshow(url, username, password):
     opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookielib.LWPCookieJar()))
     urllib2.install_opener(opener)
     print "Lista: %s" % (url)
-    result = {}
     try:
         html_source = post_page(url, username, password)
     except:
@@ -348,110 +350,59 @@ def list_seasons(url, username, password):
     if gks_data is None:
         print "Nenhuma série encontrada!"
         return result
-    gks2_match = re.compile('data-html="(.+?)"').findall(gks_data)
-    for idx, gks2 in enumerate(gks2_match):
-        gks2_parsed = urlparse.urlparse(base_url + gks2)
-        gks2_query = dict((q.split('=')[0], q.split('=')[1]) for q in gks2_parsed.query.split('&'))
-        if gks2_query['t'] == 1:
-            print "Isto é um filme, não uma temporada!"
-            return result
-        season_num = gks2_query['s']
-        print "...processando %s temporada" % (season_num)
-        if not season_num in result:
-            result[season_num] = []
-        result[season_num].append(gks2)
-    return result
-
-
-def list_episodes(url, username, password, season, gks2_list, progress_hook=None):
-    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookielib.LWPCookieJar()))
-    urllib2.install_opener(opener)
-    try:
-        html_source = post_page(url, username, password)
-    except:
-        raise LoginError()
+    #print gks_data
+    dp_data = json.loads(re.search(r'var display_data = (\[.+?\])</script>', gks_data).group(1))[0]
+    dp_link = json.loads(re.search(r'var display_links = (\[.+?\])</script>', gks_data).group(1))[0]
+    #print "dp_data =", dp_data
+    #print "dp_link =", dp_link
     result = {}
-    for idx, gks2 in enumerate(gks2_list):
-        print "html_sourcehtml_source", html_source
-        print base_url + gks2
-        gks2_source = xmlhttp_request(base_url + gks2)
-        if gks2_source == "<script>parent.window.location.reload(true);</script>":
-            _get_gks_data(html_source)
-            gks2_source = xmlhttp_request(base_url + gks2)
-        season_data = json.loads(re.compile('\&proxy.list=(.+?)\&').findall(gks2_source)[0]) 
-        print "season_dataaa", season_data
-        for episode in season_data:
-            episode_key = re.search(".*?(\d+)", episode['title']).group(1)
-            if episode_key not in result:
-                result[episode_key] = {"options":[], "watched":None}
-            result[episode_key]["options"].append(episode)
-            if progress_hook:
-                progress_hook(int((idx+1)/float(len(gks2_list)) * 100))
-    for m  in re.finditer(r'<div data-sid="(\d+)" data-eid="(\d+)" data-watch=\"(\d+)">.+?</div>', html_source):
-        if m.group(1) == season:
-            if m.group(2) not in result:
-                continue
-            result[m.group(2)]["watched"] = bool(int(m.group(3)))
-    return result
-
-def list_page(url, username, password):
-    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookielib.LWPCookieJar()))
-    urllib2.install_opener(opener)
-    print "Lista: %s" % (url)
-    result = {}
-    try:
-        html_source = post_page(url, username, password)
-    except:
-        raise LoginError()
-    gks_data = _get_gks_data(html_source)
-    if gks_data is None:
-        print "Nenhum filme/série encontrado :("
-        return
-    gks2_match = re.compile('data-html="(.+?)"').findall(gks_data)
-    for idx, gks2 in enumerate(gks2_match):
-        gks2_parsed = urlparse.urlparse(base_url + gks2)
-        gks2_query = dict((q.split('=')[0], q.split('=')[1]) for q in gks2_parsed.query.split('&'))
-        if gks2_query['t'] == 1:
-            print "filme detetado..."
-            result['type'] = 'movie'
+    for season in dp_data.keys():
+        result[season] = {}
+        if isinstance(dp_data[season], list):
+            season_episodes_list = True
+            episodes_list = (str(i) for i in range(1, len(dp_data[season])))
         else:
-            print "serie detetado..."
-            result['type'] = 'series'
-        break
-    if result['type'] == 'movie':
-        print "extracting filme metadata..."
-        gks2_source = xmlhttp_request(base_url + gks2_match[0])
-        options = re.compile('\&proxy.list=(.+?)\&').findall(gks2_source)
-        print "...encontrado %d options" % (len(options))
-        for o in options:
-            result['options'].append(json.loads(o))
-    elif result['type'] == 'series':
-        print "extracting series metadata..."
-        title = re.compile('<strong>Título Original: </strong>(.+?)</li>').findall(html_source)
-        if title:
-            print "...titulo detetado = %s" % (title[0])
-            result['title'] = title[0]
-        year = re.compile('<strong>Ano: </strong><a href=".+?">(.+?)</a>').findall(html_source)
-        if year:
-            print "...titulo detetado = %s" % (year[0])
-            result["year"] = year[0]
-        result['seasons'] = {}
-        for idx, gks2 in enumerate(gks2_match):
-            gks2_parsed = urlparse.urlparse(base_url + gks2)
-            gks2_query = dict((q.split('=')[0], q.split('=')[1]) for q in gks2_parsed.query.split('&'))
-            season_num = gks2_query['s']
-            print "...extracting %s temporadas" % (season_num)
-            if not season_num in result['seasons']:
-                result['seasons'][season_num] = {}
-            season_dict = result['seasons'][season_num]
-            gks2_source = xmlhttp_request(base_url + gks2)
-            season_data = json.loads(re.compile('\&proxy.list=(.+?)\&').findall(gks2_source)[0]) 
-            for episode in season_data:
-                episode_key = re.search(".*?(\d+)", episode['title']).group(1)
-                if episode_key not in season_dict:
-                    season_dict[episode_key] = []
-                season_dict[episode_key].append(episode)
-            print "....option[%d] - %d episodes" % (len(season_dict[episode_key]), len(season_dict.keys()))
+            season_episodes_list = False
+            episodes_list = dp_data[season].keys()
+
+        for episode in episodes_list:
+            if season_episodes_list:
+                result[season][episode] = dp_data[season][int(episode)-1]
+            else:
+                result[season][episode] = dp_data[season][episode]
+            result[season][episode]['options'] = []
+            for option in sorted(dp_link.keys()):
+                if season not in dp_link[option]:
+                    print '[list_tv_show] missing links for season %s!' % season
+                    continue
+                if isinstance(dp_link[option][season], list):
+                    try:
+                        result[season][episode]['options'].append({'subtitle':result[season][episode].get('subtitle'), 'link': dp_link[option][season][int(episode)-1]})
+                    except IndexError:
+                        print '[list_tv_show] missing links for season %s episode %s!' % (season, episode)
+                        continue
+                else:
+                    if episode not in dp_link[option][season]:
+                        print '[list_tv_show] missing links for season %s episode %s!' % (season, episode)
+                        continue
+                    result[season][episode]['options'].append({'subtitle':result[season][episode].get('subtitle'),'link':dp_link[option][season][episode]})
+    return result
+
+def list_episodes(url, username, password, season, tvshow_dict, progress_hook=None):
+    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookielib.LWPCookieJar()))
+    urllib2.install_opener(opener)
+    try:
+        html_source = post_page(url, username, password)
+    except:
+        raise LoginError()
+    result = tvshow_dict[season]
+    for episode in result.keys():
+        result[episode]['watched'] = False
+    for m in re.finditer(r'<div data-sid="(?P<sid>\d+)" data-eid="(?P<eid>\d+)" data-watch="(?P<watch>\d+)"', html_source):
+        if m.group('sid') == season:
+            if m.group('eid') not in result:
+                continue
+            result[m.group('eid')]['watched'] = bool(int(m.group('watch')))
     return result
 
 def get_quality_key(video_item):
@@ -474,20 +425,23 @@ def get_options(url, username, password, flashvar_list=None, progress_hook=None)
         except:
             raise LoginError()
         gks_data = _get_gks_data(html_source)
-        gks2_match = re.compile('data-html="(.+?)"').findall(gks_data)
-        print "\n\ngks2_match:", gks2_match
-        for idx, gks2 in enumerate(gks2_match):
-            gks2_url = base_url + gks2
-            print "gks2_url:", gks2_url
-            html_source = xmlhttp_request(gks2_url)
-            flashvar_list.append(json.loads(re.compile('\&proxy.list=(.+?)\&').findall(html_source)[0])[0])
+        dp_data = json.loads(re.search(r'var dp_data = (\[[^\]]+\]);', gks_data).group(1))[0]
+        dp_link = json.loads(re.search(r'var dp_link = (\[[^\]]+\]);', gks_data).group(1))[0]
+        #print "dp_data = ", dp_data
+        #print "dp_link = ", dp_link
+        for idx, key in enumerate(sorted(dp_data)):
+            dp_data[key]['link'] = dp_link[key]
+            flashvar_list.append(dp_data[key])
             if progress_hook:
-                progress_hook(int((idx + 1) / float(len(gks2_match)) * 50))
+                progress_hook(int((idx + 1) / float(len(dp_data.keys())) * 50))
+        print "flashvar_list = ", flashvar_list
+
     print "__found %d options__\n\n" % len(flashvar_list)
     for idx, f in enumerate(flashvar_list):
         print "__processing %d option__\n" % idx
-        print "ratohash:", f['file']
-        videos = resolver_externos(f['file'])
+        f['link_data'] = json.loads(post_page_free(base_url + "/newplay/gkpluginsphp.php", [("link", f["link"])]))
+        #print f['link_data']
+        videos = resolver_externos(f['link_data'])
         if len(videos) == 0:
             print "no videos resolved!"
             continue
@@ -495,9 +449,9 @@ def get_options(url, username, password, flashvar_list=None, progress_hook=None)
             print "%d videos resolved" % len(videos)
             for v in videos:
                 print "video_url[%s] : %s" % (v['quality'], v['url'])
-        if 'captions.files' in f:
+        if 'subtitle' in f:
             subs = []
-            for sub_path in f['captions.files'].split(','):
+            for sub_path in f['subtitle'].split(','):
                 subs.append(base_url + sub_path)
             print 'subs:', subs
             for v in videos:
