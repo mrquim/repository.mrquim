@@ -869,4 +869,28 @@ Addons Included
     <description lang="zh">此视频插件提供访问1800多个视频, 8个播客以及4个美国国家航空和航天管理局电视直播流[CR]全部内容都动态的并保持最新。</description>
   </extension>
 </addon>
+
+<addon id="plugin.video.tvgolo"
+       name="OKGoals"
+       version="1.0.2"
+       provider-name="fightnight">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+		<import addon="script.module.urlresolver"  version="1.0.5"/> 
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+		<language>pt</language>
+		<platform>all</platform>
+		<source>https://github.com/fightnight/fightnight-addons/tree/master/plugin.video.tvgolo</source>
+		<summary lang="en">OKGoals addon for Kodi</summary>
+		<summary lang="pt">OKGoals addon para o Kodi</summary>
+		<description lang="en">The best goals from OKGoals.com on Kodi.</description>
+		<description lang="pt">Os melhor golos do OKGoals.com para o Kodi.</description>
+		<disclaimer lang="en">Independent and opensource addon not endorsed by OKGoals.</disclaimer>
+		<disclaimer lang="pt">Addon independente e opensource não afliado com OKGoals.</disclaimer>
+    </extension>
+</addon>
 </addons>

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<strings>
+    <string id="30000">OKGoals</string>
+    <string id="30001">Semanas Anteriores</string>
+    <string id="30002">Procurar Jogos</string>
+    <string id="30003">Página</string>
+    <string id="30004">indisponível</string>
+    <string id="30005">Nenhum servidor compatível.</string>
+    <string id="30006">Escolha o vídeo</string>
+    <string id="30007">Video indisponível ou removido.</string>
+    <string id="30008">Pesquisar partida</string>
+    <string id="30009">A pesquisa só inclui jogos que ocorreram neste mês.</string>
+	<string id="30010">Últimos Golos</string>
+	<string id="30011">Últimos Liga Portugal</string>
+	<string id="30012">Últimos Golos por Liga</string>
+	<string id="30013">Épocas Anteriores</string>
+	<string id="30014">Qualidade</string>
+	<string id="30015">Não inclui a Liga Portugal.</string>
+</strings>
