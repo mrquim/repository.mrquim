@@ -1,0 +1,78 @@
+<settings>
+	<category label="Account Settings">
+		<setting type="lsep" label="Trakt Account"/>
+		<setting id="trakt_account" label="Authorize Trakt" type="action" default="" action="RunScript(plugin.video.theroyalwe, ?mode=authorize_trakt)"/>
+		<setting id="trakt_authorized" type="bool" default="false" visible="false" />
+		<setting id="trakt_client_id" type="text" label="Trakt Client ID" default="dbe260b94e985159dde067ea1f1702174bc9ab69e4c2aa8560cd7fc6b024c27a" visible="false"/>
+		<setting id="trakt_secret" type="text" label="Trakt Secret" default="198b3b421f09fa0de96b38ebda1b3c9ae848e189c8b5dec5d8f04768e06d05e2" visible="false"/>
+		<setting id="trakt_pin_url" type="text" label="Trakt Pin URL" default="http://trakt.tv/pin/6170" visible="false"/>
+		<setting id="trakt_oauth_token" type="text" default="" visible="false" />
+		<setting id="trakt_refresh_token" type="text" default="" visible="false" />
+		<setting type="lsep" label="Enter account information here."/>
+		<setting type="lsep" label="These are optional, These accounts will be disabled without credientials"/>
+		<setting type="lsep" label="Alluc"/>
+		<setting id="alluc_api_username" type="text" label="Alluc Username" option="hidden" default=""/>
+		<setting id="alluc_api_password" type="text" label="Alluc Password" option="hidden" default=""/>
+		<setting type="lsep" label="Furk.net"/>
+		<setting id="furk_username" type="text" label="Furk.net Username" option="hidden" default=""/>
+		<setting id="furk_password" type="text" label="Furk.net Password" option="hidden" default=""/>
+		<setting type="lsep" label="Ororo.tv"/>
+		<setting id="ororo_username" type="text" label="Ororo.tv Username" option="hidden" default=""/>
+		<setting id="ororo_password" type="text" label="Ororo.tv Password" option="hidden" default=""/>
+		<setting id="ororo_premium" type="bool" label="Premium Account" default="false" subsetting="true"/>
+	</category>
+	<category label="Scraper Settings">
+		<setting type="lsep" label="Nothing to see here! Enable advanced settings for more." visible="eq(1,false)"/>
+		<setting id="advanced_mode" type="bool" default="false" visible="false" />
+		<setting type="lsep" label="Advanced Settings" visible="eq(-1,true)"/>
+		<setting id="enable_result_caching" type="bool" label="Enable Result Caching" default="false" visible="eq(-2,true)" />
+		<setting id="enable_result_filters" type="bool" label="Enable Result Filters" default="false" visible="eq(-3,true)" />
+		<setting id="threadpool_size" type="slider" label="ThreadPool Size" default="10" option="int" range="1,20" visible="eq(-4,true)" enable="" />
+		<setting id="hide_watched_episodes" type="bool" label="Hide Watched Episodes" default="false" visible="!eq(-5,false)" enable="!eq(-5,false)"/>
+		<setting id="enable_transmogrifier" type="bool" label="Enable Transmogrifier (Expirimental)" default="false" visible="System.HasAddon(service.transmogrifier)+!eq(-6,false)" enable="!eq(-6,false)"/>
+		<setting id="enable_transmogrifier_streaming" type="bool" label="Enable Transmogrifer Streaming (Expirimental)" default="false" visible="eq(-1,true)" enable="eq(-1,true)"/>
+		<setting id="enable_result_sorting" type="bool" label="Change Result Sorting Order" default="false" visible="eq(-8,true)" enable="eq(-8,true)" />
+		<setting id="custom_result_sorting"  type="enum" label="Sort Order" values="Quality,Rank,Service,Host|Quality,Rank,Debrid,Host|Debrid,Rank,Quality,Host" default="0" subsetting="true"  visible="eq(-1,true)" enable="eq(-1,true)"/>
+		
+		<setting id="agent_refresh_time" type="text" default="" visible="false" />
+		<setting id="user_agent" type="text" default="" visible="false" />
+		<setting id="setup_run" type="bool" default="false" visible="false" />
+		<setting id="version" type="string" visible="false" default=""/>
+	</category>
+	<category label="Display (Advanced Mode)">
+		<setting id="enable_scraper_progress" type="bool" label="Show Scraper Progress" default="false"/>
+		<setting id="advanced_mode" type="text" default="false" visible="false" />
+		<setting id="enable_default_views" type="bool" label="Enable Default Views" default="false" visible="!eq(-1,false)"/>
+		<setting id="default_folder_view" type="number" label="Default Folder View" default="500" visible="!eq(-1,false) + !eq(-2,false)" enable="!eq(-1,false)" subsetting="true" />
+		<setting id="default_list_view" type="number" label="Default List View" default="50" visible="!eq(-2,false) + !eq(-3,false)" enable="!eq(-2,false)" subsetting="true" />
+		<setting id="default_tvshow_view" type="number" label="Default TV Show View" default="50" visible="!eq(-3,false) + !eq(-4,false)" enable="!eq(-3,false)" subsetting="true" />
+		<setting id="default_season_view" type="number" label="Default Season View" default="50" visible="!eq(-4,false) + !eq(-5,false)" enable="!eq(-4,false)" subsetting="true" />
+		<setting id="default_episode_view" type="number" label="Default Episode View" default="50" visible="!eq(-5,false) + !eq(-6,false)" enable="!eq(-5,false)" subsetting="true" />
+		<setting id="default_movie_view" type="number" label="Default Movie View" default="50" visible="!eq(-6,false) + !eq(-7,false)" enable="!eq(-6,false)" subsetting="true" />
+		<setting id="source_selection_mode" type="labelenum" label="Source Selection Mode" values="Dialog|Directory" default="Directory" visible="!eq(-8,false)" enable="!eq(-8,false)"/>
+		<setting id="enable_full_context" type="bool" label="Show Full Context Menus" default="false" visible="!eq(-9,false)"/>
+	</category>
+	<category label="Database (Advanced Mode)">
+		<setting id="advanced_mode" type="text" default="false" visible="false" />
+		<setting id="database_type" type="enum" label="Database Type" values="SQLite|MySQL" default="0" enabled="!eq(-1,false)"/>
+		<setting type="lsep" label="SQLite"/>
+		<setting id="database_sqlite_file" type="file" label="Database File" default="special://userdata/addon_data/plugin.video.theroyalwe/theroyalwe.db" enable="eq(-2,0)" subsetting="true" />
+		<setting type="lsep" label="MySQL"/>
+		<setting id="database_mysql_host" type="text" label="Host" default="" enable="eq(-4,1)" subsetting="true" />
+		<setting id="database_mysql_name" type="text" label="Schema" default="theroyalwe" enable="eq(-5,1)" subsetting="true" />
+		<setting id="database_mysql_user" type="text" label="Username" default="" enable="eq(-6,1)" subsetting="true" />
+		<setting id="database_mysql_pass" type="text" label="Password" option="hidden" default="" enable="eq(-7,1)" subsetting="true" />
+		<setting id="database_mysql_port" type="number" label="Port" default="3306" enable="eq(-8,1)" subsetting="true" />
+		<setting id="database_sqlite_init" type="text" default="false" visible="false" />
+		<setting id="database_sqlite_init.cache" type="text" default="false" visible="false" />
+		<setting id="database_mysql_init" type="text" default="false" visible="false" />
+		<setting id="database_mysql_init.cache" type="text" default="false" visible="false" />
+		<setting id="database_sqlite_version" type="number" default="1" visible="false" />
+		<setting id="database_mysql_version" type="number" default="1" visible="false" />
+		<setting id="database_sqlite_version.cache" type="number" default="1" visible="false" />
+		<setting id="database_mysql_version.cache" type="number" default="1" visible="false" />
+	</category>
+	<category label="Misc">
+		<setting id="log_level" type="enum" values="Standard|Verbose" label="Log Level" default="1"/>
+	</category>
+</settings>

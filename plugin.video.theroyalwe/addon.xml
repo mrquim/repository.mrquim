@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="plugin.video.theroyalwe" name="The Royal We" provider-name="DudeHere" version="0.8.23">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0" />
+        <import addon="script.module.simplejson" />
+        <import addon="script.module.beautifulsoup" />
+        <import addon="script.module.addon.common" />
+        <import addon="script.module.dudehere.routines" />
+        <import addon="script.module.metahandler" />
+        <import addon="script.module.myconnpy" />
+        <import addon="script.module.urlresolver" />
+    </requires>
+    <extension library="default.py" point="xbmc.python.pluginsource">
+        <provides>video</provides>
+    </extension>
+    <extension library="calendar.py" point="kodi.context.item">
+        <item>
+            <label>TRW Calendar</label>
+            <visible>True</visible>
+        </item>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <language />
+        <summary>The Royal We is about simplicity and sources.</summary>
+        <description>The Royal We is getting better then ever. It&apos;s all about simplicity and lots of sources. No settings. No configuration (except for a Trakt.tv account if you have one).</description>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <forum>http://forums.tvaddons.ag/dudehere-addons/</forum>
+        <website>http://www.tvaddons.ag/</website>
+    </extension>
+</addon>
