@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 '''
-    Genesis Add-on
+    Specto Add-on
     Copyright (C) 2015 lambda
 
     This program is free software: you can redistribute it and/or modify
@@ -17,6 +17,10 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
+
+#TODO ['notifications-on-startup', False, 'DoFromService', True]
+#TODO Trakt
+#TODO RealDbrid v3
 
 
 import urlparse,sys
@@ -119,6 +123,10 @@ if action == None:
     from resources.lib.indexers import navigator
     navigator.navigator().root()
 
+elif action == 'traktpinauth':
+    from resources.lib.indexers import navigator
+    navigator.navigator().trakt_pin_auth()
+
 elif action == 'movieNavigator':
     from resources.lib.indexers import navigator
     navigator.navigator().movies()
@@ -129,7 +137,7 @@ elif action == 'tvNavigator':
 
 elif action == 'myNavigator':
     from resources.lib.indexers import navigator
-    navigator.navigator().genesis()
+    navigator.navigator().specto()
 
 elif action == 'downloadNavigator':
     from resources.lib.indexers import navigator

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 '''
-    Genesis Add-on
+    Specto Add-on
     Copyright (C) 2015 lambda
 
     This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@ from resources.lib.libraries import client
 
 
 def resolve(url):
-    print("---------------sdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa--------------------")
+    #print("---------------sdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa--------------------")
     try:
         url = url.replace('/embed-', '/')
         url = re.compile('//.+?/([\w]+)').findall(url)[0]

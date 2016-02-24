@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 '''
-    Genesis Add-on
+    Specto Add-on
     Copyright (C) 2015 lambda
 
     This program is free software: you can redistribute it and/or modify
@@ -20,10 +20,20 @@
 
 
 import re,sys,urllib2,HTMLParser
+from resources.lib.libraries import cloudflare
 
+
+
+IE_USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; AS; rv:11.0) like Gecko'
+FF_USER_AGENT = 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0'
+OPERA_USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36 OPR/34.0.2036.50'
+IOS_USER_AGENT = 'Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25'
+ANDROID_USER_AGENT = 'Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.114 Mobile Safari/537.36'
+#SMU_USER_AGENT = 'URLResolver for Kodi/%s' % (addon_version)
 
 def request(url, close=True, error=False, proxy=None, post=None, headers=None, mobile=False, safe=False, referer=None, cookie=None, output='', timeout='30'):
     try:
+        html=''
         handlers = []
         if not proxy == None:
             handlers += [urllib2.ProxyHandler({'http':'%s' % (proxy)}), urllib2.HTTPHandler]
@@ -51,8 +61,9 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
         if 'User-Agent' in headers:
             pass
         elif not mobile == True:
-            #headers['User-Agent'] = 'Mozilla/5.0 (compatible, MSIE 11, Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko'
-            headers['User-Agent'] = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.82 Safari/537.36'
+            #headers['User-Agent'] = 'User-Agent: Mozilla/5.0 (Windows NT 6.2; Trident/7.0; rv:11.0) like Gecko'
+            #headers['User-Agent'] = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.82 Safari/537.36'
+            headers['User-Agent'] = 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:44.0) Gecko/20100101 Firefox/44.0'
         else:
             headers['User-Agent'] = 'Apple-iPhone/701.341'
         if 'referer' in headers:
@@ -73,7 +84,11 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
         try:
             response = urllib2.urlopen(request, timeout=int(timeout))
         except urllib2.HTTPError as response:
-            if error == False: return
+            if response.code == 503:
+                print("------------------------------------------------------------------------------")
+                print("- HTTP cloudflare -",output, response.code,)
+                html = cloudflare.solve(url,'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:44.0) Gecko/20100101 Firefox/44.0')
+                #print(">-------",html)
 
         if output == 'cookie':
             result = []
@@ -91,7 +106,10 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
         elif output == 'geturl':
             result = response.geturl()
         else:
-            if safe == True:
+            if html != '':
+                result = html
+            #
+            elif safe == True:
                 result = response.read(224 * 1024)
             else:
                 result = response.read()
@@ -221,6 +239,8 @@ def replaceHTMLCodes(txt):
 
 
 def agent():
+    #return 'Mozilla/5.0 (compatible, MSIE 11, Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko'
+    return 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:44.0) Gecko/20100101 Firefox/44.0'
     return 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.82 Safari/537.36'
 
 

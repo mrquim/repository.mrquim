@@ -445,12 +445,13 @@ Addons Included
 	</extension>
 </addon>
 
-<addon id="plugin.video.specto" name="Specto - ... Fork" version="2016.02.06.1" provider-name="mrknow">
+<addon id="plugin.video.specto" name="Specto - ... Fork"  version="2016.02.21.3" provider-name="mrknow" >
 	<requires>
 		<import addon="xbmc.python" version="2.1.0" />
 		<import addon="script.module.requests" version="1.0.0" />
 		<import addon="script.module.metahandler" optional="true" />
 		<import addon="plugin.video.youtube" optional="true" />
+
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
@@ -975,7 +976,7 @@ Addons Included
   </extension>
 </addon>
 
-<addon id="plugin.video.youtube" name="YouTube Fixed Version" version="5.1.20" provider-name="bromix & Mr. Quim">
+<addon id="plugin.video.youtube" name="YouTube" version="5.1.18" provider-name="bromix & Mr. Quim">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 	</requires>

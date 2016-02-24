@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 '''
-    Genesis Add-on
+    Specto Add-on
     Copyright (C) 2015 lambda
 
     This program is free software: you can redistribute it and/or modify
@@ -41,7 +41,7 @@ class movies:
         self.tmdb_link = 'http://api.themoviedb.org'
         self.trakt_link = 'http://api-v2launch.trakt.tv'
         self.imdb_link = 'http://www.imdb.com'
-        self.tmdb_key = base64.urlsafe_b64decode('NTc5ODNlMzFmYjQzNWRmNGRmNzdhZmI4NTQ3NDBlYTk=')
+        self.tmdb_key = base64.urlsafe_b64decode('ZTZhZDE0YmE1YzlkNTViNzYyMmY5NDNjMmVmZTFjMzk=')
         self.datetime = (datetime.datetime.utcnow() - datetime.timedelta(hours = 5))
         self.systime = (self.datetime).strftime('%Y%m%d%H%M%S%f')
         self.today_date = (self.datetime).strftime('%Y-%m-%d')
@@ -99,6 +99,8 @@ class movies:
             try: u = urlparse.urlparse(url).netloc.lower()
             except: pass
 
+            print("Movies >>",url)
+
 
             if u in self.tmdb_link:
                 self.list = cache.get(self.tmdb_list, 24, url)
@@ -106,6 +108,8 @@ class movies:
 
 
             elif u in self.trakt_link and '/users/' in url:
+                print("Movies Trakt >>",url)
+
                 self.list = cache.get(self.trakt_list, 0, url)
                 self.list = sorted(self.list, key=lambda k: k['title'])
                 if idx == True: self.worker()
@@ -436,6 +440,7 @@ class movies:
 
 
     def trakt_list(self, url):
+        print(">>> trakt_list ---", url)
         try:
             q = dict(urlparse.parse_qsl(urlparse.urlsplit(url).query))
             q.update({'extended': 'full,images'})
