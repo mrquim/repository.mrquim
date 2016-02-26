@@ -1096,4 +1096,596 @@ Addons Included
   </extension>
 </addon>
 
+<addon id="skin.amber" version="2.2.3" name="Amber" provider-name="Jester, Pecinko">
+  <requires>
+    <import addon="xbmc.gui" version="5.10.0"/>
+    <import addon="script.favourites" version="6.0.3"/>
+    <import addon="service.skin.widgets" version="0.0.31"/>
+    <import addon="resource.uisounds.amber" version="1.0.0"/>
+  </requires>
+  <extension
+    point="xbmc.gui.skin" debugging="false">
+    <res width="1920" height="1080" aspect="16:9" default="true" folder="1080i" />
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">No bloatware, just your media with an easy to navigate interface</summary>
+	<summary lang="en_NZ">No bloatware, just your media with an easy to navigate interface</summary>
+    <summary lang="en_US">No bloatware, just your media with an easy to navigate interface</summary>
+    <description lang="de">Keine Bloatware, nur Ihre Medien mit einer einfach zu navigierenden Oberfläche.[CR]Benutzt Texturen aus den Mediastream und Aeon skins.</description>
+    <description lang="en">No bloatware, just your media with an easy to navigate interface.[CR]Uses some textures from Mediastream and Aeon skins.</description>
+    <description lang="en_AU">No bloatware, just your media with an easy to navigate interface.[CR]Uses some textures from Mediastream and Aeon skins.</description>
+    <description lang="en_NZ">No bloatware, just your media with an easy to navigate interface.[CR]Uses some textures from Mediastream and Aeon skins.</description>
+    <description lang="en_US">No bloatware, just your media with an easy to navigate interface.[CR]Uses some textures from Mediastream and Aeon skins.</description>
+    <description lang="es">Sin complicaciones, sólo tu multimedia en un interfaz sencillo.[CR]Utiliza algunas texturas de los skins Mediastream y Aeon.</description>
+    <description lang="fr">Pas d'utilisation excessive des ressources, juste vos médias avec une interface facile à utiliser.[CR]Utilise quelques textures provenant des thèmes Mediastream et Aeon.</description>
+    <description lang="fr_CA">Pas d'inflagiciel, juste vos médias avec une interface facile à naviguer.[CR]Utilise des textures des habillages Mediastream et Aeon.</description>
+    <description lang="he">מעטפת קלילה וללא רכיבים מיותרים, מאפשרת הצגת המדיה עם ממשק משתמש פשוט לניווט.[CR]משתמשת במאפייני עיצוב מסוימים מהמעטפות Mediastream ו־Aeon.</description>
+    <description lang="hu">Semmi pazarlás. csak média könnyű kezelhetőséggel és navigációval.[CR]Néhány textúra a Mediastream és Aeon felszínből származik.</description>
+    <description lang="it">Skin leggera, i tuoi media con un'interfaccia semplice in cui navigare.[CR]Usa alcuni elementi grafici delle skin Mediastream e Aeon.</description>
+    <description lang="ko">블로트웨어가 아닌 그냥 쉬운 탐색 인터페이스를 가진 샤용자의 미디어입니다.[CR]Mediastream 과 Aeon 스킨의 텍스처를 사용하였습니다.</description>
+    <description lang="lt">Neapkrauta, lengvai valdoma sąsaja. [CR] Naudoja kai kuriuos elementus iš Mediastream and Aeon temų.</description>
+    <description lang="ms">Bukan perisian palsu, hanya media anda dengan antaramuka yang mudah dinavigasi.[CR]Gunakan beberapa tekstur dari kulit Mediastream dan Aeon.</description>
+    <description lang="nl">Geen Bloatware. alleen jouw media met een makkelijk te navigeren interface.[CR] gebruikt sommige texturen van Mediastream en Aeon ontwerp.</description>
+    <description lang="pl">Bez bezużytecznych funkcji, tylko Twoje media z łatwym w nawigacji interfejsem.[CR] Wykorzystuje niektóre tekstury skóry Mediastream i Aeon</description>
+    <description lang="pt">Um tema sem excessos que apenas mostra a sua média com uma interface de navegação simples.[CR]Utiliza algumas texturas dos temas Mediastream e Aeon.</description>
+    <description lang="pt_BR">Sem excessos, apenas a sua mídia com uma interface fácil de navegar. [CR]Utiliza algumas texturas das skins Mediastream e Aeon.</description>
+    <description lang="ru">Никаких вирусов, только ваши медиа файлы в простом интерфейсе.[CR]Использует некоторые текстуры из тем Mediastream и Aeon.</description>
+    <description lang="sv">Inget överflödigt, bara dina media med enkelt navigeringsinterface.[CR]Använder texturer från skalen Mediastream och Aeon.</description>
+    <description lang="zh">没有花里胡哨的东西，只是你的媒体和易于浏览的界面。[CR]使用了一些来自 Mediastream 和 Aeon 皮肤的纹理材料.</description>
+    <platform>all</platform>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
+    <source>https://github.com/jester-xbmc/skin.amber</source>
+    <forum>http://forum.kodi.tv/forumdisplay.php?fid=203</forum>
+  </extension>
+</addon>
+
+<addon id="skin.ace" version="6.0.2" name="Ace" provider-name="MarcosQui, muCkk">
+	<requires>
+		<import	addon="xbmc.gui" version="5.3.0"/>
+		<import addon="script.ace.extrapack" version="1.0.1"/>
+		<import addon="script.favourites" version="4.0.4"/>
+		<import addon="script.artwork.downloader" version="12.0.11"/>
+		<import addon="script.randomandlastitems" version="2.0.3"/>
+		<import addon="script.artistslideshow" version="1.4.6"/>
+		<import addon="script.tv.show.next.aired" version="5.0.4"/>
+		<import addon="service.skin.widgets" version="0.0.19"/>
+		<import addon="script.cu.lrclyrics" version="1.0.1"/>
+		<import addon="script.videolanguage" version="0.0.6"/>
+		<import addon="service.subtitles.opensubtitles" version="5.0.1"/>
+		<import addon="script.cinema.experience" version="3.0.6"/>
+	</requires>
+	<extension point="xbmc.gui.skin" defaultthemename="Textures.xbt" effectslowdown="0.75" debugging="false">
+		<res width="1280" height="720" aspect="16:9" default="true" folder="720p"/>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Ace, a new skin by MQ</summary>
+		<summary lang="pt_BR">Ace, uma nova skin por MQ</summary>
+		<description lang="en">Ace, a new skin, light, powerful and very customizable. A tiny skin and versatile that you can use since your Tablet until the HTPC.</description>
+		<description lang="en_US">Ace, a new skin, light, powerful and very customizable. A tiny skin and versatile that you can use since your Tablet until the HTPC.</description>
+		<description lang="pt_BR">Ace, uma skin nova, leve, poderosa e muito customizável. Uma skin pequena e versátil que pode ser usada desde seu Tablet até o HTPC.</description>
+		<description lang="el">Ace, ένα νέο κέλυφος, πολύ ελαφρύ, ισχυρό και ιδιαιτέρως προσαρμόσιμο. Ένα μινιμαλιστικό και ευέλικτο κέλυφος που μπορείτε να χρησιμοποιήσετε με το tablet σας και το HTPC σας.</description>
+		<platform>all</platform>
+	</extension>
+</addon>
+
+<addon id="skin.transparency" version="9.1.2" name="Transparency!" provider-name="ronie">
+	<requires>
+		<import	addon="xbmc.gui" version="5.10.0"/>
+		<import addon="script.favourites" version="6.0.2"/>
+		<import addon="script.artwork.downloader" version="12.0.29"/>
+		<import addon="script.globalsearch" version="5.0.0"/>
+		<import addon="service.skin.widgets" version="0.0.30"/>
+		<import addon="script.image.resource.select" version="0.0.5"/>
+		<import addon="resource.images.studios.white" version="0.0.5"/>
+		<import addon="resource.images.recordlabels.white" version="0.0.5"/>
+		<import addon="resource.images.moviegenreicons.coloured" version="0.0.5"/>
+		<import addon="resource.images.musicgenreicons.poster" version="0.0.5"/>
+		<import addon="resource.images.weathericons.animated" version="0.0.4"/>
+		<import addon="resource.images.weatherfanart.prairie" version="0.0.4"/>
+		<import addon="resource.images.weatherfanart.multi" version="0.0.4"/>
+	</requires>
+	<extension point="xbmc.gui.skin" effectslowdown="1" debugging="false">
+		<res width="1280" height="720" aspect="16:9" default="true" folder="720p"/>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="be">Transparency! a fanart skin for Kodi</summary>
+		<summary lang="da">Transparency! et fanart-skin til Kodi</summary>
+		<summary lang="de">Transparency! ein Fankunst-Skin für Kodi</summary>
+		<summary lang="el">Transparency! ένα κέλυφος με βάση τα fanart για το Kodi</summary>
+		<summary lang="en">Transparency! a fanart skin for Kodi</summary>
+		<summary lang="en_AU">Transparency! a fanart skin for Kodi</summary>
+		<summary lang="en_NZ">Transparency! a fanart skin for Kodi</summary>
+		<summary lang="en_US">Transparency! a fanart skin for Kodi</summary>
+		<summary lang="es">Transparency! Un skin fanart para Kodi</summary>
+		<summary lang="es_AR">Transparency! Un skin fanart para Kodi</summary>
+		<summary lang="fa_IR">Transparency! یک پوسته س فن آرت برای Kodi</summary>
+		<summary lang="fr">Transparency ! Un habillage de fanarts pour XBCM</summary>
+		<summary lang="fr_CA">Transparence! un habillage de fanarts pour Kodi</summary>
+		<summary lang="gl">Transparency! un tema baseado en fanarts para Kodi</summary>
+		<summary lang="he">הרחבת הפאנארט !Transparency עבור Kodi</summary>
+		<summary lang="hr">Transparency! fanart skin za Kodi</summary>
+		<summary lang="hu">Transparency! Fanart felszín az Kodi-hez</summary>
+		<summary lang="it">Transparency! una skin fanart per Kodi</summary>
+		<summary lang="ja">Kodi用ファンアートスキン Transparency!</summary>
+		<summary lang="ko">Transparency! Kodi 팬아트 스킨</summary>
+		<summary lang="lt">Transparency! FanArt vizualizacija - viršelis skyrtas Kodi</summary>
+		<summary lang="ms">Transparency! kulit seni peminat untuk Kodi</summary>
+		<summary lang="nl">Transparency! Een fanart skin voor Kodi</summary>
+		<summary lang="no">Transparency! et fanart-skall for Kodi</summary>
+		<summary lang="pl">Transparency! skóra fototapet dla Kodi</summary>
+		<summary lang="pt">Transparency! Um tema de fanart para o Kodi</summary>
+		<summary lang="pt_BR">Transparency! Uma skin fanart para Kodi</summary>
+		<summary lang="ru">Transparency! Фан-артовый скин для Kodi</summary>
+		<summary lang="sk">Transparency! fanart vzhľad pre Kodi</summary>
+		<summary lang="sv">Transparency! ett fanart skin till Kodi</summary>
+		<summary lang="th">Transparency! สกินของแฟนอาร์ต สำหรับ Kodi</summary>
+		<summary lang="tr">Transparency! Kodi için fanart görünümü</summary>
+		<summary lang="zh">Transparency! 一个充分展示同人画的Kodi皮肤</summary>
+		<summary lang="zh_TW">Transparency! 一個充分展現專輯資訊的Kodi佈景主題</summary>
+		<description lang="be">What is Transparency!? Short answer: a fanart skin. The main goal of Transparency! is showing your fanart, fullscreen, in all of the views, all of the time. Besides this, it also tries to support every neat new feature Kodi has to offer. To save everyone a lot of time and trouble hacking the xml code themselves, all of these new features are already included in the skin, pre-configured and enabled by default (wherever possible).</description>
+		<description lang="da">Hvad er Transparency!? Kort svar: et fanart skin. Hovedformålet med Transparency! er at vise dit fanart, i fuld skærm, i alle visningerne, hele tiden. Derudover forsøger det også at understøtte alle smarte nye funktioner Kodi har at tilbyde. For at alle kan spare en masse tid og besvær ved at hacke XML-koden selv, er alle disse nye funktioner allerede inkluderede, præ-konfigurerede og aktiverede som standard (hvis muligt).</description>
+		<description lang="de">Was ist Transparency!? Einfach ausgedrückt: ein fanart skin. Das Hauptaugenmerk von Transparency! liegt darin, eure Fanarts in voller Auflösung, in allen Ansichtsvarianten, zu jeder Zeit anzuzeigen. Davon abgesehen versucht Transparency! alle neuen Features von Kodi zu unterstützen. Um dem Nutzer eine Menge Arbeit mit dem Editieren des xml-codes zu ersparen, sind alle (neuen) Features bereits in den skin integriert, vorkonfiguriert und standardmäßig aktiviert (soweit möglich).</description>
+		<description lang="el">Τι είναι το Transparency!; Η σύντομη απάντηση: ένα κέλυφος fanart. Ο κύριος στόχος του Transparency! είναι να προβάλλει τα fanart σας σε πλήρη οθόνη, σε όλους τους τύπους προβολής, ανά πάσα στιγμή. Πέραν αυτού, επιδιώκει να υποστηρίζει κάθε νέο χαρακτηριστικό που προσφέρει το Kodi. Για να γλυτώσει από τον κόπο όλους τους χρήστες του να επεμβαίνουν στον κώδικα xml από μόνοι τους, όλα αυτά τα νέα χαρακτηριστικά περιλαμβάνονται ήδη στο κέλυφος, ρυθμισμένα εκ των προτέρων και ενεργοποιημένα εξαρχής (εφόσον είναι δυνατόν).</description>
+		<description lang="en">What is Transparency!? Short answer: a fanart skin. The main goal of Transparency! is showing your fanart, fullscreen, in all of the views, all of the time. Besides this, it also tries to support every neat new feature Kodi has to offer. To save everyone a lot of time and trouble hacking the xml code themselves, all of these new features are already included in the skin, pre-configured and enabled by default (wherever possible).</description>
+		<description lang="en_AU">What is Transparency!? Short answer: a fanart skin. The main goal of Transparency! is showing your fanart, fullscreen, in all of the views, all of the time. Besides this, it also tries to support every neat new feature Kodi has to offer. To save everyone a lot of time and trouble hacking the xml code themselves, all of these new features are already included in the skin, pre-configured and enabled by default (wherever possible).</description>
+		<description lang="en_NZ">What is Transparency!? Short answer: a fanart skin. The main goal of Transparency! is showing your fanart, fullscreen, in all of the views, all of the time. Besides this, it also tries to support every neat new feature Kodi has to offer. To save everyone a lot of time and trouble hacking the xml code themselves, all of these new features are already included in the skin, pre-configured and enabled by default (wherever possible).</description>
+		<description lang="en_US">What is Transparency!? Short answer: a fanart skin. The main goal of Transparency! is showing your fanart, fullscreen, in all of the views, all of the time. Besides this, it also tries to support every neat new feature Kodi has to offer. To save everyone a lot of time and trouble hacking the xml code themselves, all of these new features are already included in the skin, pre-configured and enabled by default (wherever possible).</description>
+		<description lang="es">¿Qué es Transparency!? Respuesta corta: un skin fanart. El principal objetivo de Transparency! es mostrar tus fanarts a pantalla completa, en todas las vistas, todo el tiempo. Además, también trata de incluir todas las nuevas funcionalidades que ofrece Kodi. Para ahorrar a todos un montón de tiempo y los problemas implícitos que suponen la modificación del código XML, todas estas nuevas funcionalidades ya están incluidas en el skin, pre-configuradas y habilitadas por defecto (siempre que sea posible).</description>
+		<description lang="es_AR">¿Qué es Transparency!? Respuesta corta: un skin fanart. El principal objetivo de Transparency! es mostrar tus fanarts a pantalla completa, en todas las vistas, todo el tiempo. Además, también trata de incluir todas las nuevas funcionalidades que ofrece Kodi. Para ahorrar a todos un montón de tiempo y los problemas implícitos que suponen la modificación del código XML, todas estas nuevas funcionalidades ya están incluidas en el skin, pre-configuradas y habilitadas por defecto (siempre que sea posible).</description>
+		<description lang="fa_IR">What is Transparency!? Short answer: a fanart skin. The main goal of Transparency! is showing your fanart, fullscreen, in all of the views, all of the time. Besides this, it also tries to support every neat new feature Kodi has to offer. To save everyone a lot of time and trouble hacking the xml code themselves, all of these new features are already included in the skin, pre-configured and enabled by default (wherever possible).</description>
+		<description lang="fr">Transparency! qu'est-ce que c'est ? Réponse courte : un habillage de fanart. L'objectif principal de Transparency! est d'afficher vos fanarts, en plein écran, dans toutes les vues, tout le temps. Ajouté à cela, il tente d'inclure toutes les nouvelles fonctionnalités ingénieuses que Kodi peut offrir. Pour vous faire gagner du temps et vous épargner la peine de devoir modifier le code xml par vous même, toutes ces nouvelles fonctionnalités sont déjà intégrées dans l'habillage, préconfigurées et activées par défaut (lorsque cela est possible).</description>
+		<description lang="fr_CA">Qu'est-ce que Transparence!? Réponse courte : c'est un habillage de fanarts. Le but principal de Transparence! est d'afficher vos fanarts en plein écran, dans tous les vues, en tout temps. De plus, il essaie aussi de prendre en charge tous les nouvelles fonctions intéressantes que Kodi a à offrir. Pour faire gagner beaucoup de temps à tout le monde sans avoir à bidouiller le code xml, toutes ces nouvelles fonctions sont déjà incluses dans l'habillage, pré-configurées et activées par défaut (si possible).</description>
+		<description lang="gl">Que é Transparency!? En poucas palabras: un tema baseado en fanarts. O obxectivo principal de Transparency é amosar os seus fanarts, a pantalla completa, en todas as vistas e todo o tempo. Ademais, tamén trata de incluír todas as novas funcionalidades das que fornece Kodi. Para aforrarlle os problemas e tempo que se tarda en crear o código xml por un mesmo, todas estas novas funcionalidades xa están incluidas no tema, configurado e activado de maneira predefinida (sempre que sexa posíbel).</description>
+		<description lang="he">מהי !Transparency? בקצרה: מעטפת פאנארט. המטרה הראשית של !Transparency היא הצגת פאנארט, במסך מלא, בכל התצוגות, כל הזמן. מעבר לכך, המעטפת מנסה לתמוך בכל יכולת חדשה ש־Kodi מציעה. ע"מ לחסוך זמן ומאמץ למשתמשים בעריכת קוד xml, כל התכונות החדשות האלה כבר כלולות במעטפת, מוגדרות מראש ומאופשרות כברירת מחדל (היכן שניתן).</description>
+		<description lang="hr">Što je Transparency!? Ukratko: fanart skin. Glavni cilj Transparency! skina je prikaz fanart-a, fullscreen, konstantno u svim načinima pregleda. Također, osim toga, pokušava pružiti podršku svakoj novoj mogućnosti koju Kodi podržava. Da bi svima sačuvali vrijeme i spasili ih od problema kod intervencija unutar xml koda, sve nove mogućnosti su unaprijed implementirane u skin, podešene i aktivirane po default-u (gdje god je to bilo moguće).</description>
+		<description lang="hu">Mi a Transparency!? Rövid válasz: rajongói felszín. A Transparency! főbb jellemzői, a teljesképernyős hátterek mutatása, bármelyik nézetben bármikor. Emellett próbál minden új, klassz Kodi újítást támogatni. Nem kell állandóan hekkelni az xml.-ket, sok időt rabolva ezzel, hanem a felszín tartalmazza ezeket az újdonságokat, előre konfigurálva, és (ha lehetséges) alapként beállítva.</description>
+		<description lang="it">Cos'è Transparency!? Risposta breve: una skin ottimizzata per fanart. L'obiettivo principale di Transparency! è mostrare le vostre fanart, a pieno schermo, in tutte le viste, in ogni momento. Oltre a questo, cerca di supportare tutte le funzionalità più recenti che Kodi può offrire. Per consentire a tutti di risparmiare tempo e fatica, evitando gli interventi sul codice xml, queste nuove funzionalità sono già incluse nella skin, preconfigurate e attivate di default (ogni qualvolta questo sia possibile).</description>
+		<description lang="ja">Transparency!とは？簡単な回答: それはファンアートスキン。Transparency!が目指すのは、フルスクリーンやその他すべての表示 、そしてどんな時にでもあなたのファンアートを表示することです。それに加えて、Kodiが持つあらゆる素 晴らしい新機能をサポートします。各ユーザーが自らxmlコードをハックする手間を省くため、それらの新機 能は(可能な限り)スキンに含まれており、デフォルトで設定済みであり、有効となっています。</description>
+		<description lang="ko">Transparency!는 무엇인가? 간단히 말하면, 팬아트 스킨이다. Transparency!의 주 목적은 당신의 팬아트, 전체화면을 모든 보기모드에서 언제나 보여주는 것이다. 또한, Kodi가 제공하는 멋진 새로운 기능들을 모두 지원하기위해 노력한다. xml 코드를 바꾸기 위해 겪는 고통과 필요한 시간을 절약시키기 위해, 모든 새로운 기능들이 스킨에 이미 내장되어 있으며, 기본적으로 미리 설정되어 사용가능하도록 되어있다.</description>
+		<description lang="lt">Kas tai Transparency!? Atsakymas trumpas: FanArt vizualizacinė išvaizda. Pagrindinis Transparency! tiksalas rodyti Jūsų FanArt, visame ekrane, bet kokiu kampu, visą laiką. Be to, mes bandome palaikyti ir atnaujinti visas naujoves, katras idiegia Kodi. Jūsų nervų ir sveikatos tausojimui, katruos jus susigadintumėte, bandant susigaudyti .xml koduose, visos naujos funkcijos jau integruotos į viršelio vizualizaciją, viskas nustatyta nustatyta ir įjungta ir paruošta naudojimui (na gal ir nevisai.. tačiau :).</description>
+		<description lang="ms">Apakah itu Transparency!? Jawapannya: kulit seni peminat. Matlamat utama Transparency! ialah memaparkan seni peminat anda, dalam skrin penuh, dalam semu paparan, pada sepanjang masa. Selain itu, ia juga menyokong setiap fitur baharu Kodi tawarkan. Untuk menjimatkan masa pengguna dan menghindari penggodaman kod xml sendiri, semua fitur baharu telah disertakan dalam kulit, dipra-konfigur dan dibenarkan secara lalai (bila boleh).</description>
+		<description lang="nl">Wat is Transparency!? Simpelweg: een fanart skin. Het voornaamste doel van Transparency! is om je fanart zo goed mogelijk weer te geven, full-screen, in alle weergaven, op alle momenten. Daarnaast streeft Transparency! er naar alle nieuwe features van Kodi te ondersteunen. Gebruikers kunnen zich de tijd en moeite besparen om zelf de xml-code te bewerken: al deze nieuwe features zijn in de skin geïntegreerd, voorgeconfigureerd en standaard geactiveerd (indien mogelijk).</description>
+		<description lang="no">Hva er Transparency!? Kort svar: et fanart skall. Hovedmålet med Transparency! er å vise din fanart som bakgrunnsbilde over alt, hele tiden. I tillegg, prøver den også å støtte alle nye fantastiske funksjoner som Kodi har å tilby. For å spare deg for en hel masse tid og problemer med omskrivning av xml-koden, så er alle disse nye funksjonene allerede inkludert i Transparency!, ferdig konfigurert og aktivert som standard (der det er mulig).</description>
+		<description lang="pl">Czym jest Transparency!? Krótka odpowiedź: skórą fototapet. Głównym celem Transparency! jest pokazywanie fototapet, na pełnym ekranie, w każdym widoku, przez cały czas. Skóra próbuje również wspierać wszystkie najnowsze funkcje, które Kodi ma do zaoferowania (tam gdzie to możliwe).</description>
+		<description lang="pt">O que é Transparency!? Resposta rápida: um tema de fanart. O principal objetivo de Transparency! é exibir a sua fanart, em ecrã cheio, em todas as vistas, sempre. Além disto, ela tenta suportar todos os novos recursos que o Kodi oferece. Para economizar tempo e evitar problemas a todos os que fazem hack dos xml por conta própria, todos estes recursos já estão incluídos no tema, pré-configurados e habilitados por padrão (onde possível).</description>
+		<description lang="pt_BR">O que é Transparency!? Resposta Curta: Uma skin fanart. O objetivo principal da Transparency! é exibir suas fanarts, em todos os modos de visualizações, o tempo todo. Além disso, a skin também tenta apoiar cada característica que o novo Kodi tem para oferecer. Para economizar seu tempo da dificuldade de portar o código xml por si só, todos esses novos recursos já estão incluídos na skin, por padrão (quando possível).</description>
+		<description lang="ru">Что такое Transparency!? Короткий ответ: фан-артовый скин. Главная задача Transparency! показывать ваши фан-арты, на полном экране, во всех ракурсах, всё время. Кроме того, мы также пытаемся поддерживать все новые возможности, предоставляемые Kodi. Для сохранения вашего времени и нервов, которые бы вы потратили, разбираясь в .xml коде, все новые функции уже добавлены в скин, настроены и включены по-умолчанию (ну или почти все).</description>
+		<description lang="sv">Vad är Transparency!? Det korta svaret är: Ett fanart-vänligt skin. Det övergripande målet med Transparency! är att visa fanart i fullskärm i alla kategorier, hela tiden. Förutom det så försöker Transparency! att utnyttja varenda häftig liten funktion som finns i Kodi. För att slippa krångel med att ändra i xml-koden själv, så är de nya funktionerna inkluderade från början, förkonfigurerade och aktiverade (när det är möjligt).</description>
+		<description lang="th">อะไรคือ Transparency!? ตอบสั้นๆว่า: เป็นสกินของแฟนอาร์ต. จุดประสงค์หลัก ของ Transparency! คือ การแสดงแฟนอาร์ตของคุณ, เต็มหน้าจอ, ในทุกๆ มุมมอง, ตลอดเวลา. นอกจากนี้, ยังพยายามสนับสนุนทุกคุณลักษณะใหม่ที่ Kodi มีให้ อย่างเป็นระเบียบ. เพื่อประหยัดเวลา และป้องกันปัญหาของทุกคน จากการแกะโค้ด xml ด้วยตนเอง, คุณสมบัติใหม่ทั้งหมดเหล่านี้จะรวมอยู่ในสกินเรียบร้อย, ซึ่งกำหนดค่าไว้แล้ว และเปิดใช้งานโดยค่าเริ่มต้น(ในที่ๆ เป็นไปได้).</description>
+		<description lang="zh">Transparency!是什么？简单的说：一个同人画皮肤。Transparency!的主要目标是全屏的、在所有视图、任何时间充分地展示同人画。此外，它还力求完美实现Kodi所提供的新功能。你无需自己费力去修改xml代码，所有新功能已经被皮肤支持，并默认开启（在条件允许的情况下）。</description>
+		<description lang="zh_TW">Transparency!是甚麼？簡單而言：一個展現專輯資訊的Kodi佈景主題。Transparency!的主要目標是全螢幕、在所有視圖、在任何時間可以充分地展示專輯資訊。此外，它還力求完美地實現Kodi所提供的新功能。您無須自己費力地去修改xml代碼，所有新功能此佈景主題都已支援，並預設開啟(在條件允許的狀況下)。</description>
+		<platform>all</platform>
+		<license>Creative Commons Attribution-ShareAlike 3.0 license</license>
+		<forum>http://forum.kodi.tv/forumdisplay.php?fid=115</forum>
+		<website></website>
+		<email></email>
+		<source>https://github.com/ronie/skin.transparency/</source>
+	</extension>
+</addon>
+
+<addon
+  id="skin.aeon.nox.5"
+  version="5.9.0"
+  name="Aeon Nox"
+  provider-name="BigNoid">
+	<requires>
+		<import addon="xbmc.gui" version="5.11.0"/>
+		<import addon="script.grab.fanart" version="0.12.8"/>
+		<import addon="script.skinshortcuts" version="0.4.5"/>
+		<import addon="service.library.data.provider" version="0.0.7"/>
+		<import addon="resource.images.studios.white" version="0.0.1"/>
+		<import addon="resource.images.recordlabels.white" version="0.0.1"/>
+		<import addon="script.image.resource.select" version="0.0.5"/>
+	</requires>
+	<extension
+	  point="xbmc.gui.skin"
+	  debugging="false"
+	  effectslowdown="0.75">
+		<res width="1920" height="1080" aspect="16:9" default="true" folder="1080i" />
+		<res width="2560" height="1080" aspect="21:9" default="false" folder="21x9" />
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Aeon Nox 5: Redux</summary>
+		<summary lang="el">Aeon Nox 5: Redux</summary>
+		<summary lang="en">Aeon Nox 5: Redux</summary>
+		<summary lang="en_AU">Aeon Nox 5: Redux</summary>
+		<summary lang="en_NZ">Aeon Nox 5: Redux</summary>
+		<summary lang="en_US">Aeon Nox 5: Redux</summary>
+		<summary lang="es">Aeon Nox 5: Redux</summary>
+		<summary lang="fi">Aeon Nox 5: Redux</summary>
+		<summary lang="fr">Aeon Nox 5 : Redux</summary>
+		<summary lang="fr_CA">Aeon Nox 5 : Redux</summary>
+		<summary lang="gl">Aeon Nox 5: Redux</summary>
+		<summary lang="he">Aeon Nox 5: Redux</summary>
+		<summary lang="hu">Aeon Nox 5: Redux</summary>
+		<summary lang="is">Aeon Nox 5: Redux</summary>
+		<summary lang="it">Aeon Nox 5: Redux</summary>
+		<summary lang="ko">Aeon Nox 5: Redux</summary>
+		<summary lang="lt">Aeon Nox 5: Redux</summary>
+		<summary lang="ms">Aeon Nox 5: Redux</summary>
+		<summary lang="nl">Aeon Nox 5: Redux</summary>
+		<summary lang="no">Aeon Nox 5: Redux</summary>
+		<summary lang="pl">Aeon Nox 5: Redux</summary>
+		<summary lang="pt">Aeon Nox 5: Redux</summary>
+		<summary lang="pt_BR">Aeon Nox 5: Redux</summary>
+		<summary lang="ro">Aeon Nox 5: Reproiectat</summary>
+		<summary lang="ru">Aeon Nox 5: Redux</summary>
+		<summary lang="sk">Aeon Nox 5: Redux</summary>
+		<summary lang="sv">Aeon Nox 5: Redux</summary>
+		<summary lang="th">Aeon Nox 5: Redux</summary>
+		<summary lang="vi">Aeon Nox 5: Redux - Sự trở về</summary>
+		<summary lang="zh">Aeon Nox 5: Redux</summary>
+		<description lang="de">Redux: Komplett neu designed für ein modernes Aussehen und das klassische Aeon-Feeling beizubehalten.</description>
+		<description lang="el">Redux: Πλήρως επανασχεδιασμένο για να προσφέρει μια μοντέρνα αισθητική, διατηρώντας ταυτόχρονα την κλασική ομορφιά του Aeon.</description>
+		<description lang="en">Redux: Completely redesigned to create a modern look, while retaining the classic Aeon feel.</description>
+		<description lang="en_AU">Redux: Completely redesigned to create a modern look, while retaining the classic Aeon feel.</description>
+		<description lang="en_NZ">Redux: Completely redesigned to create a modern look, while retaining the classic Aeon feel.</description>
+		<description lang="en_US">Redux: Completely redesigned to create a modern look, while retaining the classic Aeon feel.</description>
+		<description lang="es">Redux: Completamente rediseñado para crear un aspecto moderno, pero conservando el toque clásico Aeon.</description>
+		<description lang="fi">Redux: Täysin uudelleensuunniteltu moderni ulkoasu, kuitenkin tuntuen klassiselta Aeon:lta.</description>
+		<description lang="fr">Redux : complètement revu pour créer une apparence moderne, en gardant l'impression classique d'Aeon.</description>
+		<description lang="fr_CA">Redux : complètement remanié pour créer une apparence moderne, tout en conservant l'esprit classique d'Aeon.</description>
+		<description lang="he">Redux: עיצוב חדש היוצר מראה מודרני אך משמר את ההרגשה של Aeon הקלאסי.</description>
+		<description lang="hr">Redux: Potpuno preoblikovan moderan izgled, uz zadržani klasični Aeon osjećaj.</description>
+		<description lang="hu">Redux: Teljesen áttervezett modern kinézet, de megtartva a klasszikus Aeon érzetet.</description>
+		<description lang="is">Redux: Endurhannað nútímalegt útlit í anda Aeon.</description>
+		<description lang="it">Redux: Completamente ridisegnato per creare un look moderno, mantenendo la consueta qualità Aeon.</description>
+		<description lang="ko">Redux: 고전적인 Aeon 느낌을 유지하면서 현대적인 모습으로 완전히 다시 디자인하여 만들었습니다.</description>
+		<description lang="lt">Redux: pilnai atnaujinta, kad sukurtų modernią išvaizdą, išlaikant klasikinio Aeon pojūtį.</description>
+		<description lang="ms">Redux: Direka semula sepenuhnya untuk hasilkan penampilan modern, tetapi masih mengekalkan penampilan Aeon klasik.</description>
+		<description lang="nl">Redux: Volledig opnieuw ontworpen om een ​​moderne look te creëren, met behoud van het klassieke Aeon gevoel.</description>
+		<description lang="no">Redux: Helt redesignet for å gi deg en moderne utforming, samtidig som man beholder den klassiske Aeon følelsen.</description>
+		<description lang="pl">Redux: Całkowicie przeprojektowana skóra Aeon, o nowoczesnym wyglądzie, zachowując klasyczny układ skóry Aeon.</description>
+		<description lang="pt">Redux: Completamente redesenhado para criar um visual moderno enquanto retém o toque clássico Aeon.</description>
+		<description lang="pt_BR">Redux: Design completamente novo para criar um look moderno, mantendo o feeling do Aeon Clássico.</description>
+		<description lang="ru">Redux: полностью переделенная, модернизированная классическая обложка Aeon.</description>
+		<description lang="sk">Redux: Kompletne prepracovaný dizajn s moderným vzhľadom pri zachovaní klasického štýlu Aeon.</description>
+		<description lang="sv">Redux: Totalt omarbetad för att skapa ett modernt utseende, samtidigt som man behåller den klassiska Aeon-känslan.</description>
+		<description lang="th">Redux: การออกแบบใหม่หมดจด เพื่อสร้างรูปลักษณ์ทันสมัย, ​​ขณะที่ยังคงความรู้สึกคลาสสิคของ Aeon.</description>
+		<description lang="vi">Redux: Thiết kế lại hoàn toàn để tạo nên một phong cách hiện đại, trong khi đó vẫn duy trì một cảm giác Aeon cổ điển.</description>
+		<platform>all</platform>
+	</extension>
+</addon>
+
+<addon
+    id="skin.arctic.zephyr.braz"
+    version="2.0.9"
+    name="A:Z by braz"
+    provider-name="jurialmunkey">
+    <requires>
+        <import addon="xbmc.gui" version="5.10.0"/>
+        <import addon="script.skinshortcuts" version="0.5.3"/>
+        <import addon="service.library.data.provider" version="0.1.0"/>
+        <import addon="script.extendedinfo" version="3.0.0"/>
+        <import addon="script.toolbox" version="1.0.0"/>
+        <import addon="script.grab.fanart" version="0.14.1"/>
+        <import addon="script.image.resource.select" version="0.0.5"/>
+        <import addon="resource.images.moviegenreicons.arctic.zephyr" version="0.0.1"/>
+    </requires>
+    <extension
+    point="xbmc.gui.skin"
+    debugging="false"
+    effectslowdown="1">
+        <res width="1920" height="1080" aspect="16:9" default="true" folder="1080i" />
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="de">Klar, minimalistisch, elegant, einfach, leicht</summary>
+        <summary lang="en">Clean, minimal, elegant, simple, light.</summary>
+        <summary lang="en_AU">Clean, minimal, elegant, simple, light.</summary>
+        <summary lang="en_US">Clean, minimal, elegant, simple, light.</summary>
+        <summary lang="es">Limpio, minimalista, elegante, simple, ligero.</summary>
+        <summary lang="fr">Clair, minimaliste, élégant, simple et léger.</summary>
+        <summary lang="fr_CA">Net, minimal, élégant, simple, léger.</summary>
+        <summary lang="lt">Švari, minimali, elegantiška, paprasta, lengva.</summary>
+        <summary lang="nl">Schoon, minimaal, elegant, simpel, licht.</summary>
+        <summary lang="no">Rent, minimalt, elegant, enkelt, lett.</summary>
+        <summary lang="pl">Prosta, minimalista, elegancka i lekka</summary>
+        <summary lang="pt_BR">Limpa, simplista, elegante, leve.</summary>
+        <summary lang="ro">Curat, minimalist, elegant, simplu, ușor</summary>
+        <summary lang="ru">Опрятный, минималистичный, элегантный, простой, светлый.</summary>
+        <description lang="de">Arctic: Zephyr ist die dritte Iteration des Arctic Skins von jurialmunkey und ein minimalistisches, klares und simples Interface für deine Medien mit dem gewissen Etwas.</description>
+        <description lang="en">Arctic: Zephyr is the third iteration of the Arctic skin created by jurialmunkey. Arctic focuses on being simple, clean and minimalistic with a light spin.</description>
+        <description lang="en_AU">Arctic: Zephyr is the third iteration of the Arctic skin created by jurialmunkey. Arctic focuses on being simple, clean and minimalistic with a light spin.</description>
+        <description lang="en_US">Arctic: Zephyr is the third iteration of the Arctic skin created by jurialmunkey. Arctic focuses on being simple, clean and minimalistic with a light spin.</description>
+        <description lang="es">Arctic: Zephyr es la tercera versión de Arctic skin creada por jurialmunkey. La skin Arctic se centra en ser simple, limplia y minimalista con un toque de luminosidad.</description>
+        <description lang="fr">Arctic: Zephyr est la 3ème version du skin Arctic créé par jurialmunkey. Arctic se focalise sur le fait d'être simple, claire et minimaliste.</description>
+        <description lang="fr_CA">Arctique : Zéphyr est la troisième version de l'habillage Arctique créé par jurialmunkey. Arctique se veut être simple, net et minimaliste tout en étant léger. </description>
+        <description lang="lt">Arctic: Zephyr yra trečia Arctic teminės išvaizdos, kurios autorius yra jurialmunkey, iteracija. Arctic sutelkia dėmesį ties paprastumu, švarumu ir minimalizmu su lengvu veikimu.</description>
+        <description lang="nl">Arctic: Zephyr is de derde herhaling van de arctic skin ge creëerd door jurialmunkey. Arctic focust zich op een eenvoudig zeinde, schoon en minimaal met een lichte twist.</description>
+        <description lang="no">Arctic: Zephyr er den tredje iterasjonen av Arctic skallet som ble laget av jurialmunkey. Arctic fokuserer på å være enkel, rent og minimalistisk med et snev av letthet.</description>
+        <description lang="pl">Arctic: Zephyr jest trzecią wersją oryginalnej skóry Arctic stworzonej przez jurialmunkey. Arctic skupia się na prostocie i minimalizmie z lekką dozą szaleństwa.</description>
+        <description lang="pt_BR">Arctic: Zephyr é a terceira iteração da interface Arctic criada por jurialmunkey. Arctic foi criada para ser simples, limpa e minimalistica.</description>
+        <description lang="ru">Arctic: Zephyr это третий виток обложки Arctic, созданной jurialmunkey. Arctic старается быть простой, опрятной и минималистичной.</description>
+        <platform>all</platform>
+    </extension>
+</addon>
+
+<addon
+  id="skin.mimic"
+  version="3.4.0"
+  name="Mimic"
+  provider-name="bryanbrazil">
+	<requires>
+		<import addon="xbmc.gui" version="5.10.0"/>
+		<import addon="resource.images.studios.white" version="0.0.4"/>
+		<import addon="resource.images.recordlabels.white" version="0.0.4"/>
+		<import addon="script.grab.fanart" version="0.13.2"/>
+		<import addon="script.skinshortcuts" version="0.6.6"/>
+		<import addon="script.toolbox" version="1.0.0"/>
+		<import addon="service.library.data.provider" version="0.0.7"/>
+		<import addon="script.skin.helper.service" version="1.0.0"/>
+		<import addon="script.image.resource.select" version="0.0.5"/>
+	</requires>
+	<extension
+	  point="xbmc.gui.skin"
+	  debugging="false"
+	  effectslowdown="0.75">
+		<res width="1920" height="1080" aspect="16:9" default="true" folder="1080i" />
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="bg_BG">Mimic от bryanbrazil</summary>
+		<summary lang="ca_ES">Mimic per bryanbrazil</summary>
+		<summary lang="de_DE">Mimic von bryanbrazil</summary>
+		<summary lang="en_AU">Mimic by bryanbrazil</summary>
+		<summary lang="en_GB">Mimic by bryanbrazil</summary>
+		<summary lang="en_NZ">Mimic by bryanbrazil</summary>
+		<summary lang="en_US">Mimic by bryanbrazil</summary>
+		<summary lang="es_ES">Mimic por bryanbrazil</summary>
+		<summary lang="et_EE">Mimic autorilt bryanbrazil</summary>
+		<summary lang="fr_CA">Mimique par bryanbrazil</summary>
+		<summary lang="fr_FR">Mimic par bryanbrazil</summary>
+		<summary lang="gl_ES">Mimic por bryanbrazil</summary>
+		<summary lang="it_IT">Mimic by bryanbrazil</summary>
+		<summary lang="ko_KR">bryanbrazil이 만든 Mimic</summary>
+		<summary lang="lt_LT">Mimic, sukurta bryanbrazil</summary>
+		<summary lang="ms_MY">Mimic oleh byranbrazil</summary>
+		<summary lang="nl_NL">Mimic door bryanbrazil</summary>
+		<summary lang="pl_PL">Mimic autorstwa bryanbrazil</summary>
+		<summary lang="pt_BR">Mimic por bryanbrazil</summary>
+		<summary lang="pt_PT">Mimic por bryanbrazil</summary>
+		<summary lang="sr_RS@latin">Mimic od bryanbrazil</summary>
+		<summary lang="sv_SE">Mimic av bryanbrazil</summary>
+		<summary lang="tr_TR">Mimic, yazan: bryanbrazil</summary>
+		<summary lang="zh_CN">Mimic by bryanbrazil</summary>
+		<description lang="bg_BG">Mimic: Облик за Kodi съдържащ елементи от reFocus и Aeon Nox. Благодарности на  BigNoid и Jeroen.</description>
+		<description lang="ca_ES">Mimic: Una pell amb tocs de reFocus i d'Aeon Nox. Gràcies a BigNoid i Jeroen.</description>
+		<description lang="de_DE">Mimic: Ein Kodi-Skin mit Einflüssen von reFocus und Aeon Nox. Vielen Dank an BigNoid und Jeroen.</description>
+		<description lang="en_AU">Mimic: A shameless amalgamation of features from my favourite skins, including Aeon Nox, reFocus, and Arctic Zephyr.</description>
+		<description lang="en_GB">Mimic: A shameless amalgamation of features from my favourite skins, including Aeon Nox, reFocus, and Arctic Zephyr.</description>
+		<description lang="en_NZ">Mimic: A shameless amalgamation of features from my favourite skins, including Aeon Nox, reFocus, and Arctic Zephyr.</description>
+		<description lang="en_US">Mimic: A shameless amalgamation of features from my favorite skins, including Aeon Nox, reFocus, and Arctic Zephyr.</description>
+		<description lang="et_EE">Mimic on Kodi rüü, mis on saanud mõjutusi reFocus ja Aeon Nox rüüdest. Suured tänud, BigNoid ja Jeroen.</description>
+		<description lang="fr_CA">Mimique : un habillage de Kodi avec des airs de reFocus et d'Aeon Nox grâce à BigNoid et Jeroen.</description>
+		<description lang="fr_FR">Mimic : un habillage pour Kodi avec des touches d'inspiration de reFocus et Aeon Nox. De grands mercis à BigNoid et Jeroen.</description>
+		<description lang="gl_ES">Mimic: Un tema para Kodi con toques do reFocus e Aeon Nox. Moitas grazas a BigNoid e Jeroen.</description>
+		<description lang="ko_KR">Mimic: reFocus와 Aeon Nox를 수정한 Kodi 스킨. BigNoid와 Jeroen에게 깊은 감사를 드립니다.</description>
+		<description lang="lt_LT">Mimic: Kodi teminė išvaizda, kurioje panaudoti elementai iš reFocus ir Aeon Nox. Didelis ačiū BigNoid ir Jeroen.</description>
+		<description lang="ms_MY">Mimic: Kulit Kodi dengan sentuhan reFocus dan Aeon Nox. Ucapan terima kasih buat BigNoid dan Jeroen.</description>
+		<description lang="nl_NL">Mimic is een Kodi skin geinspireerd door reFocus en Aeon Nox. Met dank aan BigNoid en Jeroen.</description>
+		<description lang="pl_PL">Mimic: Skóra Kodi z domieszką skór reFocus i Aeon Nox. Wielkie podziękowania dla BigNoid i Jeroen.</description>
+		<description lang="pt_BR">Mimic: Uma skin Kodi con toques da reFocus e Aeon Nox. Meus agradecimentos a BigNoid e Jeroen.</description>
+		<description lang="sr_RS@latin">Mimic: Kodi maska sa dozom reFocus i Aeon Nox. Mnogo hvala BigNoid i Jeroen.</description>
+		<description lang="sv_SE">Mimic: Ett Kodi-skal med en touch av reFocus och Aeon Nox. Många tack till BigNoid och Jeroen.</description>
+		<description lang="tr_TR">Mimic: reFocus ve Aeon Nox rötuşlarının kullanıldığı bir Kodi dış görünümü. BigNoid ve Jeroen'e çok teşekkürler.</description>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>http://forum.kodi.tv/showthread.php?tid=221728</forum>
+		<website></website>
+		<email></email>
+		<source>https://github.com/bryanbrazil/skin.mimic</source>
+	</extension>
+</addon>
+
+<addon id="skin.xperience1080" version="5.0.500" name="Xperience1080" provider-name="Piers|xhaggi">
+	<requires>
+		<import addon="xbmc.gui" version="5.10.0" />
+		<import addon="service.skin.widgets" version="0.0.29" />
+		<import addon="script.artwork.downloader" version="12.0.29" />
+		<import addon="script.tv.show.next.aired" version="6.0.13" />
+		<import addon="script.globalsearch" version="4.0.2" />
+		<import addon="script.favourites" version="6.0.1" />
+		<import addon="script.artistslideshow" version="1.8.2" />
+		<import addon="script.videolanguage" version="0.1.0" />
+		<import addon="script.randomandlastitems" version="2.2.2" />
+		<import addon="script.toolbox" version="1.0.1" />
+	</requires>
+	<extension point="xbmc.gui.skin" effectslowdown="0.76" debugging="false">
+		<res width="1920" height="1080" aspect="16:9" default="true" folder="1080i" />
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Clean, modern, and elegant panel-based Skin.</summary>
+		<summary lang="de">Aufgeräumtes, modernes, und elegant kachel-basiertes Skin.</summary>
+		<description lang="en">Xperience1080 delivers a skin with a focus on graphical quality, smooth animations, and very well integrated functions and Add-ons.</description>
+		<description lang="de">Xperience1080 verspricht einen Skin mit hohem Anspruch auf grafische Qualität, flüssigen Animationen und optimal in den Skin integrierten Funktionen und Add-Ons.</description>
+		<disclaimer lang="en">Mouse and Touch inputs are not supported.</disclaimer>
+		<disclaimer lang="de">Maus und Touch-Eingaben werden nicht unterstützt.</disclaimer>
+		<platform>all</platform>
+		<license>Creative Commons Attribution-Noncommercial-Share Alike 3.0</license>
+		<forum>http://forum.kodi.tv/forumdisplay.php?fid=197</forum>
+		<source>https://github.com/vonH/Xperience1080</source>
+	</extension>
+</addon>
+
+<addon id="skin.nebula" version="4.0.0" name="Nebula" provider-name="Tgx">
+    <requires>
+        <import addon="xbmc.gui" version="5.10.0"/>
+        <import addon="script.favourites" version="3.2.0"/>
+        <import addon="script.skinshortcuts" version="0.2.4"/>
+        <import addon="script.skin.helper.service" version="0.0.11"/>
+        <import addon="resource.images.weatherfanart.single" version="0.0.4"/>
+        <import addon="resource.images.studios.white" version="0.0.6"/>
+        <import addon="resource.images.recordlabels.white" version="0.0.6"/>
+        <import addon="resource.uisounds.nebula" version="0.0.1"/>
+    </requires>
+    <extension point="xbmc.gui.skin" debugging="false">
+        <res width="1920" height="1080" aspect="16:9" default="true" folder="1080i"/>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="de">Einfacher heller oder dunkler Skin für Full-HD Bildschirme mit vielen Extras.</summary>
+        <summary lang="el">Απλό και πλήρες, φωτεινό ή σκοτεινό κέλυφος, σχεδιασμένο για οθόνες υψηλής ανάλυσης (Full HD).</summary>
+        <summary lang="en">Simple and full-featured light or dark color skin designed for Full HD TV screens.</summary>
+        <summary lang="en_AU">Simple and full-featured light or dark colour skin designed for Full HD TV screens.</summary>
+        <summary lang="en_NZ">Simple and full-featured light or dark color skin designed for Full HD TV screens.</summary>
+        <summary lang="en_US">Simple and full-featured light or dark color skin designed for Full HD TV screens.</summary>
+        <summary lang="es">Un skin simple, de color claro u oscuro, y con todas las funciones, diseñado para televisores Full HD.</summary>
+        <summary lang="fr">Skins clair ou foncé simple et complet conçu pour des écrans TV Full HD.</summary>
+        <summary lang="fr_CA">Habillage simple et complet, de couleur claire ou sombre, conçu pour les écrans à HD intégrale.</summary>
+        <summary lang="he">מעטפת פשוטה ורבת תכונות בצבעים כהים או בהירים המותאמת במיוחד למסכים באבחנת Full HD.</summary>
+        <summary lang="it">Skin dal colore bianco o nero, semplice e completa, progettata per TV Full HD</summary>
+        <summary lang="ko">모든 기능을 지원하는 단순한 스킨으로  밝은 색상과 어두운 색상을 지원하며 Full HD TV 용으로 디자인하였습니다.</summary>
+        <summary lang="lt">Paprasta ir su visomis papildomomis funkcijomis, šviesi arba tamsi teminė išvaizda, sukurta FullHD TV ekranams.</summary>
+        <summary lang="ms">Kulit ringkas dan warna cerah atau gelap berfitur penuh untuk skrin TV HD Penuh.</summary>
+        <summary lang="nl">Eenvoudige en volledig gekenmerkte lichte of donkere skin ontworpen voor Full-HD TV-schermen.</summary>
+        <summary lang="pl">Prosta, w pełni funkcjonalna skóra zawierająca jasny i mroczny motyw, zaprojektowana dla ekranu telewizyjnych Full HD.</summary>
+        <summary lang="pt_BR">Skin simples e completa nas cores lihgt ou dark para telas Full HD TV.</summary>
+        <summary lang="ro">Costum simplu și complet pe alb sau pe negru proiectat pentru ecrane tv de înaltă definiție.</summary>
+        <description lang="de">Einfacher heller oder dunkler Skin für Full-HD Bildschirme mit vielen Extras.</description>
+        <description lang="el">Απλό και πλήρες, φωτεινό ή σκοτεινό κέλυφος, σχεδιασμένο για οθόνες υψηλής ανάλυσης (Full HD).</description>
+        <description lang="en">Simple and full-featured light or dark color skin designed for Full HD TV screens.</description>
+        <description lang="en_AU">Simple and full-featured light or dark colour skin designed for Full HD TV screens.</description>
+        <description lang="en_NZ">Simple and full-featured light or dark color skin designed for Full HD TV screens.</description>
+        <description lang="en_US">Simple and full-featured light or dark color skin designed for Full HD TV screens.</description>
+        <description lang="es">Un skin simple, de color claro u oscuro, y con todas las funciones, diseñado para televisores Full HD.</description>
+        <description lang="fr">Skins clair ou foncé simple et complet conçu pour des écrans TV Full HD.</description>
+        <description lang="fr_CA">Habillage simple et complet, de couleur claire ou sombre, conçu pour les écrans à HD intégrale.</description>
+        <description lang="he">מעטפת פשוטה ורבת תכונות בצבעים כהים או בהירים המותאמת במיוחד למסכים באבחנת Full HD.</description>
+        <description lang="it">Skin dal colore bianco o nero, semplice e completa, progettata per TV Full HD</description>
+        <description lang="ko">모든 기능을 지원하는 단순한 스킨으로  밝은 색상과 어두운 색상을 지원하며 Full HD TV 용으로 디자인하였습니다.</description>
+        <description lang="lt">Paprasta ir su visomis papildomomis funkcijomis, šviesi arba tamsi teminė išvaizda, sukurta FullHD TV ekranams.</description>
+        <description lang="ms">Kulit ringkas dan warna cerah atau gelap berfitur penuh direka untuk skrin TV HD Penuh.</description>
+        <description lang="nl">Eenvoudige en volledig gekenmerkte lichte of donkere skin ontworpen voor Full-HD TV-schermen.</description>
+        <description lang="pl">Prosta, w pełni funkcjonalna skóra zawierająca jasny i mroczny motyw, zaprojektowana dla ekranu telewizyjnych Full HD.</description>
+        <description lang="pt_BR">Skin simples e completa nas cores lihgt ou dark para telas Full HD TV.</description>
+        <description lang="ro">Costum simplu și complet pe alb sau pe negru proiectat pentru ecrane tv de înaltă definiție.</description>
+        <disclaimer lang="en">This skin does not work on Apple Tv 2</disclaimer>
+        <disclaimer lang="it">Questa skin non funziona su Apple Tv 2</disclaimer>
+        <license>Creative Commons Attribution-ShareAlike 3.0 Unported License</license>
+        <forum>http://forum.kodi.tv/forumdisplay.php?fid=211</forum>
+        <source>https://github.com/Tgxcorporation/skin.nebula</source>
+        <website>https://github.com/Tgxcorporation/skin.nebula/wiki</website>
+        <platform>all</platform>
+    </extension>
+</addon>
+
+	<addon id="skin.refocus" version="3.0.1" name="reFocus" provider-name="Jeroen">
+	<requires>
+		<import addon="xbmc.gui" version="5.10.0"/>
+		<import addon="resource.images.studios.white" version="0.0.5"/>
+		<import addon="resource.images.languageflags.colour" version="0.0.3"/>
+		<!--<import addon="resource.uisounds.refocus" version="1.0.0"/>-->
+		<import addon="script.artwork.downloader" version="12.0.29"/>
+		<import addon="script.extendedinfo" version="3.1.1"/>
+		<import addon="script.globalsearch" version="5.0.0"/>
+		<import addon="script.grab.fanart" version="0.14.1"/>
+		<import addon="script.image.resource.select" version="0.0.6"/>
+		<import addon="script.skin.helper.service" version="1.0.0"/>
+		<import addon="script.skinshortcuts" version="0.6.3"/>
+		<import addon="script.toolbox" version="1.0.0"/>
+		<import addon="script.tv.show.next.aired" version="6.0.12"/>
+		<import addon="script.watchlist" version="0.0.2"/>
+		<import addon="service.library.data.provider" version="0.0.7"/>
+	</requires>
+	<extension point="xbmc.gui.skin" effectslowdown="1.00" debugging="false">
+		<res width="1280" height="720" aspect="16:9" default="true" folder="720p" />
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary lang="de">reFocus von Jeroen</summary>
+		<summary lang="en">reFocus by Jeroen</summary>
+		<summary lang="es">reFocus por Jeroen</summary>
+		<summary lang="gl">reFocus por Jeroen</summary>
+		<summary lang="ko">reFocus by Jeroen</summary>
+		<summary lang="lt">reFocus, sukurta Jeroen</summary>
+		<summary lang="nl">reFocus door Jeroen</summary>
+		<summary lang="no">reFocus av Jeroen</summary>
+		<summary lang="pl">reFocus autorstwa Jeroena</summary>
+		<summary lang="ro">reFocus de Jeroen</summary>
+		<summary lang="sv">reFocus av Jeroen</summary>
+		<description lang="de">reFocus ist eine graphische Schnittstelle für Kodi, welche versteht, dass deine Medien dir alles bedeuten. Eleganz, Einfachheit,Verfeinerung, Konsistenz und ausgewogenes Design sind Stichwörter für diesen Skin.</description>
+		<description lang="en">reFocus is a graphical interface for Kodi that understands your media is what truly matters. Elegance, simplicity, refinement, consistency and balanced design are keywords for this skin.</description>
+		<description lang="es">reFocus es una interfaz gráfica para Kodi que entiende que su contenido multimedia es lo que verdaderamente importa. Elegancia, sencillez, refinamiento, consistencia y diseño equilibrado son las palabras claves para este skin.</description>
+		<description lang="gl">reFocus é unha interface gráfica para Kodi que entende que o importante de verdade é a túa media. Elegancia, simplicidade, refinamento, consistencia e un deseño equilibrado son as chaves deste tema.</description>
+		<description lang="ko">reFocus는 사용자의 미디어를 가장 중요하게 생각하는 Kodi 그래픽 인터페이스 입니다. 우아함, 간결함, 세련됨, 일관성, 균형잡힌 디자인이 이 스킨의 키워드입니다.</description>
+		<description lang="lt">reFocus yra Kodi grafinė sąsaja, kuris supranta, kad jūsų media įrašai yra tai, kas iš tiesų svarbu. Elegancija, paprastumas, tobulinimas, nuoseklumas ir subalansuotas dizainas yra šios teminės išvaizdos raktiniai žodžiai.</description>
+		<description lang="nl">reFocus is een grafische interface voor Kodi die begrijpt dat het uiteindelijk draait om jouw media. Elegantie, eenvoud, verfijning, samenhang en doordacht ontwerp zijn sleutelwoorden voor deze skin.</description>
+		<description lang="no">reFocus er et grafisk grensesnitt for Kodi som forstår at dine medier er det som virkelig betyr noe. Eleganse, enkelhet, forbedring, konsistens og balansert design er nøkkelord for dette skallet.</description>
+		<description lang="pl">reFocus jest interfejsem graficznym dla Kodi, który rozumie, że Twoje media liczą się najbardziej. Elegancja, prostota, wyrafinowanie, konsekwencja i zrównoważony design są słowami kluczowymi tej skóry.</description>
+		<description lang="ro">reFocus e o interfaţă grafică pentru Kodi, care înţelege că ceea ce contează cu adevărat e conţinutul. Eleganţă, simplitate, rafinament, consistenţă şi design echilibrat sunt cuvintele cheie ale acestei interfeţe.</description>
+		<description lang="sv">reFocus är ett grafiskt gränssnitt till Kodi som prioriterar din media till 100%. En design med fokus på elegans, minimalism och kontinuitet.</description>	
+		<disclaimer lang="de">Die Nutzung von Maus und Touchscreen wird nicht unterstützt.</disclaimer>
+		<disclaimer lang="en">Mouse and touchscreen use not supported</disclaimer>
+		<disclaimer lang="es">Uso de ratón y pantalla táctil no compatible</disclaimer>
+		<disclaimer lang="gl">Rato e pantalla táctil non soportados</disclaimer>
+		<disclaimer lang="ko">마우스와 터치 스크린을 지원하지 않습니다 </disclaimer>
+		<disclaimer lang="lt">Pelė ir liečiamasis ekranas nepalaikomi</disclaimer>
+		<disclaimer lang="nl">Muis of touchscreen gebruik niet ondersteund</disclaimer>
+		<disclaimer lang="no">Bruk av mus og touch-skjerm er ikke støttet</disclaimer>
+		<disclaimer lang="pl">Myszka i ekran dotykowy nie są wspierane</disclaimer>
+		<disclaimer lang="ro">Nu există suport pentru touchscreen şi mouse</disclaimer>
+		<disclaimer lang="sv">Mus och pekskärm stöds inte</disclaimer>
+		<license>Attribution-NonCommercial-ShareAlike 3.0 Unported</license>
+		<forum>http://forum.xbmc.org/forumdisplay.php?fid=72</forum>
+		<source>https://github.com/jeroenpardon/skin.refocus/</source>
+		<website>jeroenpardon.github.io/skin.refocus/</website>
+	</extension>
+</addon>
+
+<addon
+    id="skin.eminence"
+    version="1.2.6"
+    name="Eminence"
+    provider-name="jurialmunkey">
+    <requires>
+        <import addon="xbmc.gui" version="5.3.0"/>
+        <import addon="service.skin.widgets" version="0.0.29"/>
+        <import addon="service.library.data.provider" version="0.0.7"/>
+        <import addon="script.favourites" version="6.0.1"/>
+        <import addon="script.globalsearch" version="3.0.4"/>
+        <import addon="script.eminencefunctions" version="0.0.1"/>
+    </requires>
+    <extension
+    point="xbmc.gui.skin"
+    defaultthemename="textures.xbt"
+    debugging="false"
+    effectslowdown="1">
+        <res width="1920" height="1080" aspect="16:9" default="true" folder="1080i" />
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="ca">Creat per jurialmunkey</summary>
+        <summary lang="de">Erstellt von jurialmunkey</summary>
+        <summary lang="el">Δημιουργήθηκε από τον jurialmunkey</summary>
+        <summary lang="en">Created by jurialmunkey</summary>
+        <summary lang="en_NZ">Created by jurialmunkey</summary>
+        <summary lang="en_US">Created by jurialmunkey</summary>
+        <summary lang="fr">Créé par jurialmunkey</summary>
+        <summary lang="fr_CA">Créé par jurialmunkey</summary>
+        <summary lang="gl">Creado por jurialmunkey</summary>
+        <summary lang="he">נוצרה ע"י jurialmunkey</summary>
+        <summary lang="ko">jurialmunkey 제작</summary>
+        <summary lang="lt">Sukūrė jurialmunkey</summary>
+        <summary lang="nl">Gecreëerd door jurialmunkey</summary>
+        <summary lang="no">Laget av jurialmunkey</summary>
+        <summary lang="pl">Autorstwa jurialmunkey</summary>
+        <summary lang="pt_BR">Criada por jurialmunkey</summary>
+        <summary lang="sl">Ustvaril jurialmunkey</summary>
+        <summary lang="sv">Skapat av jurialmunkey</summary>
+        <summary lang="tr">jurialmunkey tarafından tasarlandı.</summary>
+        <description lang="de">Eminence ist ein Skin der Einfachheit, Funktionalität und Anpassbarkeit mit einem modernen Aussehen verbindet</description>
+        <description lang="en">Eminence is a skin that seeks simplicity, functionality, and customisability with a modern look</description>
+        <description lang="en_NZ">Eminence is a skin that seeks simplicity, functionality, and customisability with a modern look</description>
+        <description lang="en_US">Eminence is a skin that seeks simplicity, functionality, and customizability with a modern look</description>
+        <description lang="fr">Eminence est un thème qui cherche la simplicité, les fonctionnalités, et la personnalisation avec un aspect moderne</description>
+        <description lang="fr_CA">Éminence est un habillage qui cible la simplicité, la fonctionnalité et la personnalisation avec une apparence moderne</description>
+        <description lang="gl">Eminence é un tema que procura a simplicidade, funcionalidade e a personalización cun aspecto moderno</description>
+        <description lang="he">המעטפת Eminence מתמקדת בפשטות, פונקציונליות, יכולת התאמה אישית ובעלת מראה מודרני</description>
+        <description lang="ko">Eminence은 단순함과 용이한 사용자 설정을 추구하는 현대적인 모양새의 스킨입니다</description>
+        <description lang="lt">Eminence yra teminė išvaizda, kuri siekia suderinti modernią išvaizdą su paprastumu, funkcionalumu ir galimybe pritaikyti pagal savo poreikius.</description>
+        <description lang="nl">Eminence is een skin die zoekt naar simpliciteit, functionaliteit en aanpasbaarheid met een moderne uitstraling</description>
+        <description lang="no">Eminence er et skall som søker enkelhet, funksjonalitet, og skreddersying med et moderne utseende</description>
+        <description lang="pl">Eminence to skóra, który łączy prostotę, bogactwo funkcji i łatwość dostosowania z nowoczesnym wyglądem</description>
+        <description lang="pt_BR">Eminence é uma skin que busca simplicidade, funcionalidade e costumização através de uma aparência moderna.</description>
+        <platform>all</platform>
+    </extension>
+</addon>
+
 </addons>

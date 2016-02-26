@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Foundation -->
+<window id="0">
+    <defaultcontrol always="true">300</defaultcontrol>
+    <onload>RunScript(script.favourites)</onload>
+    <onload>RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=300&amp;group=mainmenu|movieshub|episodeshub)</onload>
+    
+    <controls>
+        <include>GlobalBackground</include>
+        
+        <include condition="Skin.HasSetting(home.vertical)">HomeVerticalMenu</include>
+        
+        <include condition="!Skin.HasSetting(home.vertical)">HomeHeader</include>
+        <include condition="!Skin.HasSetting(home.vertical)">HomeNextRecording</include>
+        <include condition="!Skin.HasSetting(home.vertical)">HomeNowPlaying</include>
+        <include condition="!Skin.HasSetting(home.vertical)">HomeWidgetSelector</include>
+        <include condition="!Skin.HasSetting(home.vertical)">HomeBackgroundPlaylist</include>
+        <include condition="!Skin.HasSetting(home.vertical)">HomeClassicWidgets</include>
+        
+        <include condition="!Skin.HasSetting(home.vertical) + Skin.HasSetting(home.submenu2)">HomeSubMenu2</include>
+        <include condition="!Skin.HasSetting(home.vertical) + !Skin.HasSetting(home.submenu2)">HomeSubMenu</include>
+
+        <control type="group">
+            <include>Animation.FadeIn</include>
+            <include>Animation.FadeOut</include>
+            <visible>Window.IsVisible(script-ExtendedInfo Script-DialogVideoInfo.xml) | Window.IsVisible(script-ExtendedInfo Script-DialogInfo.xml) | Window.IsVisible(script-ExtendedInfo Script-VideoList.xml)</visible>
+            <include condition="!Skin.HasSetting(home.vertical)">GlobalBackgroundExtended</include>
+            <include condition="!Skin.HasSetting(home.vertical)">Furniture_Header</include>
+            <include condition="!Skin.HasSetting(home.vertical)">Furniture_NowPlaying</include>
+            <include condition="!Skin.HasSetting(home.vertical)">Furniture_Clock</include>
+            <include condition="!Skin.HasSetting(home.vertical)">Furniture_Weather</include>
+        </control>
+    </controls>
+</window>

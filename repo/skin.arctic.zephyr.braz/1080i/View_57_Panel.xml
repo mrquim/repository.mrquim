@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Foundation -->
+<includes>
+    <include name="View_57_Panel">
+        <description>List View (id=57)</description>
+        <control type="group">
+            <include>Animation.Common</include>
+            <visible>Control.IsVisible(57)</visible>
+            <control type="group">
+                <control type="panel" id="57">
+                    <visible>Container.Content(musicvideos) | Container.Content(movies) | Container.Content(tvshows) | [Container.Content(episodes) + !substring(Container.FolderPath,plugin://,left)] | Container.Content(artists)</visible>
+                    <top>206</top>
+                    <height>660</height>
+                    <left>70</left>
+                    <right>70</right>
+                    <onleft>57</onleft>
+                    <onright>57</onright>
+                    <onup condition="!Skin.HasSetting(global.kioskmode)">9000</onup>
+                    <ondown>60</ondown>
+                    <orientation>horizontal</orientation>
+                    <pagecontrol>60</pagecontrol>
+                    <preloaditems>2</preloaditems>
+                    <viewtype label="Panel">list</viewtype>
+                    <scrolltime tween="quadratic">400</scrolltime>
+                    <itemlayout width="445" height="660">
+                        <control type="image">
+                            <left>10</left>
+                            <top>10</top>
+                            <right>10</right>
+                            <bottom>10</bottom>
+                            <texture colordiffuse="White12" border="5">common/box.png</texture>
+                        </control>
+                        <control type="image">                                
+                            <left>10</left>
+                            <top>10</top>
+                            <width>425</width>
+                            <height>239</height>
+                            <aspectratio scalediffuse="false">scale</aspectratio>
+                            <texture diffuse="diffuse/panel.png" background="true">$VAR[FanartImage]</texture>
+                        </control>
+                        <control type="image">
+                            <right>24</right>
+                            <top>24</top>
+                            <width>32</width>
+                            <height>32</height>
+                            <aspectratio aligny="top">keep</aspectratio>
+                            <texture colordiffuse="$VAR[ColorHighlight]">$VAR[PosterPercentWatchedBacking]</texture>
+                            <visible>!stringcompare(ListItem.Label,..)</visible>
+                        </control>
+                        <control type="image">
+                            <right>24</right>
+                            <top>24</top>
+                            <width>32</width>
+                            <height>32</height>
+                            <aspectratio aligny="top">keep</aspectratio>
+                            <texture>$VAR[PosterPercentWatched]</texture>
+                            <visible>!stringcompare(ListItem.Label,..)</visible>
+                        </control>
+                        <control type="label">
+                            <left>30</left>
+                            <right>30</right>
+                            <top>260</top>
+                            <height>50</height>
+                            <align>left</align>
+                            <font>SmallBold</font>
+                            <textcolor>White100</textcolor>
+                            <selectedcolor>White100</selectedcolor>
+                            <label>$INFO[ListItem.Label]</label>
+                        </control>
+                        <control type="label">
+                            <left>30</left>
+                            <right>30</right>
+                            <top>303</top>
+                            <height>50</height>
+                            <align>left</align>
+                            <font>Tiny</font>
+                            <textcolor>White100</textcolor>
+                            <selectedcolor>White100</selectedcolor>
+                            <label>$INFO[ListItem.Genre]</label>
+                            <visible>Container.Content(artists)</visible>
+                        </control>
+                        <control type="textbox">
+                            <animation effect="slide" time="0" start="0,0" end="0,40" condition="Container.Content(artists)">Conditional</animation>
+                            <left>30</left>
+                            <right>30</right>
+                            <top>310</top>
+                            <height>280</height>
+                            <font>Tiny</font>
+                            <autoscroll>false</autoscroll>
+                            <textcolor>White100</textcolor>
+                            <selectedcolor>White100</selectedcolor>
+                            <label>$VAR[LabelPlotBox]</label>
+                        </control>
+                        <control type="label">
+                            <left>30</left>
+                            <right>30</right>
+                            <bottom>20</bottom>
+                            <aligny>center</aligny>
+                            <height>38</height>
+                            <align>right</align>
+                            <font>Tiny</font>
+                            <textcolor>White100</textcolor>
+                            <selectedcolor>White100</selectedcolor>
+                            <label>$VAR[LabelYear]$VAR[LabelDuration,  •  ]$INFO[ListItem.Rating,  •  ]</label>
+                        </control>
+                       
+                    </itemlayout>
+                    <focusedlayout width="445" height="660">
+                        <control type="image">
+                            <left>10</left>
+                            <top>11</top>
+                            <right>10</right>
+                            <bottom>10</bottom>
+                            <texture colordiffuse="White100" border="5">common/box.png</texture>
+                        </control>
+                        <control type="image">                                
+                            <left>10</left>
+                            <top>10</top>
+                            <width>425</width>
+                            <height>239</height>
+                            <aspectratio scalediffuse="false">scale</aspectratio>
+                            <texture diffuse="diffuse/panel.png" background="true">$VAR[FanartImage]</texture>
+                        </control>
+                        <control type="image">
+                            <right>24</right>
+                            <top>24</top>
+                            <width>32</width>
+                            <height>32</height>
+                            <aspectratio aligny="top">keep</aspectratio>
+                            <texture colordiffuse="$VAR[ColorHighlight]">$VAR[PosterPercentWatchedBacking]</texture>
+                            <visible>!stringcompare(ListItem.Label,..)</visible>
+                        </control>
+                        <control type="image">
+                            <right>24</right>
+                            <top>24</top>
+                            <width>32</width>
+                            <height>32</height>
+                            <aspectratio aligny="top">keep</aspectratio>
+                            <texture>$VAR[PosterPercentWatched]</texture>
+                            <visible>!stringcompare(ListItem.Label,..)</visible>
+                        </control>
+                        <control type="label">
+                            <left>30</left>
+                            <right>30</right>
+                            <top>260</top>
+                            <height>50</height>
+                            <align>left</align>
+                            <font>SmallBold</font>
+                            <textcolor>Dark1</textcolor>
+                            <selectedcolor>Dark1</selectedcolor>
+                            <label>$INFO[ListItem.Label]</label>
+                        </control>
+                        <control type="label">
+                            <left>30</left>
+                            <right>30</right>
+                            <top>303</top>
+                            <height>50</height>
+                            <align>left</align>
+                            <font>Tiny</font>
+                            <textcolor>Dark1</textcolor>
+                            <selectedcolor>Dark</selectedcolor>
+                            <label>$INFO[ListItem.Genre]</label>
+                            <visible>Container.Content(artists)</visible>
+                        </control>
+                        <control type="textbox">
+                            <animation effect="slide" time="0" start="0,0" end="0,40" condition="Container.Content(artists)">Conditional</animation>
+                            <left>30</left>
+                            <right>30</right>
+                            <top>310</top>
+                            <height>280</height>
+                            <font>Tiny</font>
+                            <textcolor>Dark1</textcolor>
+                            <selectedcolor>Dark1</selectedcolor>
+                            <label>$VAR[LabelPlotBox]</label>
+                        </control>
+                        <control type="label">
+                            <left>30</left>
+                            <right>30</right>
+                            <bottom>20</bottom>
+                            <aligny>center</aligny>
+                            <height>38</height>
+                            <align>right</align>
+                            <font>Tiny</font>
+                            <textcolor>Dark1</textcolor>
+                            <selectedcolor>Dark1</selectedcolor>
+                            <label>$VAR[LabelYear]$VAR[LabelDuration,  •  ]$INFO[ListItem.Rating,  •  ]</label>
+                        </control>
+                    </focusedlayout>
+                </control>
+                <include>Furniture_Scrollbar_Horizontal</include>
+            </control>
+        
+        </control>
+    </include>
+   
+
+</includes>

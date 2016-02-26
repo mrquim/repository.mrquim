@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<window>
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+    <!--<animation effect="slide" start="0,1080" end="0,0" time="300" reversible="false" condition="!IsEmpty(Window(10000).Property(script.hdhomerun.view.window.animations))">WindowOpen</animation>
+    <animation effect="slide" start="0,0" end="0,-1080" time="300" reversible="false" condition="!IsEmpty(Window(10000).Property(script.hdhomerun.view.window.animations))">WindowClose</animation>-->
+    <controls>
+        <control type="group">
+            <include>Animation.FadeIn</include>
+            <include>Animation.FadeOut</include>
+            <!--<visible>ControlGroup(3110).HasFocus()</visible>-->
+            <include>GlobalOverlay</include>
+        </control>
+        <control type="group">
+            <!--<visible allowhiddenfocus="true">ControlGroup(3110).HasFocus()</visible>-->
+            <include>Animation.ZoomIn</include>
+            <include>Animation.FadeOut</include>
+            <top>184</top>
+            <centerleft>50%</centerleft>
+            <height>312</height>
+            <width>466</width>
+            
+            <control type="image">
+                <description>background image</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>466</width>
+                <height>100%</height>
+                <texture border="16" colordiffuse="White100">common/rounded-shadow100.png</texture>
+            </control>
+            <control type="image">
+                <description>background image</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>466</width>
+                <height>100%</height>
+                <texture border="16" colordiffuse="White100">common/rounded-shadow8.png</texture>
+            </control>
+
+            <control type="group" id="240">
+                <!--<defaultcontrol>242</defaultcontrol>-->
+
+                <control type="grouplist" id="252">
+                    <posx>8</posx>
+                    <posy>16</posy>
+                    <width>510</width>
+                    <height>280</height>
+                    <itemgap>0</itemgap>
+                    <orientation>vertical</orientation>
+
+                    <control type="button" id="242">
+                        <include>DefContextButton</include>
+                        <label>[UPPERCASE]$LOCALIZE[13395][/UPPERCASE]</label>
+                        <onclick>ActivateWindow(OSDVideoSettings)</onclick>
+                    </control>
+
+                    <control type="button" id="243">
+                        <include>DefContextButton</include>
+                        <label>[UPPERCASE]Audio Settings[/UPPERCASE]</label>
+                        <onclick>ActivateWindow(OSDAudioSettings)</onclick>
+                    </control>
+
+                    <control type="button" id="245">
+                        <visible>False</visible>
+                        <include>DefContextButton</include>
+                        <label>13396</label>
+                        <onclick>VolumeDown</onclick>
+                    </control>
+
+                    <control type="button" id="244">
+                        <visible>False</visible>
+                        <include>DefContextButton</include>
+                        <label>13396</label>
+                        <onclick>VolumeUp</onclick>
+                    </control>
+
+                    <control type="button" id="241">
+                        <visible>!Control.IsVisible(248)</visible>
+                        <include>DefContextButton</include>
+                        <label>$ADDON[script.hdhomerun.view 32836]</label>
+                    </control>
+
+                    <control type="button" id="248">
+                        <visible>!Player.HasVideo | !IsEmpty(Window(10000).Property(script.hdhomerun.view.playing.dvr))</visible>
+                        <include>DefContextButton</include>
+                        <label>LIVE TV</label>
+                    </control>
+
+                    <control type="button" id="247">
+                        <include>DefContextButton</include>
+                        <label>$ADDON[script.hdhomerun.view 32837]</label>
+                    </control>
+                </control>
+            </control>
+
+            <control type="grouplist" id="250">
+                <visible>False</visible>
+                <posx>8</posx>
+                <posy>156</posy>
+                <width>510</width>
+                <height>210</height>
+                <itemgap>0</itemgap>
+                <ondown>240</ondown>
+                <orientation>vertical</orientation>
+            </control>
+        </control>
+
+        <control type="group">
+            <visible>!IsEmpty(Window(10000).Property(script.hdhomerun.view.busy))</visible>
+            <posx>1367</posx>
+            <posy>860</posy>
+
+            <control type="image">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>503</width>
+                <height>170</height>
+                <texture>script-hdhomerun-view-loading_bg.png</texture>
+                <colordiffuse>80FFFFFF</colordiffuse>
+                <aspectratio>stretch</aspectratio>
+            </control>
+            <control type="label">
+                <posx>21</posx>
+                <posy>44</posy>
+                <width>307</width>
+                <height>106</height>
+                <font>font13</font>
+                <align>center</align>
+                <aligny>center</aligny>
+                <textcolor>FF000000</textcolor>
+                <label>[B]$INFO[Window(10000).Property(script.hdhomerun.view.busy)][/B]</label>
+            </control>
+            <control type="image">
+                <posx>354</posx>
+                <posy>21</posy>
+                <width>128</width>
+                <height>128</height>
+                <texture>script-hdhomerun-view-loading.gif</texture>
+                <colordiffuse>80FFFFFF</colordiffuse>
+                <aspectratio>stretch</aspectratio>
+            </control>
+
+        </control>
+
+    </controls>
+</window>

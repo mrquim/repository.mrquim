@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Foundation -->
+<window type="dialog" id="1110">
+    <defaultcontrol always="true">3110</defaultcontrol>
+    <coordinates>
+        <system>1</system>
+        <left>0</left>
+        <top>0</top>
+    </coordinates>
+    <!--<zorder>10</zorder>-->
+    <controls>
+        <control type="group">
+            <include>Animation.FadeIn</include>
+            <include>Animation.FadeOut</include>
+            <visible>ControlGroup(3110).HasFocus()</visible>
+            <include>GlobalOverlay</include>
+        </control>
+        <control type="group">
+            <visible allowhiddenfocus="true">Control.HasFocus(90400)</visible>
+            <control type="button" id="90400">
+                <description>FS Fanart button</description>
+                <width>1920</width>
+                <height>1080</height>
+                <texturefocus>-</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <onleft>SetFocus(3110)</onleft>
+                <onright>SetFocus(3110)</onright>
+                <onup>SetFocus(3110)</onup>
+                <ondown>SetFocus(3110)</ondown>
+                <onclick>SetFocus(3110)</onclick>
+                <label>-</label>
+                <hitrect x="0" y="0" w="0" h="0"/>
+            </control>
+            <control type="image">
+                <include>FullscreenDimensions</include>
+                <texture>$INFO[ListItem.Art(fanart)]</texture>
+            </control>
+        </control>
+        <control type="group">
+            <visible allowhiddenfocus="true">ControlGroup(3110).HasFocus()</visible>
+            <include>Animation.ZoomIn</include>
+            <include>Animation.FadeOut</include>
+            <top>184</top>
+            <centerleft>50%</centerleft>
+            <height>242</height>
+            <width>466</width>
+            
+            <control type="image">
+                <description>background image</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>466</width>
+                <height>100%</height>
+                <texture border="16" colordiffuse="White100">common/rounded-shadow100.png</texture>
+            </control>
+            <control type="group">
+                <control type="image">
+                    <visible>Container(3110).HasPrevious</visible>
+                    <description>arrow image</description>
+                    <centerleft>50%</centerleft>
+                    <posy>-16</posy>
+                    <width>16</width>
+                    <height>16</height>
+                    <texture colordiffuse="White70" flipy="true">common/arrow-small.png</texture>
+                </control>
+                <control type="image">
+                    <visible>Container(3110).HasNext</visible>
+                    <description>arrow image</description>
+                    <centerleft>50%</centerleft>
+                    <posy>242</posy>
+                    <width>16</width>
+                    <height>16</height>
+                    <texture colordiffuse="White70" flipy="false">common/arrow-small.png</texture>
+                </control>
+            </control>
+            <control type="image">
+                <description>background image</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>466</width>
+                <height>100%</height>
+                <texture border="16" colordiffuse="White100">common/rounded-shadow8.png</texture>
+            </control>
+            <control type="grouplist" id="3110">
+                <description>grouplist for context buttons</description>
+                <posx>8</posx>
+                <posy>16</posy>
+                <width>510</width>
+                <height>210</height>
+                <onleft>Close</onleft>
+                <onright>Close</onright>
+                <itemgap>0</itemgap>
+                <control type="button" id="3111">
+                    <include>DefContextButton</include>
+                    <label>Download artwork</label>
+                    <onclick condition="Container.Content(tvshows)">XBMC.RunScript(script.artwork.downloader, mode=gui, mediatype=tvshow, dbid=$INFO[ListItem.DBID])</onclick>
+                    <onclick condition="Container.Content(movies)">XBMC.RunScript(script.artwork.downloader, mode=gui, mediatype=movie, dbid=$INFO[ListItem.DBID])</onclick>
+                    <onclick condition="Container.Content(musicvideos)">XBMC.RunScript(script.artwork.downloader, mode=gui, mediatype=musicvideo, dbid=$INFO[ListItem.DBID])</onclick>
+                    <description>Get Artwork</description>
+                    <visible>!Skin.HasSetting(global.kioskmode)</visible>
+                    <visible>[Container.Content(tvshows) | Container.Content(movies) | Container.Content(musicvideos)] + system.hasaddon(script.artwork.downloader)</visible>
+                </control>
+                <control type="button" id="3112">
+                    <include>DefContextButton</include>
+                    <label>Download artwork (auto)</label>
+                    <onclick condition="Container.Content(movies)">RunScript(script.artwork.downloader, mediatype=movie, dbid=$INFO[ListItem.DBID])</onclick>
+                    <onclick condition="Container.Content(tvshows)">RunScript(script.artwork.downloader, mediatype=tvshow, dbid=$INFO[ListItem.DBID])</onclick>
+                    <onclick condition="Container.Content(musicvideos)">RunScript(script.artwork.downloader, mediatype=musicvideo, dbid=$INFO[ListItem.DBID])</onclick>
+                    <visible>System.HasAddon(script.artwork.downloader) + [Container.Content(movies) | Container.Content(tvshows) | Container.Content(musicvideos)]</visible>
+                </control>
+                <control type="button" id="3114">
+                    <include>DefContextButton</include>
+                    <label>Add to playlist</label>
+                    <onclick>RunPlugin(plugin://script.simpleplaylists/?mode=addCurrentUrl)</onclick>
+                    <visible>[Container.Content(movies) | Container.Content(episodes)] + System.HasAddon(script.simpleplaylists)</visible>
+                </control>
+                <control type="button" id="3113">
+                    <include>DefContextButton</include>
+                    <label>Update IMDb rating</label>
+                    <onclick>Dialog.Close(1110)</onclick>
+                    <onclick>RunScript(script.ratingupdate,Single=Movie)</onclick>
+                    <visible>System.HasAddon(script.ratingupdate)</visible>
+                    <visible>Container.Content(movies) | Container.Content(tvshows)</visible>
+                </control>
+                <control type="button" id="3118">
+                    <include>DefContextButton</include>
+                    <label>Update user rating</label>
+                    <onclick>Dialog.Close(1110)</onclick>
+                    <onclick>SendClick(7)</onclick>
+                    <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(episodes)</visible>
+                </control>
+                <control type="button" id="3115">
+                    <include>DefContextButton</include>
+                    <label>$INFO[System.AddonTitle(script.cinemavision)]</label>
+                    <onclick>Dialog.Close(1110)</onclick>
+                    <onclick>Dialog.Close(MovieInformation)</onclick>
+                    <onclick>RunScript(script.cinemavision,experience)</onclick>
+                    <visible>System.HasAddon(script.cinemavision) + [Container.Content(movies) | Container.Content(tvshows) | Container.Content(episodes)]</visible>
+                </control>
+                <control type="button" id="3116">
+                    <include>DefContextButton</include>
+                    <label>31171</label>
+                    <onclick>RunScript(script.videoextras,display,"$INFO[ListItem.FilenameAndPath]")</onclick>
+                    <visible>System.HasAddon(script.videoextras) + [Container.Content(movies) | Container.Content(episodes) | Container.Content(TVShows) | Container.Content(musicvideos)] + IsEmpty(Window(movieinformation).Property("HideVideoExtrasButton"))</visible>
+                </control>
+                <control type="button" id="3117">
+                    <include>DefContextButton</include>
+                    <label>View fanart</label>
+                    <onclick>SetFocus(90400)</onclick>
+                </control>
+            </control>
+        </control>
+    </controls>
+
+</window>

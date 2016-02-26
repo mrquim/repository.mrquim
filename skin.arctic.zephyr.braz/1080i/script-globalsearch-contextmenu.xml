@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+	<defaultcontrol>1001</defaultcontrol>
+	<coordinates>
+        <origin x="0" y="0" />
+    </coordinates>
+	<controls>
+		<!-- assume the context menu contains 1 button. code the size/position of all controls based on that -->
+		<include>GlobalOverlay</include>
+        <control type="group">
+            <include>Animation.ZoomIn</include>
+            <include>Animation.FadeOut</include>
+            <top>489</top>
+            <centerleft>50%</centerleft>
+            <width>466</width>
+            <control type="image" id="999">
+                <description>background image</description>
+                <posx>0</posx>
+                <posy>-16</posy>
+                <width>466</width>
+                <height>102</height>
+                <texture border="16" colordiffuse="White100">common/rounded-shadow100.png</texture>
+            </control>
+			<control type="group" id="1000">
+				<left>8</left>
+				<control type="button" id="1001">
+					<include>DefContextButton</include>
+					<onleft>1001</onleft>
+					<onright>1001</onright>
+					<onup>1003</onup>
+					<ondown>1002</ondown>
+				</control>
+				<control type="button" id="1002">
+					<include>DefContextButton</include>
+					<onleft>1002</onleft>
+					<onright>1002</onright>
+					<onup>1001</onup>
+					<ondown>1003</ondown>
+				</control>
+				<control type="button" id="1003">
+					<include>DefContextButton</include>
+					<onleft>1003</onleft>
+					<onright>1003</onright>
+					<onup>1002</onup>
+					<ondown>1001</ondown>
+				</control>
+			</control>
+		</control>
+	</controls>
+</window>

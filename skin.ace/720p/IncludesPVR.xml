@@ -1,0 +1,253 @@
+<includes>
+	<include name="TopMenu_PVRNew">
+		<include>TopMenu_BG</include>
+		<control type="group" id="9000">
+			<posy>-100</posy>
+			<animation effect="slide" start="0,0" end="0,80" time="400" tween="cubic" easing="inout" condition="ControlGroup(9000).HasFocus | ControlGroup(9101).HasFocus | ControlGroup(9201).HasFocus | ControlGroup(9301).HasFocus | ControlGroup(9401).HasFocus | ControlGroup(9501).HasFocus">Conditional</animation>
+
+			<control type="grouplist" id="9101">
+				<!-- Go to -->
+				<animation effect="slide" start="0,0" end="0,350" time="600" tween="sine" easing="inout" condition="Control.HasFocus(9100) | ControlGroup(9101).HasFocus">Conditional</animation>
+				<posx>1</posx>
+				<posy>-300</posy>
+				<width>320</width>
+				<height>300</height>
+				<onup>9101</onup>
+				<ondown>9101</ondown>
+				<onleft>SetFocus(11)</onleft>
+				<onright>31</onright>
+				<itemgap>0</itemgap>
+				<focusposition>1</focusposition>
+				<scrolltime>450</scrolltime>
+				<control type="button" id="9102">
+					<!-- Kiosk Code -->
+					<width>320</width>
+					<include>TopMenuButton</include>
+					<label>$VAR[value_kioskcode]</label>
+					<onclick>Skin.SetString(custom_code,codestep)</onclick>
+					<onclick condition="!SubString(skin.string(codestep),step3)">SetFocus(51)</onclick>
+					<onclick condition="!SubString(skin.string(codestep),step3)">ActivateWindow(629)</onclick>
+					<onclick condition="SubString(skin.string(codestep),step3) + Control.HasFocus(9102)">Skin.Reset($INFO[skin.string(custom_code)])</onclick>
+					<visible>Skin.HasSetting(kioskcode)</visible>
+				</control>
+				<control type="button" id="9103">
+					<!-- Home -->
+					<width>320</width>
+					<include>TopMenuButton</include>
+					<label>31410</label>
+					<onclick>ReplaceWindow(Home)</onclick>
+				</control>
+				<control type="button" id="9104">
+					<!-- Videos -->
+					<width>320</width>
+					<include>TopMenuButton</include>
+					<label>$LOCALIZE[31001] ($LOCALIZE[31437])</label>
+					<onclick>ReplaceWindow(Videos,Root)</onclick>
+					<visible>Container.Content(Movies) | Container.Content(MusicVideos) | Container.Content(TvShows) | Container.Content(Seasons) | Container.Content(Episodes)</visible>
+				</control>
+				<control type="button" id="9105">
+					<!-- Movies -->
+					<width>320</width>
+					<include>TopMenuButton</include>
+					<label>31003</label>
+					<onclick>ActivateWindow(videos,movietitles,return)</onclick>
+					<visible>!Container.Content(Movies) + Library.HasContent(Movies)</visible>
+				</control>
+				<control type="button" id="9106">
+					<!-- TVShows -->
+					<width>320</width>
+					<include>TopMenuButton</include>
+					<label>31005</label>
+					<onclick>ActivateWindow(videos,tvshowtitles,return)</onclick>
+					<visible>![Container.Content(TvShows) | Container.Content(Seasons) | Container.Content(Episodes)] + Library.HasContent(TVShows)</visible>
+				</control>
+				<control type="button" id="9107">
+					<!-- Live TV -->
+					<width>320</width>
+					<include>TopMenuButton</include>
+					<label>31006</label>
+					<onclick>ActivateWindow(TVChannels)</onclick>
+					<visible>!Container.Content(LiveTV) + System.GetBool(pvrmanager.enabled)</visible>
+				</control>
+				<control type="button" id="9108">
+					<!-- Music Videos -->
+					<width>320</width>
+					<include>TopMenuButton</include>
+					<label>31013</label>
+					<onclick>ActivateWindow(videos,musicvideotitles,return)</onclick>
+					<visible>!Container.Content(MusicVideos) + Library.HasContent(MusicVideos)</visible>
+				</control>
+				<control type="button" id="9109">
+					<!-- Music -->
+					<width>320</width>
+					<include>TopMenuButton</include>
+					<label>31002</label>
+					<onclick>ActivateWindow(music)</onclick>
+					<visible>![Window.IsActive(musicplaylist) | Window.IsActive(musicfiles) | Window.IsActive(musiclibrary)] + Library.HasContent(Music)</visible>
+				</control>
+				<control type="radiobutton" id="9352">
+					<width>320</width>
+					<radioposx>250</radioposx>
+					<include>TopMenuRadioButton</include>
+					<label>31227</label>
+					<onclick>Skin.ToggleSetting(noinfobar)</onclick>
+					<selected>!Skin.HasSetting(noinfobar)</selected>
+				</control>
+				<control type="button" id="9112">
+					<width>320</width>
+					<include>TopMenuButton</include>
+					<label>31375</label>
+					<onclick>ActivateWindow(4)</onclick>
+					<visible>![Skin.HasSetting(kiosksmart) + !SubString(skin.string(codestep),step3)]</visible>
+				</control>
+			</control>
+
+			<control type="grouplist" id="9201">
+				<!-- Options/Guide/EPG/Timer -->
+				<animation effect="slide" start="0,0" end="0,450" time="600" tween="sine" easing="inout" condition="Control.HasFocus(31) | ControlGroup(9201).HasFocus">Conditional</animation>
+				<posx>321</posx>
+				<posy>-400</posy>
+				<width>318</width>
+				<height>400</height>
+				<onup>31</onup>
+				<ondown>9201</ondown>
+				<onleft>9100</onleft>
+				<onright>32</onright>
+				<itemgap>0</itemgap>
+				<focusposition>1</focusposition>
+				<scrolltime>450</scrolltime>
+				<control type="button" id="2">
+					<!-- Views -->
+					<description>View As button</description>
+					<width>320</width>
+					<include>TopMenuButton</include>
+					<posx>320</posx>
+					<label>-</label>
+				</control>
+				<control type="button" id="34">
+					<!-- Recordings -->
+					<width>320</width>
+					<include>TopMenuButton</include>
+					<onclick condition="IsEmpty(Window.Property(IsRadio))">ActivateWindow(TVRecordings)</onclick>
+					<onclick condition="!IsEmpty(Window.Property(IsRadio))">ActivateWindow(RadioRecordings)</onclick>
+					<label>19163</label>
+					<ondown>11</ondown>
+				</control>
+				<control type="button" id="35">
+					<!-- Timer -->
+					<width>320</width>
+					<include>TopMenuButton</include>
+					<onclick condition="IsEmpty(Window.Property(IsRadio))">ActivateWindow(TVTimers)</onclick>
+					<onclick condition="!IsEmpty(Window.Property(IsRadio))">ActivateWindow(RadioTimers)</onclick>
+					<label>19040</label>
+					<ondown>11</ondown>
+				</control>
+				<control type="button" id="36">
+					<!-- Search -->
+					<width>320</width>
+					<include>TopMenuButton</include>
+					<onclick condition="IsEmpty(Window.Property(IsRadio))">ActivateWindow(TVSearch)</onclick>
+					<onclick condition="!IsEmpty(Window.Property(IsRadio))">ActivateWindow(RadioSearch)</onclick>
+					<label>137</label>
+					<ondown>11</ondown>
+				</control>
+				<control type="button" id="37">
+					<!-- Fullscreen -->
+					<width>320</width>
+					<include>TopMenuButton</include>
+					<label>31907</label>
+					<onclick>fullscreen</onclick>
+					<visible>Player.HasMedia</visible>
+					<ondown>11</ondown>
+				</control>
+			</control>
+
+			<include>TopMenu_Bar</include>
+			<control type="button" id="9100">
+				<width>320</width>
+				<include>TopMenuTopButton</include>
+				<posx>0</posx>
+				<onup>SetFocus(11)</onup>
+				<ondown>9101</ondown>
+				<onleft>SetFocus(11)</onleft>
+				<onright>31</onright>
+				<label>31436</label>
+			</control>
+			<control type="button" id="31">
+				<!-- TV Guide -->
+				<visible>IsEmpty(Window.Property(IsRadio))</visible>
+				<width>320</width>
+				<include>TopMenuTopButton</include>
+				<posx>320</posx>
+				<onup>SetFocus(10)</onup>
+				<ondown>9201</ondown>
+				<onleft>9100</onleft>
+				<onright>32</onright>
+				<onclick condition="IsEmpty(Window.Property(IsRadio))">ActivateWindow(TVGuide)</onclick>
+				<label>$LOCALIZE[19020] $LOCALIZE[22020]</label>
+				
+				<enable>![Skin.HasSetting(kiosksmart) + !SubString(skin.string(codestep),step3)]</enable>
+			</control>
+			<control type="button" id="31">
+				<!-- Radio Guide -->
+				<visible>!IsEmpty(Window.Property(IsRadio))</visible>
+				<width>320</width>
+				<include>TopMenuTopButton</include>
+				<posx>320</posx>
+				<onup>SetFocus(10)</onup>
+				<ondown>9201</ondown>
+				<onleft>9100</onleft>
+				<onright>32</onright>
+				<onclick condition="!IsEmpty(Window.Property(IsRadio))">ActivateWindow(RadioGuide)</onclick>
+				<label>$LOCALIZE[19021] $LOCALIZE[22020]</label>
+				<enable>![Skin.HasSetting(kiosksmart) + !SubString(skin.string(codestep),step3)]</enable>
+			</control>
+			<control type="button" id="32">
+				<!-- TV Channels -->
+				<width>320</width>
+				<include>TopMenuTopButton</include>
+				<posx>640</posx>
+				<onup>SetFocus(11)</onup>
+				<ondown>SetFocus(11)</ondown>
+				<onleft>31</onleft>
+				<onright>33</onright>
+				<onclick>ActivateWindow(TVChannels)</onclick>
+				<label>19023</label>
+				<ondown>SetFocus(11)</ondown>
+			</control>
+			<control type="button" id="33">
+				<!-- Radio Channels -->
+				<width>320</width>
+				<include>TopMenuTopButton</include>
+				<posx>960</posx>
+				<onup>SetFocus(12)</onup>
+				<ondown>SetFocus(12)</ondown>
+				<onleft>32</onleft>
+				<onright>SetFocus(11)</onright>
+				<onclick>ActivateWindow(RadioChannels)</onclick>
+				<label>19024</label>
+			</control>
+			<control type="image">
+				<posx>320</posx>
+				<posy>19</posy>
+				<width>1</width>
+				<height>30</height>
+				<texture>separator_v.png</texture>
+			</control>
+			<control type="image">
+				<posx>640</posx>
+				<posy>19</posy>
+				<width>1</width>
+				<height>30</height>
+				<texture>separator_v.png</texture>
+			</control>
+			<control type="image">
+				<posx>960</posx>
+				<posy>19</posy>
+				<width>1</width>
+				<height>30</height>
+				<texture>separator_v.png</texture>
+			</control>
+		</control>
+	</include>
+</includes>
