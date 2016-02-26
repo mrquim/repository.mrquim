@@ -2,7 +2,7 @@
 
 '''
     Exodus Add-on
-    Copyright (C) 2016 lambda
+    Copyright (C) 2016 Exodus
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -69,17 +69,19 @@ class source:
             url = urlparse.urljoin(self.base_link, url)
 
             result = cloudflare.source(url)
+            result = re.sub(r'[^\x00-\x7F]+', '', result)
             result = client.parseDOM(result, 'a', ret='href', attrs = {'class': '[^"]*btn_watch_detail[^"]*'})
-
             if len(result) == 0:
                 url = self.watch_link % [i for i in url.split('/') if not i == ''][-1]
                 url = urlparse.urljoin(self.base_link, url)
                 result = cloudflare.source(url)
+                result = re.sub(r'[^\x00-\x7F]+', '', result)
                 result = client.parseDOM(result, 'a', ret='href', attrs = {'class': '[^"]*btn_watch_detail[^"]*'})
 
             result = urlparse.urljoin(self.base_link, result[0])
 
             result = cloudflare.source(result)
+            result = re.sub(r'[^\x00-\x7F]+', '', result)
 
             result = client.parseDOM(result, 'div', attrs = {'class': 'server'})[0]
             result = result.split('"svname"')
@@ -88,10 +90,11 @@ class source:
             result = [[(x[0], x[1], i[1]) for x in i[0]] for i in result]
             result = sum(result, [])
 
+            result = [(i[0], re.sub('[^0-9]', '', i[1].strip().split(' ')[-1]), i[2].split(':')[0].split('>')[-1].strip()) for i in result]
+            result = [(i[0], '720', i[2]) if i[1] == '' else (i[0], i[1], i[2]) for i in result]
+
             result = [i for i in result if '1080' in i[1] or '720' in i[1]]
             result = [('%s?quality=1080P' % i[0], '1080p', i[2]) if '1080' in i[1] else ('%s?quality=720P' % i[0], 'HD', i[2]) for i in result]
-
-            result = [(i[0], i[1], i[2].split(':')[0].split('>')[-1].strip()) for i in result]
 
             links = []
             links += [(i[0], i[1], 'gvideo') for i in result if i[2] in ['Fast Location 1', 'Fast Location 4']]
@@ -113,6 +116,7 @@ class source:
         try:
             try: quality = urlparse.parse_qs(urlparse.urlparse(url).query)['quality'][0]
             except: quality = '1080P'
+            quality = re.sub('[^0-9]', '', quality)
 
             url = urlparse.urljoin(self.base_link, url)
             url = url.rsplit('?', 1)[0]
@@ -124,20 +128,24 @@ class source:
 
             result = cloudflare.request(url)
 
+            replace = re.findall("\.replace\('(.*?)'.+?'(.*?)'\)", result)
+            for i in replace:
+                try: result = result.replace(i[0], i[1])
+                except: pass
+
+            count = len(re.findall('window\.atob', result))
+            result = re.compile("window\.atob[\([]+'([^']+)").findall(result)[0]
+            for i in xrange(count):
+                try: result = base64.decodestring(result)
+                except: pass
+
             url = client.parseDOM(result, 'iframe', ret='src')
             if len(url) > 0: return url[0]
 
-            count = len(re.findall('window\.atob', result))
-            result = re.compile("window\.atob\('([^']+)").findall(result)[0]
-
-            for i in xrange(count):
-                result = base64.decodestring(result)
-
-            result = re.compile('(\d*p)="([^"]+)"').findall(result)
-
-            url = [i for i in result if i[0].upper() == quality]
-            if len(url) > 0: url = url[0][1]
-            else: url = result[0][1]
+            result = re.compile('''<source[^>]+src=["']([^'"]+)[^>]+res=['"]([^'"]+)''').findall(result)
+            url = [i for i in result if i[1] == quality]
+            if len(url) > 0: url = url[0][0]
+            else: url = result[0][0]
 
             return url
         except:

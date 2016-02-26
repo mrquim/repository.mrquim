@@ -2,7 +2,7 @@
 
 '''
     Exodus Add-on
-    Copyright (C) 2016 lambda
+    Copyright (C) 2016 Exodus
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ import os,sys,re,json,zipfile,StringIO,urllib,urllib2,urlparse,base64,datetime
 
 from resources.lib.modules import trakt
 from resources.lib.modules import cleantitle
+from resources.lib.modules import cleangenre
 from resources.lib.modules import control
 from resources.lib.modules import client
 from resources.lib.modules import cache
@@ -35,36 +36,41 @@ class seasons:
     def __init__(self):
         self.list = []
 
-        self.tmdb_key = base64.urlsafe_b64decode('OWI5MzlhZWUwYWFhZmMxMmE2NWJmNDQ4ZTRhZjk1NDM==')
-        self.tvdb_key = base64.urlsafe_b64decode('MUQ2MkYyRjkwMDMwQzQ0NA==')
+        self.lang = control.apiLanguage()['tvdb']
         self.datetime = (datetime.datetime.utcnow() - datetime.timedelta(hours = 5))
         self.today_date = (self.datetime).strftime('%Y-%m-%d')
-        self.tmdb_lang = control.apiLanguage()['tmdb']
-        self.tvdb_lang = control.apiLanguage()['tvdb']
+        self.tvdb_key = base64.urlsafe_b64decode('MUQ2MkYyRjkwMDMwQzQ0NA==')
 
-        self.tmdb_info_link = 'http://api.themoviedb.org/3/tv/%s?api_key=%s&language=%s&append_to_response=credits,content_ratings,external_ids' % ('%s', self.tmdb_key, self.tmdb_lang)
         self.tvdb_info_link = 'http://thetvdb.com/api/%s/series/%s/all/%s.zip' % (self.tvdb_key, '%s', '%s')
-        self.tmdb_by_imdb = 'http://api.themoviedb.org/3/find/%s?api_key=%s&external_source=imdb_id' % ('%s', self.tmdb_key)
-        self.tmdb_by_tvdb = 'http://api.themoviedb.org/3/find/%s?api_key=%s&external_source=tvdb_id' % ('%s', self.tmdb_key)
         self.tvdb_by_imdb = 'http://thetvdb.com/api/GetSeriesByRemoteID.php?imdbid=%s'
-        self.tmdb_image = 'http://image.tmdb.org/t/p/original'
-        self.tmdb_poster = 'http://image.tmdb.org/t/p/w500'
+        self.tvdb_by_query = 'http://thetvdb.com/api/GetSeries.php?seriesname=%s'
+        self.imdb_by_query = 'http://www.omdbapi.com/?t=%s&y=%s'
         self.tvdb_image = 'http://thetvdb.com/banners/'
         self.tvdb_poster = 'http://thetvdb.com/banners/_cache/'
 
 
-    def get(self, tvshowtitle, year, imdb, tmdb, tvdb, idx=True):
+    def get(self, tvshowtitle, year, imdb, tvdb, idx=True):
         if idx == True:
-            self.list = cache.get(self.tvdb_list, 24, tvshowtitle, year, imdb, tmdb, tvdb, self.tvdb_lang)
+            self.list = cache.get(self.tvdb_list, 24, tvshowtitle, year, imdb, tvdb, self.lang)
             self.seasonDirectory(self.list)
             return self.list
         else:
-            self.list = self.tvdb_list(tvshowtitle, year, imdb, tmdb, tvdb, 'en')
+            self.list = self.tvdb_list(tvshowtitle, year, imdb, tvdb, 'en')
             return self.list
 
 
-    def tvdb_list(self, tvshowtitle, year, imdb, tmdb, tvdb, lang, limit=''):
+    def tvdb_list(self, tvshowtitle, year, imdb, tvdb, lang, limit=''):
         try:
+            if imdb == '0':
+                url = self.imdb_by_query % (urllib.quote_plus(tvshowtitle), year)
+
+                imdb = client.request(url, timeout='10')
+                try: imdb = json.loads(imdb)['imdbID']
+                except: imdb = '0'
+
+                if imdb == None or imdb == '' or imdb == 'N/A': imdb = '0'
+
+
             if tvdb == '0' and not imdb == '0':
                 url = self.tvdb_by_imdb % imdb
 
@@ -79,169 +85,111 @@ class seasons:
                 if len(dupe) > 0: tvdb = str(dupe[0])
 
                 if tvdb == '': tvdb = '0'
-                tvdb = tvdb.encode('utf-8')
 
 
-            if tvdb == '0' and not imdb == '0':
-                url = self.tmdb_by_imdb % imdb
-                result = client.request(url, timeout='10')
-                result = json.loads(result)
+            if tvdb == '0':
+                url = self.tvdb_by_query % (urllib.quote_plus(tvshowtitle))
 
-                tmdb = result['tv_results'][0]['id']
-                if tmdb == '' or tmdb == None: tmdb = '0'
-                tmdb = re.sub('[^0-9]', '', str(tmdb))
-                tmdb = tmdb.encode('utf-8')
+                years = [str(year), str(int(year)+1), str(int(year)-1)]
 
-                if not tmdb == '0':
-                    url = self.tmdb_info_link % tmdb
+                tvdb = client.request(url, timeout='10')
+                tvdb = re.sub(r'[^\x00-\x7F]+', '', tvdb)
+                tvdb = client.replaceHTMLCodes(tvdb)
+                tvdb = client.parseDOM(tvdb, 'Series')
+                tvdb = [(x, client.parseDOM(x, 'SeriesName'), client.parseDOM(x, 'FirstAired')) for x in tvdb]
+                tvdb = [(x, x[1][0], x[2][0]) for x in tvdb if len(x[1]) > 0 and len(x[2]) > 0]
+                tvdb = [x for x in tvdb if cleantitle.get(tvshowtitle) == cleantitle.get(x[1])]
+                tvdb = [x[0][0] for x in tvdb if any(y in x[2] for y in years)][0]
+                tvdb = client.parseDOM(tvdb, 'seriesid')[0]
 
-                    item = client.request(url, timeout='10')
-                    item = json.loads(item)
-
-                    tvdb = item['external_ids']['tvdb_id']
-                    if tvdb == '' or tvdb == None: tvdb = '0'
-                    tvdb = re.sub('[^0-9]', '', str(tvdb))
-                    tvdb = tvdb.encode('utf-8')
+                if tvdb == '': tvdb = '0'
         except:
-            pass
+            return
 
 
         try:
-            try: item = item
-            except: item = ''
-            if limit == '-2' or not item == '': raise Exception()
+            if tvdb == '0': return
 
-            if tmdb == '0' and not imdb == '0':
-                url = self.tmdb_by_imdb % imdb
-                result = client.request(url, timeout='10')
-                result = json.loads(result)
-
-                tmdb = result['tv_results'][0]['id']
-                if tmdb == '' or tmdb == None: tmdb = '0'
-                tmdb = re.sub('[^0-9]', '', str(tmdb))
-                tmdb = tmdb.encode('utf-8')
-
-
-            if tmdb == '0' and not tvdb == '0':
-                url = self.tmdb_by_tvdb % tvdb
-                result = client.request(url, timeout='10')
-                result = json.loads(result)
-
-                tmdb = result['tv_results'][0]['id']
-                if tmdb == '' or tmdb == None: tmdb = '0'
-                tmdb = re.sub('[^0-9]', '', str(tmdb))
-                tmdb = tmdb.encode('utf-8')
-
-
-
-            if tmdb == '0': raise Exception()
-
-            url = self.tmdb_info_link % tmdb
-
-            item = client.request(url, timeout='10')
-            item = json.loads(item)
-        except:
-            pass
-
-
-        try:
-            if tvdb == '0': raise Exception()
-
-            tvdb_lang = re.sub('bg', 'en', lang)
-
-            url = self.tvdb_info_link % (tvdb, tvdb_lang)
+            url = self.tvdb_info_link % (tvdb, 'en')
             data = urllib2.urlopen(url, timeout=30).read()
 
             zip = zipfile.ZipFile(StringIO.StringIO(data))
-            result = zip.read('%s.xml' % tvdb_lang)
+            result = zip.read('%s.xml' % 'en')
             artwork = zip.read('banners.xml')
             zip.close()
 
             dupe = client.parseDOM(result, 'SeriesName')[0]
             dupe = re.compile('[***]Duplicate (\d*)[***]').findall(dupe)
+
             if len(dupe) > 0:
                 tvdb = str(dupe[0]).encode('utf-8')
-                url = self.tvdb_info_link % (tvdb, tvdb_lang)
-                data = urllib2.urlopen(url, timeout=30).read()
-                zip = zipfile.ZipFile(StringIO.StringIO(data))
-                result = zip.read('%s.xml' % tvdb_lang)
-                artwork = zip.read('banners.xml')
-                zip.close()
 
-            if not tvdb_lang == 'en':
                 url = self.tvdb_info_link % (tvdb, 'en')
                 data = urllib2.urlopen(url, timeout=30).read()
 
                 zip = zipfile.ZipFile(StringIO.StringIO(data))
-                titleDict = zip.read('%s.xml' % 'en')
+                result = zip.read('%s.xml' % 'en')
+                artwork = zip.read('banners.xml')
+                zip.close()
+
+            if not lang == 'en':
+                url = self.tvdb_info_link % (tvdb, lang)
+                data = urllib2.urlopen(url, timeout=30).read()
+
+                zip = zipfile.ZipFile(StringIO.StringIO(data))
+                result2 = zip.read('%s.xml' % lang)
                 zip.close()
             else:
-                titleDict = result
-
-            titlex = '<Episode>.+?<id>(.+?)</id>.+?<EpisodeName>(.+?)</EpisodeName>'
-            titleDict = dict(re.compile(titlex, re.DOTALL).findall(titleDict))
+                result2 = result
 
 
             artwork = artwork.split('<Banner>')
             artwork = [i for i in artwork if '<Language>en</Language>' in i and '<BannerType>season</BannerType>' in i]
-            artwork = [i for i in artwork if not 'seasonswide' in re.compile('<BannerPath>(.+?)</BannerPath>').findall(i)[0]]
+            artwork = [i for i in artwork if not 'seasonswide' in re.findall('<BannerPath>(.+?)</BannerPath>', i)[0]]
+
 
             result = result.split('<Episode>')
+            result2 = result2.split('<Episode>')
 
-            item2 = result[0]
+            item = result[0] ; item2 = result2[0]
+
             episodes = [i for i in result if '<EpisodeNumber>' in i]
             episodes = [i for i in episodes if not '<SeasonNumber>0</SeasonNumber>' in i]
             episodes = [i for i in episodes if not '<EpisodeNumber>0</EpisodeNumber>' in i]
+
             seasons = [i for i in episodes if '<EpisodeNumber>1</EpisodeNumber>' in i]
 
-            result = ''
+            locals = [i for i in result2 if '<EpisodeNumber>' in i]
+
+            result = '' ; result2 = ''
 
             if limit == '':
                 episodes = []
-            elif limit == '-1' or  limit == '-2':
+            elif limit == '-1':
                 seasons = []
             else:
                 episodes = [i for i in episodes if '<SeasonNumber>%01d</SeasonNumber>' % int(limit) in i]
                 seasons = []
 
 
-            try: label = item['name']
-            except: label = ''
-            if label == '' or label == None: label = '0'
-            if label == '0':
-                try: label = client.parseDOM(item2, 'SeriesName')[0]
-                except: label = '0'
-            label = client.replaceHTMLCodes(label)
-            label = label.encode('utf-8')
-
-            try: poster = item['poster_path']
+            try: poster = client.parseDOM(item, 'poster')[0]
             except: poster = ''
-            if poster == '' or poster == None: poster = '0'
-            if not poster == '0': poster = self.tmdb_poster + poster
-            if poster == '0':
-                try: poster = client.parseDOM(item2, 'poster')[0]
-                except: poster = ''
-                if not poster == '': poster = self.tvdb_image + poster
-                else: poster = '0'
+            if not poster == '': poster = self.tvdb_image + poster
+            else: poster = '0'
             poster = client.replaceHTMLCodes(poster)
             poster = poster.encode('utf-8')
 
-            try: banner = client.parseDOM(item2, 'banner')[0]
+            try: banner = client.parseDOM(item, 'banner')[0]
             except: banner = ''
             if not banner == '': banner = self.tvdb_image + banner
             else: banner = '0'
             banner = client.replaceHTMLCodes(banner)
             banner = banner.encode('utf-8')
 
-            try: fanart = item['backdrop_path']
+            try: fanart = client.parseDOM(item, 'fanart')[0]
             except: fanart = ''
-            if fanart == '' or fanart == None: fanart = '0'
-            if not fanart == '0': fanart = self.tmdb_image + fanart
-            if fanart == '0':
-                try: fanart = client.parseDOM(item2, 'fanart')[0]
-                except: fanart = ''
-                if not fanart == '': fanart = self.tvdb_image + fanart
-                else: fanart = '0'
+            if not fanart == '': fanart = self.tvdb_image + fanart
+            else: fanart = '0'
             fanart = client.replaceHTMLCodes(fanart)
             fanart = fanart.encode('utf-8')
 
@@ -253,93 +201,68 @@ class seasons:
             elif not fanart == '0': banner = fanart
             elif not poster == '0': banner = poster
 
-            try: status = client.parseDOM(item2, 'Status')[0]
+            try: status = client.parseDOM(item, 'Status')[0]
             except: status = ''
             if status == '': status = 'Ended'
             status = client.replaceHTMLCodes(status)
             status = status.encode('utf-8')
 
-            try: studio = item['networks'][0]['name']
+            try: studio = client.parseDOM(item, 'Network')[0]
             except: studio = ''
-            if studio == '' or studio == None:
-                try: studio = client.parseDOM(item2, 'Network')[0]
-                except: studio = ''
             if studio == '': studio = '0'
             studio = client.replaceHTMLCodes(studio)
             studio = studio.encode('utf-8')
 
-            try: genre = item['genres']
-            except: genre = []
-            try: genre = [x['name'] for x in genre]
-            except: genre = []
-            if genre == '' or genre == None or genre == []:
-                try: genre = client.parseDOM(item2, 'Genre')[0]
-                except: genre = ''
-                genre = [x for x in genre.split('|') if not x == '']
+            try: genre = client.parseDOM(item, 'Genre')[0]
+            except: genre = ''
+            genre = [x for x in genre.split('|') if not x == '']
             genre = ' / '.join(genre)
             if genre == '': genre = '0'
             genre = client.replaceHTMLCodes(genre)
             genre = genre.encode('utf-8')
 
-            try: duration = str(item['episode_run_time'][0])
+            try: duration = client.parseDOM(item, 'Runtime')[0]
             except: duration = ''
-            if duration == '' or duration == None:
-                try: duration = client.parseDOM(item2, 'Runtime')[0]
-                except: duration = ''
             if duration == '': duration = '0'
             duration = client.replaceHTMLCodes(duration)
             duration = duration.encode('utf-8')
 
-            try: rating = str(item['vote_average'])
+            try: rating = client.parseDOM(item, 'Rating')[0]
             except: rating = ''
-            if rating == '' or rating == None:
-                try: rating = client.parseDOM(item2, 'Rating')[0]
-                except: rating = ''
             if rating == '': rating = '0'
             rating = client.replaceHTMLCodes(rating)
             rating = rating.encode('utf-8')
 
-            try: votes = str(item['vote_count'])
-            except: votes = ''
-            try: votes = str(format(int(votes),',d'))
-            except: pass
-            if votes == '' or votes == None:
-                try: votes = client.parseDOM(item2, 'RatingCount')[0]
-                except: votes = '0'
+            try: votes = client.parseDOM(item, 'RatingCount')[0]
+            except: votes = '0'
             if votes == '': votes = '0'
             votes = client.replaceHTMLCodes(votes)
             votes = votes.encode('utf-8')
 
-            try: mpaa = item['content_ratings']['results'][-1]['rating']
+            try: mpaa = client.parseDOM(item, 'ContentRating')[0]
             except: mpaa = ''
-            if mpaa == '' or mpaa == None:
-                try: mpaa = client.parseDOM(item2, 'ContentRating')[0]
-                except: mpaa = ''
             if mpaa == '': mpaa = '0'
             mpaa = client.replaceHTMLCodes(mpaa)
             mpaa = mpaa.encode('utf-8')
 
-            try: cast = item['credits']['cast']
+            try: cast = client.parseDOM(item, 'Actors')[0]
+            except: cast = ''
+            cast = [x for x in cast.split('|') if not x == '']
+            try: cast = [(x.encode('utf-8'), '') for x in cast]
             except: cast = []
-            try: cast = [(x['name'].encode('utf-8'), x['character'].encode('utf-8')) for x in cast]
-            except: cast = []
-            if cast == []:
-                try: cast = client.parseDOM(item2, 'Actors')[0]
-                except: cast = ''
-                cast = [x for x in cast.split('|') if not x == '']
-                try: cast = [(x.encode('utf-8'), '') for x in cast]
-                except: cast = []
 
-            try: plot = item['overview']
+            try: label = client.parseDOM(item2, 'SeriesName')[0]
+            except: label = '0'
+            label = client.replaceHTMLCodes(label)
+            label = label.encode('utf-8')
+
+            try: plot = client.parseDOM(item2, 'Overview')[0]
             except: plot = ''
-            if plot == '' or plot == None:
-                try: plot = client.parseDOM(item2, 'Overview')[0]
-                except: plot = ''
             if plot == '': plot = '0'
             plot = client.replaceHTMLCodes(plot)
             plot = plot.encode('utf-8')
         except:
-            return
+            pass
 
 
         for item in seasons:
@@ -367,7 +290,7 @@ class seasons:
 
                 if thumb == '0': thumb = poster
 
-                self.list.append({'season': season, 'tvshowtitle': tvshowtitle, 'label': label, 'year': year, 'premiered': premiered, 'status': status, 'studio': studio, 'genre': genre, 'duration': duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'cast': cast, 'plot': plot, 'code': imdb, 'imdb': imdb, 'tmdb': tmdb, 'tvdb': tvdb, 'poster': poster, 'banner': banner, 'fanart': fanart, 'thumb': thumb})
+                self.list.append({'season': season, 'tvshowtitle': tvshowtitle, 'label': label, 'year': year, 'premiered': premiered, 'status': status, 'studio': studio, 'genre': genre, 'duration': duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'cast': cast, 'plot': plot, 'code': imdb, 'imdb': imdb, 'tmdb': '0', 'tvdb': tvdb, 'poster': poster, 'banner': banner, 'fanart': fanart, 'thumb': thumb})
             except:
                 pass
 
@@ -391,15 +314,10 @@ class seasons:
                 episode = re.sub('[^0-9]', '', '%01d' % int(episode))
                 episode = episode.encode('utf-8')
 
-                title = titleDict[client.parseDOM(item, 'id')[0]]
+                title = client.parseDOM(item, 'EpisodeName')[0]
                 if title == '': title = '0'
                 title = client.replaceHTMLCodes(title)
                 title = title.encode('utf-8')
-
-                label = client.parseDOM(item, 'EpisodeName')[0]
-                if label == '': label = '0'
-                label = client.replaceHTMLCodes(label)
-                label = label.encode('utf-8')
 
                 try: thumb = client.parseDOM(item, 'filename')[0]
                 except: thumb = ''
@@ -409,7 +327,7 @@ class seasons:
                 thumb = thumb.encode('utf-8')
 
                 if not thumb == '0': pass
-                elif not fanart == '0': thumb = fanart.replace(self.tmdb_image, self.tmdb_poster).replace(self.tvdb_image, self.tvdb_poster)
+                elif not fanart == '0': thumb = fanart.replace(self.tvdb_image, self.tvdb_poster)
                 elif not poster == '0': thumb = poster
 
                 try: rating = client.parseDOM(item, 'Rating')[0]
@@ -434,7 +352,18 @@ class seasons:
                 writer = client.replaceHTMLCodes(writer)
                 writer = writer.encode('utf-8')
 
-                try: episodeplot = client.parseDOM(item, 'Overview')[0]
+                try:
+                    local = client.parseDOM(item, 'id')[0]
+                    local = [x for x in locals if '<id>%s</id>' % str(local) in x][0]
+                except:
+                    local = item
+
+                label = client.parseDOM(local, 'EpisodeName')[0]
+                if label == '': label = '0'
+                label = client.replaceHTMLCodes(label)
+                label = label.encode('utf-8')
+
+                try: episodeplot = client.parseDOM(local, 'Overview')[0]
                 except: episodeplot = ''
                 if episodeplot == '': episodeplot = '0'
                 if episodeplot == '0': episodeplot = plot
@@ -442,7 +371,7 @@ class seasons:
                 try: episodeplot = episodeplot.encode('utf-8')
                 except: pass
 
-                self.list.append({'title': title, 'label': label, 'season': season, 'episode': episode, 'tvshowtitle': tvshowtitle, 'year': year, 'premiered': premiered, 'status': status, 'studio': studio, 'genre': genre, 'duration': duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'director': director, 'writer': writer, 'cast': cast, 'plot': episodeplot, 'code': imdb, 'imdb': imdb, 'tmdb': tmdb, 'tvdb': tvdb, 'poster': poster, 'banner': banner, 'fanart': fanart, 'thumb': thumb})
+                self.list.append({'title': title, 'label': label, 'season': season, 'episode': episode, 'tvshowtitle': tvshowtitle, 'year': year, 'premiered': premiered, 'status': status, 'studio': studio, 'genre': genre, 'duration': duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'director': director, 'writer': writer, 'cast': cast, 'plot': episodeplot, 'code': imdb, 'imdb': imdb, 'tmdb': '0', 'tvdb': tvdb, 'poster': poster, 'banner': banner, 'fanart': fanart, 'thumb': thumb})
             except:
                 pass
 
@@ -471,7 +400,7 @@ class seasons:
                 systitle = sysname = urllib.quote_plus(i['tvshowtitle'])
                 sysimage = urllib.quote_plus(i['thumb'])
 
-                imdb, tmdb, tvdb, year, season = i['imdb'], i['tmdb'], i['tvdb'], i['year'], i['season']
+                imdb, tvdb, year, season = i['imdb'], i['tvdb'], i['year'], i['season']
 
                 poster, banner, fanart, thumb = i['poster'], i['banner'], i['fanart'], i['thumb']
                 if poster == '0': poster = addonPoster
@@ -485,11 +414,13 @@ class seasons:
                 if i['duration'] == '0': meta.update({'duration': '60'})
                 try: meta.update({'duration': str(int(meta['duration']) * 60)})
                 except: pass
+                try: meta.update({'genre': cleangenre.lang(meta['genre'], self.lang)})
+                except: pass
                 sysmeta = urllib.quote_plus(json.dumps(meta))
                 try: meta.update({'tvshowtitle': i['label']})
                 except: pass
 
-                url = '%s?action=episodes&tvshowtitle=%s&year=%s&imdb=%s&tmdb=%s&tvdb=%s&season=%s' % (sysaddon, systitle, year, imdb, tmdb, tvdb, season)
+                url = '%s?action=episodes&tvshowtitle=%s&year=%s&imdb=%s&tvdb=%s&season=%s' % (sysaddon, systitle, year, imdb, tvdb, season)
 
                 cm = []
 
@@ -543,14 +474,14 @@ class episodes:
         self.systime = (self.datetime).strftime('%Y%m%d%H%M%S%f')
         self.today_date = (self.datetime).strftime('%Y-%m-%d')
         self.trakt_user = re.sub('[^a-z0-9]', '-', control.setting('trakt.user').strip().lower())
-        self.tvdb_lang = control.apiLanguage()['tvdb']
+        self.lang = control.apiLanguage()['tvdb']
 
         self.tvdb_info_link = 'http://thetvdb.com/api/%s/series/%s/all/%s.zip' % (self.tvdb_key, '%s', '%s')
         self.tvdb_image = 'http://thetvdb.com/banners/'
         self.tvdb_poster = 'http://thetvdb.com/banners/_cache/'
 
-        self.added_link = 'http://api-v2launch.trakt.tv/calendars/all/shows/%s/7/' % (self.datetime - datetime.timedelta(days = 6)).strftime('%Y-%m-%d')
-        self.mycalendar_link = 'http://api-v2launch.trakt.tv/calendars/my/shows/%s/60/' % (self.datetime - datetime.timedelta(days = 59)).strftime('%Y-%m-%d')
+        self.added_link = 'http://api-v2launch.trakt.tv/calendars/all/shows/date[6]/7/'
+        self.mycalendar_link = 'http://api-v2launch.trakt.tv/calendars/my/shows/date[59]/60/'
         self.trakthistory_link = 'http://api-v2launch.trakt.tv/users/%s/history/shows?limit=300' % self.trakt_user
         self.progress_link = 'http://api-v2launch.trakt.tv/users/%s/watched/shows' % self.trakt_user
         self.calendar_link = 'http://api-v2launch.trakt.tv/calendars/all/shows/%s/%s'
@@ -559,20 +490,20 @@ class episodes:
         self.traktlist_link = 'http://api-v2launch.trakt.tv/users/%s/lists/%s/items'
 
 
-    def get(self, tvshowtitle, year, imdb, tmdb, tvdb, season=None, episode=None, idx=True):
+    def get(self, tvshowtitle, year, imdb, tvdb, season=None, episode=None, idx=True):
         try:
             if idx == True:
                 if episode == None:
-                    self.list = cache.get(seasons().tvdb_list, 1, tvshowtitle, year, imdb, tmdb, tvdb, self.tvdb_lang, season)
+                    self.list = cache.get(seasons().tvdb_list, 1, tvshowtitle, year, imdb, tvdb, self.lang, season)
                 else:
-                    self.list = cache.get(seasons().tvdb_list, 1, tvshowtitle, year, imdb, tmdb, tvdb, self.tvdb_lang, '-1')
+                    self.list = cache.get(seasons().tvdb_list, 1, tvshowtitle, year, imdb, tvdb, self.lang, '-1')
                     num = [x for x,y in enumerate(self.list) if y['season'] == str(season) and  y['episode'] == str(episode)][-1]
                     self.list = [y for x,y in enumerate(self.list) if x >= num]
 
                 self.episodeDirectory(self.list)
                 return self.list
             else:
-                self.list = seasons().tvdb_list(tvshowtitle, year, imdb, tmdb, tvdb, 'en', '-2')
+                self.list = seasons().tvdb_list(tvshowtitle, year, imdb, tvdb, 'en', '-1')
                 return self.list
         except:
             pass
@@ -584,7 +515,9 @@ class episodes:
             except: pass
 
             if url in self.progress_link:
-                self.list = cache.get(self.trakt_list2, 1, url, self.tvdb_lang)
+                self.blist = cache.get(self.trakt_progress_list, 720, url, self.lang)
+                self.list = []
+                self.list = cache.get(self.trakt_progress_list, 0, url, self.lang)
             elif '/users/' in url:
                 self.list = cache.get(self.trakt_list, 0, url)
                 self.list = self.list[::-1]
@@ -667,6 +600,9 @@ class episodes:
 
     def trakt_list(self, url):
         try:
+            for i in re.findall('date\[(\d+)\]', url):
+                url = url.replace('date[%s]' % i, (self.datetime - datetime.timedelta(days = int(i))).strftime('%Y-%m-%d'))
+
             q = dict(urlparse.parse_qsl(urlparse.urlsplit(url).query))
             q.update({'extended': 'full,images'})
             q = (urllib.urlencode(q)).replace('%2C', ',')
@@ -714,11 +650,6 @@ class episodes:
                 if tvdb == None or tvdb == '': raise Exception()
                 tvdb = re.sub('[^0-9]', '', str(tvdb))
                 tvdb = tvdb.encode('utf-8')
-
-                tmdb = item['show']['ids']['tmdb']
-                if tmdb == None or tmdb == '': tmdb = '0'
-                tmdb = re.sub('[^0-9]', '', str(tmdb))
-                tmdb = tmdb.encode('utf-8')
 
                 poster = '0'
                 try: poster = item['show']['images']['poster']['medium']
@@ -792,7 +723,7 @@ class episodes:
                 plot = client.replaceHTMLCodes(plot)
                 plot = plot.encode('utf-8')
 
-                itemlist.append({'title': title, 'season': season, 'episode': episode, 'tvshowtitle': tvshowtitle, 'year': year, 'premiered': premiered, 'status': 'Continuing', 'studio': studio, 'genre': genre, 'duration': duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'director': '0', 'writer': '0', 'cast': '0', 'plot': plot, 'code': imdb, 'imdb': imdb, 'tmdb': tmdb, 'tvdb': tvdb, 'poster': poster, 'banner': banner, 'fanart': fanart, 'thumb': thumb})
+                itemlist.append({'title': title, 'season': season, 'episode': episode, 'tvshowtitle': tvshowtitle, 'year': year, 'premiered': premiered, 'status': 'Continuing', 'studio': studio, 'genre': genre, 'duration': duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'director': '0', 'writer': '0', 'cast': '0', 'plot': plot, 'code': imdb, 'imdb': imdb, 'tmdb': '0', 'tvdb': tvdb, 'poster': poster, 'banner': banner, 'fanart': fanart, 'thumb': thumb})
             except:
                 pass
 
@@ -801,7 +732,7 @@ class episodes:
         return itemlist
 
 
-    def trakt_list2(self, url, lang):
+    def trakt_progress_list(self, url, lang):
         try:
             url += '?extended=full'
             result = trakt.getTrakt(url)
@@ -842,17 +773,20 @@ class episodes:
                 tvdb = re.sub('[^0-9]', '', str(tvdb))
                 tvdb = tvdb.encode('utf-8')
 
-                tmdb = item['show']['ids']['tmdb']
-                if tmdb == None or tmdb == '': tmdb = '0'
-                tmdb = re.sub('[^0-9]', '', str(tmdb))
-                tmdb = tmdb.encode('utf-8')
-
-                items.append({'imdb': imdb, 'tmdb': tmdb, 'tvdb': tvdb, 'tvshowtitle': tvshowtitle, 'year': year, 'season': season, 'episode': episode})
+                items.append({'imdb': imdb, 'tmdb': '0', 'tvdb': tvdb, 'tvshowtitle': tvshowtitle, 'year': year, 'snum': season, 'enum': episode})
             except:
                 pass
 
 
         def items_list(i):
+            try:
+                item = [x for x in self.blist if x['tvdb'] == i['tvdb'] and x['snum'] == i['snum'] and x['enum'] == i['enum']][0]
+                item['action'] = 'episodes'
+                self.list.append(item)
+                return
+            except:
+                pass
+
             try:
                 url = self.tvdb_info_link % (i['tvdb'], lang)
                 data = urllib2.urlopen(url, timeout=10).read()
@@ -866,7 +800,7 @@ class episodes:
                 item = [x for x in result if '<EpisodeNumber>' in x]
                 item2 = result[0]
 
-                num = [x for x,y in enumerate(item) if re.compile('<SeasonNumber>(.+?)</SeasonNumber>').findall(y)[0] == str(i['season']) and re.compile('<EpisodeNumber>(.+?)</EpisodeNumber>').findall(y)[0] == str(i['episode'])][-1]
+                num = [x for x,y in enumerate(item) if re.compile('<SeasonNumber>(.+?)</SeasonNumber>').findall(y)[0] == str(i['snum']) and re.compile('<EpisodeNumber>(.+?)</EpisodeNumber>').findall(y)[0] == str(i['enum'])][-1]
                 item = [y for x,y in enumerate(item) if x > num][0]
 
 
@@ -899,7 +833,7 @@ class episodes:
                 episode = episode.encode('utf-8')
 
                 tvshowtitle = i['tvshowtitle']
-                imdb, tmdb, tvdb = i['imdb'], i['tmdb'], i['tvdb']
+                imdb, tvdb = i['imdb'], i['tvdb']
 
                 year = i['year']
                 try: year = year.encode('utf-8')
@@ -1014,17 +948,18 @@ class episodes:
                 plot = client.replaceHTMLCodes(plot)
                 plot = plot.encode('utf-8')
 
-                self.list.append({'title': title, 'season': season, 'episode': episode, 'tvshowtitle': tvshowtitle, 'year': year, 'premiered': premiered, 'status': status, 'studio': studio, 'genre': genre, 'duration': duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'director': director, 'writer': writer, 'cast': cast, 'plot': plot, 'code': imdb, 'imdb': imdb, 'tmdb': tmdb, 'tvdb': tvdb, 'poster': poster, 'banner': banner, 'fanart': fanart, 'thumb': thumb, 'action': 'episodes'})
+                self.list.append({'title': title, 'season': season, 'episode': episode, 'tvshowtitle': tvshowtitle, 'year': year, 'premiered': premiered, 'status': status, 'studio': studio, 'genre': genre, 'duration': duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'director': director, 'writer': writer, 'cast': cast, 'plot': plot, 'code': imdb, 'imdb': imdb, 'tmdb': '0', 'tvdb': tvdb, 'poster': poster, 'banner': banner, 'fanart': fanart, 'thumb': thumb, 'snum': i['snum'], 'enum': i['enum'], 'action': 'episodes'})
             except:
                 pass
 
 
-        items = items[:30]
+        items = items[:100]
 
         threads = []
         for i in items: threads.append(workers.Thread(items_list, i))
         [i.start() for i in threads]
         [i.join() for i in threads]
+
 
         try: self.list = sorted(self.list, key=lambda k: k['premiered'], reverse=True)
         except: pass
@@ -1097,7 +1032,7 @@ class episodes:
                 if multi == True:
                     label = '%s - %s' % (i['tvshowtitle'], label)
 
-                imdb, tmdb, tvdb, year, season, episode = i['imdb'], i['tmdb'], i['tvdb'], i['year'], i['season'], i['episode']
+                imdb, tvdb, year, season, episode = i['imdb'], i['tvdb'], i['year'], i['season'], i['episode']
 
                 systitle = urllib.quote_plus(i['title'])
                 systvshowtitle = urllib.quote_plus(i['tvshowtitle'])
@@ -1116,21 +1051,23 @@ class episodes:
                 if i['duration'] == '0': meta.update({'duration': '60'})
                 try: meta.update({'duration': str(int(meta['duration']) * 60)})
                 except: pass
+                try: meta.update({'genre': cleangenre.lang(meta['genre'], self.lang)})
+                except: pass
                 try: meta.update({'title': i['label']})
                 except: pass
                 sysmeta = urllib.quote_plus(json.dumps(meta))
 
 
-                url = '%s?action=play&title=%s&year=%s&imdb=%s&tmdb=%s&tvdb=%s&season=%s&episode=%s&tvshowtitle=%s&premiered=%s&meta=%s&t=%s' % (sysaddon, systitle, year, imdb, tmdb, tvdb, season, episode, systvshowtitle, syspremiered, sysmeta, self.systime)
+                url = '%s?action=play&title=%s&year=%s&imdb=%s&tvdb=%s&season=%s&episode=%s&tvshowtitle=%s&premiered=%s&meta=%s&t=%s' % (sysaddon, systitle, year, imdb, tvdb, season, episode, systvshowtitle, syspremiered, sysmeta, self.systime)
                 sysurl = urllib.quote_plus(url)
 
-                path = '%s?action=play&title=%s&year=%s&imdb=%s&tmdb=%s&tvdb=%s&season=%s&episode=%s&tvshowtitle=%s&premiered=%s' % (sysaddon, systitle, year, imdb, tmdb, tvdb, season, episode, systvshowtitle, syspremiered)
+                path = '%s?action=play&title=%s&year=%s&imdb=%s&tvdb=%s&season=%s&episode=%s&tvshowtitle=%s&premiered=%s' % (sysaddon, systitle, year, imdb, tvdb, season, episode, systvshowtitle, syspremiered)
 
                 if isFolder == True:
-                    url = '%s?action=sources&title=%s&year=%s&imdb=%s&tmdb=%s&tvdb=%s&season=%s&episode=%s&tvshowtitle=%s&premiered=%s&meta=%s' % (sysaddon, systitle, year, imdb, tmdb, tvdb, season, episode, systvshowtitle, syspremiered, sysmeta)
+                    url = '%s?action=sources&title=%s&year=%s&imdb=%s&tvdb=%s&season=%s&episode=%s&tvshowtitle=%s&premiered=%s&meta=%s' % (sysaddon, systitle, year, imdb, tvdb, season, episode, systvshowtitle, syspremiered, sysmeta)
 
                 if sysaction == 'episodes':
-                    url = '%s?action=episodes&tvshowtitle=%s&year=%s&imdb=%s&tmdb=%s&tvdb=%s&season=%s&episode=%s' % (sysaddon, systvshowtitle, year, imdb, tmdb, tvdb, season, episode)
+                    url = '%s?action=episodes&tvshowtitle=%s&year=%s&imdb=%s&tvdb=%s&season=%s&episode=%s' % (sysaddon, systvshowtitle, year, imdb, tvdb, season, episode)
                     isFolder = True ; cacheToDisc = True
 
 
@@ -1153,7 +1090,7 @@ class episodes:
                     cm.append((control.lang(30265).encode('utf-8'), 'RunPlugin(%s?action=traktManager&name=%s&tvdb=%s&content=tvshow)' % (sysaddon, systvshowtitle, tvdb)))
 
                 if multi == True:
-                    cm.append((control.lang(30274).encode('utf-8'), 'ActivateWindow(Videos,%s?action=seasons&tvshowtitle=%s&year=%s&imdb=%s&tmdb=%s&tvdb=%s,return)' % (sysaddon, systvshowtitle, year, imdb, tmdb, tvdb)))
+                    cm.append((control.lang(30274).encode('utf-8'), 'ActivateWindow(Videos,%s?action=seasons&tvshowtitle=%s&year=%s&imdb=%s&tvdb=%s,return)' % (sysaddon, systvshowtitle, year, imdb, tvdb)))
 
                 cm.append((control.lang(30272).encode('utf-8'), 'Action(Info)'))
                 cm.append((control.lang(30263).encode('utf-8'), 'RunPlugin(%s?action=episodePlaycount&imdb=%s&tvdb=%s&season=%s&episode=%s&query=7)' % (sysaddon, imdb, tvdb, season, episode)))

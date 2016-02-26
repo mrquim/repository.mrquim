@@ -29,13 +29,13 @@ from resources.lib.modules import client
 class source:
     def __init__(self):
         self.domains = ['ororo.tv']
-        self.base_link = 'https://ororo.tv'
+        self.base_link = 'https://www2.ororo.tv'
         self.moviesearch_link = '/en/movies'
         self.tvsearch_link = '/en'
 
         self.cookie = None
         self.lang = 'locale=en; nl=true'
-        self.sign = 'https://ororo.tv/en/users/sign_in'
+        self.sign = 'https://www2.ororo.tv/en/users/sign_in'
         self.user = control.setting('ororo.user')
         self.password = control.setting('ororo.pass')
         self.headers = {'User-Agent': 'Exodus for Kodi'}

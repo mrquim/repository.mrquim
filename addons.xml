@@ -762,7 +762,7 @@ Addons Included
 	</extension>
 </addon>
 
-<addon id="plugin.video.exodus" version="1.0.1" name="Exodus" provider-name="l*m*d*">
+<addon id="plugin.video.exodus" version="1.1.1" name="Exodus" provider-name="Exodus">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0" />
 		<import addon="repository.exodus" version="1.0.0" />
@@ -1011,6 +1011,20 @@ Addons Included
 		<email>bromix at gmx dot net</email>
 		<source>https://github.com/bromix/plugin.video.youtube</source>
 	</extension>
+</addon>
+
+<addon id="service.autosubs"
+    name="AutoSubs" version="0.0.9" provider-name="amet,schumi2004,CaTz,sagiben">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.service" library="default.py" start="login"></extension> 
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Auto Search for Subtitles on Play</summary>
+    <description lang="en">Auto Search for Subtitles on Playback start if no subs are found.[CR][CR]Icon credits goes to zNET Computer Solutions http://www.znetcs.pl</description>
+    <platform>all</platform>
+    <language>en</language>
+  </extension>
 </addon>
 
 </addons>

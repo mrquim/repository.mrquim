@@ -2,7 +2,7 @@
 
 '''
     Exodus Add-on
-    Copyright (C) 2016 lambda
+    Copyright (C) 2016 Exodus
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ class player(xbmc.Player):
         xbmc.Player.__init__(self)
 
 
-    def run(self, title, year, season, episode, imdb, tmdb, tvdb, meta, url):
+    def run(self, title, year, season, episode, imdb, tvdb, meta, url):
         try:
             self.loadingTime = time.time()
             self.totalTime = 0 ; self.currentTime = 0
@@ -45,9 +45,8 @@ class player(xbmc.Player):
             self.episode = '%01d' % int(episode) if self.content == 'episode' else None
 
             self.imdb = imdb if not imdb == None else '0'
-            self.tmdb = tmdb if not tmdb == None else '0'
             self.tvdb = tvdb if not tvdb == None else '0'
-            self.ids = {'imdb': self.imdb, 'tmdb': self.tmdb, 'tvdb': self.tvdb}
+            self.ids = {'imdb': self.imdb, 'tvdb': self.tvdb}
             self.ids = dict((k,v) for k, v in self.ids.iteritems() if not v == '0')
 
             control.window.setProperty('script.trakt.ids', json.dumps(self.ids))

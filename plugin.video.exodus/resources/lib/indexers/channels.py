@@ -2,7 +2,7 @@
 
 '''
     Exodus Add-on
-    Copyright (C) 2016 lambda
+    Copyright (C) 2016 Exodus
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -203,7 +203,7 @@ class channels:
                 label = '[B]%s[/B] : %s (%s)' % (i['channel'].upper(), i['title'], i['year'])
                 sysname = urllib.quote_plus('%s (%s)' % (i['title'], i['year']))
                 systitle = urllib.quote_plus(i['title'])
-                imdb, tmdb, year = i['imdb'], i['tmdb'], i['year']
+                imdb, year = i['imdb'], i['year']
 
                 poster, banner = i['poster'], i['poster']
                 if poster == '0': poster = addonPoster
@@ -217,7 +217,7 @@ class channels:
                 except: pass
                 sysmeta = urllib.quote_plus(json.dumps(meta))
 
-                url = '%s?action=play&title=%s&year=%s&imdb=%s&tmdb=%s&meta=%s&t=%s' % (sysaddon, systitle, year, imdb, tmdb, sysmeta, self.systime)
+                url = '%s?action=play&title=%s&year=%s&imdb=%s&meta=%s&t=%s' % (sysaddon, systitle, year, imdb, sysmeta, self.systime)
                 sysurl = urllib.quote_plus(url)
 
                 cm = []

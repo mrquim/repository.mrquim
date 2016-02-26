@@ -2,7 +2,7 @@
 
 '''
     Exodus Add-on
-    Copyright (C) 2016 lambda
+    Copyright (C) 2016 Exodus
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -130,7 +130,7 @@ class navigator:
             self.addDirectoryItem(30068, 'tvshows&url=imdbwatchlist', 'imdb.png', 'DefaultTVShows.png')
 
         self.addDirectoryItem(30051, 'tvGenres', 'genres.png', 'DefaultTVShows.png')
-        self.addDirectoryItem(30052, 'tvYears', 'years.png', 'DefaultTVShows.png')
+        self.addDirectoryItem(30024, 'tvCertificates', 'certificates.png', 'DefaultTVShows.png')
         self.addDirectoryItem(30053, 'tvNetworks', 'networks.png', 'DefaultTVShows.png')
 
         if classicMenu == False and traktCredentials == True:

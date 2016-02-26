@@ -55,7 +55,6 @@
 		<setting id="provider.sezonlukdizi" type="bool" label="Sezonlukdizi" default="true" />
 		<setting id="provider.onlinedizi" type="bool" label="Onlinedizi" default="true" />
 		<setting id="provider.dizigold" type="bool" label="Dizigold" default="true" />
-		<setting id="provider.torba" type="bool" label="Torba" default="true" />
 		<setting id="provider.einthusan" type="bool" label="Einthusan" default="true" />
 		<setting id="provider.animeultima" type="bool" label="Animeultima" default="true" />
 		<setting id="provider.moviestorm" type="bool" label="Moviestorm" default="true" />

@@ -9,16 +9,20 @@
 # Translators:
 # Translators:
 # Translators:
-# Mafarricos <MafaStudios@gmail.com>, 2015
-# Helder <helderkid@gmail.com>, 2015-2016
-# lambda81, 2015-2016
+# Translators:
+# Translators:
+# Translators:
+# Translators:
+# Translators:
+# Helder, 2016
+# Mafarricos, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Exodus\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2016-01-20 07:27+0000\n"
-"Last-Translator: lambda81\n"
-"Language-Team: Portuguese (http://www.transifex.com/tv-addons/genesis/language/pt/)\n"
+"PO-Revision-Date: 2016-02-23 12:06+0000\n"
+"Last-Translator: Helder\n"
+"Language-Team: Portuguese (http://www.transifex.com/tv-addons/exodus/language/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -125,6 +129,22 @@ msgctxt "#30035"
 msgid "Search"
 msgstr "Pesquisar"
 
+msgctxt "#30036"
+msgid "Collection"
+msgstr "Coleção"
+
+msgctxt "#30037"
+msgid "Watchlist"
+msgstr "Visualizados"
+
+msgctxt "#30038"
+msgid "Movie Lists"
+msgstr "Listas de Filmes"
+
+msgctxt "#30039"
+msgid "History"
+msgstr "Histórico"
+
 msgctxt "#30051"
 msgid "Genres"
 msgstr "Géneros"
@@ -184,6 +204,34 @@ msgstr "Pesquisar Atores"
 msgctxt "#30066"
 msgid "Search"
 msgstr "Pesquisar"
+
+msgctxt "#30067"
+msgid "Collection"
+msgstr "Coleção"
+
+msgctxt "#30068"
+msgid "Watchlist"
+msgstr "Visualizado"
+
+msgctxt "#30069"
+msgid "Progress"
+msgstr "Progresso"
+
+msgctxt "#30070"
+msgid "Featured"
+msgstr "Em Destaque"
+
+msgctxt "#30071"
+msgid "TV Show Lists"
+msgstr "Listas de Séries"
+
+msgctxt "#30072"
+msgid "Episode Lists"
+msgstr "Lista Episódios"
+
+msgctxt "#30073"
+msgid "History"
+msgstr "Histórico"
 
 msgctxt "#30081"
 msgid "No Trakt or IMDb account found."
@@ -275,19 +323,19 @@ msgstr "[B]CONFIGURAÇÕES[/B] : Legendas"
 
 msgctxt "#30115"
 msgid "[B]SETTINGS[/B] : Providers"
-msgstr ""
+msgstr "[B]CONFIGURAÇOES[/B] : Provedores"
 
 msgctxt "#30119"
 msgid "[B]EXODUS[/B] : Clear providers..."
-msgstr ""
+msgstr "[B]EXODUS[/B]: Limpar Fontes..."
 
 msgctxt "#30120"
 msgid "[B]EXODUS[/B] : Clear cache..."
-msgstr "[B]EXODUS[/B] : Limpar cache..."
+msgstr "[B]EXODUS[/B]: Limpar cache..."
 
 msgctxt "#30122"
 msgid "[B]EXODUS[/B] : Downloads"
-msgstr "[B]EXODUS[/B] : Transferências"
+msgstr "[B]EXODUS[/B]: Downloads"
 
 msgctxt "#30141"
 msgid "Movies"
@@ -511,27 +559,23 @@ msgstr "Processo Terminado"
 
 msgctxt "#30411"
 msgid "A RealDebrid account already exists"
-msgstr ""
-
-msgctxt "#30412"
-msgid "After reset, save Exodus settings"
-msgstr ""
+msgstr "Conta RealDebrid já existe"
 
 msgctxt "#30413"
 msgid "Do you want to reset?"
-msgstr ""
+msgstr "Fazer Reset?"
 
 msgctxt "#30414"
 msgid "Yes"
-msgstr ""
+msgstr "Sim"
 
 msgctxt "#30415"
 msgid "No"
-msgstr ""
+msgstr "Não"
 
 msgctxt "#30416"
 msgid "1) Visit : "
-msgstr ""
+msgstr "1) Visitar:"
 
 msgctxt "#30417"
 msgid "2) When prompted enter : "
@@ -595,27 +639,23 @@ msgstr "Remover de"
 
 msgctxt "#30479"
 msgid "A Trakt account already exists"
-msgstr ""
-
-msgctxt "#30480"
-msgid "After reset, save Exodus settings"
-msgstr ""
+msgstr "Conta Trakt já existe"
 
 msgctxt "#30481"
 msgid "Do you want to reset?"
-msgstr ""
+msgstr "Fazer Reset?"
 
 msgctxt "#30482"
 msgid "Yes"
-msgstr ""
+msgstr "Sim"
 
 msgctxt "#30483"
 msgid "No"
-msgstr ""
+msgstr "Não"
 
 msgctxt "#30484"
 msgid "1) Visit : "
-msgstr ""
+msgstr "1) Visitar:"
 
 msgctxt "#30485"
 msgid "2) If prompted, authorize Exodus to access your account"
@@ -627,11 +667,11 @@ msgstr ""
 
 msgctxt "#30487"
 msgid "Enter PIN"
-msgstr ""
+msgstr "Inserir PIN"
 
 msgctxt "#30488"
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 msgctxt "#30491"
 msgid "This View is now Default"
@@ -704,6 +744,10 @@ msgstr "Trailer Filme"
 msgctxt "#30517"
 msgid "TV show trailer"
 msgstr "Trailer Série"
+
+msgctxt "#30518"
+msgid "Playback outside Exodus is not allowed"
+msgstr ""
 
 msgctxt "#30521"
 msgid "Monday"
@@ -884,6 +928,14 @@ msgstr "Desativado"
 msgctxt "#30825"
 msgid "Enabled"
 msgstr "Ativado"
+
+msgctxt "#30826"
+msgid "Sub menu"
+msgstr ""
+
+msgctxt "#30827"
+msgid "Classic"
+msgstr ""
 
 msgctxt "#30830"
 msgid "Playback"

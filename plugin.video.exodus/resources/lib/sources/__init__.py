@@ -2,7 +2,7 @@
 
 '''
     Exodus Add-on
-    Copyright (C) 2016 lambda
+    Copyright (C) 2016 Exodus
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ class sources:
         self.sources = []
 
 
-    def play(self, title, year, imdb, tmdb, tvdb, season, episode, tvshowtitle, premiered, meta, url):
+    def play(self, title, year, imdb, tvdb, season, episode, tvshowtitle, premiered, meta, url):
         try:
             if not control.addonInfo('id').lower() == control.infoLabel('Container.PluginName').lower():
                 progress = True if control.setting('progress.dialog') == '1' else False
@@ -54,7 +54,7 @@ class sources:
             if 'super.fav' in control.infoLabel('Container.PluginName'):
                 return control.dialog.ok('Exodus', control.lang(30518).encode('utf-8'), '', '')
 
-            self.sources = self.getSources(title, year, imdb, tmdb, tvdb, season, episode, tvshowtitle, premiered, progress=progress)
+            self.sources = self.getSources(title, year, imdb, tvdb, season, episode, tvshowtitle, premiered, progress=progress)
             self.sources = self.sourcesFilter()
 
             if control.window.getProperty('PseudoTVRunning') == 'True':
@@ -75,19 +75,19 @@ class sources:
             if not tvshowtitle == None: title = tvshowtitle
 
             from resources.lib.modules.player import player
-            player().run(title, year, season, episode, imdb, tmdb, tvdb, meta, url)
+            player().run(title, year, season, episode, imdb, tvdb, meta, url)
 
             return url
         except:
             control.infoDialog(control.lang(30501).encode('utf-8'))
 
 
-    def addItem(self, title, year, imdb, tmdb, tvdb, season, episode, tvshowtitle, premiered, meta):
+    def addItem(self, title, year, imdb, tvdb, season, episode, tvshowtitle, premiered, meta):
         try:
             if 'super.fav' in control.infoLabel('Container.PluginName'):
                 return control.dialog.ok('Exodus', control.lang(30518).encode('utf-8'), '', '')
 
-            self.sources = self.getSources(title, year, imdb, tmdb, tvdb, season, episode, tvshowtitle, premiered)
+            self.sources = self.getSources(title, year, imdb, tvdb, season, episode, tvshowtitle, premiered)
             if self.sources == []: raise Exception()
 
             self.progressDialog = control.progressDialog
@@ -176,7 +176,6 @@ class sources:
             season = f['season'] if 'season' in f else None
             episode = f['episode'] if 'episode' in f else None
             imdb = f['imdb'] if 'imdb' in f else None
-            tmdb = f['tmdb'] if 'tmdb' in f else None
             tvdb = f['tvdb'] if 'tvdb' in f else None
 
             next = [] ; prev = [] ; total = []
@@ -248,7 +247,7 @@ class sources:
                     control.sleep(200)
 
                     from resources.lib.modules.player import player
-                    player().run(title, year, season, episode, imdb, tmdb, tvdb, meta, self.url)
+                    player().run(title, year, season, episode, imdb, tvdb, meta, self.url)
 
                     return self.url
                 except:
@@ -264,7 +263,7 @@ class sources:
             pass
 
 
-    def getSources(self, title, year, imdb, tmdb, tvdb, season, episode, tvshowtitle, premiered, progress=True):
+    def getSources(self, title, year, imdb, tvdb, season, episode, tvshowtitle, premiered, progress=True):
         sourceDict = []
         for package, name, is_pkg in pkgutil.walk_packages(__path__): sourceDict.append((name, is_pkg))
         sourceDict = [i[0] for i in sourceDict if i[1] == False]

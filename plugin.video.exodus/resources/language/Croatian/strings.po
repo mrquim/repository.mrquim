@@ -9,15 +9,18 @@
 # Translators:
 # Translators:
 # Translators:
-# lambda81, 2015-2016
-# Natko <natko_maniac@hotmail.com>, 2015-2016
+# Translators:
+# Translators:
+# Translators:
+# Translators:
+# Translators:
 msgid ""
 msgstr ""
 "Project-Id-Version: Exodus\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2016-01-20 07:27+0000\n"
+"PO-Revision-Date: 2016-02-17 09:35+0000\n"
 "Last-Translator: lambda81\n"
-"Language-Team: Croatian (http://www.transifex.com/tv-addons/genesis/language/hr/)\n"
+"Language-Team: Croatian (http://www.transifex.com/tv-addons/exodus/language/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -124,6 +127,22 @@ msgctxt "#30035"
 msgid "Search"
 msgstr "Pretraga"
 
+msgctxt "#30036"
+msgid "Collection"
+msgstr ""
+
+msgctxt "#30037"
+msgid "Watchlist"
+msgstr ""
+
+msgctxt "#30038"
+msgid "Movie Lists"
+msgstr "Liste filmova"
+
+msgctxt "#30039"
+msgid "History"
+msgstr ""
+
 msgctxt "#30051"
 msgid "Genres"
 msgstr "Žanrovi"
@@ -183,6 +202,34 @@ msgstr "Pretraga osoba"
 msgctxt "#30066"
 msgid "Search"
 msgstr "Pretraga"
+
+msgctxt "#30067"
+msgid "Collection"
+msgstr ""
+
+msgctxt "#30068"
+msgid "Watchlist"
+msgstr ""
+
+msgctxt "#30069"
+msgid "Progress"
+msgstr ""
+
+msgctxt "#30070"
+msgid "Featured"
+msgstr "Istaknuto"
+
+msgctxt "#30071"
+msgid "TV Show Lists"
+msgstr "Liste TV Serija"
+
+msgctxt "#30072"
+msgid "Episode Lists"
+msgstr "Popisi s epizodama"
+
+msgctxt "#30073"
+msgid "History"
+msgstr ""
 
 msgctxt "#30081"
 msgid "No Trakt or IMDb account found."
@@ -274,7 +321,7 @@ msgstr "[B]POSTAVKE[/B] : Podnapisi"
 
 msgctxt "#30115"
 msgid "[B]SETTINGS[/B] : Providers"
-msgstr ""
+msgstr "[B]POSTAVKE[/B] : Izvori"
 
 msgctxt "#30119"
 msgid "[B]EXODUS[/B] : Clear providers..."
@@ -282,11 +329,11 @@ msgstr ""
 
 msgctxt "#30120"
 msgid "[B]EXODUS[/B] : Clear cache..."
-msgstr "[B]EXODUS[/B] : Očisti cache..."
+msgstr ""
 
 msgctxt "#30122"
 msgid "[B]EXODUS[/B] : Downloads"
-msgstr "[B]EXODUS[/B] : Preuzimanja"
+msgstr ""
 
 msgctxt "#30141"
 msgid "Movies"
@@ -498,7 +545,7 @@ msgstr "Trenutno se reproducira..."
 
 msgctxt "#30297"
 msgid "Trailer"
-msgstr ""
+msgstr "Foršpan"
 
 msgctxt "#30401"
 msgid "Are you sure?"
@@ -510,31 +557,27 @@ msgstr "Proces dovršen"
 
 msgctxt "#30411"
 msgid "A RealDebrid account already exists"
-msgstr ""
-
-msgctxt "#30412"
-msgid "After reset, save Exodus settings"
-msgstr ""
+msgstr "RealDebrid račun već postoji..."
 
 msgctxt "#30413"
 msgid "Do you want to reset?"
-msgstr ""
+msgstr "Želite li resetirati?"
 
 msgctxt "#30414"
 msgid "Yes"
-msgstr ""
+msgstr "Da"
 
 msgctxt "#30415"
 msgid "No"
-msgstr ""
+msgstr "Ne"
 
 msgctxt "#30416"
 msgid "1) Visit : "
-msgstr ""
+msgstr "1) Posjetite:"
 
 msgctxt "#30417"
 msgid "2) When prompted enter : "
-msgstr ""
+msgstr "2) Kada Vas se pita unesite:"
 
 msgctxt "#30451"
 msgid "Getting information"
@@ -594,27 +637,23 @@ msgstr "Ukloni iz"
 
 msgctxt "#30479"
 msgid "A Trakt account already exists"
-msgstr ""
-
-msgctxt "#30480"
-msgid "After reset, save Exodus settings"
-msgstr ""
+msgstr "Trakt račun već postoji"
 
 msgctxt "#30481"
 msgid "Do you want to reset?"
-msgstr ""
+msgstr "Želite li resetirati?"
 
 msgctxt "#30482"
 msgid "Yes"
-msgstr ""
+msgstr "Da"
 
 msgctxt "#30483"
 msgid "No"
-msgstr ""
+msgstr "Ne"
 
 msgctxt "#30484"
 msgid "1) Visit : "
-msgstr ""
+msgstr "1) Posjetite:"
 
 msgctxt "#30485"
 msgid "2) If prompted, authorize Exodus to access your account"
@@ -622,15 +661,15 @@ msgstr ""
 
 msgctxt "#30486"
 msgid "3) Enter the PIN provided or Cancel"
-msgstr ""
+msgstr "3) Unesite dobiveni PIN ili odustanite"
 
 msgctxt "#30487"
 msgid "Enter PIN"
-msgstr ""
+msgstr "Unesi PIN"
 
 msgctxt "#30488"
 msgid "Cancel"
-msgstr ""
+msgstr "Odustani"
 
 msgctxt "#30491"
 msgid "This View is now Default"
@@ -658,7 +697,7 @@ msgstr "Preuzmi"
 
 msgctxt "#30506"
 msgid "Refresh providers"
-msgstr ""
+msgstr "Osvježi izvore"
 
 msgctxt "#30507"
 msgid "Add-on settings"
@@ -690,11 +729,11 @@ msgstr "sekundi"
 
 msgctxt "#30514"
 msgid "Remaining providers"
-msgstr ""
+msgstr "Preostali izvori"
 
 msgctxt "#30515"
 msgid "Loading streams"
-msgstr ""
+msgstr "Učitavanje linkova"
 
 msgctxt "#30516"
 msgid "Movie trailer"
@@ -703,6 +742,10 @@ msgstr "Foršpan filma"
 msgctxt "#30517"
 msgid "TV show trailer"
 msgstr "Foršpan TV serije"
+
+msgctxt "#30518"
+msgid "Playback outside Exodus is not allowed"
+msgstr ""
 
 msgctxt "#30521"
 msgid "Monday"
@@ -798,7 +841,7 @@ msgstr "Jezik informacija"
 
 msgctxt "#30804"
 msgid "Providers Timeout"
-msgstr ""
+msgstr "Timeout izvora"
 
 msgctxt "#30805"
 msgid "Main menu"
@@ -884,6 +927,14 @@ msgctxt "#30825"
 msgid "Enabled"
 msgstr "Omogućeno"
 
+msgctxt "#30826"
+msgid "Sub menu"
+msgstr ""
+
+msgctxt "#30827"
+msgid "Classic"
+msgstr ""
+
 msgctxt "#30830"
 msgid "Playback"
 msgstr "Reprodukcija"
@@ -954,7 +1005,7 @@ msgstr "Nesigurno"
 
 msgctxt "#30860"
 msgid "Providers"
-msgstr ""
+msgstr "Izvori"
 
 msgctxt "#30910"
 msgid "Accounts"

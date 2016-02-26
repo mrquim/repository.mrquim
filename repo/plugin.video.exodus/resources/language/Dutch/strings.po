@@ -9,15 +9,20 @@
 # Translators:
 # Translators:
 # Translators:
-# lambda81, 2015-2016
+# Translators:
+# Translators:
+# Translators:
+# Translators:
+# Translators:
 # Mike Bike, 2015
+# Mike Bike, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Exodus\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2016-01-20 07:27+0000\n"
+"PO-Revision-Date: 2016-02-17 20:19+0000\n"
 "Last-Translator: lambda81\n"
-"Language-Team: Dutch (http://www.transifex.com/tv-addons/genesis/language/nl/)\n"
+"Language-Team: Dutch (http://www.transifex.com/tv-addons/exodus/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -124,6 +129,22 @@ msgctxt "#30035"
 msgid "Search"
 msgstr "Zoeken"
 
+msgctxt "#30036"
+msgid "Collection"
+msgstr "Collectie"
+
+msgctxt "#30037"
+msgid "Watchlist"
+msgstr "Watchlist"
+
+msgctxt "#30038"
+msgid "Movie Lists"
+msgstr "Film Lijst"
+
+msgctxt "#30039"
+msgid "History"
+msgstr "Geschiedenis"
+
 msgctxt "#30051"
 msgid "Genres"
 msgstr "Genres"
@@ -184,17 +205,45 @@ msgctxt "#30066"
 msgid "Search"
 msgstr "Zoeken"
 
+msgctxt "#30067"
+msgid "Collection"
+msgstr "Collectie"
+
+msgctxt "#30068"
+msgid "Watchlist"
+msgstr "Watchlist"
+
+msgctxt "#30069"
+msgid "Progress"
+msgstr "Process"
+
+msgctxt "#30070"
+msgid "Featured"
+msgstr "Uitgelicht"
+
+msgctxt "#30071"
+msgid "TV Show Lists"
+msgstr "Series Lijst"
+
+msgctxt "#30072"
+msgid "Episode Lists"
+msgstr "Afleverings-lijst"
+
+msgctxt "#30073"
+msgid "History"
+msgstr "Geschiedenis"
+
 msgctxt "#30081"
 msgid "No Trakt or IMDb account found."
-msgstr ""
+msgstr "Geen Trakt of IMDb account gevonden"
 
 msgctxt "#30082"
 msgid "Trakt indicators are disabled by default."
-msgstr ""
+msgstr "Trakt meldingen zijn standaard uitgeschakeld"
 
 msgctxt "#30083"
 msgid "In order to use them enable them in settings."
-msgstr ""
+msgstr "Om deze te gebruiken activeer deze in instellingen"
 
 msgctxt "#30084"
 msgid "[B]TRAKT[/B] : Collection"
@@ -230,11 +279,11 @@ msgstr "[B]TRAKT[/B] : Series Uitgelicht"
 
 msgctxt "#30092"
 msgid "[B]TRAKT[/B] : History"
-msgstr ""
+msgstr "[B]TRAKT[/B] : Geschiedenis"
 
 msgctxt "#30093"
 msgid "[B]TRAKT[/B] : TV History"
-msgstr ""
+msgstr "[B]TRAKT[/B] : Serie Geschiedenis"
 
 msgctxt "#30094"
 msgid "[B]TRAKT[/B] : Progress"
@@ -254,7 +303,7 @@ msgstr "Series Lijst"
 
 msgctxt "#30098"
 msgid "Episode Lists"
-msgstr ""
+msgstr "Afleverings-lijst"
 
 msgctxt "#30111"
 msgid "[B]SETTINGS[/B] : General"
@@ -274,15 +323,15 @@ msgstr "[B]INSTELLINGEN[/B] : Ondertiteling"
 
 msgctxt "#30115"
 msgid "[B]SETTINGS[/B] : Providers"
-msgstr ""
+msgstr "[B]INSTELLINGEN[/B] : Bronnen"
 
 msgctxt "#30119"
 msgid "[B]EXODUS[/B] : Clear providers..."
-msgstr ""
+msgstr "[B]EXODUS[/B] : Opschonen van Bronnen..."
 
 msgctxt "#30120"
 msgid "[B]EXODUS[/B] : Clear cache..."
-msgstr "[B]EXODUS[/B] : Wis cache..."
+msgstr "[B]EXODUS[/B] : Opschonen van Cache..."
 
 msgctxt "#30122"
 msgid "[B]EXODUS[/B] : Downloads"
@@ -366,7 +415,7 @@ msgstr "[I]Volgende Pagina[/I]"
 
 msgctxt "#30214"
 msgid "Movie trailer"
-msgstr ""
+msgstr "Film trailer"
 
 msgctxt "#30231"
 msgid "Search"
@@ -410,7 +459,7 @@ msgstr "[I]Volgende Pagina[/I]"
 
 msgctxt "#30242"
 msgid "TV show trailer"
-msgstr ""
+msgstr "Serie trailer"
 
 msgctxt "#30261"
 msgid "Queue item"
@@ -442,7 +491,7 @@ msgstr "Verwijderen van Favorieten"
 
 msgctxt "#30268"
 msgid "TV show trailer"
-msgstr ""
+msgstr "Serie trailer"
 
 msgctxt "#30269"
 msgid "Set Seasons view"
@@ -498,7 +547,7 @@ msgstr "Nu speeld af..."
 
 msgctxt "#30297"
 msgid "Trailer"
-msgstr ""
+msgstr "Trailer"
 
 msgctxt "#30401"
 msgid "Are you sure?"
@@ -510,31 +559,27 @@ msgstr "Voortgang Compleet"
 
 msgctxt "#30411"
 msgid "A RealDebrid account already exists"
-msgstr ""
-
-msgctxt "#30412"
-msgid "After reset, save Exodus settings"
-msgstr ""
+msgstr "Een RealDebrid account bestaat al"
 
 msgctxt "#30413"
 msgid "Do you want to reset?"
-msgstr ""
+msgstr "Wilt u een reset uitvoeren?"
 
 msgctxt "#30414"
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 msgctxt "#30415"
 msgid "No"
-msgstr ""
+msgstr "Nee"
 
 msgctxt "#30416"
 msgid "1) Visit : "
-msgstr ""
+msgstr "1) Ga naar : "
 
 msgctxt "#30417"
 msgid "2) When prompted enter : "
-msgstr ""
+msgstr "2) Wanneer gevraagd, vul in : "
 
 msgctxt "#30451"
 msgid "Getting information"
@@ -594,43 +639,39 @@ msgstr "Verwijderen van"
 
 msgctxt "#30479"
 msgid "A Trakt account already exists"
-msgstr ""
-
-msgctxt "#30480"
-msgid "After reset, save Exodus settings"
-msgstr ""
+msgstr "Een Trakt account bestaat reeds"
 
 msgctxt "#30481"
 msgid "Do you want to reset?"
-msgstr ""
+msgstr "Wilt u een reset uitvoeren?"
 
 msgctxt "#30482"
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 msgctxt "#30483"
 msgid "No"
-msgstr ""
+msgstr "Nee"
 
 msgctxt "#30484"
 msgid "1) Visit : "
-msgstr ""
+msgstr "1) Bezoek : "
 
 msgctxt "#30485"
 msgid "2) If prompted, authorize Exodus to access your account"
-msgstr ""
+msgstr "2) Autoriseer Exodus om gebruik te maken van uw account als daarom wordt gevraagd "
 
 msgctxt "#30486"
 msgid "3) Enter the PIN provided or Cancel"
-msgstr ""
+msgstr "3) Vul de gegeven Code in of annuleer "
 
 msgctxt "#30487"
 msgid "Enter PIN"
-msgstr ""
+msgstr "Code invullen"
 
 msgctxt "#30488"
 msgid "Cancel"
-msgstr ""
+msgstr "Annuleer"
 
 msgctxt "#30491"
 msgid "This View is now Default"
@@ -658,7 +699,7 @@ msgstr "Download item"
 
 msgctxt "#30506"
 msgid "Refresh providers"
-msgstr ""
+msgstr "Ververs Bronnen"
 
 msgctxt "#30507"
 msgid "Add-on settings"
@@ -690,19 +731,23 @@ msgstr "Seconden"
 
 msgctxt "#30514"
 msgid "Remaining providers"
-msgstr ""
+msgstr "Overgebleven Bronnen"
 
 msgctxt "#30515"
 msgid "Loading streams"
-msgstr ""
+msgstr "Steams Laden"
 
 msgctxt "#30516"
 msgid "Movie trailer"
-msgstr ""
+msgstr "Film trailer"
 
 msgctxt "#30517"
 msgid "TV show trailer"
-msgstr ""
+msgstr "Serie trailer"
+
+msgctxt "#30518"
+msgid "Playback outside Exodus is not allowed"
+msgstr "Afspelen buiten Exodus is niet toegestaan"
 
 msgctxt "#30521"
 msgid "Monday"
@@ -798,7 +843,7 @@ msgstr "Taal Info"
 
 msgctxt "#30804"
 msgid "Providers Timeout"
-msgstr ""
+msgstr "Bronnen Tijdslimiet"
 
 msgctxt "#30805"
 msgid "Main menu"
@@ -862,11 +907,11 @@ msgstr "Ingeschakeld"
 
 msgctxt "#30820"
 msgid "Indicators"
-msgstr ""
+msgstr "Meldingen"
 
 msgctxt "#30821"
 msgid "Local"
-msgstr ""
+msgstr "Lokaal "
 
 msgctxt "#30822"
 msgid "Trakt"
@@ -883,6 +928,14 @@ msgstr "Uitgeschakeld"
 msgctxt "#30825"
 msgid "Enabled"
 msgstr "Ingeschakeld"
+
+msgctxt "#30826"
+msgid "Sub menu"
+msgstr "Sub menu"
+
+msgctxt "#30827"
+msgid "Classic"
+msgstr "Klassiek "
 
 msgctxt "#30830"
 msgid "Playback"
@@ -914,7 +967,7 @@ msgstr "Hosters met captchas"
 
 msgctxt "#30837"
 msgid "Sort by Provider"
-msgstr ""
+msgstr "Sorteren op Bron"
 
 msgctxt "#30839"
 msgid "Auto-play"
@@ -942,19 +995,19 @@ msgstr "Afspeel informatie"
 
 msgctxt "#30846"
 msgid "Progress Dialog"
-msgstr ""
+msgstr "Proces-dialoog "
 
 msgctxt "#30847"
 msgid "Safe"
-msgstr ""
+msgstr "Opslaan"
 
 msgctxt "#30848"
 msgid "Unsafe"
-msgstr ""
+msgstr "Verwijderen"
 
 msgctxt "#30860"
 msgid "Providers"
-msgstr ""
+msgstr "Bronnen"
 
 msgctxt "#30910"
 msgid "Accounts"
@@ -974,7 +1027,7 @@ msgstr "Paswoord"
 
 msgctxt "#30914"
 msgid "Authorization..."
-msgstr ""
+msgstr "Autoriseren..."
 
 msgctxt "#30940"
 msgid "Subtitles"
@@ -1018,12 +1071,12 @@ msgstr "Series"
 
 msgctxt "#30953"
 msgid "Enable downloads"
-msgstr ""
+msgstr "Downloaden activeren"
 
 msgctxt "#30954"
 msgid "Downloading features are disabled by default."
-msgstr ""
+msgstr "Download functies zijn standaard uitgeschakeld"
 
 msgctxt "#30955"
 msgid "Set up your download folders in order to enable them."
-msgstr ""
+msgstr "Stel uw download locatie in om dit te activeren"

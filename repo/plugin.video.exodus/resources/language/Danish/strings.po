@@ -9,15 +9,21 @@
 # Translators:
 # Translators:
 # Translators:
+# Translators:
+# Translators:
+# Translators:
+# Translators:
+# Translators:
 # lambda81, 2016
-# Michael <Theklavej@hotmail.com>, 2015
+# lambda81, 2016
+# Michael, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Exodus\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2016-01-20 07:27+0000\n"
+"PO-Revision-Date: 2016-02-17 19:55+0000\n"
 "Last-Translator: lambda81\n"
-"Language-Team: Danish (http://www.transifex.com/tv-addons/genesis/language/da/)\n"
+"Language-Team: Danish (http://www.transifex.com/tv-addons/exodus/language/da/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -124,6 +130,22 @@ msgctxt "#30035"
 msgid "Search"
 msgstr "Søg"
 
+msgctxt "#30036"
+msgid "Collection"
+msgstr "Samling"
+
+msgctxt "#30037"
+msgid "Watchlist"
+msgstr "Ønskeliste"
+
+msgctxt "#30038"
+msgid "Movie Lists"
+msgstr "Filmliste"
+
+msgctxt "#30039"
+msgid "History"
+msgstr "Historik"
+
 msgctxt "#30051"
 msgid "Genres"
 msgstr "Genre"
@@ -183,6 +205,34 @@ msgstr "Søg Personer"
 msgctxt "#30066"
 msgid "Search"
 msgstr "Søg"
+
+msgctxt "#30067"
+msgid "Collection"
+msgstr "Samling"
+
+msgctxt "#30068"
+msgid "Watchlist"
+msgstr "Ønskeliste"
+
+msgctxt "#30069"
+msgid "Progress"
+msgstr "Fremskridt"
+
+msgctxt "#30070"
+msgid "Featured"
+msgstr "Optrædener"
+
+msgctxt "#30071"
+msgid "TV Show Lists"
+msgstr "TV Serie liste"
+
+msgctxt "#30072"
+msgid "Episode Lists"
+msgstr "Episode liste"
+
+msgctxt "#30073"
+msgid "History"
+msgstr "Historik"
 
 msgctxt "#30081"
 msgid "No Trakt or IMDb account found."
@@ -510,31 +560,27 @@ msgstr "Processen er færdig"
 
 msgctxt "#30411"
 msgid "A RealDebrid account already exists"
-msgstr ""
-
-msgctxt "#30412"
-msgid "After reset, save Exodus settings"
-msgstr ""
+msgstr "En RealDebrid konto eksisterer allerede"
 
 msgctxt "#30413"
 msgid "Do you want to reset?"
-msgstr ""
+msgstr "Vil du resette?"
 
 msgctxt "#30414"
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 msgctxt "#30415"
 msgid "No"
-msgstr ""
+msgstr "Nej"
 
 msgctxt "#30416"
 msgid "1) Visit : "
-msgstr ""
+msgstr "1) Besøg :"
 
 msgctxt "#30417"
 msgid "2) When prompted enter : "
-msgstr ""
+msgstr "2) Ved forespørgsel indtast :"
 
 msgctxt "#30451"
 msgid "Getting information"
@@ -594,27 +640,23 @@ msgstr "Fjern fra"
 
 msgctxt "#30479"
 msgid "A Trakt account already exists"
-msgstr ""
-
-msgctxt "#30480"
-msgid "After reset, save Exodus settings"
-msgstr ""
+msgstr "En Trakt konto eksisterer allerede"
 
 msgctxt "#30481"
 msgid "Do you want to reset?"
-msgstr ""
+msgstr "Vil du resette?"
 
 msgctxt "#30482"
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 msgctxt "#30483"
 msgid "No"
-msgstr ""
+msgstr "Nej"
 
 msgctxt "#30484"
 msgid "1) Visit : "
-msgstr ""
+msgstr "1) Besøg :"
 
 msgctxt "#30485"
 msgid "2) If prompted, authorize Exodus to access your account"
@@ -626,11 +668,11 @@ msgstr ""
 
 msgctxt "#30487"
 msgid "Enter PIN"
-msgstr ""
+msgstr "Indtast PIN"
 
 msgctxt "#30488"
 msgid "Cancel"
-msgstr ""
+msgstr "Afslut"
 
 msgctxt "#30491"
 msgid "This View is now Default"
@@ -703,6 +745,10 @@ msgstr "Film trailer"
 msgctxt "#30517"
 msgid "TV show trailer"
 msgstr "TV serie trailer"
+
+msgctxt "#30518"
+msgid "Playback outside Exodus is not allowed"
+msgstr "Afspilning udenfor Exodus er ikke tilladt"
 
 msgctxt "#30521"
 msgid "Monday"
@@ -883,6 +929,14 @@ msgstr "Slået fra"
 msgctxt "#30825"
 msgid "Enabled"
 msgstr "Slået til"
+
+msgctxt "#30826"
+msgid "Sub menu"
+msgstr "Undermenu"
+
+msgctxt "#30827"
+msgid "Classic"
+msgstr "Klassisk"
 
 msgctxt "#30830"
 msgid "Playback"

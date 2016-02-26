@@ -2,7 +2,7 @@
 
 '''
     Exodus Add-on
-    Copyright (C) 2016 lambda
+    Copyright (C) 2016 Exodus
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -197,7 +197,7 @@ def tvshows(tvshowtitle, imdb, tvdb, season, watched):
 
         metaget.get_meta('tvshow', name='', imdb_id=imdb)
 
-        items = episodes.episodes().get(tvshowtitle, '0', imdb, '0', tvdb, '0', idx=False)
+        items = episodes.episodes().get(tvshowtitle, '0', imdb, tvdb, '0', idx=False)
         try: items = [i for i in items if int('%01d' % int(season)) == int('%01d' % int(i['season']))]
         except: pass
         items = [{'label': '%s S%02dE%02d' % (tvshowtitle, int(i['season']), int(i['episode'])), 'season': int('%01d' % int(i['season'])), 'episode': int('%01d' % int(i['episode']))} for i in items]

@@ -9,16 +9,22 @@
 # Translators:
 # Translators:
 # Translators:
-# Achaw <achaw.ar@gmail.com>, 2015
-# Alberto Pardo <alberto.pardo@ymail.com>, 2015
+# Translators:
+# Translators:
+# Translators:
+# Translators:
+# Translators:
+# Achaw, 2015
+# Achaw, 2016
+# Alberto Pardo, 2015
 # lambda81, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Exodus\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2016-01-20 07:27+0000\n"
+"PO-Revision-Date: 2016-02-17 20:19+0000\n"
 "Last-Translator: lambda81\n"
-"Language-Team: Spanish (http://www.transifex.com/tv-addons/genesis/language/es/)\n"
+"Language-Team: Spanish (http://www.transifex.com/tv-addons/exodus/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -111,7 +117,7 @@ msgstr "Del Cine"
 
 msgctxt "#30032"
 msgid "Latest Movies"
-msgstr "Peliculas Mas Receinte"
+msgstr "Peliculas Mas Reciente"
 
 msgctxt "#30033"
 msgid "My Lists"
@@ -124,6 +130,22 @@ msgstr "Buscar por Persona"
 msgctxt "#30035"
 msgid "Search"
 msgstr "Buscar"
+
+msgctxt "#30036"
+msgid "Collection"
+msgstr "Colección"
+
+msgctxt "#30037"
+msgid "Watchlist"
+msgstr "Lista de Seguimiento"
+
+msgctxt "#30038"
+msgid "Movie Lists"
+msgstr "Lista de Películas"
+
+msgctxt "#30039"
+msgid "History"
+msgstr "Historial"
 
 msgctxt "#30051"
 msgid "Genres"
@@ -185,17 +207,45 @@ msgctxt "#30066"
 msgid "Search"
 msgstr "Buscar"
 
+msgctxt "#30067"
+msgid "Collection"
+msgstr "Colección"
+
+msgctxt "#30068"
+msgid "Watchlist"
+msgstr "Lista de Seguimiento"
+
+msgctxt "#30069"
+msgid "Progress"
+msgstr "Progreso"
+
+msgctxt "#30070"
+msgid "Featured"
+msgstr "Destacadas"
+
+msgctxt "#30071"
+msgid "TV Show Lists"
+msgstr "Lista de Series de TV"
+
+msgctxt "#30072"
+msgid "Episode Lists"
+msgstr "Listas de Episodios"
+
+msgctxt "#30073"
+msgid "History"
+msgstr "Historial"
+
 msgctxt "#30081"
 msgid "No Trakt or IMDb account found."
-msgstr ""
+msgstr "No se encontraron cuentas de Trakt o IMDB"
 
 msgctxt "#30082"
 msgid "Trakt indicators are disabled by default."
-msgstr ""
+msgstr "Los indicadores de Trakt estan deshabilitados por defecto."
 
 msgctxt "#30083"
 msgid "In order to use them enable them in settings."
-msgstr ""
+msgstr "Para usarlos, debe activarlos en la configuración."
 
 msgctxt "#30084"
 msgid "[B]TRAKT[/B] : Collection"
@@ -231,11 +281,11 @@ msgstr "[B]TRAKT[/B] : Destacadas de TV"
 
 msgctxt "#30092"
 msgid "[B]TRAKT[/B] : History"
-msgstr ""
+msgstr "[B]TRAKT[/B] : Historial"
 
 msgctxt "#30093"
 msgid "[B]TRAKT[/B] : TV History"
-msgstr ""
+msgstr "[B]TRAKT[/B] : Historial de TV"
 
 msgctxt "#30094"
 msgid "[B]TRAKT[/B] : Progress"
@@ -255,7 +305,7 @@ msgstr "Lista de Series de TV"
 
 msgctxt "#30098"
 msgid "Episode Lists"
-msgstr ""
+msgstr "Listas de Episodios"
 
 msgctxt "#30111"
 msgid "[B]SETTINGS[/B] : General"
@@ -275,15 +325,15 @@ msgstr "[B]CONFIGURACIÓN[/B] : Subtítulos"
 
 msgctxt "#30115"
 msgid "[B]SETTINGS[/B] : Providers"
-msgstr ""
+msgstr "[B]CONFIGURACIÓN[/B] : Proveedores"
 
 msgctxt "#30119"
 msgid "[B]EXODUS[/B] : Clear providers..."
-msgstr ""
+msgstr "[B]EXODUS[/B] : Limpiar Proovedores..."
 
 msgctxt "#30120"
 msgid "[B]EXODUS[/B] : Clear cache..."
-msgstr "[B]EXODUS[/B] : Limpiar cache..."
+msgstr "[B]EXODUS[/B] : Limpiar Cache..."
 
 msgctxt "#30122"
 msgid "[B]EXODUS[/B] : Downloads"
@@ -315,7 +365,7 @@ msgstr "Personas (TV)"
 
 msgctxt "#30155"
 msgid "Queue item"
-msgstr ""
+msgstr "Item en cola"
 
 msgctxt "#30201"
 msgid "Search"
@@ -359,7 +409,7 @@ msgstr "Eliminar de favoritos"
 
 msgctxt "#30212"
 msgid "Set Movies view"
-msgstr "Definir vista de Películas"
+msgstr "Definir como vista de Películas"
 
 msgctxt "#30213"
 msgid "[I]Next Page[/I]"
@@ -367,7 +417,7 @@ msgstr "[I]Página Siguiente[/I]"
 
 msgctxt "#30214"
 msgid "Movie trailer"
-msgstr ""
+msgstr "Trailer de Película"
 
 msgctxt "#30231"
 msgid "Search"
@@ -403,7 +453,7 @@ msgstr "Eliminar de favoritos"
 
 msgctxt "#30240"
 msgid "Set TV Shows view"
-msgstr "Definir vista de Series de TV"
+msgstr "Definir como vista de Series de TV"
 
 msgctxt "#30241"
 msgid "[I]Next Page[/I]"
@@ -411,7 +461,7 @@ msgstr "[I]Página Siguiente[/I]"
 
 msgctxt "#30242"
 msgid "TV show trailer"
-msgstr ""
+msgstr "Trailer de Serie de TV"
 
 msgctxt "#30261"
 msgid "Queue item"
@@ -443,11 +493,11 @@ msgstr "Eliminar de favoritos"
 
 msgctxt "#30268"
 msgid "TV show trailer"
-msgstr ""
+msgstr "Trailer de Serie de TV"
 
 msgctxt "#30269"
 msgid "Set Seasons view"
-msgstr "Definir vista de Temporadas"
+msgstr "Definir como vista de Temporadas"
 
 msgctxt "#30270"
 msgid "Auto-play"
@@ -463,7 +513,7 @@ msgstr "Información de Episodio"
 
 msgctxt "#30273"
 msgid "Set Episodes view"
-msgstr "Definir vista de Episodios"
+msgstr "Definir como vista de Episodios"
 
 msgctxt "#30274"
 msgid "Browse Seasons"
@@ -499,7 +549,7 @@ msgstr "Reproduciendo ahora..."
 
 msgctxt "#30297"
 msgid "Trailer"
-msgstr ""
+msgstr "Trailer"
 
 msgctxt "#30401"
 msgid "Are you sure?"
@@ -511,31 +561,27 @@ msgstr "Proceso Completo"
 
 msgctxt "#30411"
 msgid "A RealDebrid account already exists"
-msgstr ""
-
-msgctxt "#30412"
-msgid "After reset, save Exodus settings"
-msgstr ""
+msgstr "Ya existe una cuenta de RealDebrid"
 
 msgctxt "#30413"
 msgid "Do you want to reset?"
-msgstr ""
+msgstr "Desea resetear?"
 
 msgctxt "#30414"
 msgid "Yes"
-msgstr ""
+msgstr "Si"
 
 msgctxt "#30415"
 msgid "No"
-msgstr ""
+msgstr "No"
 
 msgctxt "#30416"
 msgid "1) Visit : "
-msgstr ""
+msgstr "1) Visitar:"
 
 msgctxt "#30417"
 msgid "2) When prompted enter : "
-msgstr ""
+msgstr "2) Cuando se le solicite, ingresar:"
 
 msgctxt "#30451"
 msgid "Getting information"
@@ -595,43 +641,39 @@ msgstr "Eliminar de"
 
 msgctxt "#30479"
 msgid "A Trakt account already exists"
-msgstr ""
-
-msgctxt "#30480"
-msgid "After reset, save Exodus settings"
-msgstr ""
+msgstr "Ya existe una cuenta de Trakt"
 
 msgctxt "#30481"
 msgid "Do you want to reset?"
-msgstr ""
+msgstr "Desea resetear?"
 
 msgctxt "#30482"
 msgid "Yes"
-msgstr ""
+msgstr "Si"
 
 msgctxt "#30483"
 msgid "No"
-msgstr ""
+msgstr "No"
 
 msgctxt "#30484"
 msgid "1) Visit : "
-msgstr ""
+msgstr "1) Visitar:"
 
 msgctxt "#30485"
 msgid "2) If prompted, authorize Exodus to access your account"
-msgstr ""
+msgstr "2) Si se le solicita, autorize a Exodus a tener acceso a su cuenta"
 
 msgctxt "#30486"
 msgid "3) Enter the PIN provided or Cancel"
-msgstr ""
+msgstr "3) Ingrese el PIN obtenido o Cancele"
 
 msgctxt "#30487"
 msgid "Enter PIN"
-msgstr ""
+msgstr "Ingresar PIN"
 
 msgctxt "#30488"
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 msgctxt "#30491"
 msgid "This View is now Default"
@@ -659,7 +701,7 @@ msgstr "Descargar Item"
 
 msgctxt "#30506"
 msgid "Refresh providers"
-msgstr ""
+msgstr "Actualizar Proovedores"
 
 msgctxt "#30507"
 msgid "Add-on settings"
@@ -691,19 +733,23 @@ msgstr "segundos"
 
 msgctxt "#30514"
 msgid "Remaining providers"
-msgstr ""
+msgstr "Proovedores Restantes"
 
 msgctxt "#30515"
 msgid "Loading streams"
-msgstr ""
+msgstr "Cargando streams"
 
 msgctxt "#30516"
 msgid "Movie trailer"
-msgstr ""
+msgstr "Trailer de Película"
 
 msgctxt "#30517"
 msgid "TV show trailer"
-msgstr ""
+msgstr "Trailer de Serie de TV"
+
+msgctxt "#30518"
+msgid "Playback outside Exodus is not allowed"
+msgstr "La reproducción fuera de Exodus no esta permitida"
 
 msgctxt "#30521"
 msgid "Monday"
@@ -799,7 +845,7 @@ msgstr "Idioma de Info"
 
 msgctxt "#30804"
 msgid "Providers Timeout"
-msgstr ""
+msgstr "Tiempo de espera de Proovedores"
 
 msgctxt "#30805"
 msgid "Main menu"
@@ -863,11 +909,11 @@ msgstr "Activo"
 
 msgctxt "#30820"
 msgid "Indicators"
-msgstr ""
+msgstr "Indicadores"
 
 msgctxt "#30821"
 msgid "Local"
-msgstr ""
+msgstr "Local"
 
 msgctxt "#30822"
 msgid "Trakt"
@@ -884,6 +930,14 @@ msgstr "Desactivado"
 msgctxt "#30825"
 msgid "Enabled"
 msgstr "Activo"
+
+msgctxt "#30826"
+msgid "Sub menu"
+msgstr "Sub menu"
+
+msgctxt "#30827"
+msgid "Classic"
+msgstr "Clasica"
 
 msgctxt "#30830"
 msgid "Playback"
@@ -915,7 +969,7 @@ msgstr "Hosters con captchas"
 
 msgctxt "#30837"
 msgid "Sort by Provider"
-msgstr ""
+msgstr "Ordenar por Proovedor"
 
 msgctxt "#30839"
 msgid "Auto-play"
@@ -943,19 +997,19 @@ msgstr "Info de Reproducción"
 
 msgctxt "#30846"
 msgid "Progress Dialog"
-msgstr ""
+msgstr "Dialogo de Progreso"
 
 msgctxt "#30847"
 msgid "Safe"
-msgstr ""
+msgstr "Seguro"
 
 msgctxt "#30848"
 msgid "Unsafe"
-msgstr ""
+msgstr "No Seguro"
 
 msgctxt "#30860"
 msgid "Providers"
-msgstr ""
+msgstr "Proovedores"
 
 msgctxt "#30910"
 msgid "Accounts"
@@ -975,7 +1029,7 @@ msgstr "Contraseña"
 
 msgctxt "#30914"
 msgid "Authorization..."
-msgstr ""
+msgstr "Autorización..."
 
 msgctxt "#30940"
 msgid "Subtitles"
@@ -1019,12 +1073,12 @@ msgstr "TV"
 
 msgctxt "#30953"
 msgid "Enable downloads"
-msgstr ""
+msgstr "Activar Descargas"
 
 msgctxt "#30954"
 msgid "Downloading features are disabled by default."
-msgstr ""
+msgstr "Las características de Descargas estan desactivadas por defecto."
 
 msgctxt "#30955"
 msgid "Set up your download folders in order to enable them."
-msgstr ""
+msgstr "Configura los directorios de descargas para activarlos."

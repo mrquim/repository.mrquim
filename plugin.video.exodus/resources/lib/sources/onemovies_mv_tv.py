@@ -2,7 +2,7 @@
 
 '''
     Exodus Add-on
-    Copyright (C) 2016 lambda
+    Copyright (C) 2016 Exodus
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -150,6 +150,7 @@ class source:
             if url == None: return sources
 
             url = urlparse.urljoin(self.base_link, url)
+            url = url.replace('/watching.html', '')
 
             content = re.compile('(.+?)\?episode=\d*$').findall(url)
             content = 'movie' if len(content) == 0 else 'episode'

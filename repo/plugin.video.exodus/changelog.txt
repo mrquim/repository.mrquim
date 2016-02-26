@@ -1,5 +1,15 @@
+[B]1.1.1[/B]
+- Updated translations
+- Updated providers
+
+[B]1.1.0[/B]
+- Updated indexers
+- Tweaked Trakt progress
+- Updated translations
+- Updated providers
+
 [B]1.0.1[/B]
-- Code comsnetics
+- Code cosmetics
 
 [B]1.0.0[/B]
 - Initial version

@@ -2,7 +2,7 @@
 
 '''
     Exodus Add-on
-    Copyright (C) 2016 lambda
+    Copyright (C) 2016 Exodus
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -43,10 +43,6 @@ try:
     imdb = params['imdb']
 except:
     imdb = None
-try:
-    tmdb = params['tmdb']
-except:
-    tmdb = None
 try:
     tvdb = params['tvdb']
 except:
@@ -182,9 +178,9 @@ elif action == 'tvNetworks':
     from resources.lib.indexers import tvshows
     tvshows.tvshows().networks()
 
-elif action == 'tvYears':
+elif action == 'tvCertificates':
     from resources.lib.indexers import tvshows
-    tvshows.tvshows().years()
+    tvshows.tvshows().certifications()
 
 elif action == 'tvUserlists':
     from resources.lib.indexers import tvshows
@@ -192,11 +188,11 @@ elif action == 'tvUserlists':
 
 elif action == 'seasons':
     from resources.lib.indexers import episodes
-    episodes.seasons().get(tvshowtitle, year, imdb, tmdb, tvdb)
+    episodes.seasons().get(tvshowtitle, year, imdb, tvdb)
 
 elif action == 'episodes':
     from resources.lib.indexers import episodes
-    episodes.episodes().get(tvshowtitle, year, imdb, tmdb, tvdb, season, episode)
+    episodes.episodes().get(tvshowtitle, year, imdb, tvdb, season, episode)
 
 elif action == 'calendar':
     from resources.lib.indexers import episodes
@@ -279,11 +275,11 @@ elif action == 'download':
 
 elif action == 'play':
     from resources.lib.sources import sources
-    sources().play(title, year, imdb, tmdb, tvdb, season, episode, tvshowtitle, premiered, meta, url)
+    sources().play(title, year, imdb, tvdb, season, episode, tvshowtitle, premiered, meta, url)
 
 elif action == 'sources':
     from resources.lib.sources import sources
-    sources().addItem(title, year, imdb, tmdb, tvdb, season, episode, tvshowtitle, premiered, meta)
+    sources().addItem(title, year, imdb, tvdb, season, episode, tvshowtitle, premiered, meta)
 
 elif action == 'playItem':
     from resources.lib.sources import sources
