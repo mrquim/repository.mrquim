@@ -69,6 +69,8 @@ class source:
 
 
     def get_sources(self, url, hosthdDict, hostDict, locDict):
+        return
+
         try:
             sources = []
 
@@ -121,7 +123,7 @@ class source:
 
                         if '3d' in fmt: info = '3D'
                         else: info = ''
-
+                        control.log('### FARSI ')
                         sources.append({'source': 'Moviefarsi', 'quality': quality, 'provider': 'Moviefarsiv2', 'url': url, 'info': info})
                     except:
                         pass
@@ -161,6 +163,7 @@ class source:
 
 
     def resolve(self, url):
+        return
         url = '%s|User-Agent=%s' % (url, urllib.quote_plus(client.agent()))
         return url
 

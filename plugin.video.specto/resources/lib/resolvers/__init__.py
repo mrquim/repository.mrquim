@@ -22,17 +22,22 @@
 import re,urllib,urlparse
 
 from resources.lib.libraries import client
+from resources.lib.libraries import control
 from resources.lib.resolvers import realdebrid
 from resources.lib.resolvers import premiumize
 
 
+
 def request(url):
     try:
+        control.log("#RESOLVER#  my url 1 ************ %s " % url)
+
         if '</regex>' in url:
             import regex ; url = regex.resolve(url)
 
         rd = realdebrid.resolve(url)
         if not rd == None: return rd
+
         pz = premiumize.resolve(url)
         if not pz == None: return pz
 
@@ -40,13 +45,17 @@ def request(url):
             if len(re.compile('\s*timeout=(\d*)').findall(url)) == 0: url += ' timeout=10'
             return url
 
-        u = urlparse.urlparse(url).netloc
-        u = u.replace('www.', '').replace('embed.', '')
+        u = client.shrink_host(url)
         u = u.lower()
+
+        control.log("#RESOLVER#  my url 3 ************ %s " % u)
 
         r = [i['class'] for i in info() if u in i['netloc']][0]
         r = __import__(r, globals(), locals(), [], -1)
+        control.log("#RESOLVER#  my url 4 ************ %s " % r)
+
         r = r.resolve(url)
+        control.log("#RESOLVER#  my url 5 %s ************ %s " % (r,url))
 
         if r == None: return r
         elif type(r) == list: return r
@@ -310,14 +319,7 @@ def info():
         'a/c': False
     }, {
         'class': 'openload',
-        'netloc': ['openload.io'],
-        'host': ['Openload'],
-        'quality': 'High',
-        'captcha': False,
-        'a/c': False
-    }, {
-        'class': 'openload',
-        'netloc': ['openload.co'],
+        'netloc': ['openload.io', 'openload.co'],
         'host': ['Openload'],
         'quality': 'High',
         'captcha': False,
