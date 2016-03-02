@@ -2,8 +2,8 @@
 <settings>
    <category label="Definicoes gerais">
       <setting label="[B][COLOR green]Dados de conta:[/B][/COLOR]" type="lsep" />
-      <setting id="login_name" type="text" label="Utilizador" default="liveit"/>
-      <setting id="login_password" type="text" label="Senha" default="liveit" option="hidden" enable="!eq(-1,false)"/>
+      <setting id="login_name" type="text" label="Utilizador" default="live2016"/>
+      <setting id="login_password" type="text" label="Senha" default="live2016" option="hidden" enable="!eq(-1,false)"/>
 	  <setting id="login_adultos" type="text" label="Senha Adultos" default="" option="hidden"/>  
    </category>
    <category label="Idioma">

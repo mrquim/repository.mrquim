@@ -62,42 +62,57 @@ def menu():
 				'tipo': '',
 				'senha': ''
 				}
+			if check_login['datafim']['data'] != "Membro Ativo Sem Doacao!":
+				if check_login['user']['dias'] == '5' or check_login['user']['dias'] == '4' or check_login['user']['dias'] == '3' or check_login['user']['dias'] == '2' or check_login['user']['dias'] == '1':
+					__ALERTA__('Live!t TV', 'Faltam '+check_login['user']['dias']+' dias para o serviço expirar.')
+				if check_login['user']['dias'] == '0':
+					__ALERTA__('Live!t TV', 'É hoje que o seu serviço expira. Faça a sua Renovação. Caso não faça irá ficar Inactivo Hoje.')
 			menus['nome'] = "Participacoes"
 			menus['logo'] = check_login['info']['logo']
 			menus['link'] = check_login['info']['link']
 			menus['tipo'] = "patrocinadores"
 			menus['senha'] = ""
-			check_login['menus'].append(menus)
+			#check_login['menus'].append(menus)
 			Menu_inicial(check_login)
-			addDir(check_login['datafim']['data'], 'url', None, 2000, 'Miniatura', __SITEAddon__+"Imagens/estadomembro.png",'','')
-			addDir('Definições', 'url', None, 1000, 'Miniatura', __SITEAddon__+"Imagens/definicoes.png",'','')
+			if check_login['datafim']['data'] != "Membro Ativo Sem Doacao!":
+				#addDir('Favoritos', __SITE__+'favoritos.php', None, 11, 'Miniatura', __SITEAddon__+"Imagens/favoritos.png",'','','','')
+				addDir(check_login['datafim']['data'], 'url', None, None, 'Miniatura', __SITEAddon__+"Imagens/estadomembro.png",'','','','')
+				#thread.start_new_thread(obter_ficheiro_epg, ())
+			#addDir('A Minha Conta', 'url', None, 10, 'Miniatura', __SITEAddon__+"Imagens/estadomembro.png",'','','',check_login['datafim']['data'])
+			#addDir('Definições', 'url', None, 1000, 'Miniatura', __SITEAddon__+"Imagens/definicoes.png",'','','','')
 		elif check_login['sucesso']['resultado'] == 'utilizador':
 			__ALERTA__('Live!t TV', 'Utilizador incorreto.')
-			addDir('Alterar Definições', 'url', None, 1000, 'Miniatura', __SITEAddon__+"Imagens/definicoes.png",'','')
-			addDir('Entrar novamente', 'url', None, None, 'Miniatura', __SITEAddon__+"Imagens/retroceder.png",'','')
+			addDir('Alterar Definições', 'url', None, 1000, 'Miniatura', __SITEAddon__+"Imagens/definicoes.png",'','','','')
+			addDir('Entrar novamente', 'url', None, None, 'Miniatura', __SITEAddon__+"Imagens/retroceder.png",'','','','')
 		elif check_login['sucesso']['resultado'] == 'senha':
 			__ALERTA__('Live!t TV', 'Senha incorreta.')
-			addDir('Alterar Definições', 'url', None, 1000, 'Miniatura', __SITEAddon__+"Imagens/definicoes.png",'','')
-			addDir('Entrar novamente', 'url', None, None, 'Miniatura', __SITEAddon__+"Imagens/retroceder.png",'','')
+			addDir('Alterar Definições', 'url', None, 1000, 'Miniatura', __SITEAddon__+"Imagens/definicoes.png",'','','','')
+			addDir('Entrar novamente', 'url', None, None, 'Miniatura', __SITEAddon__+"Imagens/retroceder.png",'','','','')
 		elif check_login['sucesso']['resultado'] == 'ativo':
 			__ALERTA__('Live!t TV', 'O estado do seu Utilizador encontra-se Inactivo. Para saber mais informações entre em contacto pelo email registoliveit@pcteckserv.com.')
 		else:
 			__ALERTA__('Live!t TV', 'Não foi possível abrir a página. Por favor tente novamente.')
 	else:
-		addDir('Alterar Definições', 'url', None, 1000, 'Miniatura', __SITEAddon__+"Imagens/definicoes.png",'','')
-		addDir('Entrar novamente', 'url', None, None, 'Miniatura', __SITEAddon__+"Imagens/retroceder.png",'','')
+		addDir('Alterar Definições', 'url', None, 1000, 'Miniatura', __SITEAddon__+"Imagens/definicoes.png",'','','','')
+		addDir('Entrar novamente', 'url', None, None, 'Miniatura', __SITEAddon__+"Imagens/retroceder.png",'','','','')
 
 	xbmc.executebuiltin("Container.SetViewMode(500)")
 ###################################################################################
 #                              Login Addon		                                  #
 ###################################################################################
-		
+def minhaConta(data_user):
+	addDir(data_user, 'url', None, None, 'Miniatura', __SITEAddon__+"Imagens/estadomembro.png",'','','','')
+	addDir('Definições', 'url', None, 1000, 'Miniatura', __SITEAddon__+"Imagens/definicoes.png",'','','','')
+
 def login():
 	informacoes = {
 		'user' : {
 			'nome': '',
+			'nome': '',
 			'email': '',
 			'tipo': '',
+			'dias': '',
+			'servidor': '',
 			'senhaadulto': ''
 		},
 		'sucesso' :{
@@ -128,7 +143,7 @@ def login():
 			net = Net()
 			net.set_cookies(__COOKIE_FILE__)
 			dados = {'username': __ADDON__.getSetting("login_name"), 'password': __ADDON__.getSetting("login_password")}
-			codigo_fonte = net.http_POST(__SITE__+'LoginAddon.php',form_data=dados,headers=__HEADERS__).content
+			codigo_fonte = net.http_POST(__SITE__+'LoginAddon2.php',form_data=dados,headers=__HEADERS__).content
 			elems = ET.fromstring(codigo_fonte)
 			for child in elems:
 				if(child.tag == 'sucesso'):
@@ -139,8 +154,12 @@ def login():
 							informacoes['user']['nome'] = d.text
 						elif(d.tag == 'Email'):
 							informacoes['user']['email'] = d.text
+						elif(d.tag == 'Servidor'):
+							informacoes['user']['servidor'] = d.text
 						elif(d.tag == 'Tipo'):
 							informacoes['user']['tipo'] = d.text
+						elif(d.tag == 'dias'):
+							informacoes['user']['dias'] = d.text
 						elif(d.tag == 'DataFim'):
 							try:
 								informacoes['datafim']['data'] = "Membro Ativo até "+ d.text
@@ -175,7 +194,11 @@ def login():
 							menu['tipo'] = g.text
 						elif(g.tag == 'senha'):
 							menu['senha'] = informacoes['user']['senhaadulto']
-					informacoes['menus'].append(menu)
+					if informacoes['datafim']['data'] == "Membro Ativo Sem Doacao!":
+						if menu['nome'] != 'Adultos':
+							informacoes['menus'].append(menu)
+					else:
+						informacoes['menus'].append(menu)
 				else: 
 					print("Não sei o que estou a ler")
 		except:
@@ -190,6 +213,7 @@ def login():
 
 def Menu_inicial(men):
 	_tipouser = men['user']['tipo']
+	_servidoruser = men['user']['servidor']
 	for menu in men['menus']:
 		nome = menu['nome']
 		logo = menu['logo']
@@ -197,19 +221,27 @@ def Menu_inicial(men):
 		tipo = menu['tipo']
 		senha = menu['senha']
 		if(tipo == 'Adulto'):		
-			addDir(nome,link,senha,3,'Miniatura',logo,tipo,_tipouser)
+			addDir(nome,link,senha,3,'Miniatura',logo,tipo,_tipouser,_servidoruser,'')
 		elif(tipo == 'patrocinadores'):
-			addDir(nome,link,None,1,'Lista',logo,tipo,_tipouser)
+			addDir(nome,link,None,1,'Lista',logo,tipo,_tipouser,_servidoruser,'')
 		elif(tipo == 'Filme'):
-			addDir(nome,link,None,1,'Miniatura',logo,tipo,_tipouser)
+			addDir(nome,link,None,1,'Miniatura',logo,tipo,_tipouser,_servidoruser,'')
 		elif(tipo == 'Serie'):
-			addDir(nome,link,None,1,'Miniatura',logo,tipo,_tipouser)
+			addDir(nome,link,None,1,'Miniatura',logo,tipo,_tipouser,_servidoruser,'')
 		else:
-			addDir(nome,link,None,1,'Miniatura',logo,tipo,_tipouser)
+			if _tipouser == 'Administrador' or _tipouser == 'Patrocinador' or _tipouser == 'PatrocinadorPagante':
+				if nome == 'TVs':
+					addDir(nome,link,None,1,'Miniatura',logo,tipo,_tipouser,_servidoruser,'')
+					addDir('TVs-Free',link,None,1,'Miniatura',logo,tipo,_tipouser,_servidoruser,'')
+				else:
+					addDir(nome,link,None,1,'Miniatura',logo,tipo,_tipouser,_servidoruser,'')
+			else:
+				addDir(nome,link,None,1,'Miniatura',logo,tipo,_tipouser,_servidoruser,'')
+		
 			
 	thread.start_new_thread( obter_ficheiro_epg, () )
 
-def listar_grupos_adultos(url,senha,estilo,tipo,tipo_user):
+def listar_grupos_adultos(url,senha,estilo,tipo,tipo_user,servidor_user):
 	passa = True
 	if tipo_user == 'Teste':
 		passa = False
@@ -220,14 +252,10 @@ def listar_grupos_adultos(url,senha,estilo,tipo,tipo_user):
 		elif(__ADDON__.getSetting("login_adultos") != senha):
 			__ALERTA__('Live!t TV', 'Senha para adultos incorrecta. Verifique e tente de novo.')
 		else:
-			listar_grupos(url,estilo,tipo,tipo_user)
+			listar_grupos('',url,estilo,tipo,tipo_user,servidor_user)
 	
-def listar_grupos(url,estilo,tipo,tipo_user):
+def listar_grupos(nome_nov,url,estilo,tipo,tipo_user,servidor_user):
 	passa = True
-	if tipo_user == 'Teste':
-		if tipo == 'Serie' or tipo == 'Filme' or tipo == 'patrocinadores':
-			passa = False
-			__ALERTA__('Live!t TV', 'Não tem acesso a este menu. Faça a sua doação.')
 	if passa == True:
 		page_with_xml = urllib2.urlopen(url).readlines()
 		for line in page_with_xml:
@@ -238,18 +266,27 @@ def listar_grupos(url,estilo,tipo,tipo_user):
 				imag = params[1]
 				urlll = params[2]
 				estil = params[3]
-				urlllpg = params[4]
+				urlllserv1 = params[4]
+				urlllserv2 = params[5]
 				paramss = estil.split('\n')
 				if tipo_user == 'Administrador' or tipo_user == 'Pagante' or tipo_user == 'PatrocinadorPagante':
-					addDir(nomee,urlllpg,None,2,paramss[0],imag,tipo,tipo_user)
+					if nome_nov == 'TVs-Free':
+						addDir(nomee,urlll,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'')
+					elif servidor_user == 'Servidor1':
+						addDir(nomee,urlllserv1,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'')
+					else:
+						addDir(nomee,urlllserv2,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'')
+				elif tipo_user == 'Patrocinador':
+					if nome_nov == 'TVs-Free':
+						addDir(nomee,urlll,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'')
 				else:
-					addDir(nomee,urlll,None,2,paramss[0],imag,tipo,tipo_user)
+					addDir(nomee,urlll,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'')
 			except:
 				pass
 		estiloSelect = returnestilo(estilo)
 		xbmc.executebuiltin(estiloSelect)
 	
-def listar_canais_url(nome,url,estilo,tipo,tipo_user):
+def listar_canais_url(nome,url,estilo,tipo,tipo_user,servidor_user):
 	if url != 'nada':
 		page_with_xml = urllib2.urlopen(url).readlines()
 		f = open(os.path.join(__FOLDER_EPG__, 'epg'), mode="r")
@@ -271,6 +308,7 @@ def listar_canais_url(nome,url,estilo,tipo,tipo_user):
 				rtmp = params[2].replace(' rtmp','rtmp').replace(' rtsp','rtsp').replace(' http','http').replace('utilizadorliveit',__ADDON__.getSetting("login_name")).replace('senhaliveit',__ADDON__.getSetting("login_password"))
 				grup = params[3]
 				id_it = params[4].rstrip()
+				id_p = params[5]
 				srt_f = ''
 				descri = ''
 				if	grup == nome:
@@ -285,10 +323,10 @@ def listar_canais_url(nome,url,estilo,tipo,tipo_user):
 						nomewp = nomee
 
 					if	tipo == 'Filme' or tipo == 'Serie':
-						srt_f = params[5]
-						ano = params[6]
-						realizador = 'Director: '+params[7]
-						descri = params[8]
+						srt_f = params[6]
+						ano = params[7]
+						realizador = 'Director: '+params[8]
+						descri = params[9]
 						detalhes1 = grup
 						argumento = 'Live!t-TV'
 						plot = 'Enredo: '+descri
@@ -298,9 +336,8 @@ def listar_canais_url(nome,url,estilo,tipo,tipo_user):
 						infoLabels = {'Title':nomewp, 'Plot':plot, 'Writer': argumento, 'Director':realizador, 'Genre':detalhes1, 'Year': detalhes2, 'Aired':detalhes2, 'IMDBNumber':imdb, 'Votes':votes}
 					else:
 						infoLabels = {'Title':nomewp}
-					
 					#addDirM(filme['title'], str({'torrents': filme['items'], 'imdb': filme['imdb'], 'poster': filme['poster_big']}), 6, filme['poster_big'], total, True)
-					addLink(nomewp,rtmp,img,id_it,srt_f,descri,tipo,infoLabels,total)
+					addLink(nomewp,rtmp,img,id_it,srt_f,descri,tipo,id_p,infoLabels,total)
 			except:
 				pass
 		estiloSelect = returnestilo(estilo)
@@ -358,7 +395,96 @@ def getProgramacaoDiaria(idCanal, diahora, codigo):
 			programa = programa1
 	return programa
 
+def favoritos(url):
+	net = Net()
+	net.set_cookies(__COOKIE_FILE__)
+	dados = {'username': __ADDON__.getSetting("login_name")}
+	codigo_fonte = net.http_POST(url,form_data=dados,headers=__HEADERS__).content
+	f = open(os.path.join(__FOLDER_EPG__, 'epg'), mode="r")
+	codigo = f.read()
+	f.close()
+	ts = time.time()
+	st = int(datetime.datetime.fromtimestamp(ts).strftime('%Y%m%d%H%M%S'))
+		
+	elems = ET.fromstring(codigo_fonte)
+	for child in elems:
+		infoLabels = ''
+		img = ''
+		grup = ''
+		tipo = ''
+		rtmppp = ''
+		id_it = ''
+		id_p = ''
+		descri = ''
+		srt_f = ''
+		if(child.tag == 'sucesso'):
+			succc = child.text
+		elif(child.tag == 'canal'):
+			for d in child:
+				total = len(d)
+				if(d.tag == 'Nome'):
+					nomee = d.text
+					infoLabels = {'Title':nomee}
+				elif(d.tag == 'Imagem'):
+					img = d.text
+				elif(d.tag == 'Grupo'):
+					grup = d.text
+				elif(d.tag == 'Tipo'):
+					tipo = d.text
+				elif(d.tag == 'Url'):
+					rtmpaa = d.text
+					rtmppp = rtmpaa.replace(' rtmp','rtmp').replace(' rtsp','rtsp').replace(' http','http').replace('utilizadorliveit',__ADDON__.getSetting("login_name")).replace('senhaliveit',__ADDON__.getSetting("login_password"))
+				elif(d.tag == 'NomeID'):
+					id_it = d.text
+				elif(d.tag == 'ID'):
+					id_p = d.text
+				elif(d.tag == 'Descricao'):
+					descri = d.text
+				elif(d.tag == 'Legendas'):
+					srt_f = d.text
+			twrv = ThreadWithReturnValue(target=getProgramacaoDiaria, args=(id_it, st,codigo))
+			twrv.start()
+			programa = twrv.join()
+			if programa != '':
+				nomewp = nomee + " | "+ programa
+			else:
+				nomewp = nomee
+			addLinkFavorito(nomewp,rtmppp,img,id_it,id_p,infoLabels)
+	xbmc.executebuiltin("Container.SetViewMode(500)")
 
+def adicionaFavorito(idCanal):
+	net = Net()
+	net.set_cookies(__COOKIE_FILE__)
+	dados = {'username': __ADDON__.getSetting("login_name"), 'idcanal': idCanal}
+	codigo_fonte = net.http_POST(__SITE__+'AddFav.php',form_data=dados,headers=__HEADERS__).content
+	elems = ET.fromstring(codigo_fonte)
+	for child in elems:
+		if(child.tag == 'sucesso'):
+			succ=child.text
+			if succ == 'yes':
+				__ALERTA__('Live!t TV', 'Adicionou com sucesso aos favoritos.')
+			elif succ=='jaadicionado':
+				__ALERTA__('Live!t TV', 'Já está adicionado na sua página de favoritos.')
+			else: 
+				__ALERTA__('Live!t TV', 'Erro. Por favor tente mais tarde.')
+
+			
+def RemoveFavorito(idCanal):
+	net = Net()
+	net.set_cookies(__COOKIE_FILE__)
+	#print "Sou ID:"+idCanal
+	dados = {'username': __ADDON__.getSetting("login_name"), 'idcanal': idCanal}
+	codigo_fonte = net.http_POST(__SITE__+'RemFav.php',form_data=dados,headers=__HEADERS__).content
+	elems = ET.fromstring(codigo_fonte)
+	for child in elems:
+		if(child.tag == 'sucesso'):
+			succ=child.text
+			if succ == 'yes':
+				__ALERTA__('Live!t TV', 'Removeu com Sucesso. Por favor saia do menu favoritos e volte a entrar.')
+			else: 
+				__ALERTA__('Live!t TV', 'Erro. Por favor tente mais tarde.')
+
+			
 def programacao_canal(idCanal):
 
 	f = open(os.path.join(__FOLDER_EPG__, 'epg'), mode="r")
@@ -441,14 +567,14 @@ def returnestilo(estilonovo):
 
 def abrirDefinincoes():
 	__ADDON__.openSettings()
-	addDir('Entrar novamente', 'url', None, None, 'Lista Grande', __SITEAddon__+"Imagens/retroceder.png",'','')
+	addDir('Entrar novamente', 'url', None, None, 'Lista Grande', __SITEAddon__+"Imagens/retroceder.png",'','','','')
 	xbmc.executebuiltin("Container.SetViewMode(51)")
 
 def abrirNada():
 	xbmc.executebuiltin("Container.SetViewMode(51)")
 	
-def addDir(name,url,senha,mode,estilo,iconimage,tipo,tipo_user,pasta=True,total=1):
-	u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&senha="+str(senha)+"&estilo="+urllib.quote_plus(estilo)+"&tipologia="+str(tipo)+"&tipo_user="+str(tipo_user)
+def addDir(name,url,senha,mode,estilo,iconimage,tipo,tipo_user,servidor_user,data_user,pasta=True,total=1):
+	u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&senha="+str(senha)+"&estilo="+urllib.quote_plus(estilo)+"&tipologia="+str(tipo)+"&tipo_user="+str(tipo_user)+"&servidor_user="+str(servidor_user)+"&data_user="+str(data_user)
 	ok=True
 	liz=xbmcgui.ListItem(name, iconImage=iconimage, thumbnailImage=iconimage)
 	liz.setProperty('fanart_image', iconimage)
@@ -463,7 +589,7 @@ def addFolder(name,url,mode,iconimage,folder):
 	ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=folder)
 	return ok
 	
-def addLink(name,url,iconimage,idCanal,srtfilm,descricao,tipo,infoLabels,total=1):
+def addLink(name,url,iconimage,idCanal,srtfilm,descricao,tipo,id_p,infoLabels,total=1):
 	cm=[]
 	ok=True
 	liz=xbmcgui.ListItem(name, iconImage=iconimage, thumbnailImage=iconimage)
@@ -471,7 +597,9 @@ def addLink(name,url,iconimage,idCanal,srtfilm,descricao,tipo,infoLabels,total=1
 	if tipo == 'Filme' or tipo == 'Serie':
 		u = sys.argv[0] + "?url=" + urllib.quote_plus(url) + "&mode=333&name=" + urllib.quote_plus(name) + "&iconimage=" + urllib.quote_plus(iconimage)+ "&srtfilm=" + urllib.quote_plus(srtfilm)
 	else:
-		cm.append(('Ver programação', 'XBMC.RunPlugin(%s?mode=31&name=%s&url=%s&iconimage=%s&idCanal=%s)'%(sys.argv[0],urllib.quote_plus(name), urllib.quote_plus(url), urllib.quote_plus(iconimage), urllib.quote_plus(idCanal))))
+		if tipo != 'Praia':
+			#cm.append(('Adicionar a Favoritos', 'XBMC.RunPlugin(%s?mode=55&name=%s&url=%s&iconimage=%s&idCanal=%s&idffCanal=%s)'%(sys.argv[0],urllib.quote_plus(name), urllib.quote_plus(url), urllib.quote_plus(iconimage), idCanal, id_p)))
+			cm.append(('Ver programação', 'XBMC.RunPlugin(%s?mode=31&name=%s&url=%s&iconimage=%s&idCanal=%s&idffCanal=%s)'%(sys.argv[0],urllib.quote_plus(name), urllib.quote_plus(url), urllib.quote_plus(iconimage), idCanal, id_p)))
 	liz.setInfo( type="Video", infoLabels=infoLabels)
 	
 	if tipo == 'Filme':	
@@ -480,12 +608,23 @@ def addLink(name,url,iconimage,idCanal,srtfilm,descricao,tipo,infoLabels,total=1
 		xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
 
 	if tipo == 'Filme' or tipo == 'Serie':
-		#xbmcplugin.setContent(int(sys.argv[1]), 'Movies')
 		ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
 	else:
-		liz.addContextMenuItems(cm, replaceItems=True)
+		liz.addContextMenuItems(cm, replaceItems=False)
 		xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
 		ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=liz)
+	return ok
+	
+def addLinkFavorito(name,url,iconimage,idCanal,id_p,infoLabels):
+	cm=[]
+	ok=True
+	liz=xbmcgui.ListItem(name, iconImage=iconimage, thumbnailImage=iconimage)
+	liz.setProperty('fanart_image', iconimage)
+	#cm.append(('Remover Favorito','XBMC.RunPlugin(%s?mode=66&name=%s&url=%s&iconimage=%s&idffCanal=%s)'%(sys.argv[0],name, urllib.quote_plus(url), urllib.quote_plus(iconimage),id_p)))
+	cm.append(('Ver programação','XBMC.RunPlugin(%s?mode=31&name=%s&url=%s&iconimage=%s&idCanal=%s&idffCanal=%s)'%(sys.argv[0],name, urllib.quote_plus(url), urllib.quote_plus(iconimage),idCanal,id_p)))
+	liz.addContextMenuItems(cm, replaceItems=False)
+	xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
+	ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=liz)
 	return ok
 	
 def play_srt(name,url,iconimage,legendas):
@@ -500,8 +639,8 @@ def play_srt(name,url,iconimage,legendas):
 	player = xbmc.Player()
 	player.play(playlist)
 	while not (player.isPlaying()):
-		xbmc.sleep(30)
-		time.sleep(30)
+		xbmc.sleep(80)
+		time.sleep(80)
 	if legendas != '':
 		player.setSubtitles(legendas)
 
@@ -534,9 +673,12 @@ senha=None
 estilo=None
 srtfilm=None
 idCanal=None
+idffCanal=None
 tipologia=None
 descricao=None
 tipo_user=None
+servidor_user=None
+data_user=None
 
 try:
         url=urllib.unquote_plus(params["url"])
@@ -567,6 +709,10 @@ try:
 except:
 		pass
 try:
+		idffCanal=params["idffCanal"]
+except:
+		pass
+try:
 		srtfilm=urllib.unquote_plus(params["srtfilm"])
 except:
 		pass
@@ -582,20 +728,30 @@ try:
 		tipo_user=urllib.unquote_plus(params["tipo_user"])
 except:
 		pass
-		
+try:
+		servidor_user=urllib.unquote_plus(params["servidor_user"])
+except:
+		pass
+try:
+		data_user=urllib.unquote_plus(params["data_user"])
+except:
+		pass
 
 ###############################################################################################################
 #                                                   MODOS                                                     #
 ###############################################################################################################
 
 if mode==None or url==None or len(url)<1: menu()
-elif mode==1: listar_grupos(str(url),estilo,tipologia,tipo_user)
-elif mode==2: listar_canais_url(str(name),str(url),estilo,tipologia,tipo_user)
-elif mode==3: listar_grupos_adultos(str(url),str(senha),estilo,tipologia,tipo_user)
-elif mode==10: minhaConta()
+elif mode==1: listar_grupos(str(name),str(url),estilo,tipologia,tipo_user,servidor_user)
+elif mode==2: listar_canais_url(str(name),str(url),estilo,tipologia,tipo_user,servidor_user)
+elif mode==3: listar_grupos_adultos(str(url),str(senha),estilo,tipologia,tipo_user,servidor_user)
+elif mode==10: minhaConta(data_user)
+elif mode==11: favoritos(str(url))
 elif mode==1000: abrirDefinincoes()
 elif mode==2000: abrirNada()
 elif mode==31: programacao_canal(idCanal)
+elif mode==55: adicionaFavorito(idffCanal)
+elif mode==66: RemoveFavorito(idffCanal)
 elif mode==333: play_srt(str(name),str(url),iconimage,srtfilm)
 
 xbmcplugin.endOfDirectory(int(sys.argv[1]))

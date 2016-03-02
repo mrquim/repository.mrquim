@@ -667,26 +667,23 @@ Addons Included
   </extension>   
 </addon>
 
-<addon id="repository.livetv" name="LiveTV" version="2.2.5" provider-name="TV Direto">
-<requires>
-    <import addon="xbmc.addon" version="12.0.0" />
-</requires>
-        <extension point="xbmc.addon.repository" name="Live TV Repo">     
-                <info compressed="false">https://raw.githubusercontent.com/joelgrace1/repository.livetv/master/addons.xml</info>
-                <checksum>https://raw.githubusercontent.com/joelgrace1/repository.livetv/master/addons.xml.md5</checksum>
-                <datadir zip="true">https://raw.githubusercontent.com/joelgrace1/repository.livetv/master/addons/</datadir>
-                <hashes>true</hashes>
-        </extension>
-        <extension point="xbmc.addon.metadata">
-                <summary>Install add-ons from Live TV Repository</summary>
-                <description>Download and install add-ons from the Live Tv Repository</description>
-                <disclaimer></disclaimer>
-                <platform>all</platform>
-                <website></website>
-        </extension>   
+<addon id="liveit.repository" name="Live!t TV repository" version="0.0.2" provider-name="rebolinho">
+	<extension point="xbmc.addon.repository" name="Live!t TV Add-on Repository">
+		<info compressed="false">http://raw.github.com/rebolinho/liveit.repository/master/addons.xml</info>
+		<checksum>http://raw.github.com/rebolinho/liveit.repository/master/addons.xml.md5</checksum>
+		<datadir zip="true">http://raw.github.com/rebolinho/liveit.repository/master/repo/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Live!t TV</summary>
+		<description lang="en">Repositorio para todos os membros do grupo Live!t TV.</description>
+		<language>pt</language>
+		<disclaimer lang="en">Como desenvolvedores do addon, nada temos a haver com os links disponibilizados. 
+		Limitimo-nos a ler o seu conteudo disponibilizado e converter em addon.</disclaimer>
+		<platform>all</platform>
+	</extension>
 </addon>
 
-<addon id="plugin.video.LiveTV" name="Live!t TV" provider-name="Live!t TV" version="4.8.7">
+<addon id="plugin.video.LiveTV" name="Live!t TV" provider-name="Live!t TV" version="5.2.2">
   <requires>
     <import addon="xbmc.python" version="2.19.0"/>
 	<import addon="script.module.t0mm0.common" version="1.0.0"/>
@@ -976,7 +973,7 @@ Addons Included
   </extension>
 </addon>
 
-<addon id="plugin.video.youtube" name="YouTube" version="5.1.17" provider-name="bromix">
+<addon id="plugin.video.youtube" name="YouTube Fixed Version" version="5.1.20" provider-name="bromix & Mr. Quim">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 	</requires>
@@ -986,6 +983,8 @@ Addons Included
 	<extension point="xbmc.addon.metadata">
         <summary lang="en">Plugin for YouTube</summary>
         <description lang="en">YouTube is a one of the biggest video-sharing websites of the world.</description>
+		<summary lang="pt">Add-on para o YouTube</summary>
+        <description lang="pt">O Youtube é o maior site de partilha de videos no mundo.</description>
 		<summary lang="de">Plugin für YouTube</summary>
         <description lang="de">YouTube ist ein eines der größten Video-Sharing-Websites der Welt.</description>
         <summary lang="pl">Wtyczka YouTube</summary>
@@ -1002,8 +1001,8 @@ Addons Included
         <description lang="zh">「Youtube」是全世界最大的影片分享網站</description>
         <summary lang="bg">Добавка за YouTube</summary>
         <description lang="bg">YouTube е един от най-големите уеб сайтове за споделяне на видео в целия свят.</description>
-		<disclaimer lang="en"/>
-		<language/>
+		<disclaimer lang="en"></disclaimer>
+		<language></language>
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
 		<forum>http://forum.kodi.tv/showthread.php?tid=200735</forum>
@@ -1684,6 +1683,22 @@ Addons Included
         <description lang="pt_BR">Eminence é uma skin que busca simplicidade, funcionalidade e costumização através de uma aparência moderna.</description>
         <platform>all</platform>
     </extension>
+</addon>
+
+<addon id="liveit.repository" name="Live!t TV repository" version="0.0.2" provider-name="rebolinho">
+	<extension point="xbmc.addon.repository" name="Live!t TV Add-on Repository">
+		<info compressed="false">http://raw.github.com/rebolinho/liveit.repository/master/addons.xml</info>
+		<checksum>http://raw.github.com/rebolinho/liveit.repository/master/addons.xml.md5</checksum>
+		<datadir zip="true">http://raw.github.com/rebolinho/liveit.repository/master/repo/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Live!t TV</summary>
+		<description lang="en">Repositorio para todos os membros do grupo Live!t TV.</description>
+		<language>pt</language>
+		<disclaimer lang="en">Como desenvolvedores do addon, nada temos a haver com os links disponibilizados. 
+		Limitimo-nos a ler o seu conteudo disponibilizado e converter em addon.</disclaimer>
+		<platform>all</platform>
+	</extension>
 </addon>
 
 </addons>
