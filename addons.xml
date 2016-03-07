@@ -121,7 +121,7 @@ http://www.hometheater.co.il</description>
   </extension>
 </addon>
 
-<addon id="plugin.video.sembilhete.tv" name="SemBilhete.tv" provider-name="SemBilhete.tv" version="0.2.1">
+<addon id="plugin.video.sembilhete.tv" name="SemBilhete.tv" provider-name="SemBilhete.tv" version="0.2.2">
  <requires>
   <import addon="xbmc.python" version="2.7.10"/>
  </requires>
@@ -445,7 +445,7 @@ Addons Included
 	</extension>
 </addon>
 
-<addon id="plugin.video.specto" name="Specto - ... Fork"  version="2016.03.03.1" provider-name="mrknow" >
+<addon id="plugin.video.specto" name="Specto - ... Fork"  version="2016.03.05.1" provider-name="mrknow" >
 	<requires>
 		<import addon="xbmc.python" version="2.1.0" />
 		<import addon="script.module.requests" version="1.0.0" />
