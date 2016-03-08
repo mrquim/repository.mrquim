@@ -237,8 +237,7 @@ def Menu_inicial(men):
 					addDir(nome,link,None,1,'Miniatura',logo,tipo,_tipouser,_servidoruser,'')
 			else:
 				addDir(nome,link,None,1,'Miniatura',logo,tipo,_tipouser,_servidoruser,'')
-		
-			
+
 	thread.start_new_thread( obter_ficheiro_epg, () )
 
 def listar_grupos_adultos(url,senha,estilo,tipo,tipo_user,servidor_user):
@@ -311,7 +310,7 @@ def listar_canais_url(nome,url,estilo,tipo,tipo_user,servidor_user):
 				id_p = params[5]
 				srt_f = ''
 				descri = ''
-				if	grup == nome:
+				if grup == nome:
 					twrv = ThreadWithReturnValue(target=getProgramacaoDiaria, args=(id_it, st,codigo))
 
 					twrv.start()
@@ -336,7 +335,7 @@ def listar_canais_url(nome,url,estilo,tipo,tipo_user,servidor_user):
 						infoLabels = {'Title':nomewp, 'Plot':plot, 'Writer': argumento, 'Director':realizador, 'Genre':detalhes1, 'Year': detalhes2, 'Aired':detalhes2, 'IMDBNumber':imdb, 'Votes':votes}
 					else:
 						infoLabels = {'Title':nomewp}
-					#addDirM(filme['title'], str({'torrents': filme['items'], 'imdb': filme['imdb'], 'poster': filme['poster_big']}), 6, filme['poster_big'], total, True)
+
 					addLink(nomewp,rtmp,img,id_it,srt_f,descri,tipo,id_p,infoLabels,total)
 			except:
 				pass
@@ -384,7 +383,6 @@ def obter_ficheiro_epg():
 
 
 def getProgramacaoDiaria(idCanal, diahora, codigo):
-
 	source = re.compile('<programme channel="'+idCanal+'" start="(.+?) \+0100" stop="(.+?) \+0100">\s+<title lang="pt">(.+?)<\/title>').findall(codigo)
 
 	programa = ''
@@ -394,95 +392,6 @@ def getProgramacaoDiaria(idCanal, diahora, codigo):
 		if(int(start) < diahora and int(stop) > diahora):
 			programa = programa1
 	return programa
-
-def favoritos(url):
-	net = Net()
-	net.set_cookies(__COOKIE_FILE__)
-	dados = {'username': __ADDON__.getSetting("login_name")}
-	codigo_fonte = net.http_POST(url,form_data=dados,headers=__HEADERS__).content
-	f = open(os.path.join(__FOLDER_EPG__, 'epg'), mode="r")
-	codigo = f.read()
-	f.close()
-	ts = time.time()
-	st = int(datetime.datetime.fromtimestamp(ts).strftime('%Y%m%d%H%M%S'))
-		
-	elems = ET.fromstring(codigo_fonte)
-	for child in elems:
-		infoLabels = ''
-		img = ''
-		grup = ''
-		tipo = ''
-		rtmppp = ''
-		id_it = ''
-		id_p = ''
-		descri = ''
-		srt_f = ''
-		if(child.tag == 'sucesso'):
-			succc = child.text
-		elif(child.tag == 'canal'):
-			for d in child:
-				total = len(d)
-				if(d.tag == 'Nome'):
-					nomee = d.text
-					infoLabels = {'Title':nomee}
-				elif(d.tag == 'Imagem'):
-					img = d.text
-				elif(d.tag == 'Grupo'):
-					grup = d.text
-				elif(d.tag == 'Tipo'):
-					tipo = d.text
-				elif(d.tag == 'Url'):
-					rtmpaa = d.text
-					rtmppp = rtmpaa.replace(' rtmp','rtmp').replace(' rtsp','rtsp').replace(' http','http').replace('utilizadorliveit',__ADDON__.getSetting("login_name")).replace('senhaliveit',__ADDON__.getSetting("login_password"))
-				elif(d.tag == 'NomeID'):
-					id_it = d.text
-				elif(d.tag == 'ID'):
-					id_p = d.text
-				elif(d.tag == 'Descricao'):
-					descri = d.text
-				elif(d.tag == 'Legendas'):
-					srt_f = d.text
-			twrv = ThreadWithReturnValue(target=getProgramacaoDiaria, args=(id_it, st,codigo))
-			twrv.start()
-			programa = twrv.join()
-			if programa != '':
-				nomewp = nomee + " | "+ programa
-			else:
-				nomewp = nomee
-			addLinkFavorito(nomewp,rtmppp,img,id_it,id_p,infoLabels)
-	xbmc.executebuiltin("Container.SetViewMode(500)")
-
-def adicionaFavorito(idCanal):
-	net = Net()
-	net.set_cookies(__COOKIE_FILE__)
-	dados = {'username': __ADDON__.getSetting("login_name"), 'idcanal': idCanal}
-	codigo_fonte = net.http_POST(__SITE__+'AddFav.php',form_data=dados,headers=__HEADERS__).content
-	elems = ET.fromstring(codigo_fonte)
-	for child in elems:
-		if(child.tag == 'sucesso'):
-			succ=child.text
-			if succ == 'yes':
-				__ALERTA__('Live!t TV', 'Adicionou com sucesso aos favoritos.')
-			elif succ=='jaadicionado':
-				__ALERTA__('Live!t TV', 'Já está adicionado na sua página de favoritos.')
-			else: 
-				__ALERTA__('Live!t TV', 'Erro. Por favor tente mais tarde.')
-
-			
-def RemoveFavorito(idCanal):
-	net = Net()
-	net.set_cookies(__COOKIE_FILE__)
-	#print "Sou ID:"+idCanal
-	dados = {'username': __ADDON__.getSetting("login_name"), 'idcanal': idCanal}
-	codigo_fonte = net.http_POST(__SITE__+'RemFav.php',form_data=dados,headers=__HEADERS__).content
-	elems = ET.fromstring(codigo_fonte)
-	for child in elems:
-		if(child.tag == 'sucesso'):
-			succ=child.text
-			if succ == 'yes':
-				__ALERTA__('Live!t TV', 'Removeu com Sucesso. Por favor saia do menu favoritos e volte a entrar.')
-			else: 
-				__ALERTA__('Live!t TV', 'Erro. Por favor tente mais tarde.')
 
 			
 def programacao_canal(idCanal):
@@ -615,18 +524,6 @@ def addLink(name,url,iconimage,idCanal,srtfilm,descricao,tipo,id_p,infoLabels,to
 		ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=liz)
 	return ok
 	
-def addLinkFavorito(name,url,iconimage,idCanal,id_p,infoLabels):
-	cm=[]
-	ok=True
-	liz=xbmcgui.ListItem(name, iconImage=iconimage, thumbnailImage=iconimage)
-	liz.setProperty('fanart_image', iconimage)
-	#cm.append(('Remover Favorito','XBMC.RunPlugin(%s?mode=66&name=%s&url=%s&iconimage=%s&idffCanal=%s)'%(sys.argv[0],name, urllib.quote_plus(url), urllib.quote_plus(iconimage),id_p)))
-	cm.append(('Ver programação','XBMC.RunPlugin(%s?mode=31&name=%s&url=%s&iconimage=%s&idCanal=%s&idffCanal=%s)'%(sys.argv[0],name, urllib.quote_plus(url), urllib.quote_plus(iconimage),idCanal,id_p)))
-	liz.addContextMenuItems(cm, replaceItems=False)
-	xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
-	ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=liz)
-	return ok
-	
 def play_srt(name,url,iconimage,legendas):
 	playlist = xbmc.PlayList(1)
 	playlist.clear()
@@ -746,12 +643,9 @@ elif mode==1: listar_grupos(str(name),str(url),estilo,tipologia,tipo_user,servid
 elif mode==2: listar_canais_url(str(name),str(url),estilo,tipologia,tipo_user,servidor_user)
 elif mode==3: listar_grupos_adultos(str(url),str(senha),estilo,tipologia,tipo_user,servidor_user)
 elif mode==10: minhaConta(data_user)
-elif mode==11: favoritos(str(url))
 elif mode==1000: abrirDefinincoes()
 elif mode==2000: abrirNada()
 elif mode==31: programacao_canal(idCanal)
-elif mode==55: adicionaFavorito(idffCanal)
-elif mode==66: RemoveFavorito(idffCanal)
 elif mode==333: play_srt(str(name),str(url),iconimage,srtfilm)
 
 xbmcplugin.endOfDirectory(int(sys.argv[1]))
