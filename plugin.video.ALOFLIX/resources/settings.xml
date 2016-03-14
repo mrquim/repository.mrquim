@@ -1,0 +1,8 @@
+﻿<settings>
+  <category label="General">
+    <setting id="Updatecommonresolvers" label="Update Commonresolver from Genesis" type="bool" default="true" visible="false"/>
+	<setting type="action" label="Descargar última versión de [B]SportsDevil[/B]  [2015-05-02]" option="close" action="RunPlugin(plugin://plugin.video.ALOFLIX/?mode=7)" />
+  
+  </category>
+
+</settings>
