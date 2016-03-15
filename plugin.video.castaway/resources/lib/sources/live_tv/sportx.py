@@ -23,19 +23,25 @@ class main():
 		self.base = 'http://www.sports-x.net/'
 
 	def channels(self):
-		html = client.request(self.base, referer=self.base)
-		channels = webutils.bs(html).findAll('a')
+		html = client.request('http://www.sports-x.net/index.phplivetv', referer=self.base)
+		channels = webutils.bs(html).find('article',{'class':'main'}).findAll('a')
 		events = self.__prepare_channels(channels)
 		return events
 
 	def __prepare_channels(self,channels):
 		new=[]
+		urls=[]
 		for channel in channels:
-			url = self.base + channel['href']
+			url = channel['href']
 			title = channel.getText()
-			new.append((url,title,icon_path(info().icon)))
-		new.pop(-1)
+			if url not in urls:
+				urls.append(url)
+				new.append((url,title,icon_path(info().icon)))
+		#new.pop(-1)
 		return new
 
 
 
+	def resolve(self,url):
+		import liveresolver
+		return liveresolver.resolve(url)

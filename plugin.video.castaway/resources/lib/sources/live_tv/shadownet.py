@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from resources.lib.modules import client,webutils
 import re,sys,xbmcgui,os
+from resources.lib.modules.log_utils import log
 from addon.common.addon import Addon
 addon = Addon('plugin.video.castaway', sys.argv)
 
@@ -62,3 +63,7 @@ class main():
 			next = False
 
 		return next
+
+	def resolve(self,url):
+		import liveresolver
+		return liveresolver.resolve(url,cache_timeout=0)

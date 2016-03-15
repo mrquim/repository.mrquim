@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 from resources.lib.modules import client
+from resources.lib.modules.log_utils import log
 import re
 
 
@@ -27,12 +28,15 @@ class main():
 		new=[]
 		channels.pop(0)
 		for channel in channels:
-
+			log(channel)
 			img = 'http://hdfree.tv' + channel[1]
 			url = channel[0]
-			title = re.findall('(?:.tv|\d+)/(.+?)-live',url)[0].replace('-',' ').title().replace('Watch', '').lstrip("0123456789=/,")
+			title = re.findall('(?:\d+|.tv)/(.+?)(?:-live|.html)',url)[0].replace('-',' ').title().replace('Watch', '').lstrip("0123456789=/,")
 			new.append((url,title,img))
 		return new
 
 
 
+	def resolve(self,url):
+		import liveresolver
+		return liveresolver.resolve(url,cache_timeout=0)

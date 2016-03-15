@@ -1,6 +1,21 @@
 ====================================================================
 Castaway sports addon by [COLOR yellow]@natko1412[/COLOR]
 ====================================================================
+
+v0.1.2 [15-Mar-2016]
+-add account support for streamlive.to
+-add iptvlinks.eu
+-add ustvnow.com
+-add batmanstream.com
+-add reddit soccerstreams
+-improve caching and playback handling
+-fix hdfree.tv
+-fix sports-x.tv
+-fix nbafull
+-fix tvrex
+-remove tugoleada
+-remove nbahd
+
 v0.1.1 [29-Feb-2016]
 -fix tvone
 
@@ -22,7 +37,7 @@ v0.1.0 [28-Feb-2016]
 -fix fullmatchtv.com
 -fix rutube videos (nhl)
 -fix serbiaplus.club
--fix livetv.sx regex
+-fix livetc.sx regex
 -remove nba & nhlstream.net
 -remove time4tv
 -remove zonasports.in

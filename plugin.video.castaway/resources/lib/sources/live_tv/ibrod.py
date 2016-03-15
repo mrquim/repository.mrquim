@@ -46,6 +46,8 @@ class main():
 			i+=1
 		return new
 
-	
+	def resolve(self,url):
+		import liveresolver
+		return liveresolver.resolve(url)
 
 

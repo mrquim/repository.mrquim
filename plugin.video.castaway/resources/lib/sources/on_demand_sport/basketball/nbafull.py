@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from resources.lib.modules import client,webutils
 import re,urlparse,urllib,sys,os
-
+from resources.lib.modules.log_utils import log
 from addon.common.addon import Addon
 addon = Addon('plugin.video.castaway', sys.argv)
 
@@ -51,6 +51,20 @@ class main():
 			title = video.findPrevious('p').getText()
 			out.append((title,url,icon_path(info().icon)))
 
+		if out==[]:
+			videos = soup.findAll('iframe')
+			for video in videos:
+				log(video)
+				url = video['src']
+				if 'vk.com' not in url and 'dailymotion' not in url and 'ok.ru' not in url and 'mail.ru' not in url:
+					continue
+				if url.startswith('//'):
+					url = 'http:' + url
+				title = video.findPrevious('p').getText().strip()
+				if title =='':
+					title = 'Video 1'
+				url = url.replace('http://snnyk.com/mailru/?s=','')
+				out.append((title,url,icon_path(info().icon)))
 
 		return out
 
@@ -59,7 +73,8 @@ class main():
 
 
 	def resolve(self,url):
-		return url
+		import urlresolver
+		return urlresolver.resolve(url)
 
 
 

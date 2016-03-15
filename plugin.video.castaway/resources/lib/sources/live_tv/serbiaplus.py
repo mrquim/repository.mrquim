@@ -40,6 +40,9 @@ class main():
 			new.append((url,title,img))
 		return new
 
+	def resolve(self,url):
+		import liveresolver
+		return liveresolver.resolve(url)
 	
 
 

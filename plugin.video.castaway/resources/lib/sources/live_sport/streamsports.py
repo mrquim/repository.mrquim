@@ -101,3 +101,6 @@ class main():
                 pass
         
         return new
+    def resolve(self,url):
+        import liveresolver
+        return liveresolver.resolve(url,cache_timeout=0)

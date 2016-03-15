@@ -19,7 +19,7 @@ class info():
 
 class main():
     def __init__(self):
-        self.base = 'http://www.livefootballol.com'        
+        self.base = 'http://www.livefootballol.me'        
 
     def links(self,url):
         if url=='x':
@@ -30,7 +30,7 @@ class main():
         return links
 
     def channels(self):
-        result = client.request('http://www.livefootballol.com/live-football-streaming.html')
+        result = client.request('http://www.livefootballol.me/live-football-streaming.html')
         dates=re.findall('<h3>(.+?)\s*CET</h3></div>\s*<list class="uk-list uk-list-striped">',result)
         d = webutils.bs(result).findAll('list', {'class': 'uk-list uk-list-striped'})
         events = self.__prepare_events(dates, d)

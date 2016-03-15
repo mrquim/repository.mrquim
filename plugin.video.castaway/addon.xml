@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.castaway" name="Castaway" version="0.1.1" provider-name="natko1412">
+<addon id="plugin.video.castaway" name="Castaway" version="0.1.2" provider-name="natko1412">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.beautifulsoup" version="3.2.1"/>

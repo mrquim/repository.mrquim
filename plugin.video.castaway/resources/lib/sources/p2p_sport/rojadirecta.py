@@ -84,7 +84,7 @@ class main():
             lang = info[2].getText()
             service = info[3].getText()
             kbps = info[4].getText()
-            url = self.base + '/' + info[5].find('a')['href']
+            url = info[5].find('a')['href']
             title = "%s (%s, %skbps) - %s"%(name, lang, kbps, service)
             if 'Acestream'  in service or 'Sopcast' in service:
                 new.append((url,title))

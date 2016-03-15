@@ -80,15 +80,16 @@ class main():
 		post_data = "action=playwirevideos&postid=%s&serialid=%s"%(post_id,video_id)
 		result = s.post('http://thefootballcouch.com/wp-admin/admin-ajax.php', data=post_data, headers=headers).content
 		url = 'http:' + re.findall('(\/\/config\.playwire\.com\/[^\'\"]+)',result)[0]
+
+
 		result = client.request(url)
-		html = result
 		result = json.loads(result)
 		try:
 			f4m=result['content']['media']['f4m']
 		except:
-			reg=re.compile('"src":"http://(.+?).f4m"')
+			reg=re.compile('"src":"(http://.+?.f4m)"')
 			f4m=re.findall(reg,html)[0]
-			f4m='http://'+pom+'.f4m'
+			
 
 		result = client.request(f4m)
 		soup = webutils.bs(result)

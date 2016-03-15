@@ -36,4 +36,7 @@ class main():
         events=list(set(events))
         events.sort(key=lambda x: x[1])
         return events
-	
+        
+    def resolve(self,url):
+        import liveresolver
+        return liveresolver.resolve(url,cache_timeout=0)

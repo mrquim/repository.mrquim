@@ -29,10 +29,13 @@ class main():
 		for channel in channels:
 
 			img = self.base + channel[1]
-			url = channel[0]
+			url = self.base + channel[0]
 			title = channel[2]
 			new.append((url,title,img))
 		return new
 
 
 
+	def resolve(self,url):
+		import liveresolver
+		return liveresolver.resolve(url)

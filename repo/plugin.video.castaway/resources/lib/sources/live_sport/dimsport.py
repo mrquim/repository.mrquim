@@ -21,7 +21,7 @@ class main():
                 ('http://idimsports.eu/basketball.html','Basketball','icons/basketball.png'),('http://idimsports.eu/boxing-wwe-ufc.html', 'Fighting','icons/fighting.png'),
                 ('http://idimsports.eu/rugby.html', 'Rugby', 'icons/rugby.png'), ('http://idimsports.eu/ice-hockey.html', 'Ice Hockey', 'icons/hockey.png'),
                 ('http://idimsports.eu/tennis.html', 'Tennis', 'icons/tennis.png'), ('http://idimsports.eu/motosport.html', 'Motorsport', 'icons/f1.png'),
-                ('http://idimsports.eu/golf.html', 'Golf', 'icons/golf.png'), ('http://idimsports.eu/cricket.html', 'Cricket', 'icons/cricket.png') ]
+                ('http://idimsports.eu/golf.html', 'Golf', 'icons/golf.png'), ('http://idimsports.eu/cricket.html', 'Cricket', 'icons/cricket.png'), ('http://idimsports.eu/baseball.html', 'Baseball', 'icons/baseball.png') ]
         return cats
 
     def events(self,url):
@@ -87,3 +87,7 @@ class main():
             title = '[COLOR orange](%s)[/COLOR] %s'%(time,title)
             events.append((uri,title))
         return events
+
+    def resolve(self,url):
+        import liveresolver
+        return liveresolver.resolve(url,cache_timeout=0)

@@ -46,7 +46,7 @@ class main():
 		new = items
 		for event in events:
 			sport = event[0].title().replace('2Wges85','Champions League').replace('2Exu91G','College Basketball').replace('Hockey3','Hockey').replace('2W7Msf5','Pool').replace('A478Uu','Rugby').replace('2Zeezvn','College Football').replace('Orj96F','FOX').replace('120Grqw','CBS')
-			sport = sport.replace('359Jrq0','Volleyball').replace('Tennis3','Tennis')
+			sport = sport.replace('359Jrq0','Volleyball').replace('Tennis3','Tennis').replace('Dxmwp2','Europa League').replace('Baseball2','Baseball')
 			url = self.base + event[1]
 			title = event[2]
 			time = self.convert_time(event[3])
@@ -62,3 +62,7 @@ class main():
 			title = '[B]%s[/B]'%(title)
 			new.append((url,title))
 		return new
+
+	def resolve(self,url):
+		import liveresolver
+		return liveresolver.resolve(url,cache_timeout=0)

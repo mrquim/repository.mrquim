@@ -1,6 +1,8 @@
-from resources.lib.modules import client,webutils
+from resources.lib.modules import client,webutils,convert
 import re,sys,xbmcgui
 from addon.common.addon import Addon
+from resources.lib.modules.log_utils import log
+
 addon = Addon('plugin.video.castaway', sys.argv)
 
 class info():
@@ -24,6 +26,8 @@ class main():
 
     def events(self,url):
         result = client.request(url)
+        log(result)
+        result = convert.unescape(result.decode('utf-8'))
         reg = re.compile('(<h1 class="leagues".+?align="left"[^>]*>\s*<a([^>]*)>\s*<span class="[^"]+ ([^"]*)">[^>]*><span gday="[^"]*" class="matchtime">([\d:]*)</span>\s*([^<]+)\s*</a>\s*</h1>)')
         events = re.findall(reg,result)
         events = self.__prepare_events(events)
@@ -101,7 +105,7 @@ class main():
             title = re.findall('class="matchtime">.+?</span>\s*([^<]+)\s*</a>\s*</h1>',event[0])[0]
             time = self.convert_time(event[3])
             title = '[COLOR orange](%s)[/COLOR] (%s) [B]%s[/B]'%(time,sport,title)
-            new.append((url,title))
+            new.append((url,title.encode('utf-8', 'xmlcharrefreplace')))
         
         return new
 
@@ -128,3 +132,7 @@ class main():
                     new.append((url,title))
 
         return new
+
+    def resolve(self,url):
+        import liveresolver
+        return liveresolver.resolve(url,cache_timeout=0)

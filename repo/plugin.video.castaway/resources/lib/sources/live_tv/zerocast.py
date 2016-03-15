@@ -35,3 +35,6 @@ class main():
 
 
 
+	def resolve(self,url):
+		import liveresolver
+		return liveresolver.resolve(url)

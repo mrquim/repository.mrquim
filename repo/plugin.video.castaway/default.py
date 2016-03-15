@@ -4,7 +4,7 @@ import sys,os
 import urlparse,urllib
 import xbmc, xbmcgui, xbmcplugin, xbmcaddon
 from resources.lib.modules import control
-
+from resources.lib.modules.log_utils import log
 
 addon = Addon('plugin.video.castaway', sys.argv)
 addon_handle = int(sys.argv[1])
@@ -50,7 +50,7 @@ elif mode[0]=='keyboard_open':
         query = keyboard.getText()
         import liveresolver
         url=query
-        resolved = liveresolver.resolve(url)
+        resolved = liveresolver.resolve(url,cache_timeout=0)
         xbmc.Player().play(resolved)
 
 elif mode[0] == 'live_sport':
@@ -135,18 +135,27 @@ elif mode[0] == 'p2p_corner':
 
 elif mode[0] == 'open_live_sport':
     site = args['site'][0]
+    try:
+        next_page = args['next'][0]
+    except:
+        next_page = None
     exec "from resources.lib.sources.live_sport import %s"%site
-    source = eval(site+".main()")
     info = eval(site+".info()")
     if not info.categorized:
+        if next_page:
+            source = eval(site+".main(url=next_page)")
+        else:
+            source = eval(site+".main()")
         events = source.events()
         for event in events:
             if not info.multilink:
                 browser = 'plugin://plugin.program.chrome.launcher/?url=%s&mode=showSite&stopPlayback=no'%(event[0])
                 context = [('Open in browser','RunPlugin(%s)'%browser)]
-                addon.add_video_item({'mode': 'play', 'url': event[0], 'title':event[1], 'img': icon_path(info.icon)}, {'title': event[1]}, img=icon_path(info.icon), fanart=fanart, contextmenu_items=context)
+                addon.add_video_item({'mode': 'play_special_sport', 'url': event[0], 'title':event[1], 'img': icon_path(info.icon),'site':site}, {'title': event[1]}, img=icon_path(info.icon), fanart=fanart, contextmenu_items=context)
             else:
                 addon.add_item({'mode': 'get_sport_event','site':site, 'url': event[0], 'title':event[1], 'img': icon_path(info.icon)}, {'title': event[1]}, img=icon_path(info.icon), fanart=fanart,is_folder=True)
+        if (info.paginated and source.next_page()):
+            addon.add_item({'mode': 'open_live_sport', 'site': info.mode, 'next' : source.next_page()}, {'title': 'Next Page >>'}, img=icon_path(info.icon), fanart=fanart,is_folder=True)
 
     else:
         source = eval(site+".main()")
@@ -167,8 +176,7 @@ elif mode[0] == 'open_live_tv':
         next_page = None
     exec "from resources.lib.sources.live_tv import %s"%site
     info = eval(site+".info()")
-    try: special = info.special
-    except: special = False
+    
     if not info.categorized:
         if next_page:
             source = eval(site+".main(url=next_page)")
@@ -179,10 +187,8 @@ elif mode[0] == 'open_live_tv':
             if not info.multilink:
                 browser = 'plugin://plugin.program.chrome.launcher/?url=%s&mode=showSite&stopPlayback=no'%(channel[0])
                 context = [('Open in browser','RunPlugin(%s)'%browser)]
-                if not special:
-                    addon.add_video_item({'mode': 'play', 'url': channel[0], 'title': channel[1], 'img':channel[2]}, {'title': channel[1]}, img=channel[2], fanart=fanart, contextmenu_items=context)
-                else:
-                    addon.add_item({'mode': 'play_special', 'url': channel[0], 'title': channel[1], 'img':channel[2], 'site': site}, {'title': channel[1]}, img=channel[2], fanart=fanart, contextmenu_items=context, is_folder=True)
+                addon.add_video_item({'mode': 'play_special', 'url': channel[0], 'title': channel[1], 'img':channel[2], 'site': site}, {'title': channel[1]}, img=channel[2], fanart=fanart, contextmenu_items=context)
+                
             else:
 
                 addon.add_item({'mode': 'get_tv_event', 'url': channel[0],'site':site , 'title':channel[1], 'img': channel[2]}, {'title': channel[1]}, img=channel[2], fanart=fanart,is_folder=True)
@@ -349,7 +355,7 @@ elif mode[0]=='open_tv_cat':
         if not info.multilink:
             browser = 'plugin://plugin.program.chrome.launcher/?url=%s&mode=showSite&stopPlayback=no'%(event[0])
             context = [('Open in browser','RunPlugin(%s)'%browser)]
-            addon.add_video_item({'mode': 'play', 'url': event[0],'title':event[1], 'img': event[2]}, {'title': event[1]}, img=event[2], fanart=fanart, contextmenu_items=context)
+            addon.add_video_item({'mode': 'play_special', 'url': event[0],'title':event[1],'site':site, 'img': event[2]}, {'title': event[1]}, img=event[2], fanart=fanart, contextmenu_items=context)
         else:
             addon.add_item({'mode': 'get_tv_event', 'url': event[0],'site':site , 'title':event[1], 'img': event[2]}, {'title': event[1]}, img=event[2], fanart=fanart,is_folder=True)
     
@@ -370,7 +376,7 @@ elif mode[0]=='open_sport_cat':
         if not info.multilink:
             browser = 'plugin://plugin.program.chrome.launcher/?url=%s&mode=showSite&stopPlayback=no'%(event[0])
             context = [('Open in browser','RunPlugin(%s)'%browser)]
-            addon.add_video_item({'mode': 'play', 'url': event[0],'title':event[1], 'img': icon_path(info.icon)}, {'title': event[1]}, img=icon_path(info.icon), fanart=fanart, contextmenu_items=context)
+            addon.add_video_item({'mode': 'play_special_sport', 'url': event[0],'title':event[1], 'img': icon_path(info.icon),'site':site}, {'title': event[1]}, img=icon_path(info.icon), fanart=fanart, contextmenu_items=context)
         else:
             addon.add_item({'mode': 'get_sport_event', 'url': event[0],'site':site , 'title':event[1], 'img': icon_path(info.icon)}, {'title': event[1]}, img=icon_path(info.icon), fanart=fanart,is_folder=True)
     if (info.paginated and source.next_page()):
@@ -406,36 +412,27 @@ elif mode[0]=='get_sport_event':
     source = eval(site+".main()")
     events = source.links(url)
 
-    #auto play if only 1 link
-    if len(events)==1:
-        import liveresolver
-        resolved = liveresolver.resolve(events[0][0])
-        player=xbmc.Player()
-        li = xbmcgui.ListItem(title)
-        li.setThumbnailImage(icon_path(info.icon))
-        player.play(resolved,listitem=li)
+    autoplay = addon.get_setting('autoplay')
+    if autoplay == 'false':
+        for event in events:
+            browser = 'plugin://plugin.program.chrome.launcher/?url=%s&mode=showSite&stopPlayback=no'%(event[0])
+            context = [('Open in browser','RunPlugin(%s)'%browser)]
+            addon.add_video_item({'mode': 'play_special_sport', 'url': event[0],'title':title, 'img': img,'site':site}, {'title': event[1]}, img=img, fanart=fanart, contextmenu_items=context)
+        addon.end_of_directory()
     else:
-        autoplay = addon.get_setting('autoplay')
-        if autoplay == 'false':
-            for event in events:
-                browser = 'plugin://plugin.program.chrome.launcher/?url=%s&mode=showSite&stopPlayback=no'%(event[0])
-                context = [('Open in browser','RunPlugin(%s)'%browser)]
-                addon.add_video_item({'mode': 'play', 'url': event[0],'title':title, 'img': img}, {'title': event[1]}, img=img, fanart=fanart, contextmenu_items=context)
-            addon.end_of_directory()
-        else:
-            for event in events:
-                import liveresolver
-                try:
-                    resolved = liveresolver.resolve(event[0])
-                except:
-                    resolved = None
-                if resolved:
-                    player=xbmc.Player()
-                    li = xbmcgui.ListItem(title)
-                    li.setThumbnailImage(img)
-                    player.play(resolved,listitem=li)
-                    break
-            control.infoDialog("No stream found")
+        for event in events:
+            import liveresolver
+            try:
+                resolved = liveresolver.resolve(event[0])
+            except:
+                resolved = None
+            if resolved:
+                player=xbmc.Player()
+                li = xbmcgui.ListItem(title)
+                li.setThumbnailImage(img)
+                player.play(resolved,listitem=li)
+                break
+        control.infoDialog("No stream found")
 
 elif mode[0]=='get_tv_event':
     url = args['url'][0]
@@ -447,36 +444,27 @@ elif mode[0]=='get_tv_event':
     source = eval(site+".main()")
     events = source.links(url)
 
-    #auto play if only 1 link
-    if len(events)==1:
-        import liveresolver
-        resolved = liveresolver.resolve(events[0][0])
-        player=xbmc.Player()
-        li = xbmcgui.ListItem(title)
-        li.setThumbnailImage(icon_path(info.icon))
-        player.play(resolved,listitem=li)
+    autoplay = addon.get_setting('autoplay')
+    if autoplay == 'false':
+        for event in events:
+            browser = 'plugin://plugin.program.chrome.launcher/?url=%s&mode=showSite&stopPlayback=no'%(event[0])
+            context = [('Open in browser','RunPlugin(%s)'%browser)]
+            addon.add_video_item({'mode': 'play_special', 'url': event[0],'title':title, 'img': img, 'site':site}, {'title': event[1]}, img=img, fanart=fanart, contextmenu_items=context)
+        addon.end_of_directory()
     else:
-        autoplay = addon.get_setting('autoplay')
-        if autoplay == 'false':
-            for event in events:
-                browser = 'plugin://plugin.program.chrome.launcher/?url=%s&mode=showSite&stopPlayback=no'%(event[0])
-                context = [('Open in browser','RunPlugin(%s)'%browser)]
-                addon.add_video_item({'mode': 'play', 'url': event[0],'title':title, 'img': img}, {'title': event[1]}, img=img, fanart=fanart, contextmenu_items=context)
-            addon.end_of_directory()
-        else:
-            for event in events:
-                import liveresolver
-                try:
-                    resolved = liveresolver.resolve(event[0])
-                except:
-                    resolved = None
-                if resolved:
-                    player=xbmc.Player()
-                    li = xbmcgui.ListItem(title)
-                    li.setThumbnailImage(img)
-                    player.play(resolved,listitem=li)
-                    break
-            control.infoDialog("No stream found")
+        for event in events:
+            import liveresolver
+            try:
+                resolved = liveresolver.resolve(event[0])
+            except:
+                resolved = None
+            if resolved:
+                player=xbmc.Player()
+                li = xbmcgui.ListItem(title)
+                li.setThumbnailImage(img)
+                player.play(resolved,listitem=li)
+                break
+        control.infoDialog("No stream found")
 
 elif mode[0]=='get_p2p_event':
     url = args['url'][0]
@@ -488,36 +476,27 @@ elif mode[0]=='get_p2p_event':
     source = eval(site+".main()")
     events = source.links(url)
 
-    #auto play if only 1 link
-    if len(events)==1:
-        import liveresolver
-        resolved = liveresolver.resolve(events[0][0])
-        player=xbmc.Player()
-        li = xbmcgui.ListItem(title)
-        li.setThumbnailImage(icon_path(info.icon))
-        player.play(resolved,listitem=li)
+    autoplay = addon.get_setting('autoplay')
+    if autoplay == 'false':
+        for event in events:
+            browser = 'plugin://plugin.program.chrome.launcher/?url=%s&mode=showSite&stopPlayback=no'%(event[0])
+            context = [('Open in browser','RunPlugin(%s)'%browser)]
+            addon.add_video_item({'mode': 'play', 'url': event[0],'title':title, 'img': img}, {'title': event[1]}, img=img, fanart=fanart, contextmenu_items=context)
+        addon.end_of_directory()
     else:
-        autoplay = addon.get_setting('autoplay')
-        if autoplay == 'false':
-            for event in events:
-                browser = 'plugin://plugin.program.chrome.launcher/?url=%s&mode=showSite&stopPlayback=no'%(event[0])
-                context = [('Open in browser','RunPlugin(%s)'%browser)]
-                addon.add_video_item({'mode': 'play', 'url': event[0],'title':title, 'img': img}, {'title': event[1]}, img=img, fanart=fanart, contextmenu_items=context)
-            addon.end_of_directory()
-        else:
-            for event in events:
-                import liveresolver
-                try:
-                    resolved = liveresolver.resolve(event[0])
-                except:
-                    resolved = None
-                if resolved:
-                    player=xbmc.Player()
-                    li = xbmcgui.ListItem(title)
-                    li.setThumbnailImage(img)
-                    player.play(resolved,listitem=li)
-                    break
-            control.infoDialog("No stream found")
+        for event in events:
+            import liveresolver
+            try:
+                resolved = liveresolver.resolve(event[0])
+            except:
+                resolved = None
+            if resolved:
+                player=xbmc.Player()
+                li = xbmcgui.ListItem(title)
+                li.setThumbnailImage(img)
+                player.play(resolved,listitem=li)
+                break
+        control.infoDialog("No stream found")
 
 
 
@@ -527,7 +506,7 @@ elif mode[0] == 'play':
     title = args['title'][0]
     img = args['img'][0]
     import liveresolver
-    resolved = liveresolver.resolve(url)
+    resolved = liveresolver.resolve(url,cache_timeout=0)
     li = xbmcgui.ListItem(title, path=resolved)
     li.setThumbnailImage(img)
     li.setLabel(title)
@@ -542,9 +521,26 @@ elif mode[0] == 'play_special':
     exec "from resources.lib.sources.live_tv import %s"%(site)
     source = eval(site+'.main()')
     resolved = source.resolve(url)
-    li = xbmcgui.ListItem(title, iconImage=img)
+    li = xbmcgui.ListItem(title, path=resolved)
     li.setThumbnailImage(img)
-    xbmc.Player().play(resolved, li)
+    li.setLabel(title)
+    li.setProperty('IsPlayable', 'true')
+    xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, li)
+
+elif mode[0] == 'play_special_sport':
+    url = args['url'][0]
+    title = args['title'][0]
+    img = args['img'][0]
+    site = args['site'][0]
+    exec "from resources.lib.sources.live_sport import %s"%(site)
+    source = eval(site+'.main()')
+    resolved = source.resolve(url)
+    li = xbmcgui.ListItem(title, path=resolved)
+    li.setThumbnailImage(img)
+    li.setLabel(title)
+    li.setProperty('IsPlayable', 'true')
+    xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, li)
+
 
 elif mode[0]=='play_od_item':
     url = args['url'][0]

@@ -1,6 +1,10 @@
 from __future__ import unicode_literals
 from resources.lib.modules import client, webutils
-import re, urllib, requests
+from resources.lib.modules.log_utils import log
+import urllib, requests
+import re,sys,xbmcgui,os
+from addon.common.addon import Addon
+addon = Addon('plugin.video.castaway', sys.argv)
 
 
 class info():
@@ -39,23 +43,28 @@ class main():
 		self.url = url
 		html = self.session.get(url).text
 
-		regex='<a href="(.+?)" title=".+?" class="clist-thumb">\s*<img .+? src="(.+?)" src=".+?" alt="(.+?)" '
-		reg=re.compile(regex)
-		channels = re.findall(regex,html)
+		channels = webutils.bs(html).findAll('li')
 		events = self.__prepare_channels(channels)
 		return events
 
 	def __prepare_channels(self,channels):
 		new=[]
 		for channel in channels:
-			url = channel[0]
-			img = 'http:' + channel[1]
-			title = channel[2].encode('utf-8')
-			new.append((url,title,img))
+			try:
+				url = channel.find('a')['href']
+				img = 'http:' + re.findall('img.+?src="(.+?)"',str(channel.find('img')))[0]
+				title = channel.find('img')['alt'].encode('utf-8')
+				if 'premium' in channel.getText().lower() and addon.get_setting('streamlive_show_premium')=='false':
+					continue
+				else:
+					log(img)
+					new.append((url,title,img))
+				
+			except:
+				pass
 		return new
 
 	def next_page(self):
-		print(self.url)
 		html = self.session.get(self.url, headers={'referer':self.base}).text
 		try: 
 			next = re.compile('>\s\d+\s<a href="(.+?)">').findall(html)[0]
@@ -66,7 +75,7 @@ class main():
 
 	def start_session(self):
 		s = requests.Session()
-		html = s.get(self.url, headers={'referer':self.base, 'Content-type':'application/x-www-form-urlencoded', 'Origin': 'http://www.streamlive.to', 'Host':'www.streamlive.to'}).text
+		html = s.get(self.url, headers={'referer':self.base, 'Content-type':'application/x-www-form-urlencoded', 'Origin': 'http://www.streamlive.to', 'Host':'www.streamlive.to', 'User-agent':client.agent()}).text
 		if 'captcha' in html:
 			try:
 				answer = re.findall('Question\:.+?\:(.+?)<',html)[0].strip()
@@ -74,6 +83,14 @@ class main():
 				answer = eval(re.findall('Question\:(.+?)<',html)[0].replace('=?',''))
 			
 			post = urllib.urlencode({"captcha":answer})
-			html = s.post(self.url, data=post, headers={'referer':self.base, 'Content-type':'application/x-www-form-urlencoded', 'Origin': 'http://www.streamlive.to', 'Host':'www.streamlive.to'}).text
+			html = s.post(self.url, data=post, headers={'referer':self.base, 'Content-type':'application/x-www-form-urlencoded', 'Origin': 'http://www.streamlive.to', 'Host':'www.streamlive.to', 'User-agent':client.agent()}).text
 			
 		return s
+
+
+
+	def resolve(self,url):
+
+		import liveresolver
+		return liveresolver.resolve(url)
+		
