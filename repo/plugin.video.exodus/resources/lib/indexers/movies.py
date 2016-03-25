@@ -367,15 +367,7 @@ class movies:
                 plot = client.replaceHTMLCodes(plot)
                 plot = plot.encode('utf-8')
 
-                try: tagline = item['tagline']
-                except: tagline = None
-                if tagline == None and not plot == '0': tagline = re.compile('[.!?][\s]{1,2}(?=[A-Z])').split(plot)[0]
-                elif tagline == None: tagline = '0'
-                tagline = client.replaceHTMLCodes(tagline)
-                try: tagline = tagline.encode('utf-8')
-                except: pass
-
-                self.list.append({'title': title, 'originaltitle': title, 'year': year, 'premiered': premiered, 'studio': '0', 'genre': genre, 'duration': duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'director': '0', 'writer': '0', 'cast': '0', 'plot': plot, 'tagline': tagline, 'code': imdb, 'imdb': imdb, 'tmdb': '0', 'tvdb': '0', 'poster': poster, 'banner': banner, 'fanart': fanart, 'next': next})
+                self.list.append({'title': title, 'originaltitle': title, 'year': year, 'premiered': premiered, 'studio': '0', 'genre': genre, 'duration': duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'director': '0', 'writer': '0', 'cast': '0', 'plot': plot, 'code': imdb, 'imdb': imdb, 'tmdb': '0', 'tvdb': '0', 'poster': poster, 'banner': banner, 'fanart': fanart, 'next': next})
             except:
                 pass
 
@@ -541,11 +533,7 @@ class movies:
                 plot = client.replaceHTMLCodes(plot)
                 plot = plot.encode('utf-8')
 
-                tagline = re.compile('[.!?][\s]{1,2}(?=[A-Z])').split(plot)[0]
-                try: tagline = tagline.encode('utf-8')
-                except: pass
-
-                self.list.append({'title': title, 'originaltitle': title, 'year': year, 'premiered': '0', 'studio': '0', 'genre': genre, 'duration': duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'director': director, 'writer': '0', 'cast': cast, 'plot': plot, 'tagline': tagline, 'code': imdb, 'imdb': imdb, 'tmdb': '0', 'tvdb': '0', 'poster': poster, 'banner': '0', 'fanart': '0', 'next': next})
+                self.list.append({'title': title, 'originaltitle': title, 'year': year, 'premiered': '0', 'studio': '0', 'genre': genre, 'duration': duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'director': director, 'writer': '0', 'cast': cast, 'plot': plot, 'code': imdb, 'imdb': imdb, 'tmdb': '0', 'tvdb': '0', 'poster': poster, 'banner': '0', 'fanart': '0', 'next': next})
             except:
                 pass
 
@@ -723,11 +711,6 @@ class movies:
             plot = plot.encode('utf-8')
             if not plot == '0': self.list[i].update({'plot': plot})
 
-            tagline = re.compile('[.!?][\s]{1,2}(?=[A-Z])').split(plot)[0]
-            try: tagline = tagline.encode('utf-8')
-            except: pass
-            if not tagline == '0': self.list[i].update({'tagline': tagline})
-
             studio = self.list[i]['studio']
 
 
@@ -781,13 +764,7 @@ class movies:
                 except: pass
                 if not plot == '0': self.list[i].update({'plot': plot})
 
-                t = item['tagline']
-                if not (t == None or t == ''): tagline = t
-                try: tagline = tagline.encode('utf-8')
-                except: pass
-                if not tagline == '0': self.list[i].update({'tagline': tagline})
-
-            self.meta.append({'imdb': imdb, 'tmdb': '0', 'tvdb': '0', 'lang': self.lang, 'item': {'title': title, 'year': year, 'code': imdb, 'imdb': imdb, 'tmdb': '0', 'poster': poster, 'fanart': fanart, 'premiered': premiered, 'studio': studio, 'genre': genre, 'duration': duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'director': director, 'writer': writer, 'cast': cast, 'plot': plot, 'tagline': tagline}})
+            self.meta.append({'imdb': imdb, 'tmdb': '0', 'tvdb': '0', 'lang': self.lang, 'item': {'title': title, 'year': year, 'code': imdb, 'imdb': imdb, 'tmdb': '0', 'poster': poster, 'fanart': fanart, 'premiered': premiered, 'studio': studio, 'genre': genre, 'duration': duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'director': director, 'writer': writer, 'cast': cast, 'plot': plot}})
         except:
             pass
 
@@ -831,6 +808,8 @@ class movies:
                 try: meta.update({'duration': str(int(meta['duration']) * 60)})
                 except: pass
                 try: meta.update({'genre': cleangenre.lang(meta['genre'], self.lang)})
+                except: pass
+                try: del meta['tagline']
                 except: pass
                 sysmeta = urllib.quote_plus(json.dumps(meta))
 

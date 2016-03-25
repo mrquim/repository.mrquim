@@ -42,14 +42,13 @@
 		<setting id="provider.directdl" type="bool" label="DirectDL" default="true" />
 		<setting id="provider.ddlvalley" type="bool" label="DDLvalley" default="true" />
 		<setting id="provider.mvlinks" type="bool" label="MVlinks" default="true" />
-		<setting id="provider.watchmovies" type="bool" label="Watchmovies" default="true" />
+		<setting id="provider.watch1080" type="bool" label="Watch1080" default="true" />
 		<setting id="provider.onemovies" type="bool" label="Onemovies" default="true" />
 		<setting id="provider.ninemovies" type="bool" label="Ninemovies" default="true" />
 		<setting id="provider.pubfilm" type="bool" label="Pubfilm" default="true" />
 		<setting id="provider.miradetodo" type="bool" label="MiraDeTodo" default="true" />
 		<setting id="provider.xmovies" type="bool" label="Xmovies" default="true" />
 		<setting id="provider.tunemovie" type="bool" label="Tunemovie" default="true" />
-		<setting id="provider.izlemeyedeger" type="bool" label="Izlemeyedeger" default="true" />
 		<setting id="provider.afdah" type="bool" label="Afdah" default="true" />
 		<setting id="provider.dizilab" type="bool" label="Dizilab" default="true" />
 		<setting id="provider.sezonlukdizi" type="bool" label="Sezonlukdizi" default="true" />

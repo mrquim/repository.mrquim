@@ -43,7 +43,7 @@ class source:
             result = json.loads(result)['results']
 
             title = cleantitle.get(title)
-            years = ['(%s)' % str(year), '(%s)' % str(int(year)+1), '(%s)' % str(int(year)-1)]
+            years = ['(%s)' % str(year)]
 
             r = [(i['url'], i['titleNoFormatting']) for i in result]
             r = [(i[0], re.compile('(^Watch Full "|^Watch |)(.+? [(]\d{4}[)])').findall(i[1])) for i in r]
@@ -90,7 +90,6 @@ class source:
                     post = urllib.urlencode(post)
 
                     if not host in ['google', 'putlocker', 'openload', 'videomega']: raise Exception()
-                    if not host in ['google', 'putlocker', 'openload']: raise Exception()
 
                     result = cloudflare.source(url, post=post, headers=headers)
                     result = json.loads(result)['s']

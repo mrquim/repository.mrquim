@@ -21,19 +21,21 @@
 
 import sys,pkgutil,re,json,urllib,urlparse,random,datetime,time
 
-try: import xbmc
-except: pass
-
-try:
-    from sqlite3 import dbapi2 as database
-except:
-    from pysqlite2 import dbapi2 as database
-
 from resources.lib.modules import control
 from resources.lib.modules import cleantitle
 from resources.lib.modules import client
 from resources.lib.modules import debrid
 from resources.lib.modules import workers
+
+try: from sqlite3 import dbapi2 as database
+except: from pysqlite2 import dbapi2 as database
+
+try: import urlresolver
+except: pass
+
+try: import xbmc
+except: pass
+
 
 
 class sources:
@@ -54,18 +56,17 @@ class sources:
             if 'super.fav' in control.infoLabel('Container.PluginName'):
                 return control.dialog.ok('Exodus', control.lang(30518).encode('utf-8'), '', '')
 
-            self.sources = self.getSources(title, year, imdb, tvdb, season, episode, tvshowtitle, premiered, progress=progress)
-            self.sources = self.sourcesFilter()
+            items = self.getSources(title, year, imdb, tvdb, season, episode, tvshowtitle, premiered, progress=progress)
 
             if control.window.getProperty('PseudoTVRunning') == 'True':
-                return control.resolve(int(sys.argv[1]), True, control.item(path=str(self.sourcesDirect(progress=progress))))
+                return control.resolve(int(sys.argv[1]), True, control.item(path=str(self.sourcesDirect(items, progress=progress))))
 
-            if self.sources == []: raise Exception()
+            if items == []: raise Exception()
 
-            if url == 'direct://': url = self.sourcesDirect(progress=progress)
-            elif url == 'dialog://': url = self.sourcesDialog(progress=progress)
-            elif control.setting('autoplay') == 'false': url = self.sourcesDialog(progress=progress)
-            else: url = self.sourcesDirect(progress=progress)
+            if url == 'direct://': url = self.sourcesDirect(items, progress=progress)
+            elif url == 'dialog://': url = self.sourcesDialog(items, progress=progress)
+            elif control.setting('autoplay') == 'false': url = self.sourcesDialog(items, progress=progress)
+            else: url = self.sourcesDirect(items, progress=progress)
 
             if url == None: raise Exception()
             if url == 'close://': return
@@ -94,7 +95,7 @@ class sources:
             self.progressDialog.create(control.addonInfo('name'), '')
             self.progressDialog.update(0, control.lang(30515).encode('utf-8'), str(' '))
 
-            self.sources = self.sourcesFilter()
+            content = 'movies' if tvshowtitle == None else 'episodes'
 
             trailerMenu = control.lang(30516).encode('utf-8') if tvshowtitle == None else control.lang(30517).encode('utf-8')
 
@@ -103,6 +104,9 @@ class sources:
             downloads = True if control.setting('downloads') == 'true' and not (control.setting('movie.download.path') == '' or control.setting('tv.download.path') == '') else False
 
             meta = json.loads(meta)
+
+            try: del meta['duration']
+            except: pass
 
             poster = meta['poster'] if 'poster' in meta else '0'
             banner = meta['banner'] if 'banner' in meta else '0'
@@ -156,6 +160,8 @@ class sources:
                 except:
                     pass
 
+
+            control.content(int(sys.argv[1]), content)
             control.directory(int(sys.argv[1]), cacheToDisc=True)
             try: self.progressDialog.close()
             except: pass
@@ -263,10 +269,12 @@ class sources:
             pass
 
 
-    def getSources(self, title, year, imdb, tvdb, season, episode, tvshowtitle, premiered, progress=True):
+    def getSources(self, title, year, imdb, tvdb, season, episode, tvshowtitle, premiered, presetDict=[], timeout=30, progress=True):
         sourceDict = []
         for package, name, is_pkg in pkgutil.walk_packages(__path__): sourceDict.append((name, is_pkg))
         sourceDict = [i[0] for i in sourceDict if i[1] == False]
+
+        if not presetDict == []: sourceDict = [i for i in presetDict if i in sourceDict]
 
         content = 'movie' if tvshowtitle == None else 'episode'
 
@@ -278,7 +286,7 @@ class sources:
         try: sourceDict = [(i, control.setting('provider.' + re.sub('_mv_tv$|_mv$|_tv$', '', i))) for i in sourceDict]
         except: sourceDict = [(i, 'true') for i in sourceDict]
 
-        sourceDict = [i[0] for i in sourceDict if i[1] == 'true']
+        sourceDict = [i[0] for i in sourceDict if not i[1] == 'false']
 
         threads = []
 
@@ -295,7 +303,7 @@ class sources:
 
 
         try: timeout = int(control.setting('scrapers.timeout.1'))
-        except: timeout = 40
+        except: pass
 
         [i.start() for i in threads]
 
@@ -334,6 +342,8 @@ class sources:
 
         try: self.progressDialog.close()
         except: pass
+
+        self.sourcesFilter()
 
         return self.sources
 
@@ -458,6 +468,29 @@ class sources:
             pass
 
 
+    def getURISource(self, url):
+        try:
+            sourceDict = []
+            for package, name, is_pkg in pkgutil.walk_packages(__path__): sourceDict.append((name, is_pkg))
+            sourceDict = [i[0] for i in sourceDict if i[1] == False]
+            sourceDict = [(i, __import__(i, globals(), locals(), [], -1).source()) for i in sourceDict]
+
+            domain = (urlparse.urlparse(url).netloc).lower()
+
+            domains = [(i[0], i[1].domains) for i in sourceDict]
+            domains = [i[0] for i in domains if any(x in domain for x in i[1])]
+
+            if len(domains) == 0: return False
+
+            call = [i[1] for i in sourceDict if i[0] == domains[0]][0]
+
+            self.sources = call.sources(url, self.hostDict, self.hostprDict)
+            self.sources = self.sourcesFilter()
+            return self.sources
+        except:
+            pass
+
+
     def alterSources(self, url, meta):
         try:
             setting = control.setting('autoplay')
@@ -489,12 +522,12 @@ class sources:
 
 
     def sourcesFilter(self):
-        try: quality = control.setting('hosts.quality')
-        except: quality = '0'
-        try: captcha = control.setting('hosts.captcha')
-        except: captcha = 'true'
-        try: provider = control.setting('hosts.sort.provider')
-        except: provider = 'false'
+        provider = control.setting('hosts.sort.provider')
+
+        quality = control.setting('hosts.quality')
+        if quality == '': quality = '0'
+
+        captcha = control.setting('hosts.captcha')
 
 
         random.shuffle(self.sources)
@@ -528,7 +561,7 @@ class sources:
         if len(filter) < 10: filter += [i for i in self.sources if i['quality'] == 'CAM']
         self.sources = filter
 
-        if captcha == 'false':
+        if not captcha == 'true':
             filter = [i for i in self.sources if i['source'].lower() in self.hostcapDict and not 'debrid' in i]
             self.sources = [i for i in self.sources if not i in filter]
 
@@ -588,15 +621,40 @@ class sources:
 
             elif not direct == True:
                 try:
-                    url = [(i, i.get_host_and_id(u)) for i in self.resolvers]
-                    url = [i for i in url if not i[1] == False]
-                    url = [(i[0], i[0].valid_url(u, i[1][0]), i[1][0], i[1][1]) for i in url]
-                    url = [i for i in url if not i[1] == False][0]
-                    url = url[0].get_media_url(url[2], url[3])
-                except:
-                    url = False
+                    url = None
 
-            if url == False: raise Exception()
+                    hmf = urlresolver.HostedMediaFile(url=u, include_disabled=True, include_universal=False)
+                    if hmf.valid_url() == True: url = hmf.resolve()
+                    else: url = False
+                except:
+                    pass
+
+                try:
+                    if not url == None: raise Exception()
+
+                    hmf = urlresolver.HostedMediaFile(url=u, include_disabled=True)
+                    hmf = hmf.get_resolvers(validated=True)
+                    hmf = [i for i in hmf if not i.isUniversal()][0]
+                    host, media_id = hmf.get_host_and_id(u)
+                    url = hmf.get_media_url(host, media_id)
+                except:
+                    pass
+
+                try:
+                    if not url == None: raise Exception()
+
+                    hmf = urlresolver.plugnplay.man.implementors(urlresolver.UrlResolver)
+                    hmf = [i for i in hmf if not '*' in i.domains]
+                    hmf = [(i, i.get_host_and_id(u)) for i in hmf]
+                    hmf = [i for i in hmf if not i[1] == False]
+                    hmf = [(i[0], i[0].valid_url(u, i[1][0]), i[1][0], i[1][1]) for i in hmf]
+                    hmf = [i for i in hmf if not i[1] == False][0]
+                    url = hmf[0].get_media_url(hmf[2], hmf[3])
+                except:
+                    pass
+
+
+            if url == False or url == None: raise Exception()
 
             try: headers = dict(urlparse.parse_qsl(url.rsplit('|', 1)[1]))
             except: headers = dict('')
@@ -615,21 +673,20 @@ class sources:
             return
 
 
-    def sourcesDialog(self, progress=True):
+    def sourcesDialog(self, items, progress=True):
         try:
-            sources = [{'label': '00 | [B]%s[/B]' % control.lang(30509).encode('utf-8').upper()}] + self.sources
+            sources = [{'label': '00 | [B]%s[/B]' % control.lang(30509).encode('utf-8').upper()}] + items
 
             labels = [i['label'] for i in sources]
 
             select = control.selectDialog(labels)
-            if select == 0: return self.sourcesDirect(progress=progress)
+            if select == 0: return self.sourcesDirect(items, progress=progress)
             if select == -1: return 'close://'
 
-            items = [self.sources[select-1]]
+            next = [y for x,y in enumerate(items) if x >= select]
+            prev = [y for x,y in enumerate(items) if x < select][::-1]
 
-            next = [y for x,y in enumerate(self.sources) if x >= select]
-            prev = [y for x,y in enumerate(self.sources) if x < select][::-1]
-
+            items = [items[select-1]]
             items = [i for i in items+next+prev][:20]
 
             if progress == True:
@@ -691,31 +748,38 @@ class sources:
             except: pass
 
 
-    def sourcesDirect(self, progress=True):
-        filter = [i for i in self.sources if i['source'].lower() in self.hostcapDict and i['debrid'] == '']
-        self.sources = [i for i in self.sources if not i in filter]
+    def sourcesDirect(self, items, progress=True):
+        filter = [i for i in items if i['source'].lower() in self.hostcapDict and i['debrid'] == '']
+        items = [i for i in items if not i in filter]
 
-        self.sources = [i for i in self.sources if ('autoplay' in i and i['autoplay'] == True) or not 'autoplay' in i]
+        items = [i for i in items if ('autoplay' in i and i['autoplay'] == True) or not 'autoplay' in i]
 
-        if control.setting("autoplay.sd") == 'true':
-            self.sources = [i for i in self.sources if not i['quality'] in ['1080p', 'HD']]
+        if control.setting('autoplay.sd') == 'true':
+            items = [i for i in items if not i['quality'] in ['1080p', 'HD']]
 
         u = None
 
-        if progress == True:
+        try:
+            if not progress == True: raise Exception()
+            control.sleep(1000)
             self.progressDialog = control.progressDialog
             self.progressDialog.create(control.addonInfo('name'), '')
             self.progressDialog.update(0)
+        except:
+            pass
 
-        for i in range(len(self.sources)):
+        for i in range(len(items)):
             try:
-                if progress == True:
-                    if self.progressDialog.iscanceled(): break
-                    self.progressDialog.update(int((100 / float(len(self.sources))) * i), str(self.sources[i]['label']), str(' '))
+                if not progress == True: raise Exception()
+                self.progressDialog.update(int((100 / float(len(items))) * i), str(items[i]['label']), str(' '))
+                if self.progressDialog.iscanceled(): break
+            except:
+                pass
 
+            try:
                 if xbmc.abortRequested == True: return sys.exit()
 
-                url = self.sourcesResolve(self.sources[i])
+                url = self.sourcesResolve(items[i])
                 if u == None: u = url
                 if not url == None: break
             except:
@@ -729,14 +793,9 @@ class sources:
 
     def getConstants(self):
         try:
-            import urlresolver.plugnplay
-            self.resolvers = urlresolver.plugnplay.man.implementors(urlresolver.UrlResolver)
-            self.resolvers = [i for i in self.resolvers if not '*' in i.domains]
-        except:
-            self.resolvers = []
-
-        try:
-            self.hostDict = [i.domains for i in self.resolvers]
+            try: self.hostDict = urlresolver.relevant_resolvers(order_matters=True)
+            except: self.hostDict = urlresolver.plugnplay.man.implementors(urlresolver.UrlResolver)
+            self.hostDict = [i.domains for i in self.hostDict if not '*' in i.domains]
             self.hostDict = [i.lower() for i in reduce(lambda x, y: x+y, self.hostDict)]
             self.hostDict = [x for y,x in enumerate(self.hostDict) if x not in self.hostDict[:y]]
         except:

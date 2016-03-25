@@ -28,9 +28,9 @@ from resources.lib.modules import client
 class source:
     def __init__(self):
         self.domains = ['afdah.org', 'xmovies8.org', 'putlockerhd.co']
-        self.base_link_1 = 'https://afdah.org'
+        self.base_link_1 = 'https://xmovies8.org'
         self.base_link_2 = 'https://xmovies8.org'
-        self.base_link_3 = 'https://putlockerhd.co'
+        self.base_link_3 = 'https://xmovies8.org'
         self.search_link = '/results?q=%s'
 
 
@@ -44,7 +44,7 @@ class source:
             result = client.source(query)
 
             title = cleantitle.get(title)
-            years = ['%s' % str(year), '%s' % str(int(year)+1), '%s' % str(int(year)-1)]
+            years = ['%s' % str(year)]
 
             result = client.parseDOM(result, 'div', attrs = {'class': 'cell_container'})
             result = [(client.parseDOM(i, 'a', ret='href'), client.parseDOM(i, 'a', ret='title')) for i in result]

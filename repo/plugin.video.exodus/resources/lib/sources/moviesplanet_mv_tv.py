@@ -45,7 +45,7 @@ class source:
 
             url = urlparse.urljoin(self.base_link, self.search_link)
 
-            post = {'q': title.rsplit(':', 1)[0], 'limit': '100', 'timestamp': int(time.time() * 1000), 'verifiedCheck': ''}
+            post = {'q': title.rsplit(':', 1)[0], 'limit': '10', 'timestamp': int(time.time() * 1000), 'verifiedCheck': ''}
             post = urllib.urlencode(post)
 
             result = client.source(url, post=post, headers=headers)
@@ -64,6 +64,13 @@ class source:
 
             result = result[0]['permalink']
 
+            atr = urlparse.urljoin(self.base_link, result)
+            atr = client.source(atr)
+            atr = client.parseDOM(atr, 'p')
+            atr = [i for i in atr if 'Released:' in i][0]
+            atr = client.parseDOM(atr, 'a')[0]
+            if not atr == year: raise Exception()
+
             url = urlparse.urljoin(self.base_link, result)
             url = urlparse.urlparse(url).path
             url = client.replaceHTMLCodes(url)
@@ -81,7 +88,7 @@ class source:
 
             url = urlparse.urljoin(self.base_link, self.search_link)
 
-            post = {'q': tvshowtitle.rsplit(':', 1)[0], 'limit': '100', 'timestamp': int(time.time() * 1000), 'verifiedCheck': ''}
+            post = {'q': tvshowtitle.rsplit(':', 1)[0], 'limit': '10', 'timestamp': int(time.time() * 1000), 'verifiedCheck': ''}
             post = urllib.urlencode(post)
 
             result = client.source(url, post=post, headers=headers)
@@ -99,6 +106,14 @@ class source:
                 result = [i[0] for i in result if len(i[1]) > 0 and imdb == i[1][0]]
 
             result = result[0]['permalink']
+
+            atr = urlparse.urljoin(self.base_link, result)
+            atr = client.source(atr)
+            atr = client.parseDOM(atr, 'p')
+            atr = [i for i in atr if 'Published:' in i][0]
+            atr = client.parseDOM(atr, 'a')[0]
+            atr = re.findall('(\d{4})', atr)[0]
+            if not atr == year: raise Exception()
 
             url = urlparse.urljoin(self.base_link, result)
             url = urlparse.urlparse(url).path
@@ -183,7 +198,7 @@ class source:
                 pass
 
             try:
-                u = result[0][0]
+                u = a = result[0][0]
                 if not 'download.php' in u and not '.live.' in u: raise Exception()
                 o = urllib2.build_opener(NoRedirection)
                 o.addheaders = [('User-Agent', client.randomagent()), ('Cookie', cookie)]
@@ -191,6 +206,7 @@ class source:
                 try: u = r.headers['Location']
                 except: pass
                 r.close()
+                if a == u: raise Exception()
                 links += [(u, '1080p', 'cdn')]
             except:
                 pass

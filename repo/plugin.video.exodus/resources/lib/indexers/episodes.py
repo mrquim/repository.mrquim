@@ -481,7 +481,7 @@ class episodes:
         self.tvdb_poster = 'http://thetvdb.com/banners/_cache/'
 
         self.added_link = 'http://api-v2launch.trakt.tv/calendars/all/shows/date[6]/7/'
-        self.mycalendar_link = 'http://api-v2launch.trakt.tv/calendars/my/shows/date[59]/60/'
+        self.mycalendar_link = 'http://api-v2launch.trakt.tv/calendars/my/shows/date[29]/60/'
         self.trakthistory_link = 'http://api-v2launch.trakt.tv/users/%s/history/shows?limit=300' % self.trakt_user
         self.progress_link = 'http://api-v2launch.trakt.tv/users/%s/watched/shows' % self.trakt_user
         self.calendar_link = 'http://api-v2launch.trakt.tv/calendars/all/shows/%s/%s'

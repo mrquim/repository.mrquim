@@ -167,11 +167,7 @@ class channels:
             plot = client.replaceHTMLCodes(plot)
             plot = plot.encode('utf-8')
 
-            tagline = re.compile('[.!?][\s]{1,2}(?=[A-Z])').split(plot)[0]
-            try: tagline = tagline.encode('utf-8')
-            except: pass
-
-            self.list.append({'title': title, 'originaltitle': title, 'year': year, 'genre': genre, 'duration': duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'director': director, 'writer': writer, 'cast': cast, 'plot': plot, 'tagline': tagline, 'code': imdb, 'imdb': imdb, 'tmdb': '0', 'poster': poster, 'channel': i[2], 'num': i[3]})
+            self.list.append({'title': title, 'originaltitle': title, 'year': year, 'genre': genre, 'duration': duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'director': director, 'writer': writer, 'cast': cast, 'plot': plot, 'code': imdb, 'imdb': imdb, 'tmdb': '0', 'poster': poster, 'channel': i[2], 'num': i[3]})
         except:
             pass
 
