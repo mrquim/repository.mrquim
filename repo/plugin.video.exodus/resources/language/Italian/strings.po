@@ -14,6 +14,7 @@
 # Translators:
 # Translators:
 # Translators:
+# Translators:
 # lambda81, 2016
 # lambda81, 2016
 # Nicola Zilio, 2015
@@ -22,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Exodus\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2016-02-17 09:47+0000\n"
+"PO-Revision-Date: 2016-03-25 21:44+0000\n"
 "Last-Translator: lambda81\n"
 "Language-Team: Italian (http://www.transifex.com/tv-addons/exodus/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -655,26 +656,6 @@ msgctxt "#30483"
 msgid "No"
 msgstr "No"
 
-msgctxt "#30484"
-msgid "1) Visit : "
-msgstr "1) Visita:"
-
-msgctxt "#30485"
-msgid "2) If prompted, authorize Exodus to access your account"
-msgstr "2) Se richiesto, autorizzare la Exodus per accedere al tuo conto"
-
-msgctxt "#30486"
-msgid "3) Enter the PIN provided or Cancel"
-msgstr "3) Inserire il PIN fornito o Annulla"
-
-msgctxt "#30487"
-msgid "Enter PIN"
-msgstr "Inserire il PIN"
-
-msgctxt "#30488"
-msgid "Cancel"
-msgstr "Cancellare"
-
 msgctxt "#30491"
 msgid "This View is now Default"
 msgstr "Questo Aspetto adesso è il Predefinito"
@@ -938,6 +919,10 @@ msgstr "Sottomenu"
 msgctxt "#30827"
 msgid "Classic"
 msgstr "Classico"
+
+msgctxt "#30828"
+msgid "Flatten TV show seasons"
+msgstr "Spiana Serie TV"
 
 msgctxt "#30830"
 msgid "Playback"

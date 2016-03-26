@@ -14,12 +14,14 @@
 # Translators:
 # Translators:
 # Translators:
+# Translators:
 # Cojocaru Nicolae - Gheorhe, 2015
+# lambda81, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Exodus\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2016-02-17 09:35+0000\n"
+"PO-Revision-Date: 2016-03-25 21:44+0000\n"
 "Last-Translator: lambda81\n"
 "Language-Team: Romanian (http://www.transifex.com/tv-addons/exodus/language/ro/)\n"
 "MIME-Version: 1.0\n"
@@ -652,26 +654,6 @@ msgctxt "#30483"
 msgid "No"
 msgstr ""
 
-msgctxt "#30484"
-msgid "1) Visit : "
-msgstr ""
-
-msgctxt "#30485"
-msgid "2) If prompted, authorize Exodus to access your account"
-msgstr ""
-
-msgctxt "#30486"
-msgid "3) Enter the PIN provided or Cancel"
-msgstr ""
-
-msgctxt "#30487"
-msgid "Enter PIN"
-msgstr ""
-
-msgctxt "#30488"
-msgid "Cancel"
-msgstr ""
-
 msgctxt "#30491"
 msgid "This View is now Default"
 msgstr "Acest mod de vizualizare este de acum implicit"
@@ -935,6 +917,10 @@ msgstr ""
 msgctxt "#30827"
 msgid "Classic"
 msgstr ""
+
+msgctxt "#30828"
+msgid "Flatten TV show seasons"
+msgstr "Netezește sezoanele serialelor"
 
 msgctxt "#30830"
 msgid "Playback"

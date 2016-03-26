@@ -14,13 +14,15 @@
 # Translators:
 # Translators:
 # Translators:
-# Billy GR, 2016
+# Translators:
+# Billy GR <maiko77@pathfinder.gr>, 2016
+# lambda81, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Exodus\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2016-02-23 19:52+0000\n"
-"Last-Translator: Billy GR\n"
+"PO-Revision-Date: 2016-03-25 21:44+0000\n"
+"Last-Translator: lambda81\n"
 "Language-Team: Greek (http://www.transifex.com/tv-addons/exodus/language/el/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -326,11 +328,11 @@ msgstr "[B]ΡΥΘΜΙΣΕΙΣ[/B] : Πάροχοι"
 
 msgctxt "#30119"
 msgid "[B]EXODUS[/B] : Clear providers..."
-msgstr ""
+msgstr "[B]EXODUS[/B] : Καθαρισμός παρόχων..."
 
 msgctxt "#30120"
 msgid "[B]EXODUS[/B] : Clear cache..."
-msgstr ""
+msgstr "[B]EXODUS[/B] : Καθαρισμός μνήμης..."
 
 msgctxt "#30122"
 msgid "[B]EXODUS[/B] : Downloads"
@@ -558,11 +560,11 @@ msgstr "Ολοκλήρωση εργασίας"
 
 msgctxt "#30411"
 msgid "A RealDebrid account already exists"
-msgstr ""
+msgstr "Υπάρχει ήδη λογαριασμός RealDebrid"
 
 msgctxt "#30413"
 msgid "Do you want to reset?"
-msgstr ""
+msgstr "Θέλετε να τον αφαιρέσετε;"
 
 msgctxt "#30414"
 msgid "Yes"
@@ -574,11 +576,11 @@ msgstr "Οχι"
 
 msgctxt "#30416"
 msgid "1) Visit : "
-msgstr ""
+msgstr "1) Επισκεφθείτε : "
 
 msgctxt "#30417"
 msgid "2) When prompted enter : "
-msgstr ""
+msgstr "2) Όταν σας ζητηθεί εισάγετε : "
 
 msgctxt "#30451"
 msgid "Getting information"
@@ -638,11 +640,11 @@ msgstr "Αφαίρεση από"
 
 msgctxt "#30479"
 msgid "A Trakt account already exists"
-msgstr ""
+msgstr "Υπάρχει ήδη λογαριασμός Trakt"
 
 msgctxt "#30481"
 msgid "Do you want to reset?"
-msgstr ""
+msgstr "Θέλετε να τον αφαιρέσετε;"
 
 msgctxt "#30482"
 msgid "Yes"
@@ -651,26 +653,6 @@ msgstr "Ναι"
 msgctxt "#30483"
 msgid "No"
 msgstr "Οχι"
-
-msgctxt "#30484"
-msgid "1) Visit : "
-msgstr ""
-
-msgctxt "#30485"
-msgid "2) If prompted, authorize Exodus to access your account"
-msgstr ""
-
-msgctxt "#30486"
-msgid "3) Enter the PIN provided or Cancel"
-msgstr ""
-
-msgctxt "#30487"
-msgid "Enter PIN"
-msgstr "Εισάγετε το PIN"
-
-msgctxt "#30488"
-msgid "Cancel"
-msgstr "Ακύρωση"
 
 msgctxt "#30491"
 msgid "This View is now Default"
@@ -746,7 +728,7 @@ msgstr "Διαφημιστικό σειράς"
 
 msgctxt "#30518"
 msgid "Playback outside Exodus is not allowed"
-msgstr ""
+msgstr "Η αναπαραγωγή εκτός Exodus δεν επιτρέπεται"
 
 msgctxt "#30521"
 msgid "Monday"
@@ -930,11 +912,15 @@ msgstr "Ενεργό"
 
 msgctxt "#30826"
 msgid "Sub menu"
-msgstr ""
+msgstr "Υπο μενού"
 
 msgctxt "#30827"
 msgid "Classic"
-msgstr ""
+msgstr "Κλασικό"
+
+msgctxt "#30828"
+msgid "Flatten TV show seasons"
+msgstr "Ενιαία λίστα κύκλων σειράς"
 
 msgctxt "#30830"
 msgid "Playback"

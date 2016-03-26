@@ -19,7 +19,7 @@
 '''
 
 
-import re,json,urlparse
+import re,json,urlparse,time
 
 from resources.lib.modules import cache
 from resources.lib.modules import control
@@ -75,26 +75,36 @@ def authTrakt():
                 control.setSetting(id='trakt.refresh', value='')
             raise Exception()
 
-        if control.yesnoDialog(control.lang(30484).encode('utf-8') + '[COLOR skyblue]http://trakt.tv/pin/7920[/COLOR]', control.lang(30485).encode('utf-8'), control.lang(30486).encode('utf-8'), 'Trakt', control.lang(30487).encode('utf-8'), control.lang(30488).encode('utf-8')): raise Exception()
-
-        k = control.keyboard('', control.lang(30487).encode('utf-8'))
-        k.doModal() ; pin = k.getText() if k.isConfirmed() else None
-        if pin == '' or pin == None: raise Exception()
-
-        trakt_base = 'http://api-v2launch.trakt.tv'
-
-        headers = {'Content-Type': 'application/json', 'trakt-api-key': 'c029c80fd3d3a5284ee820ba1cf7f0221da8976b8ee5e6c4af714c22fc4f46fa', 'trakt-api-version': '2'}
-
-        post = {'client_id': 'c029c80fd3d3a5284ee820ba1cf7f0221da8976b8ee5e6c4af714c22fc4f46fa', 'client_secret': '90a1840447a1e39d350023263902fe7010338d19789e6260f18df56a8b07a68a', 'redirect_uri': 'urn:ietf:wg:oauth:2.0:oob', 'grant_type': 'authorization_code', 'code': pin}
-
-        result = client.request(urlparse.urljoin(trakt_base, '/oauth/token'), post=json.dumps(post), headers=headers)
+        result = getTrakt('/oauth/device/code', {'client_id': 'c029c80fd3d3a5284ee820ba1cf7f0221da8976b8ee5e6c4af714c22fc4f46fa'})
         result = json.loads(result)
+        verification_url = (control.lang(30416) + '[COLOR skyblue]%s[/COLOR]' % result['verification_url']).encode('utf-8')
+        user_code = (control.lang(30417) + '[COLOR skyblue]%s[/COLOR]' % result['user_code']).encode('utf-8')
+        expires_in = int(result['expires_in'])
+        device_code = result['device_code']
+        interval = result['interval']
 
-        token, refresh = result['access_token'], result['refresh_token']
+        progressDialog = control.progressDialog
+        progressDialog.create('Trakt', verification_url, user_code)
 
-        headers['Authorization'] = 'Bearer %s' % token
+        for i in range(0, expires_in):
+            try:
+                if progressDialog.iscanceled(): break
+                time.sleep(1)
+                if not float(i) % interval == 0: raise Exception()
+                r = getTrakt('/oauth/device/token', {'client_id': 'c029c80fd3d3a5284ee820ba1cf7f0221da8976b8ee5e6c4af714c22fc4f46fa', 'client_secret': '90a1840447a1e39d350023263902fe7010338d19789e6260f18df56a8b07a68a', 'code': device_code})
+                r = json.loads(r)
+                if 'access_token' in r: break
+            except:
+                pass
 
-        result = client.request(urlparse.urljoin(trakt_base, '/users/me'), headers=headers)
+        try: progressDialog.close()
+        except: pass
+
+        token, refresh = r['access_token'], r['refresh_token']
+
+        headers = {'Content-Type': 'application/json', 'trakt-api-key': 'c029c80fd3d3a5284ee820ba1cf7f0221da8976b8ee5e6c4af714c22fc4f46fa', 'trakt-api-version': '2', 'Authorization': 'Bearer %s' % token}
+
+        result = client.request('http://api-v2launch.trakt.tv/users/me', headers=headers)
         result = json.loads(result)
 
         user = result['username']

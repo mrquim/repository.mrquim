@@ -17,7 +17,8 @@
 		<setting label="[B]DESPORTO[/B]" type="text"  id="desporto_m3u" default="http://bit.ly/1NSnvl5" />
 		<setting label="[B]SERIES[/B]" type="text"  id="series_m3u" default="http://bit.ly/1ZwhamC" />
 		<setting label="[B]INTERNACIONAL[/B]" type="text"  id="inter_m3u" default="http://bit.ly/1Q19PsP" />	
-		<setting label="[B]PRAIAS[/B]" type="text" id="praias_m3u" default="http://bit.ly/1JbsHUl" />			
+		<setting label="[B]PRAIAS[/B]" type="text" id="praias_m3u" default="http://bit.ly/1JbsHUl" />
+		<setting label="[B]DES. MOTORIZADO[/B]" type="text" id="motor_m3u" default="http://bit.ly/1VEt51o" />		
 	</category>
 	<category label="[COLOR red][B]Listas Externas[/B][/COLOR]">
 		<setting label="[B]KITINA[/B]" type="text"  id="kitina_m3u" default="http://bit.ly/1PjhM7R" />

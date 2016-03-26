@@ -120,6 +120,9 @@ class tvshows:
 
     def search(self, query=None):
         try:
+            if control.infoLabel('Container.PluginName') == '':
+                return control.dialog.ok('Exodus', control.lang(30518).encode('utf-8'), '', '')
+
             if not control.infoLabel('ListItem.Title') == '':
                 self.query = control.window.getProperty('%s.tvshow.search' % control.addonInfo('id'))
 

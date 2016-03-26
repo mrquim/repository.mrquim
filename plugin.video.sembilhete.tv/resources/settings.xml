@@ -4,6 +4,7 @@
         <setting label="Dados SemBilhete.tv:" type="lsep" />
         <setting id="email" type="text" label="Email/Username" default=""/>
         <setting id="password" type="text" label="Password" default="" option="hidden" enable="!eq(-1,false)"/>
+        <setting id="video.quality" type="enum" label="Qualidade do Vídeo" values="1080p (HD)|720p (HD)|480p|360p" default="0" />
         <setting id="apikey" type="text" label="" default="" visible="false"/>
         <setting id="username" type="text" label="" default="" visible="false"/>
         <setting type="sep" />  

@@ -45,6 +45,7 @@ f_ru = xbmc.translatePath(os.path.join(artfolder, 'radio.jpg'))
 f_tvshow = xbmc.translatePath(os.path.join(artfolder, 'tvshow.jpg'))
 f_inter = xbmc.translatePath(os.path.join(artfolder, 'inter.jpg'))
 f_search = xbmc.translatePath(os.path.join(artfolder, 'search.jpg'))
+f_motor = xbmc.translatePath(os.path.join(artfolder, 'motor.jpg'))
 ##############################3
 i_music = xbmc.translatePath(os.path.join(artfolder, 'music.png'))
 i_sport = xbmc.translatePath(os.path.join(artfolder, 'sport.png'))
@@ -58,6 +59,7 @@ i_ru = xbmc.translatePath(os.path.join(artfolder, 'radio.png'))
 i_tvshow = xbmc.translatePath(os.path.join(artfolder, 'tvshow.png'))
 i_inter = xbmc.translatePath(os.path.join(artfolder, 'inter.png'))
 i_search = xbmc.translatePath(os.path.join(artfolder, 'search.png'))
+i_motor = xbmc.translatePath(os.path.join(artfolder, 'motor.png'))
 
 
 online_m3u = mysettings.getSetting('online_m3u')
@@ -71,6 +73,7 @@ desporto_m3u = mysettings.getSetting('desporto_m3u')
 series_m3u = mysettings.getSetting('series_m3u')
 inter_m3u = mysettings.getSetting('inter_m3u')
 praias_m3u = mysettings.getSetting('praias_m3u')
+motor_m3u = mysettings.getSetting('motor_m3u')
 pessoal_m3u = mysettings.getSetting('pessoal_m3u')
 pessoal_local_m3u = mysettings.getSetting('pessoal_local_m3u')
 online_xml = mysettings.getSetting('online_xml')
@@ -117,8 +120,8 @@ def make_request(url):
 			print 'Reason: ', e.reason
 			
 def main():
-	add_dir('[COLOR red][B] Versao: 0.0.8  (changelog) [/B][/COLOR]', u_tube, 111, icon, fanart)	
-	add_dir('[B] PROCURAR em myIPTVchannels[/B]', 'searchlink', 99, i_search, f_search)
+	add_dir('[COLOR red][B] Versao: 0.0.9  (changelog) [/B][/COLOR]', u_tube, 111, icon, fanart)	
+	add_dir('[B] PROCURAR[/B]', 'searchlink', 99, i_search, f_search)
 	add_dir('[COLOR blue][B] MUSICA [/B][/COLOR]', u_tube, 2, i_music, f_music)
 	add_dir('[COLOR blue][B] FILMES [/B][/COLOR]', u_tube, 3, i_movie, f_movie)
 	add_dir('[COLOR blue][B] INFANTIL [/B][/COLOR]', u_tube, 4, i_child, f_child)
@@ -127,6 +130,7 @@ def main():
 	add_dir('[COLOR yellow][B] PORTUGAL [/B][/COLOR]', u_tube, 7, i_pt, f_pt)
 	add_dir('[COLOR yellow][B] RADIOS [/B][/COLOR]', u_tube, 8, i_ru, f_ru)
 	add_dir('[COLOR red][B] DESPORTO [/B][/COLOR]', u_tube, 9, i_sport, f_sport)
+	add_dir('[COLOR red][B] DESPORTO MOTORIZADO [/B][/COLOR]', u_tube, 20, i_motor, f_motor)
 	add_dir('[COLOR red][B] SERIES [/B][/COLOR]', u_tube, 10, i_tvshow, f_tvshow)
 	add_dir('[COLOR red][B] INTERNACIONAL[/B][/COLOR]', u_tube, 11, i_inter, f_inter)
 	add_dir('[COLOR orange][B] MUNDO e PRAIAS (CAM)[/B][/COLOR]', u_tube, 12, i_beach, f_beach)
@@ -196,6 +200,12 @@ def search():
 			for thumb, name, url in match:
 				if re.search(searchText, removeAccents(name.replace('Đ', 'D')), re.IGNORECASE):
 					m3u_playlist(name, url, thumb)	
+		if len(motor_m3u) > 0:		
+			content = make_request(motor_m3u)
+			match = re.compile(m3u_regex).findall(content)		
+			for thumb, name, url in match:
+				if re.search(searchText, removeAccents(name.replace('Đ', 'D')), re.IGNORECASE):
+					m3u_playlist(name, url, thumb)
 			
 	except:
 		pass
@@ -372,6 +382,15 @@ def m3u_argivai():
 		except:
 			pass
 			
+def m3u_motor():
+	content = make_request(motor_m3u)
+	match = re.compile(m3u_regex).findall(content)
+	for thumb, name, url in match:	
+		try:
+			m3u_playlist(name, url, thumb)
+		except:
+			pass
+			
 			
 def m3u_playlist(name, url, thumb):	
 	name = re.sub('\s+', ' ', name).strip()			
@@ -522,6 +541,9 @@ elif mode == 8:
 	
 elif mode == 9:
 	m3u_desporto()
+	
+elif mode == 20:
+	m3u_motor()
 	
 elif mode == 10:
 	m3u_series()

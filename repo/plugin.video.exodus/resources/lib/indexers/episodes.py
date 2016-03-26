@@ -51,9 +51,14 @@ class seasons:
 
     def get(self, tvshowtitle, year, imdb, tvdb, idx=True):
         if idx == True:
-            self.list = cache.get(self.tvdb_list, 24, tvshowtitle, year, imdb, tvdb, self.lang)
-            self.seasonDirectory(self.list)
-            return self.list
+            if control.setting('flatten.tvshows') == 'true' or control.window.getProperty('PseudoTVRunning') == 'True':
+                self.list = cache.get(self.tvdb_list, 1, tvshowtitle, year, imdb, tvdb, self.lang, '-1')
+                episodes().episodeDirectory(self.list)
+                return self.list
+            else:
+                self.list = cache.get(self.tvdb_list, 24, tvshowtitle, year, imdb, tvdb, self.lang)
+                self.seasonDirectory(self.list)
+                return self.list
         else:
             self.list = self.tvdb_list(tvshowtitle, year, imdb, tvdb, 'en')
             return self.list

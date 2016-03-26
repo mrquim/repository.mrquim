@@ -14,13 +14,15 @@
 # Translators:
 # Translators:
 # Translators:
-# Addon Master, 2016
+# Translators:
+# Addon Master <addonmaster@hotmail.com>, 2016
 # Jrm, 2015
+# lambda81, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Exodus\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2016-02-23 20:04+0000\n"
+"PO-Revision-Date: 2016-03-25 21:44+0000\n"
 "Last-Translator: lambda81\n"
 "Language-Team: French (http://www.transifex.com/tv-addons/exodus/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -575,11 +577,11 @@ msgstr "Non"
 
 msgctxt "#30416"
 msgid "1) Visit : "
-msgstr "1) Visite :"
+msgstr "1) Visite : "
 
 msgctxt "#30417"
 msgid "2) When prompted enter : "
-msgstr "2) Lorsque demandé veuillez entrer :"
+msgstr "2) Lorsque demandé veuillez entrer : "
 
 msgctxt "#30451"
 msgid "Getting information"
@@ -652,26 +654,6 @@ msgstr "Oui"
 msgctxt "#30483"
 msgid "No"
 msgstr "Non"
-
-msgctxt "#30484"
-msgid "1) Visit : "
-msgstr "1) Visite :"
-
-msgctxt "#30485"
-msgid "2) If prompted, authorize Exodus to access your account"
-msgstr "2) Si"
-
-msgctxt "#30486"
-msgid "3) Enter the PIN provided or Cancel"
-msgstr "3) Entrez le PIN fournis ou Canceller"
-
-msgctxt "#30487"
-msgid "Enter PIN"
-msgstr "Entrez le PIN"
-
-msgctxt "#30488"
-msgid "Cancel"
-msgstr "Canceller"
 
 msgctxt "#30491"
 msgid "This View is now Default"
@@ -936,6 +918,10 @@ msgstr "Sous menu"
 msgctxt "#30827"
 msgid "Classic"
 msgstr "Classique"
+
+msgctxt "#30828"
+msgid "Flatten TV show seasons"
+msgstr "Réduire l'arborescence des saisons de séries TV"
 
 msgctxt "#30830"
 msgid "Playback"

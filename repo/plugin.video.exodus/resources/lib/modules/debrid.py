@@ -44,8 +44,8 @@ def rdAuthorize():
         url = 'https://api.real-debrid.com/oauth/v2/device/code?client_id=%s&new_credentials=yes' % (CLIENT_ID)
         result = client.request(url, headers=headers)
         result = json.loads(result)
-        verification_url = control.lang(30416).encode('utf-8') + '[COLOR skyblue]%s[/COLOR]' % (result['verification_url'])
-        user_code = control.lang(30417).encode('utf-8') + '[COLOR skyblue]%s[/COLOR]' % (result['user_code'])
+        verification_url = (control.lang(30416) + '[COLOR skyblue]%s[/COLOR]' % result['verification_url']).encode('utf-8')
+        user_code = (control.lang(30417) + '[COLOR skyblue]%s[/COLOR]' % result['user_code']).encode('utf-8')
         device_code = result['device_code']
         interval = result['interval']
 

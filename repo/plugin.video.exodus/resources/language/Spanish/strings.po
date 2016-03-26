@@ -14,15 +14,17 @@
 # Translators:
 # Translators:
 # Translators:
+# Translators:
 # Achaw, 2015
-# Achaw, 2016
+# Achaw <achaw.ar@gmail.com>, 2016
 # Alberto Pardo, 2015
+# lambda81, 2016
 # lambda81, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Exodus\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2016-02-17 20:19+0000\n"
+"PO-Revision-Date: 2016-03-25 21:44+0000\n"
 "Last-Translator: lambda81\n"
 "Language-Team: Spanish (http://www.transifex.com/tv-addons/exodus/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -655,26 +657,6 @@ msgctxt "#30483"
 msgid "No"
 msgstr "No"
 
-msgctxt "#30484"
-msgid "1) Visit : "
-msgstr "1) Visitar:"
-
-msgctxt "#30485"
-msgid "2) If prompted, authorize Exodus to access your account"
-msgstr "2) Si se le solicita, autorize a Exodus a tener acceso a su cuenta"
-
-msgctxt "#30486"
-msgid "3) Enter the PIN provided or Cancel"
-msgstr "3) Ingrese el PIN obtenido o Cancele"
-
-msgctxt "#30487"
-msgid "Enter PIN"
-msgstr "Ingresar PIN"
-
-msgctxt "#30488"
-msgid "Cancel"
-msgstr "Cancelar"
-
 msgctxt "#30491"
 msgid "This View is now Default"
 msgstr "La vista ha sido definida por defecto"
@@ -938,6 +920,10 @@ msgstr "Sub menu"
 msgctxt "#30827"
 msgid "Classic"
 msgstr "Clasica"
+
+msgctxt "#30828"
+msgid "Flatten TV show seasons"
+msgstr "No apilar temporadas de series"
 
 msgctxt "#30830"
 msgid "Playback"

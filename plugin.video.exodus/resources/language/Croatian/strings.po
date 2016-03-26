@@ -14,11 +14,14 @@
 # Translators:
 # Translators:
 # Translators:
+# Translators:
+# djkidy123 <drago.kraner@gmail.com>, 2016
+# lambda81, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Exodus\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2016-02-17 09:35+0000\n"
+"PO-Revision-Date: 2016-03-25 21:44+0000\n"
 "Last-Translator: lambda81\n"
 "Language-Team: Croatian (http://www.transifex.com/tv-addons/exodus/language/hr/)\n"
 "MIME-Version: 1.0\n"
@@ -129,11 +132,11 @@ msgstr "Pretraga"
 
 msgctxt "#30036"
 msgid "Collection"
-msgstr ""
+msgstr "Kolekcija"
 
 msgctxt "#30037"
 msgid "Watchlist"
-msgstr ""
+msgstr "Lista Ogleda"
 
 msgctxt "#30038"
 msgid "Movie Lists"
@@ -141,7 +144,7 @@ msgstr "Liste filmova"
 
 msgctxt "#30039"
 msgid "History"
-msgstr ""
+msgstr "Povijest"
 
 msgctxt "#30051"
 msgid "Genres"
@@ -205,15 +208,15 @@ msgstr "Pretraga"
 
 msgctxt "#30067"
 msgid "Collection"
-msgstr ""
+msgstr "Kolekcija"
 
 msgctxt "#30068"
 msgid "Watchlist"
-msgstr ""
+msgstr "Lista Ogleda"
 
 msgctxt "#30069"
 msgid "Progress"
-msgstr ""
+msgstr "Napredak"
 
 msgctxt "#30070"
 msgid "Featured"
@@ -229,7 +232,7 @@ msgstr "Popisi s epizodama"
 
 msgctxt "#30073"
 msgid "History"
-msgstr ""
+msgstr "Povijest"
 
 msgctxt "#30081"
 msgid "No Trakt or IMDb account found."
@@ -325,15 +328,15 @@ msgstr "[B]POSTAVKE[/B] : Izvori"
 
 msgctxt "#30119"
 msgid "[B]EXODUS[/B] : Clear providers..."
-msgstr ""
+msgstr "[B]EXODUS[/B] : Očisti usluge..."
 
 msgctxt "#30120"
 msgid "[B]EXODUS[/B] : Clear cache..."
-msgstr ""
+msgstr "[B]EXODUS[/B] : Očisti predmemoriju..."
 
 msgctxt "#30122"
 msgid "[B]EXODUS[/B] : Downloads"
-msgstr ""
+msgstr "[B]GENESIS[/B] : Preuzimanja"
 
 msgctxt "#30141"
 msgid "Movies"
@@ -651,26 +654,6 @@ msgctxt "#30483"
 msgid "No"
 msgstr "Ne"
 
-msgctxt "#30484"
-msgid "1) Visit : "
-msgstr "1) Posjetite:"
-
-msgctxt "#30485"
-msgid "2) If prompted, authorize Exodus to access your account"
-msgstr ""
-
-msgctxt "#30486"
-msgid "3) Enter the PIN provided or Cancel"
-msgstr "3) Unesite dobiveni PIN ili odustanite"
-
-msgctxt "#30487"
-msgid "Enter PIN"
-msgstr "Unesi PIN"
-
-msgctxt "#30488"
-msgid "Cancel"
-msgstr "Odustani"
-
 msgctxt "#30491"
 msgid "This View is now Default"
 msgstr "Ovaj pregled je sada zadan "
@@ -745,7 +728,7 @@ msgstr "Foršpan TV serije"
 
 msgctxt "#30518"
 msgid "Playback outside Exodus is not allowed"
-msgstr ""
+msgstr "Reprodukcija izvan Exodus-a nije dopuštena"
 
 msgctxt "#30521"
 msgid "Monday"
@@ -929,11 +912,15 @@ msgstr "Omogućeno"
 
 msgctxt "#30826"
 msgid "Sub menu"
-msgstr ""
+msgstr "Podizbornik"
 
 msgctxt "#30827"
 msgid "Classic"
-msgstr ""
+msgstr "Klasičan"
+
+msgctxt "#30828"
+msgid "Flatten TV show seasons"
+msgstr "Prikaz sezona TV serija"
 
 msgctxt "#30830"
 msgid "Playback"

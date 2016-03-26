@@ -14,13 +14,15 @@
 # Translators:
 # Translators:
 # Translators:
+# Translators:
 # Christian Klippel, 2015
-# Eider Mar, 2016
+# eidermar <chr_elogwq@rcpt.at>, 2016
+# lambda81, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Exodus\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2016-02-23 20:06+0000\n"
+"PO-Revision-Date: 2016-03-25 21:44+0000\n"
 "Last-Translator: lambda81\n"
 "Language-Team: German (http://www.transifex.com/tv-addons/exodus/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -653,26 +655,6 @@ msgctxt "#30483"
 msgid "No"
 msgstr "Nein"
 
-msgctxt "#30484"
-msgid "1) Visit : "
-msgstr "1) Gehe Sie zu:"
-
-msgctxt "#30485"
-msgid "2) If prompted, authorize Exodus to access your account"
-msgstr "2) Autorisieren Sie Exodus für den Zugriff auf Ihr Konto wenn angewiesen"
-
-msgctxt "#30486"
-msgid "3) Enter the PIN provided or Cancel"
-msgstr "3) Geben Sie den angegebenen PIN ein oder brechen Sie ab"
-
-msgctxt "#30487"
-msgid "Enter PIN"
-msgstr "PIN eingeben"
-
-msgctxt "#30488"
-msgid "Cancel"
-msgstr "Abbrechen"
-
 msgctxt "#30491"
 msgid "This View is now Default"
 msgstr "Dies ist nun die Standardansicht"
@@ -936,6 +918,10 @@ msgstr "Untermenü"
 msgctxt "#30827"
 msgid "Classic"
 msgstr "Klassisch"
+
+msgctxt "#30828"
+msgid "Flatten TV show seasons"
+msgstr "Serien-Staffeln reduzieren"
 
 msgctxt "#30830"
 msgid "Playback"

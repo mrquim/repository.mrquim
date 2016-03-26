@@ -14,13 +14,15 @@
 # Translators:
 # Translators:
 # Translators:
+# Translators:
+# lambda81, 2016
 # Mike Bike, 2015
 # Mike Bike, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Exodus\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2016-02-17 20:19+0000\n"
+"PO-Revision-Date: 2016-03-25 21:44+0000\n"
 "Last-Translator: lambda81\n"
 "Language-Team: Dutch (http://www.transifex.com/tv-addons/exodus/language/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -653,26 +655,6 @@ msgctxt "#30483"
 msgid "No"
 msgstr "Nee"
 
-msgctxt "#30484"
-msgid "1) Visit : "
-msgstr "1) Bezoek : "
-
-msgctxt "#30485"
-msgid "2) If prompted, authorize Exodus to access your account"
-msgstr "2) Autoriseer Exodus om gebruik te maken van uw account als daarom wordt gevraagd "
-
-msgctxt "#30486"
-msgid "3) Enter the PIN provided or Cancel"
-msgstr "3) Vul de gegeven Code in of annuleer "
-
-msgctxt "#30487"
-msgid "Enter PIN"
-msgstr "Code invullen"
-
-msgctxt "#30488"
-msgid "Cancel"
-msgstr "Annuleer"
-
 msgctxt "#30491"
 msgid "This View is now Default"
 msgstr "Deze Layout is nu Standaard"
@@ -936,6 +918,10 @@ msgstr "Sub menu"
 msgctxt "#30827"
 msgid "Classic"
 msgstr "Klassiek "
+
+msgctxt "#30828"
+msgid "Flatten TV show seasons"
+msgstr "Verberg seizoenen van series"
 
 msgctxt "#30830"
 msgid "Playback"

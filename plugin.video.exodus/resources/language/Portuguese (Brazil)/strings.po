@@ -14,14 +14,16 @@
 # Translators:
 # Translators:
 # Translators:
-# Helder, 2016
+# Translators:
+# Helder <helderkid@gmail.com>, 2016
+# lambda81, 2016
 # Mafarricos, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Exodus\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2016-02-23 12:06+0000\n"
-"Last-Translator: Helder\n"
+"PO-Revision-Date: 2016-03-25 21:44+0000\n"
+"Last-Translator: lambda81\n"
 "Language-Team: Portuguese (http://www.transifex.com/tv-addons/exodus/language/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -653,26 +655,6 @@ msgctxt "#30483"
 msgid "No"
 msgstr "Não"
 
-msgctxt "#30484"
-msgid "1) Visit : "
-msgstr "1) Visitar:"
-
-msgctxt "#30485"
-msgid "2) If prompted, authorize Exodus to access your account"
-msgstr ""
-
-msgctxt "#30486"
-msgid "3) Enter the PIN provided or Cancel"
-msgstr ""
-
-msgctxt "#30487"
-msgid "Enter PIN"
-msgstr "Inserir PIN"
-
-msgctxt "#30488"
-msgid "Cancel"
-msgstr "Cancelar"
-
 msgctxt "#30491"
 msgid "This View is now Default"
 msgstr "Esta Vista está definida agora por defeito"
@@ -936,6 +918,10 @@ msgstr ""
 msgctxt "#30827"
 msgid "Classic"
 msgstr ""
+
+msgctxt "#30828"
+msgid "Flatten TV show seasons"
+msgstr "Agrupar temporadas de séries de TV"
 
 msgctxt "#30830"
 msgid "Playback"

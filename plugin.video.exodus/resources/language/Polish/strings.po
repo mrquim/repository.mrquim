@@ -14,16 +14,18 @@
 # Translators:
 # Translators:
 # Translators:
+# Translators:
 # Daniel Szurgot, 2015
 # Ghuthek, 2015-2016
-# Ghuthek, 2016
+# Ghuthek <ghuthek@gmail.com>, 2016
+# lambda81, 2016
 # lambda81, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Exodus\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2016-02-23 11:19+0000\n"
-"Last-Translator: Ghuthek\n"
+"PO-Revision-Date: 2016-03-25 21:44+0000\n"
+"Last-Translator: lambda81\n"
 "Language-Team: Polish (http://www.transifex.com/tv-addons/exodus/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -655,26 +657,6 @@ msgctxt "#30483"
 msgid "No"
 msgstr "Nie"
 
-msgctxt "#30484"
-msgid "1) Visit : "
-msgstr "1) Wizyty :"
-
-msgctxt "#30485"
-msgid "2) If prompted, authorize Exodus to access your account"
-msgstr ""
-
-msgctxt "#30486"
-msgid "3) Enter the PIN provided or Cancel"
-msgstr ""
-
-msgctxt "#30487"
-msgid "Enter PIN"
-msgstr ""
-
-msgctxt "#30488"
-msgid "Cancel"
-msgstr "Anuluj"
-
 msgctxt "#30491"
 msgid "This View is now Default"
 msgstr "Ten widok jest teraz domyślny"
@@ -938,6 +920,10 @@ msgstr ""
 msgctxt "#30827"
 msgid "Classic"
 msgstr ""
+
+msgctxt "#30828"
+msgid "Flatten TV show seasons"
+msgstr "Ukrywaj widok sezonów serialu"
 
 msgctxt "#30830"
 msgid "Playback"

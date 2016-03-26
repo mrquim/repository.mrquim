@@ -136,6 +136,9 @@ class movies:
 
     def search(self, query=None):
         try:
+            if control.infoLabel('Container.PluginName') == '':
+                return control.dialog.ok('Exodus', control.lang(30518).encode('utf-8'), '', '')
+
             if not control.infoLabel('ListItem.Title') == '':
                 self.query = control.window.getProperty('%s.movie.search' % control.addonInfo('id'))
 

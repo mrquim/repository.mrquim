@@ -1,0 +1,177 @@
+﻿2.2.8 (10/02/2015)
+- Fix player
+- Fix hosts
+
+2.2.1 (26/10/2015)
+- Fix nas capas
+
+2.2.0 (24/10/2015)
+- Alteração do dominio
+
+2.1.9 (20/10/2015)
+- Fix load movies, tvshows e animes
+
+2.1.8 (28/09/2015)
+- Animes adicionados
+- Nova opção adicionada
+
+2.1.7 (25/09/2015)
+- Erro resolvido (temporario)
+
+2.1.6 (24/09/2015)
+- https to http
+- Animes brevemente disponiveis 
+
+2.1.5 (23/5/2015)
+- Marcar como visto (site) ativado
+- Correção de nomes com acentuação
+- Hosts Fixed
+
+2.1.4 (21/3/2015)
+- Adicionado progresso durante a obtenção de opções
+- Mudança de icon para 526x526
+- Marcar como visto (site) desativado (temporariamente)
+- Mudanças no site fixed
+
+2.1.3 (5/3/2015)
+- Bug Fixed
+
+2.1.2 (5/3/2015)
+-Pop-up removido
+-Código ofuscado removido
+
+2.0.3 (22/7/2014)
+-Limpeza do titulo antes de adicionar à biblioteca (tks fightnight)
+-Adicionar lista completa de favoritos à biblioteca (tks mafarricos)
+-Melhoria na importação do trakt (Tks mafarricos)
+-Minor fixes (Pastas/translatepath - tks mafarricos)
+-Optimização da actualização de biblioteca (se for adicionado um filme actualiza a biblioteca de filmes/série a de séries e não as duas ao mesmo tempo como no passado -> tks mafarricos)
+-Menu de categorias é obtido a partir do codigo fonte (redução do numero de linhas de código -tks mafarricos)
+-Filmes/Séries da biblioteca também ja são marcados como vistos (esta fui eu...yay!)
+
+
+2.0.2 (3/7/2014)
+-Corrigida actualizacao de biblioteca no service.py
+-Adicionada opcao para transferir coleccao do trakt para a biblioteca
+-Coreccao votos
+-Adicionada opcao para transferir watchlist do trakt para o xbmc (e tambem atraves do service.py)
+-Adicionada entrada de menu para verificar que trending media do trakt esta disponivel no rato
+-Reorganizaçao do menu principal
+-Outros bug fixes
+
+2.0.1 (1/7/2014)
+-Code cleanup (tks mafarricos)
+-Pequeno fix play_from_outside
+
+2.0.0 (30/6/2014)
+-Separação das funções activas (play/download/etc) das funções passivas (obter data/obter informação de media/obter temporadas/obter links) - estilo Api
+-Função de prioridade de provedores (tks mafarricos)
+-Fix na seleccao automatica da melhor qualidade
+-Fix das funções de download
+-Integração completa com a biblioteca (subscrever series,adicionar filmes à biblioteca)
+-Adicionada função para transferir todos os filmes do site para a biblioteca (façam-no apenas de madrugada)
+-Criação de serviço para automaticamente adicionar novos episodios das series subscritas à biblioteca
+-Criação de serviço para transferir novos filmes do site para a biblioteca caso tenha transferido anteriormente todos os filmes
+-Remoção de todo e qualquer tipo de tracking pelo google analytics
+-Melhor controlo sobre a fanart
+-Uniformização de vistas para filmes/series (já não existem diferenças entre os diferentes menus. A metadata é guardada em cache localmente e apenas é transferida se não existir)
+-Bump addon.xml (topico do forum,source code,disclaimer)
+-Criados bookmarks (possível retomar a visualização se tiver sido interrompida anteriormente)
+-Novo tipo de repositório (o addon é agora distribuído em zip)
+
+1.1.5
+-2ª Fix coming soon 
+
+1.1.4
+-Fix coming soon
+
+1.1.3
+-Fix listagem de episodios para episodios combinados
+
+1.1.2
+-Fix erros da versao anterior
+
+1.1.1
+-Adicionados posters de temporada (trakt)
+-Adicionado thumbnails de episodio (trakt)
+-Fix pedidos
+
+1.1.0
+-Fix pesquisa (ja nao é necessário voltar atras)
+-Fix opcao externa 3
+-Fix listagem numero temporadas (e.g.naruto)
+-Adicionada listagem de media por ano
+-Fix mensagem entrada se nao estiver a seguir nenhuma serie
+-Fix página seguinte na pesquisa/ano
+-Fix próximo episodio
+
+1.0.21
+-Fix srt qdo nao existe subtitles
+
+1.0.20
+-Fix rating
+
+1.0.19
+-Pequena fix
+
+1.0.17 + 1.0.18
+-Fix mensagem do site
+
+1.0.16
+-Fix nas séries (alteracoes no site)
+-Fix nas settings (sync com o trakt)
+
+1.0.15
+-Fix na listagem das séries
+-Fix no trakt para episodios a seguir
+
+1.0.14
+-Pedidos novamente operacionais
+-Feliz 2014!!
+
+1.0.13
+-Fix listagem pagina seguinte nos favoritos
+-Sincronização de filmes e episodios com o trakt
+
+1.0.12
+-Fix pesquisa
+
+1.0.11
+-Dependencias corrigidas
+
+1.0.10
+-Correccoes para manter o addon minimamente funcional durante o período de manutenção do site
+
+1.0.9
+-Adicionada opcao3
+
+1.0.8
+-Suporte gotham
+
+1.0.7
+-Adicionada secção de pedidos (por nome e imdb)
+-Secção de conta (mensagens privadas - respostas aos pedidos)
+-Correccoes na opcao2
+-Novo host na op2
+-Outras correccoes
+
+
+1.0.6
+-Adicionada opção 2 para os streams (thanks Tvm)
+-Adicionada opção de download
+-correcção nas pesquisas
+
+1.0.5
+-Correcções nos streams (headers passados ao player)
+
+1.0.4
+-Integração completa com o trakt (vistos/votaçao)
+-Funcao de estatisticas do trakt
+
+1.0.3
+-Novo mecanismo de voto
+-"Integração" com o trakt.tv
+
+1.0.2
+-Procurar novos episodios para series.
+-Seguir séries

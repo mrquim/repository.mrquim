@@ -14,12 +14,14 @@
 # Translators:
 # Translators:
 # Translators:
+# Translators:
 # djkidy123, 2016
+# lambda81, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Exodus\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2016-02-17 09:48+0000\n"
+"PO-Revision-Date: 2016-03-25 21:44+0000\n"
 "Last-Translator: lambda81\n"
 "Language-Team: Slovenian (Slovenia) (http://www.transifex.com/tv-addons/exodus/language/sl_SI/)\n"
 "MIME-Version: 1.0\n"
@@ -652,26 +654,6 @@ msgctxt "#30483"
 msgid "No"
 msgstr "Ne"
 
-msgctxt "#30484"
-msgid "1) Visit : "
-msgstr "1) Obišči : "
-
-msgctxt "#30485"
-msgid "2) If prompted, authorize Exodus to access your account"
-msgstr "2) Če boste pozvani, dovolite da Exodus dostopa do vašega računa"
-
-msgctxt "#30486"
-msgid "3) Enter the PIN provided or Cancel"
-msgstr "Vnesite pridobljen PIN ali Prekličite"
-
-msgctxt "#30487"
-msgid "Enter PIN"
-msgstr "Vnesite PIN"
-
-msgctxt "#30488"
-msgid "Cancel"
-msgstr "Prekliči"
-
 msgctxt "#30491"
 msgid "This View is now Default"
 msgstr "Ta pogled je sedaj Osnovni"
@@ -935,6 +917,10 @@ msgstr "Pod meni"
 msgctxt "#30827"
 msgid "Classic"
 msgstr "Klasično"
+
+msgctxt "#30828"
+msgid "Flatten TV show seasons"
+msgstr "Prikaži skupaj vse sezone TV serije"
 
 msgctxt "#30830"
 msgid "Playback"

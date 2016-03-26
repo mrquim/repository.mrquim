@@ -14,15 +14,17 @@
 # Translators:
 # Translators:
 # Translators:
+# Translators:
 # Itay Mizi, 2015
 # lambda81, 2015
+# lambda81, 2016
 # lidor malich, 2015
-# Yaron Shahrabani, 2016
+# Yaron Shahrabani <sh.yaron@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Exodus\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2016-02-23 20:07+0000\n"
+"PO-Revision-Date: 2016-03-25 21:44+0000\n"
 "Last-Translator: lambda81\n"
 "Language-Team: Hebrew (http://www.transifex.com/tv-addons/exodus/language/he/)\n"
 "MIME-Version: 1.0\n"
@@ -655,26 +657,6 @@ msgctxt "#30483"
 msgid "No"
 msgstr "לא"
 
-msgctxt "#30484"
-msgid "1) Visit : "
-msgstr "1) לבקר בכתובת :"
-
-msgctxt "#30485"
-msgid "2) If prompted, authorize Exodus to access your account"
-msgstr "2) אם הוצגה בקשה, יש לאשר ל־Exodus לגשת לחשבונך"
-
-msgctxt "#30486"
-msgid "3) Enter the PIN provided or Cancel"
-msgstr "3) יש להזין את צופן ה־PIN שסופק או לבטל"
-
-msgctxt "#30487"
-msgid "Enter PIN"
-msgstr "הזנת צופן ה־PIN"
-
-msgctxt "#30488"
-msgid "Cancel"
-msgstr "ביטול"
-
 msgctxt "#30491"
 msgid "This View is now Default"
 msgstr "תצוגה זו היא בררת המחדל כעת"
@@ -938,6 +920,10 @@ msgstr "תת תפריט"
 msgctxt "#30827"
 msgid "Classic"
 msgstr "קלסי"
+
+msgctxt "#30828"
+msgid "Flatten TV show seasons"
+msgstr "שטח עונות סדרה"
 
 msgctxt "#30830"
 msgid "Playback"
