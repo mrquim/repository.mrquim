@@ -58,12 +58,14 @@ def GETCHANNELS():
 			 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
 			 'Accept-Encoding' : 'gzip',
         		 'Connection':'Keep-Alive'}
-        page = net.http_GET('http://zona-app.com/zonaapp/api.php?cat_id=14',headers).content
+        api = net.http_GET('http://zona-app.com/zona-app/api.php?api_key',headers).content
+        url='http://zona-app.com/zona-app/api.php?cat_id=14&key='+re.compile('"key":"(.+?)"').findall(api)[0]
+        page = net.http_GET(url,headers).content
         match=re.compile('"channel_title":"(.+?)","channel_url":"(.+?)","channel_thumbnail":"(.+?)"').findall(page)
         match.sort()
         for name,url,thumb in match:
                 if not '\u' in name:
-                        thumb='http://zona-app.com/zonaapp/images/'+thumb+'|User-Agent=Dalvik/2.1.0 (Linux; U; Android 5.1.1; SM-G920F Build/LMY47X)'
+                        thumb='http://zona-app.com/zona-app/images/'+thumb+'|User-Agent=Dalvik/2.1.0 (Linux; U; Android 5.1.1; SM-G920F Build/LMY47X)'
                         chname.append(name)
                         chicon.append(thumb)
                         chstream.append(url)
