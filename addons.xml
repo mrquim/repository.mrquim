@@ -1977,4 +1977,18 @@ Addons Included
 		<platform>all</platform>
 	</extension>
 </addon>
+
+<addon id="plugin.video.TV-DOS-POBRES" name="TV-DOS-POBRES" version="0.0.1" provider-name="TV-DOS-POBRES">
+    <requires>
+    </requires>
+    <extension point="xbmc.python.pluginsource"
+               library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary>TV A 0€ COM QUALIDADE SO NESTA TABERNA</summary>
+        <description>IPTV LIVRE ACTUALIZADO 24 HORAS POR DIA. TV DOS POBRES</description>
+    </extension>
+</addon>
 </addons>
