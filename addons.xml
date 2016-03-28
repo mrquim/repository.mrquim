@@ -83,9 +83,10 @@ Maniac Team / Pancas TV
   </extension>
 </addon>
 
-<addon id="plugin.video.playlistLoader" name="Playlist Loader" version="1.0.6" provider-name="Avigdor">
+<addon id="plugin.video.playlistLoader" name="Playlist Loader" version="1.0.9" provider-name="Avigdor">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
+	<import addon="repository.xbmc-israel" />
   </requires>
   <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
@@ -121,7 +122,7 @@ http://www.hometheater.co.il</description>
   </extension>
 </addon>
 
-<addon id="plugin.video.sembilhete.tv" name="SemBilhete.tv" provider-name="SemBilhete.tv" version="0.5.0">
+<addon id="plugin.video.sembilhete.tv" name="SemBilhete.tv" provider-name="SemBilhete.tv" version="0.5.1">
  <requires>
   <import addon="xbmc.python" version="2.7.10"/>
  </requires>
