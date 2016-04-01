@@ -24,6 +24,7 @@
 		<setting label="[B]KITINA[/B]" type="text"  id="kitina_m3u" default="http://bit.ly/1PjhM7R" />
 		<setting label="[B]MARTUNIS[/B]" type="text"  id="martunis_m3u" default="http://bit.ly/1OVblHJ" />
 		<setting label="[B]ARGIVAI[/B]" type="text"  id="argivai_m3u" default="http://bit.ly/1RyDB81" />
+		<setting label="[B]IPTVBRASILHD[/B]" type="text"  id="iptvbrasil_m3u" default="http://bit.ly/1UsXQqA" />
 		<setting type="sep" />
 		<setting label="[B]Changelog[/B]" type="text" visible="false" id="log_m3u" default="http://pastebin.com/raw/sdM3jLt4" />
 		</category>
