@@ -100,7 +100,7 @@ http://www.hometheater.co.il</description>
   </extension>
 </addon>
 
-<addon id="plugin.video.ratotv" name="RatoTv" version="2.2.8" provider-name="RatoTV.net">
+<addon id="plugin.video.ratotv" name="RatoTv" version="2.2.9" provider-name="ratotv.top">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.t0mm0.common" version="2.1.1"/>
@@ -115,9 +115,9 @@ http://www.hometheater.co.il</description>
     <language>pt</language>
     <platform>all</platform>
     <summary lang="en">Rato TV</summary>
-    <description lang="en">Filmes e series no Kodi em HD. Visita o site oficial em http://www.ratotv.net. É necessária conta no site para aceder aos conteúdos do addon.</description>
+    <description lang="en">Filmes e series no Kodi em HD. Visita o site oficial em http://www.ratotv.top. É necessária conta no site para aceder aos conteúdos do addon.</description>
     <disclaimer lang="en">Os autores não alojam nem distribuem nenhum do conteúdo acessível a partir deste addon. Os autores não têm qualquer afiliação com o site em questão. O addon não contem nenhuma ferramenta de tracking.</disclaimer>
-    <website>http://www.ratotv.net/</website>
+    <website>http://www.ratotv.top/</website>
     <platform>all</platform>
   </extension>
 </addon>
@@ -441,11 +441,11 @@ Addons Included
 	</extension>
 </addon>
 
-<addon id="plugin.video.specto" name="Specto - ... Fork"  version="2016.03.12.2" provider-name="mrknow" >
+<addon id="plugin.video.specto" name="Specto - ... Fork"  version="2016.03.26.1" provider-name="mrknow" >
 	<requires>
 		<import addon="xbmc.python" version="2.1.0" />
 		<import addon="script.module.requests" version="1.0.0" />
-		<import addon="script.module.metahandler" optional="true" />
+		<import addon="script.module.metahandler" />
 		<import addon="plugin.video.youtube" optional="true" />
 
 	</requires>

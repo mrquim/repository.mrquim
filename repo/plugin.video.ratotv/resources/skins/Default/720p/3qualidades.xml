@@ -1,0 +1,160 @@
+<window>
+    <coordinates>
+        <system>1</system>
+        <posx>340</posx>
+        <posy>235</posy>
+    </coordinates>
+    <visible>true</visible>
+    <allowoverlay>no</allowoverlay>
+    <zorder>1</zorder>
+    <animation effect="fade" time="250">WindowOpen</animation>
+    <animation effect="fade" time="250">WindowClose</animation>
+
+    <controls>
+        <!--DIALOG BASE-->
+        <control type="group">
+            <control type="image"> <!--DIALOG BACKGROUND-->
+                <description>Background</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>600</width>
+                <height>250</height>
+                <texture>ConfluenceDialogBack.png</texture>
+            </control>
+
+            <control type="image">
+                <description>Dialog Header Image</description>
+                <posx>40</posx>
+                <posy>16</posy>
+                <width>520</width>
+                <height>40</height>
+                <texture>Confluencedialogheader.png</texture>
+            </control>
+
+            <control type="label" id="10011"> <!--DIALOG TITLE-->
+                <description>Title</description>
+                <posx>0</posx>
+                <posy>27</posy>
+                <width>600</width>
+                <height>20</height>
+                <label>[B][COLOR green]RatoTV - Escolha Qualidade[/COLOR][/B]</label>
+                <align>center</align>
+                <aligny>center</aligny>
+            </control>
+
+            <control type="label" id="10012"> <!--MEDIA TITLE-->
+                <description>Title</description>
+                <posx>0</posx>
+                <posy>75</posy>
+                <width>600</width>
+                <height>20</height>
+                <label></label>
+                <align>center</align>
+                <aligny>center</aligny>
+                <font>font12</font>
+                <textcolor>FFBBBBBB</textcolor>
+            </control>
+
+            <control type="label" id="10013"> <!--MEDIA TITLE-->
+                <description>Title</description>
+                <posx>0</posx>
+                <posy>100</posy>
+                <width>600</width>
+                <height>20</height>
+                <label></label>
+                <align>center</align>
+                <aligny>center</aligny>
+                <font>font12</font>
+                <textcolor>FFBBBBBB</textcolor>
+            </control>
+
+            <control type="label" id="10014"> <!--MEDIA TITLE-->
+                <description>Title</description>
+                <posx>0</posx>
+                <posy>125</posy>
+                <width>600</width>
+                <height>20</height>
+                <label></label>
+                <align>center</align>
+                <aligny>center</aligny>
+                <font>font12</font>
+                <textcolor>FFBBBBBB</textcolor>
+            </control>
+
+
+            <control type="button" id="50000">
+                <description>Close Window button</description>
+                <posx>510</posx>
+                <posy>8</posy>
+                <width>64</width>
+                <height>32</height>
+                <label></label>
+                <onup>11030</onup>
+                <ondown>11030</ondown>
+                <onclick></onclick>
+                <texturefocus>ConfluenceDialogCloseButton-focus.png</texturefocus>
+                <texturenofocus>ConfluenceDialogCloseButton.png</texturenofocus>
+                <visible>system.getbool(input.enablemouse)</visible>
+            </control>
+        </control>
+
+        <!--ADVANCED-->
+
+            <control type="button" id="11030">
+                <description>1 Button</description>
+                <posx>80</posx>
+                <posy>180</posy>
+                <width>120</width>
+                <height>35</height>
+                <label>Opção 1</label>
+                <font>font12</font>
+                <texturefocus>button-focus.png</texturefocus>
+                <texturenofocus>button-nofocus.png</texturenofocus>
+                <align>center</align>
+                <aligny>center</aligny>
+                <ondown>50000</ondown>
+                <onup>50000</onup>
+                <onright>11031</onright>
+                <animation>focus</animation>
+            </control>
+
+            <control type="button" id="11031">
+                <description>2 Button</description>
+                <posx>240</posx>
+                <posy>180</posy>
+                <width>120</width>
+                <height>35</height>
+                <label>Opção 2</label>
+                <font>font12</font>
+                <texturefocus>button-focus.png</texturefocus>
+                <texturenofocus>button-nofocus.png</texturenofocus>
+                <align>center</align>
+                <aligny>center</aligny>
+                <ondown>50000</ondown>
+                <onup>50000</onup>
+                <onleft>11030</onleft>
+                <onright>11032</onright>
+                <animation>focus</animation>
+            </control>
+
+            <control type="button" id="11032">
+                <description>3 Button</description>
+                <posx>400</posx>
+                <posy>180</posy>
+                <width>120</width>
+                <height>35</height>
+                <label>Opção 3</label>
+                <font>font12</font>
+                <texturefocus>button-focus.png</texturefocus>
+                <texturenofocus>button-nofocus.png</texturenofocus>
+                <align>center</align>
+                <aligny>center</aligny>
+                <ondown>50000</ondown>
+                <onup>50000</onup>
+                <onleft>11031</onleft>
+                <animation>focus</animation>
+            </control>
+
+    </controls>
+
+</window>
