@@ -24,6 +24,7 @@ import re,os,json,urllib,urlparse
 from resources.lib.modules import control
 from resources.lib.modules import cleantitle
 from resources.lib.modules import client
+from resources.lib.modules import workers
 
 
 class source:
@@ -42,16 +43,15 @@ class source:
             result = client.source(query)
 
             title = cleantitle.get(title)
-            years = ['%s' % str(year), '%s' % str(int(year)+1), '%s' % str(int(year)-1)]
 
             result = client.parseDOM(result, 'li', attrs = {'class': 'films-item'})
             result = [(client.parseDOM(i, 'a', ret='href'), client.parseDOM(i, 'div', attrs = {'class': 'films-item-title'}), client.parseDOM(i, 'div', attrs = {'class': 'films-item-year'})) for i in result]
             result = [(i[0][0], i[1][0], i[2][0]) for i in result if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
             result = [(i[0], re.sub('<.+?>|</.+?>', '', i[1]), re.sub('<.+?>|</.+?>', '', i[2])) for i in result]
-            result = [i for i in result if title == cleantitle.get(i[1])]
-            result = [i[0] for i in result if any(x in i[2] for x in years)][0]
+            result = [i for i in result if title == cleantitle.get(i[1]) and year == i[2]]
 
-            url = [i for i in result.split('/') if not i == ''][-1]
+            url = result[0][0]
+            url = [i for i in url.split('/') if not i == ''][-1]
             url = client.replaceHTMLCodes(url)
             url = url.encode('utf-8')
             return url
@@ -88,11 +88,11 @@ class source:
             result = [(re.compile('BANDWIDTH=(\d+).*?NAME="(\d+)').findall(i[0]), urlparse.urljoin(url, i[1])) for i in result]
             result = [{'audio_group': audio_group, 'audio_stream': audio_stream, 'stream_name': i[0][0][1], 'bandwidth': i[0][0][0], 'video_stream': i[1]} for i in result if len(i[0]) > 0]
 
-            links = [(i, '1080p') for i in result if int(i['stream_name']) >= 1080]
-            links += [(i, 'HD') for i in result if 720 <= int(i['stream_name']) < 1080]
-            links += [(i, 'SD') for i in result if 360 <= int(i['stream_name']) < 720]
+            links = []
+            links += [{'quality': '1080p', 'url': urllib.urlencode(i)} for i in result if int(i['stream_name']) >= 1080]
+            links += [{'quality': 'HD', 'url': urllib.urlencode(i)} for i in result if 720 <= int(i['stream_name']) < 1080]
 
-            for i in links: sources.append({'source': 'cdn', 'quality': i[1], 'provider': 'Torba', 'url': urllib.urlencode(i[0]), 'direct': True, 'debridonly': False})
+            for i in links: sources.append({'source': 'cdn', 'quality': i['quality'], 'provider': 'Torba', 'url': i['url'], 'direct': True, 'debridonly': False, 'autoplay': False})
 
             return sources
         except:
@@ -101,22 +101,61 @@ class source:
 
     def resolve(self, url):
         try:
-            content = [
+            m3u8 = [
             '#EXTM3U',
             '#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="{audio_group}",DEFAULT=YES,AUTOSELECT=YES,NAME="Stream 1",URI="{audio_stream}"',
             '',
             '#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH={bandwidth},NAME="{stream_name}",AUDIO="{audio_group}"',
             '{video_stream}']
 
-            url = urlparse.parse_qs(url)
-            url = dict([(key, url[key][0]) if url[key] else (key, '') for key in url])
-            url = ('\n'.join(content)).format(**url)
+            query = urlparse.parse_qs(url)
+            query = dict([(key, query[key][0]) if query[key] else (key, '') for key in query])
+
+            content = ('\n'.join(m3u8)).format(**query)
+            auth = query['video_stream']
+
+            result = client.source(auth, headers={'User-Agent': 'Lavf/56.40.101'})
+            try: url = json.loads(result)['url']
+            except: url = None
+
+
+            if not url == None:
+
+                def dialog(url):
+                    self.disableScraper = control.yesnoDialog('To watch this video visit from any device', '[COLOR skyblue]%s[/COLOR]' % url, '', 'Torba', 'Cancel', 'Settings')
+
+                workers.Thread(dialog, url).start()
+                control.sleep(3000)
+
+                for i in range(100):
+                    try:
+                        if not control.condVisibility('Window.IsActive(yesnoDialog)'): break
+
+                        result = client.source(auth, headers={'User-Agent': 'Lavf/56.40.101'})
+                        try: url = json.loads(result)['url']
+                        except: url = None
+
+                        if url == None: break
+
+                        workers.Thread(dialog, url).start()
+                        control.sleep(3000)
+                    except:
+                        pass
+
+                if self.disableScraper:
+                    control.openSettings(query='2.0')
+                    return ''
+
+                control.execute('Dialog.Close(yesnoDialog)')
+
+
+            if not url == None: return
 
             path = os.path.join(control.dataPath, 'torbase.m3u8')
 
             control.makeFile(control.dataPath) ; control.deleteFile(path)
 
-            file = control.openFile(path, 'w') ; file.write(url) ; file.close()
+            file = control.openFile(path, 'w') ; file.write(content) ; file.close()
 
             return path
         except:

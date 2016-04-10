@@ -755,12 +755,12 @@ Addons Included
 	</extension>
 </addon>
 
-<addon id="plugin.video.exodus" version="1.2.2" name="Exodus" provider-name="Exodus">
+<addon id="plugin.video.exodus" version="1.3.0" name="Exodus" provider-name="Exodus">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0" />
 		<import addon="repository.exodus" version="1.0.0" />
 		<import addon="script.exodus.artwork" version="1.0.1" />
-		<import addon="script.module.urlresolver" version="2.10.11"/>
+		<import addon="script.module.urlresolver" version="3.0.0"/>
 		<import addon="script.module.metahandler" version="1.0.0" />
 		<import addon="plugin.video.youtube" optional="true" />
 	</requires>
@@ -1934,7 +1934,7 @@ Addons Included
 
 <addon id="plugin.video.ManiacTV"
        name="[COLOR yellow][B]Maniac[/COLOR][COLOR red]TV[/B][/COLOR]"
-       version="0.0.5"
+       version="0.0.6"
        provider-name="Coelhon">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -1959,7 +1959,7 @@ Addons Included
   </extension>
   <extension point="xbmc.addon.metadata">
     <summary lang="en">Lista de Canais e Filmes ManiacTV</summary>
-    <description lang="en">Este Addon foi criado e desenvolvido pela[COLOR red][B] Team[/COLOR][/B][COLOR yellow][B]Maniac[/COLOR][/B][COLOR red][B]Pancas[/COLOR][/B][COLOR yellow][B]TV[/COLOR][/B] o mesmo nao se responsabiliza pelo que o uso do mesmo venha a causar.
+    <description lang="en">Este Addon foi criado e desenvolvido pela[COLOR red][B] Team[/COLOR][/B][COLOR yellow][B]Maniac[/COLOR][/B]o mesmo nao se responsabiliza pelo que o uso do mesmo venha a causar.
 	Tudo o que aqui se encontra está ao alcance de qualquer um na internet...Para mais novidades adere ao grupo[COLOR red][B] https://www.facebook.com/groups/MANIACTV/[/COLOR][/B]</description>
     <platform>all</platform>
   </extension>

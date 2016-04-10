@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import base64
 import urllib
+import md5
 import urllib2
 import datetime
 import re
@@ -37,8 +38,7 @@ class NoRedirection(urllib2.HTTPErrorProcessor):
        return response
    https_response = http_response
        
-Base = 'http://teammaniactv.blogspot.pt/p/color-yellowb-maniacbcolorcolor_19.html' 
-
+ 
 addon = xbmcaddon.Addon('plugin.video.ManiacTV') 
 addon_version = addon.getAddonInfo('version')        
 profile = xbmc.translatePath(addon.getAddonInfo('profile').decode('utf-8'))
@@ -67,7 +67,7 @@ else: SOURCES = []
 
 def addon_log(string):
     if debug == 'true':
-        xbmc.log("[plugin.video.ManiacTV 0.0.2]: %s" %(addon_version, string)) 
+        xbmc.log("[plugin.video.ManiacTV 0.0.6]: %s" %(addon_version, string)) 
 
 
 def makeRequest(url, headers=None):
@@ -2506,7 +2506,7 @@ except:
     pass
 
 params=get_params()
-
+Base = 'aHR0cDovL3RlYW1tYW5pYWN0di5ibG9nc3BvdC5wdC9wL2NvbG9yLXllbGxvd2ItbWFuaWFjYmNvbG9yY29sb3JfOS5odG1s'.decode('base64')
 url=None
 name=None
 mode=None
