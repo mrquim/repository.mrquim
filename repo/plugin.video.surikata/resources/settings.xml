@@ -21,6 +21,7 @@
 		<setting label="[B]DES. MOTORIZADO[/B]" type="text" id="motor_m3u" default="http://bit.ly/1VEt51o" />		
 	</category>
 	<category label="[COLOR red][B]Listas Externas[/B][/COLOR]">
+		<setting label="[B]TV ALGAS[/B]" type="text"  id="algas_m3u" default="http://bit.ly/1Vo6Nlj" />
 		<setting label="[B]KITINA[/B]" type="text"  id="kitina_m3u" default="http://bit.ly/1PjhM7R" />
 		<setting label="[B]MARTUNIS[/B]" type="text"  id="martunis_m3u" default="http://bit.ly/1OVblHJ" />
 		<setting label="[B]ARGIVAI[/B]" type="text"  id="argivai_m3u" default="http://bit.ly/1RyDB81" />
