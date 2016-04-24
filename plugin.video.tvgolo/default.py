@@ -4,9 +4,9 @@
     2015 fightnight
 """
 
-import xbmc, xbmcgui, xbmcaddon, xbmcplugin,os,re,sys, urllib, urllib2,htmlentitydefs
+import xbmc, xbmcgui, xbmcaddon, xbmcplugin,os,re,sys, urllib, urllib2,htmlentitydefs,requests
 
-user_agent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:10.0a1) Gecko/20111029 Firefox/10.0a1'
+user_agent = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.71 Safari/537.36'
 art=os.path.join(xbmcaddon.Addon().getAddonInfo('path'),'resources','art')
 MainURL = 'http://www.okgoals.com/'
 
@@ -45,14 +45,14 @@ def request(url,special=False):
       link=abrir_url(url).replace('&nbsp;','')
       if special:
             #hack para epocas anteriores
-            listagolos=re.compile('<div class="matchlisting"><a href="(.+?)"><img.+?src="images/(.+?)\..+?" />\s*(.+?)</a></div>').findall(link)
+            listagolos=re.compile('<div class="matcheslisting"><a href="(.+?)"><img.+?src="images/(.+?)\..+?" />\s*(.+?)</a></div>').findall(link)
             for endereco,thumb,multiple in listagolos:
                   data=multiple.split('(')[0]
                   hora=multiple.split('(')[1].split(')')[0]
                   rest=''.join(')'.join('('.join(multiple.split('(')[1:]).split(')')).split('- ')[1:])
                   addDir('[COLOR orange]%s[/COLOR][COLOR darkorange](%s)[/COLOR][COLOR blue] - [/COLOR][COLOR white]%s[/COLOR]' % (data,hora,rest),MainURL + endereco,1,os.path.join(art,'%s.png' % (thumb)),len(listagolos),pasta=False)
       else:
-            listagolos=re.compile('<div class="matchlisting"><a href="(.+?)"><img.+?src="images/(.+?)\..+?" />\s+?([0-9]{4}\.[0-9]{2}\.[0-9]{2})\s*(\([0-9]{2}h[0-9]{2}\))\s*-\s*([A-Za-z ]+?)\s*([0-9]*)\s*-\s*([0-9]*)\s*([A-Za-z ]+?)</a></div>').findall(link)
+            listagolos=re.compile('<div class="matcheslisting"><a href="(.+?)"><img.+?src="images/(.+?)\..+?" />\s+?([0-9]{4}\.[0-9]{2}\.[0-9]{2})\s*(\([0-9]{2}h[0-9]{2}\))\s*-\s*([A-Za-z ]+?)\s*([0-9]*)\s*-\s*([0-9]*)\s*(.+?)</a></div>').findall(link)
             for endereco,thumb,data,hora,equipa1,resultado1,resultado2,equipa2 in listagolos:
                   addDir('[COLOR orange]%s[/COLOR] [COLOR darkorange]%s[/COLOR][COLOR blue] - [/COLOR][COLOR white]%s[/COLOR] [COLOR yellow]%s - %s[/COLOR] [COLOR white]%s[/COLOR]' % (data,hora,equipa1,resultado1,resultado2,equipa2),MainURL + endereco,1,os.path.join(art,'%s.png' % (thumb)),len(listagolos),pasta=False)
 
@@ -357,11 +357,7 @@ def pesquisa():
       else: sys.exit(0)
                         
 def abrir_url(url):
-      req = urllib2.Request(url)
-      req.add_header('User-Agent', user_agent)
-      response = urllib2.urlopen(req)
-      link=response.read()
-      response.close()
+      link=requests.get(url, headers={'User-Agent':user_agent},verify=False).text
       return link
 
 def redirect(url):

@@ -1,3 +1,6 @@
+[B]v1.0.3 (26 de Marco de 2016):[/B]
+- Correccoes no addon.
+
 [B]v1.0.2 (13 de Dezembro de 2015):[/B]
 - Correccoes no addon.
 
