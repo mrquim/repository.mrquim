@@ -22,7 +22,7 @@
 import re,urllib,urlparse,json
 
 from resources.lib.modules import cleantitle
-from resources.lib.modules import cloudflare
+from resources.lib.modules import sucuri
 from resources.lib.modules import client
 from resources.lib.modules import cache
 from resources.lib.modules import directstream
@@ -30,8 +30,8 @@ from resources.lib.modules import directstream
 
 class source:
     def __init__(self):
-        self.domains = ['seriestv.us']
-        self.base_link = 'http://seriestv.us'
+        self.domains = ['sereptv.com', 'mobserep.com', 'seriestv.us']
+        self.base_link = 'http://sereptv.com'
         self.search_link = '/categoryy'
 
 
@@ -61,7 +61,7 @@ class source:
         try:
             url = urlparse.urljoin(self.base_link, self.search_link)
 
-            result = cloudflare.source(url)
+            result = client.source(url, headers=self.headers, safe=True)
             result = client.parseDOM(result, 'div', attrs = {'class': 'tagindex'})[0]
             result = re.findall('href="(.+?)">(.+?)<', result)
             result = [i for i in result if not (i[1].strip()).endswith('(0)')]
@@ -84,6 +84,8 @@ class source:
 
             if url == None: return sources
 
+            headers = self.headers = sucuri.headers(self.base_link)
+
             if not str(url).startswith('http'):
 
                 data = urlparse.parse_qs(url)
@@ -105,16 +107,17 @@ class source:
 
 
             try:
-                result = cloudflare.source(url)
+                result = client.source(url, headers=headers, safe=True)
                 r = client.parseDOM(result, 'link', ret='href', attrs = {'rel': 'canonical'})[0]
             except:
-                url = url.replace('/the-', '/')
-                result = cloudflare.source(url)
+                url = url.replace('/the-', '/').replace('-the-', '-')
+                result = client.source(url, headers=headers, safe=True)
                 r = client.parseDOM(result, 'link', ret='href', attrs = {'rel': 'canonical'})[0]
 
 
             links = []
-            headers = {'Referer': r}
+            headers['Referer'] = r
+
             result = client.parseDOM(result, 'div', attrs = {'class': 'video-embed'})[0]
 
             try:
@@ -122,7 +125,7 @@ class source:
                 post = urllib.urlencode({'link': post})
 
                 url = urlparse.urljoin(self.base_link, '/plugins/gkpluginsphp.php')
-                url = cloudflare.source(url, post=post, headers=headers)
+                url = client.source(url, post=post, headers=headers)
                 url = json.loads(url)['link']
                 links += [i['link'] for i in url if 'link' in i]
             except:
@@ -130,7 +133,7 @@ class source:
 
             try:
                 url = client.parseDOM(result, 'iframe', ret='.+?')[0]
-                url = cloudflare.source(url, headers=headers)
+                url = client.source(url, headers=headers)
                 url = url.replace('\n', '')
 
                 url = re.findall('sources\s*:\s*\[(.+?)\]', url)[0]
