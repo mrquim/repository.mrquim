@@ -1,0 +1,44 @@
+Universal Parental Control (UPC) allow you to lock videos based on their MPAA rating. Enabling this function means that, depending on your settings, you will be asked for a PIN when playing a video.
+You have 30 seconds to enter your PIN and/or configure any options. After 30 seconds the video will exit.
+
+[COLOR gold][B]Settings[/B][/COLOR] 
+
+Set the following:
+[COLOR cyan][Enable Parental Control][/COLOR]: Turn parental control on/off
+
+[COLOR cyan][Set watershed time][/COLOR]: Set a time between 15:00 and 23:00 or set to "ALWAYS ON"
+Any video will play without needing a PIN after this time, but controls are automatically turned 
+on again at 6AM	
+				  
+[COLOR cyan][Set minimum watershed rating][/COLOR]: There are 4 settings (movie rating first).......
+a. "G or TV-Y/TV-Y7/TV-G"
+b. "PG or TV-Y7-FV/TV-PG"
+c. "PG-13 or TV-14"
+d. "R/NC-17 or TV-MA"
+Any movie or tv show with a rating EQUAL TO OR GREATER THAN your setting will require
+a PIN before playing (unless it is past your watershed time) 
+
+[COLOR cyan][Set PIN][/COLOR]: PIN is set to "0000" by default. I suggest setting a 4 digit PIN as it's easier to 
+enter on a remote.
+
+[COLOR cyan][Set action if no rating is available][/COLOR]: Sometimes a rating is not available. Set your option 
+here to either play them or require a PIN.
+
+[COLOR red]Locking the Parental Control settings[/COLOR]
+If your kids know their way round the settings window you can lock them to your PIN.
+In the Parental Controls menu you will see a new link to [LOCK Parental Control Settings]. 
+If you enter the correct PIN the Parental Control settings tab will be locked. To unlock, perform the same action.
+
+MPAA ratings are sourced directly from either the file metadata or grabbed using the metahandler module. 
+If for some reason there is no rating available you will be given the option to set your own rating when playing the movie/tv show. You will need your PIN to save the rating and/or to play the title when no MPAA rating is available. When you set a rating it will be saved for future plays.
+
+If UPC cannot derive the video name you will be prompted to configure the addon. Enter our PIN and you will have 3 options:
+1. Exclude the addon from Parental Control: All videos will be allowed from the addon
+2. Exclude the mode from Parental Control: This will exclude on the specific channel/video list from UPC, allowing all videos to be played
+3. Configure the addon: UPC will list all actions in the current plugin url. Select the action that contains the movie/show name i.e. "name=Avatar"
+
+The addon works by grabbing certain file/plugin information when a video starts playing. 
+On rare occasions no information is passed to UPC. When no information is available you will be prompted for your PIN to play (you will see the mpaa rating as [notfound]) 
+
+
+

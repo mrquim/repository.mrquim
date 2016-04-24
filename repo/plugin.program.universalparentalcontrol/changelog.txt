@@ -1,0 +1,9 @@
+[0.8.2]
+More code tweaks
+
+[0.8.1]
+Some code tweaks
+Added ability to select addons that will always require a PIN
+
+[0.8.0]
+Initial Beta Release

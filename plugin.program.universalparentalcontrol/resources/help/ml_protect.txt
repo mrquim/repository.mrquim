@@ -1,0 +1,11 @@
+Universal Parental Control does a pretty good job of restricting what can be viewed, but it can be disabled or 
+even removed if someone knows their way around Kodi. To protect the installation of this addon it is a good idea to set a Master Lock password and lock certain ares of the Kodi interface. 
+
+[COLOR gold][B]Set a Password and lock sections of Kodi[/B][/COLOR] 
+
+1. Select System/Settings/System/Master Lock.
+2. Select Master Lock code and settings
+3. On the next window select [Master Lock] and choose a password type. You will be prompted to enter and then confirm your new password.
+4. Enable "Lock programs and script winddows" and "Lock Addon Manager" then hit ok.
+
+This means you will be asked for a password when trying to view the Programs section or Settings/Addons. It's not completely secure, but should stop the addon being disabled via the GUI.
