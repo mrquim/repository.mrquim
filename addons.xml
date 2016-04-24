@@ -2060,4 +2060,18 @@ Addons Included
     <source></source>
   </extension>
 </addon>
+
+<addon id="repository.mrpiracy" name="MrPiracy.club Repositório" version="1.0.1" provider-name="MrPiracy.club">
+	<extension point="xbmc.addon.repository" name="MrPiracy Repository">
+		<info compressed="false">http://mrpiracy.club/kodi/repository.mrpiracy/addons.xml</info>
+		<checksum>http://mrpiracy.club/kodi//repository.mrpiracy/addons.xml.md5</checksum>
+		<datadir zip="true">http://mrpiracy.club/kodi/repository.mrpiracy/repo/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>MrPiracy.club Repositório</summary>
+		<description>Addon Description</description>
+		<disclaimer></disclaimer>
+		<platform>all</platform>
+	</extension>
+</addon>
 </addons>
