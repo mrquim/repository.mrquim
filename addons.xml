@@ -2141,4 +2141,17 @@ Addons Included
     <description lang="en">Use this addon to play F4m v1 and v2 streams</description>
   </extension>
 </addon>
+
+<addon id="repository.fightnight" name="fightnight repo" version="1.6" provider-name="fightnight">
+	<extension point="xbmc.addon.repository" name="fightnight">
+		<info compressed="false">https://raw.githubusercontent.com/fightnight/f-base/master/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/fightnight/f-base/master/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/fightnight/f-base/master</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Os meus addons para o XBMC</summary>
+		<description>Os meus addons para o XBMC</description>
+		<platform>all</platform>
+	</extension>
+</addon>
 </addons>
