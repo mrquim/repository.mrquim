@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<addon id="plugin.video.veetle" version="0.3.2" name="Veetle" provider-name="fightnight (creator: t0mm0)">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.module.simplejson" version="2.0.10"/>
+        <import addon="script.common.plugin.cache" version="1.3.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point= "xbmc.addon.metadata">
+        <summary lang="el">Αναζήτηση και ρεύμα από veetle.com</summary>
+		<summary lang="en">Browse and stream from veetle.com</summary>
+		<summary lang="pt">Veja canais de veetle.com</summary>
+		<summary lang="pt_BR">Veja canais de veetle.com</summary>
+        <description lang="el">Επιτρέπει βλέποντας ρέματα veetle.com που flash ενεργοποιηθεί.</description>
+		<description lang="en">Enables watching streams on veetle.com that are flash enabled.</description>
+		<description lang="pt">Permite visualizar streams de veetle.com que necessitam de flash.</description>
+		<description lang="pt_BR">Permite visualizar streams de veetle.com que necessitam de flash.</description>
+		<disclaimer lang="el">Δεν λειτουργεί για τις ροές 'HD' που απαιτούν λήψη λογισμικού.</disclaimer>
+        <disclaimer lang="en">Does not work for 'HD' streams which require a software download.</disclaimer>
+		<disclaimer lang="pt">Não funciona para streams 'HD' que necessitam do download de software.</disclaimer>
+		<disclaimer lang="pt_BR">Não funciona para streams 'HD' que necessitam do download de software.</disclaimer>
+        <platform>all</platform>
+    </extension>
+</addon>
+
