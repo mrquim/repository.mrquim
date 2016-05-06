@@ -18,7 +18,6 @@ import sys
 import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon,xbmc,os,json,threading,xbmcvfs
 from resources.lib import Player
 from resources.lib import requests
-from resources.lib import expand_library
 import HTMLParser
 import datetime
 import base64
@@ -35,7 +34,6 @@ __SKIN__ = l1l111_SBK_ (u"ࠨࡸ࠴ࠫࡦ")
 __SITE__ = l1l111_SBK_ (u"ࠩ࡫ࡸࡹࡶ࠺࠰࠱ࡶࡩࡲࡨࡩ࡭ࡪࡨࡸࡪ࠴ࡴࡷࠩࡧ")
 __ALERTA__ = xbmcgui.Dialog().ok
 def l1111l1l_SBK_():
-        expand_library.main()
         l1lll1l11_SBK_(l1l111_SBK_ (u"ࠪࡊ࡮ࡲ࡭ࡦࡵࠪࡨ"), __SITE__+l1l111_SBK_ (u"ࠫ࠴ࡧࡰࡪ࠱ࡹ࠵࠴ࡳ࡯ࡷ࡫ࡨ࠳ࡄࡲࡩ࡮࡫ࡷࡁ࠶࠹ࠧࡩ"), 1, os.path.join(__ART_FOLDER__, __SKIN__, l1l111_SBK_ (u"ࠬࡳ࡯ࡷ࡫ࡨࡷ࠳ࡶ࡮ࡨࠩࡪ")))
         l1lll1l11_SBK_(l1l111_SBK_ (u"࠭ࡓ࣪ࡴ࡬ࡩࡸ࠭࡫"), __SITE__+l1l111_SBK_ (u"ࠧ࠰ࡣࡳ࡭࠴ࡼ࠱࠰ࡵࡨࡶ࡮࡫࠯ࡀ࡮࡬ࡱ࡮ࡺ࠽࠲࠵ࠪ࡬"), 12, os.path.join(__ART_FOLDER__, __SKIN__, l1l111_SBK_ (u"ࠨࡵࡨࡶ࡮࡫ࡳ࠯ࡲࡱ࡫ࠬ࡭")))
         l1lll1l11_SBK_(l1l111_SBK_ (u"ࠩࠪ࡮"), l1l111_SBK_ (u"ࠪࠫ࡯"), l1l111_SBK_ (u"ࠫࠬࡰ"), os.path.join(__ADDON_FOLDER__,l1l111_SBK_ (u"ࠬ࡯ࡣࡰࡰ࠱࡮ࡵ࡭ࠧࡱ")), 0)
@@ -105,7 +103,6 @@ def l111l1l1_SBK_(url):
     l1111l1l_SBK_()
     return
 def l11111l1_SBK_(url):
-    expand_library.main()
     l1l11l1ll_SBK_ = l1ll11ll1_SBK_(url)
     l1lllll1l_SBK_ = l1l11l1ll_SBK_[l1l111_SBK_ (u"࠭࡭ࡦࡶࡤࠫࢿ")][l1l111_SBK_ (u"ࠧ࡯ࡧࡻࡸࠬࣀ")]
     l1l1l11ll_SBK_ = l1l11l1ll_SBK_[l1l111_SBK_ (u"ࠨ࡯ࡨࡸࡦ࠭ࣁ")][l1l111_SBK_ (u"ࠩࡳࡶࡪࡼࡩࡰࡷࡶࠫࣂ")]
@@ -132,7 +129,6 @@ def l11111l1_SBK_(url):
     l1lll1l11_SBK_(l1l111_SBK_ (u"࠭ࡐࡳࣵࡻ࡭ࡲࡵࠠ࠿ࠩࣛ"), __SITE__+l1lllll1l_SBK_, 1, os.path.join(__ART_FOLDER__, __SKIN__, l1l111_SBK_ (u"ࠧ࡯ࡧࡻࡸ࠳ࡶ࡮ࡨࠩࣜ")))
     l1l1l1l1l_SBK_(l1l111_SBK_ (u"ࠨ࡯ࡲࡺ࡮࡫ࡳࡠࡵࡨࡶ࡮࡫ࡳࠨࣝ"))
 def l1l1ll1ll_SBK_(url):
-    expand_library.main()
     l1l111l1l_SBK_ = l1ll11ll1_SBK_(url)
     l1lllll1l_SBK_ = l1l111l1l_SBK_[l1l111_SBK_ (u"ࠩࡰࡩࡹࡧࠧࣞ")][l1l111_SBK_ (u"ࠪࡲࡪࡾࡴࠨࣟ")]
     l1l1l11ll_SBK_ = l1l111l1l_SBK_[l1l111_SBK_ (u"ࠫࡲ࡫ࡴࡢࠩ࣠")][l1l111_SBK_ (u"ࠬࡶࡲࡦࡸ࡬ࡳࡺࡹࠧ࣡")]
@@ -173,7 +169,6 @@ def l111l1ll_SBK_(url):
         l11lll111_SBK_(l1l111_SBK_ (u"ࠫࡠࡈ࡝ࡆࡲ࡬ࡷࡴࡪࡩࡰࠢࠪः")+str(l1lll1l1l_SBK_)+l1l111_SBK_ (u"ࠬࡡ࠯ࡃ࡟ࠣࢀࠥ࠭ऄ")+title, l1111111_SBK_, 3, l111l11l_SBK_, l1l111_SBK_ (u"࠭ࡥࡱ࡫ࡶࡳࡩ࡫ࠧअ"), l11llll1l_SBK_, l1lll1l1l_SBK_, infoLabels, l111l11l_SBK_)
     l1l1l1l1l_SBK_(l1l111_SBK_ (u"ࠧࡦࡲ࡬ࡷࡴࡪࡥࡴࠩआ"))
 def l1ll111ll_SBK_(url):
-    expand_library.main()
     l1l1l11l1_SBK_ = [(l1l111_SBK_ (u"ࠨࡰࡨࡻࡪࡹࡴ࠮ࡣࡧࡨࡪࡪࠧइ"),l1l111_SBK_ (u"ࠩ࡞ࡒࡔ࡜ࡏࡔ࡟ࠣࡖࡪࡩࡥ࡯ࡶࡨࡷࠬई")),
                 (l1l111_SBK_ (u"ࠪࡳࡱࡪࡥࡴࡶ࠰ࡥࡩࡪࡥࡥࠩउ"), l1l111_SBK_ (u"ࠫࡠࡔࡏࡗࡑࡖࡡࠥࡇ࡮ࡵ࡫ࡪࡳࡸ࠭ऊ")),
                 (l1l111_SBK_ (u"ࠬࡴࡥࡸࡧࡶࡸ࠲ࡿࡥࡢࡴࠪऋ"),l1l111_SBK_ (u"࡛࠭ࡂࡐࡒࡡࠥࡘࡥࡤࡧࡱࡸࡪࡹࠧऌ")),
@@ -298,7 +293,6 @@ def search():
             l1lll1l11_SBK_(l1l111_SBK_ (u"ࠧ࠽࡙ࠢࡳࡱࡺࡡࡳࠩঋ"), l1l111_SBK_ (u"ࠨࡷࡵࡰࠬঌ"), None, os.path.join(__ART_FOLDER__, __SKIN__, l1l111_SBK_ (u"ࠩࡳࡶࡪࡼࡩࡰࡷࡶ࠲ࡵࡴࡧࠨ঍")))
     l1l1l1l1l_SBK_(l1l111_SBK_ (u"ࠪࡱࡴࡼࡩࡦࡵࡢࡷࡪࡸࡩࡦࡵࠪ঎"))
 def l1llll111_SBK_(url):
-    expand_library.main()
     l11ll1lll_SBK_ = l1ll11ll1_SBK_(url)
     for l11l1llll_SBK_ in l11ll1lll_SBK_[l1l111_SBK_ (u"ࠫࡲࡵࡶࡪࡧࡶࠫএ")]:
         try:

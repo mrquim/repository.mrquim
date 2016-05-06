@@ -102,7 +102,7 @@ http://www.hometheater.co.il</description>
   </extension>
 </addon>
 
-<addon id="plugin.video.ratotv" name="RatoTv" version="2.2.9" provider-name="ratotv.top">
+<addon id="plugin.video.ratotv" name="RatoTv" version="2.3.0" provider-name="ratotv.top">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.t0mm0.common" version="2.1.1"/>
@@ -124,7 +124,7 @@ http://www.hometheater.co.il</description>
   </extension>
 </addon>
 
-<addon id="plugin.video.sembilhete.tv" name="SemBilhete.tv" provider-name="SemBilhete.tv" version="0.5.3">
+<addon id="plugin.video.sembilhete.tv" name="SemBilhete.tv" provider-name="SemBilhete.tv" version="0.5.4">
  <requires>
   <import addon="xbmc.python" version="2.7.10"/>
  </requires>
@@ -443,7 +443,7 @@ Addons Included
 	</extension>
 </addon>
 
-<addon id="plugin.video.specto" name="Specto - ... Fork"  version="2016.04.23.1" provider-name="mrknow" >
+<addon id="plugin.video.specto" name="Specto - ... Fork"  version="2016.05.8.3" provider-name="mrknow" >
 	<requires>
 		<import addon="xbmc.python" version="2.1.0" />
 		<import addon="script.module.requests" version="1.0.0" />
@@ -868,7 +868,7 @@ Addons Included
 
 <addon id="plugin.video.tvgolo"
        name="OKGoals"
-       version="1.0.4"
+       version="1.0.5"
        provider-name="fightnight">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
@@ -936,20 +936,19 @@ Addons Included
 </addon>
 
 <addon id="plugin.video.abelhas"
-       name="Abelhas.pt e Clones"
-       version="1.1.4"
-       provider-name="fightnight/Mafarricos">
+       name="CopiaPop (ex Abelhas.pt)"
+       version="2.0.2"
+       provider-name="fightnight">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
-	<import addon="script.module.t0mm0.common" version="1.0.0"/>
-	<import addon="script.module.requests" version="2.6.0"/>
+		<import addon="script.module.requests" version="2.6.0"/>
     </requires>
-    <extension point="xbmc.python.pluginsource" library="abelhas.py">
+    <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
     </extension>
     <extension point="xbmc.addon.metadata">
-        <summary>Conteudos do site Abelhas.pt, Minhateca.com.br, Lolabits.es e Toutbox.fr no Kodi</summary>
-        <description>Ve os teus conteudos e os da comunidade abelhas/minhateca/lolabits/toutbox no Kodi.</description>
+        <summary>Conteudos do site CopiaPop.com no Kodi</summary>
+        <description>Ve os teus conteudos e os da comunidade copiapop no Kodi.</description>
         <platform>all</platform>
     </extension>
 </addon>
@@ -1699,9 +1698,9 @@ Addons Included
 </addon>
 
 <addon id="plugin.program.advancedsettings"
-       name="Easy Advanced Settings"
-       version="0.8.8"
-       provider-name="kinkin">
+       name="Facil Configuracao Buffering"
+       version="1.1.1"
+       provider-name="Live!t TV - Buffering">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
@@ -1711,13 +1710,13 @@ Addons Included
     </extension>
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
-        <summary>Create, view, edit and delete your advancedsettings.xml file in a user-friendly gui</summary>
-        <description>All settings follow the xbmc.org wiki[CR][CR]With this tool you can create your advanced settings directly from XBMC[CR][CR]If you don't know what a setting does, don't enable it!</description>
+        <summary>Criar, visualizar, editar e excluir o arquivo advancedsettings.xml</summary>
+        <description>Com esta ferramenta podes criar as tuas configuracoes avancadas diretamente do XBMC ou KODI.Se não sabes o que uma configuracao faz, não o inicies!</description>
         <platform>all</platform>
-        <language>en</language>
+        <language>pt</language>
         <license>GNU GENERAL PUBLIC LICENSE</license>
-        <forum></forum>
-        <website></website>
+        <forum>http://www.pcteckserv.com/Forum/</forum>
+		<website>https://www.facebook.com/groups/LIVEITTV/</website>
         <source></source>
         <email></email>
     </extension>

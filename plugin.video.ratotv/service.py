@@ -1,5 +1,13 @@
 # -*- coding: utf-8 -*-
+import sys
+import os
 import datetime,xbmc,xbmcplugin,xbmcgui,xbmcaddon
+
+sys.path.append(os.path.join(os.path.dirname(__file__),'resources','lib'))
+import ratocommon
+
+base_url = ratocommon.get_base_url()
+base = base_url[base_url.find("://")+3:-1]
 
 class service:
 	def __init__(self):
@@ -13,9 +21,9 @@ class service:
 					update = abs(t2 - t1) > datetime.timedelta(hours=hoursList[interval])
 					if update is False: raise Exception()
 					if not (xbmc.Player().isPlaying() or xbmc.getCondVisibility('Library.IsScanningVideo')):
-						if xbmcaddon.Addon().getSetting("series-watchlist") == 'true': xbmc.executebuiltin('RunPlugin(plugin://plugin.video.ratotv/?mode=54&name=actualizarlib&url=ratotv.top)')
+						if xbmcaddon.Addon().getSetting("series-watchlist") == 'true': xbmc.executebuiltin('RunPlugin(plugin://plugin.video.ratotv/?mode=54&name=actualizarlib&url='+base+')')
 						xbmc.sleep(200)
-						xbmc.executebuiltin('RunPlugin(plugin://plugin.video.ratotv/?mode=48&name=service&url=ratotv.top)')
+						xbmc.executebuiltin('RunPlugin(plugin://plugin.video.ratotv/?mode=48&name=service&url='+base+')')
 						xbmcaddon.Addon().setSetting("series-last-update", datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f"))
 				except:
 					pass
@@ -29,12 +37,12 @@ class service:
 					if update is False: raise Exception()
 					if not (xbmc.Player().isPlaying() or xbmc.getCondVisibility('Library.IsScanningVideo')):
 						if xbmcaddon.Addon().getSetting("filmes-watchlist") == 'true': 
-							xbmc.executebuiltin('RunPlugin(plugin://plugin.video.ratotv/?mode=53&name=ratotv&url=ratotv.top)')
+							xbmc.executebuiltin('RunPlugin(plugin://plugin.video.ratotv/?mode=53&name=ratotv&url='+base+')')
 							xbmc.sleep(200)
 							xbmc.executebuiltin("XBMC.UpdateLibrary(video,"+os.path.join(selfAddon.getSetting('libraryfolder'),'movies')+")")
 						xbmc.sleep(200)
 						if xbmcaddon.Addon().getSetting("filmes-service") == '0' or xbmcaddon.Addon().getSetting("filmes-service") == '1':
-							xbmc.executebuiltin('RunPlugin(plugin://plugin.video.ratotv/?mode=47&name=novos&url=ratotv.top)')
+							xbmc.executebuiltin('RunPlugin(plugin://plugin.video.ratotv/?mode=47&name=novos&url='+ base + ')')
 						xbmcaddon.Addon().setSetting('movies-last-update', datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f"))
 				except:
 					pass

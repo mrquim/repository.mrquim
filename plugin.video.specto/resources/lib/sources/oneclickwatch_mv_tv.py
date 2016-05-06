@@ -19,13 +19,21 @@
 '''
 
 
-import re,urlparse,time
+import re,urlparse,time, urllib
 
 from resources.lib.libraries import client
+from resources.lib.libraries import cloudflare
+from resources.lib.libraries import cleantitle
+
 from resources.lib.libraries import workers
-from resources.lib.resolvers import hugefiles
-from resources.lib.resolvers import uploadrocket
+from resources.lib.libraries import control
+from resources.lib.resolvers import cloudzilla
 from resources.lib.resolvers import openload
+from resources.lib.resolvers import uptobox
+from resources.lib.resolvers import zstream
+from resources.lib.resolvers import vidspot
+
+
 from resources.lib import resolvers
 from resources.lib import sources
 
@@ -33,14 +41,16 @@ from resources.lib import sources
 class source:
     def __init__(self):
         self.base_link = 'http://oneclickwatch.ws'
-
+        self.search_link = '/search/%s/feed/rss2/'
+        self.title = ''
+        #view-source:http://oneclickwatch.ws/search/game+of+thrones+s06e01/feed/rss2/
 
     def get_movie(self, imdb, title, year):
         try:
-            url = '%s %s' % (title, year)
-            url = client.replaceHTMLCodes(url)
-            url = url.encode('utf-8')
-            return url
+            query = self.search_link % urllib.quote_plus(title +' '+year)
+            #control.log("##OneClickWatch movie  - res00 %s" % query)
+            self.title = title +' '+year
+            return query
         except:
             return
 
@@ -48,7 +58,7 @@ class source:
     def get_show(self, imdb, tvdb, tvshowtitle, year):
         try:
             url = tvshowtitle
-            url = client.replaceHTMLCodes(url)
+            url = client.cleanHTMLCodes(url)
             url = url.encode('utf-8')
             return url
         except:
@@ -60,8 +70,13 @@ class source:
             if url == None: return
 
             url = '%s S%02dE%02d' % (url, int(season), int(episode))
+            self.title = url
             url = client.replaceHTMLCodes(url)
             url = url.encode('utf-8')
+            url = self.search_link % urllib.quote_plus(url)
+            #control.log("##OneClickWatch movie  - Sess0 %s" % url)
+
+
             return url
         except:
             return
@@ -69,44 +84,41 @@ class source:
 
     def get_sources(self, url, hosthdDict, hostDict, locDict):
         try:
-            self.sources = []
+            self.sources =[]
+            mylinks = []
+            control.log("##OneClickWatch movie  - res00 %s" % self.title)
 
-            if url == None: return self.sources
-
-            url = url.replace('\'', '')
-            url = re.sub(r'[^a-zA-Z0-9\s]+', ' ', url).lower().strip()
-            url = re.sub('\s\s+' , ' ', url)
-            url = url.replace(' ' , '-')
 
             query = urlparse.urljoin(self.base_link, url)
 
             result = client.source(query)
-            if result == None: raise Exception()
+            result = re.compile('<item>(.*?)</item>', re.DOTALL).findall(result)
 
-            fmt = re.compile('url *: *[\'|\"](.+?)[\'|\"]').findall(result)
-            fmt = fmt[0] if len(fmt) > 0 else ''
-            fmt = re.sub('(.+)(\d{4}|s\d*e\d*)-', '', fmt.lower())
-            fmt = re.split('-', fmt.replace('/' , ''))
-
-            if any(x in ['dvdscr', 'r5', 'r6', 'camrip', 'tsrip', 'hdcam', 'hdts', 'dvdcam', 'dvdts', 'cam', 'ts'] for x in fmt): raise Exception()
-            elif '1080p' in fmt: quality = '1080p'
-            elif '720p' in fmt: quality = 'HD'
-            else: raise Exception()
-
-            hostdirhdDict = sources.sources().hostdirhdDict
-
-            links = client.parseDOM(result, 'a', attrs = {'rel': 'nofollow'})
-            links = [i for i in links if i.startswith('http')]
-            links = [(i, quality, hostdirhdDict) for i in links]
+            for y in result:
+                mytitle = re.compile('<title>(.*?)</title>', re.DOTALL).findall(y)[0]
+                if cleantitle.movie(self.title) in cleantitle.movie(mytitle):
+                    if any(word in mytitle for word in
+                           ['camrip', 'tsrip', 'hdcam', 'hdts', 'dvdcam', 'dvdts', 'cam', 'ts']):
+                        quality = 'CAM'
+                    elif '1080p' in mytitle:
+                        quality = '1080p'
+                    elif '720p' in mytitle:
+                        quality = 'HD'
+                    else:
+                        quality = 'MQ'
+                    links = client.parseDOM(y, 'a', attrs={'rel': 'nofollow'})
+                    links = [i for i in links if i.startswith('http')]
+                    for a in links:
+                        mylinks.append([a,quality])
 
 
             threads = []
-            for i in links: threads.append(workers.Thread(self.check, i))
+            for i in mylinks: threads.append(workers.Thread(self.check, i))
             [i.start() for i in threads]
             for i in range(0, 10 * 2):
                 is_alive = [x.is_alive() for x in threads]
                 if all(x == False for x in is_alive): break
-                time.sleep(0.5)
+                time.sleep(1)
             return self.sources
         except:
             return self.sources
@@ -123,11 +135,14 @@ class source:
             host = host.lower()
             host = client.replaceHTMLCodes(host)
             host = host.encode('utf-8')
+            #control.log("##OneClickWatch %s - url %s" % (host, i[0]))
 
-            if host in i[2]: check = url = resolvers.request(url)
-            elif host == 'hugefiles': check = hugefiles.check(url)
-            elif host == 'uploadrocket': check = uploadrocket.check(url)
-            elif host == 'openload': check = openload.check(url)
+            if host == 'openload': check = openload.check(url)
+            elif host == 'uptobox': check = uptobox.check(url)
+            elif host == 'cloudzilla': check = cloudzilla.check(url)
+            elif host == 'zstream': check = zstream.check(url)
+            elif host == 'vidspot': check = vidspot.check(url)
+
             else: raise Exception()
 
             if check == None or check == False: raise Exception()

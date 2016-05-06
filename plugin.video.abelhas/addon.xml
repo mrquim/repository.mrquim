@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="plugin.video.abelhas"
-       name="Abelhas.pt e Clones"
-       version="1.1.4"
-       provider-name="fightnight/Mafarricos">
+       name="CopiaPop (ex Abelhas.pt)"
+       version="2.0.2"
+       provider-name="fightnight">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
-	<import addon="script.module.t0mm0.common" version="1.0.0"/>
-	<import addon="script.module.requests" version="2.6.0"/>
+		<import addon="script.module.requests" version="2.6.0"/>
     </requires>
-    <extension point="xbmc.python.pluginsource" library="abelhas.py">
+    <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
     </extension>
     <extension point="xbmc.addon.metadata">
-        <summary>Conteudos do site Abelhas.pt, Minhateca.com.br, Lolabits.es e Toutbox.fr no Kodi</summary>
-        <description>Ve os teus conteudos e os da comunidade abelhas/minhateca/lolabits/toutbox no Kodi.</description>
+        <summary>Conteudos do site CopiaPop.com no Kodi</summary>
+        <description>Ve os teus conteudos e os da comunidade copiapop no Kodi.</description>
         <platform>all</platform>
     </extension>
 </addon>

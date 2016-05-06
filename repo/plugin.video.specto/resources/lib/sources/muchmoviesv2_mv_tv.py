@@ -39,7 +39,7 @@ class source:
             query = self.search_link % urllib.quote(title)
             query = urlparse.urljoin(self.base_link, query)
             #control.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@ %s" % query)
-            result = client.source(query)
+            result = cloudflare.source(query)
             title = cleantitle.movie(title)
             years = ['%s' % str(year), '%s' % str(int(year)+1), '%s' % str(int(year)-1)]
             r = client.parseDOM(result, 'div', attrs = {'class': 'ml-item'})
@@ -55,7 +55,7 @@ class source:
             url = urlparse.urlparse(url).path
             url = client.replaceHTMLCodes(url)
             url = url.encode('utf-8')
-            control.log("@@@@@@@@@@@@@@@ URL  %s" % url)
+            #control.log("@@@@@@@@@@@@@@@ URL  %s" % url)
 
             return url
         except:
@@ -126,11 +126,11 @@ class source:
             result = client.source(url)
             movie = client.parseDOM(result, 'div', ret='movie-id', attrs = {'id': 'media-player'})[0]
             mtoken =  client.parseDOM(result, 'div', ret='player-token', attrs = {'id': 'media-player'})[0]
-            control.log('####### %s MOVIE %s token ' % (movie, mtoken))
+            #control.log('####### %s MOVIE %s token ' % (movie, mtoken))
 
             try:
                 quality = client.parseDOM(result, 'span', attrs = {'class': 'quality'})[0].lower()
-                control.log('####### %s MOVIE quality ' % quality)
+                #control.log('####### %s MOVIE quality ' % quality)
 
             except: quality = 'hd'
             if quality == 'cam' or quality == 'ts': quality = 'CAM'
@@ -161,7 +161,7 @@ class source:
 
             #for i in links: sources.append({'source': i[1], 'quality': quality, 'provider': 'Onemovies', 'url': i[0], 'direct': False, 'debridonly': False})
             for i in links: sources.append({'source': i[1], 'quality': quality, 'provider': 'Muchmoviesv2', 'url': i[0]})
-            control.log('####### MOVIE sources %s' % sources)
+            #control.log('####### MOVIE sources %s' % sources)
 
             return sources
 
@@ -175,19 +175,19 @@ class source:
         try:
             url = urlparse.urljoin(self.base_link, url)
             result = client.source(url)
-            control.log('####### MUCHMOVIES url: %s MOVIE sources ' % (url))
+            #control.log('####### MUCHMOVIES url: %s MOVIE sources ' % (url))
 
         except:
             pass
 
         try:
             url = re.compile('"?file"?\s*=\s*"(.+?)"\s+"?label"?\s*=\s*"(\d+)p?"').findall(result)
-            control.log('####### MUCHMOVIES  MOVIE url1 %s' % url)
+            #control.log('####### MUCHMOVIES  MOVIE url1 %s' % url)
 
             url = [(int(i[1]), i[0]) for i in url]
             url = sorted(url, key=lambda k: k[0])
             url = url[-1][1]
-            control.log('####### MUCHMOVIES  MOVIE url2 %s' % url)
+            #control.log('####### MUCHMOVIES  MOVIE url2 %s' % url)
             #url = url.replace('https://','http://')
             #url = client.request(url, output='geturl')
             #control.log('####### MUCHMOVIES  MOVIE url3 %s' % url)
@@ -198,9 +198,4 @@ class source:
         except:
             pass
 
-        #try:
-        #    url = json.loads(result)['embed_url']
-        #    return url
-        #except:
-        #    pass
 

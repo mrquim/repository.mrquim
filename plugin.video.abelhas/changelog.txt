@@ -1,3 +1,17 @@
+[B]v2.0.2 (22 de Abril de 2016):[/B]
+- Novo logo (tks sheikr)
+- Pastas adicionadas.
+- Legendas disponiveis caso tenham o mesmo nome que o filme (reportar caso nao esteja a funcionar).
+- Outras correccoes de codigo.
+
+[B]v2.0.1 (7 de Marco de 2016):[/B]
+- Adicionado aviso.
+- Coleccoes mais recentes.
+
+[B]v2.0.0 (6 de Marco de 2016):[/B]
+Dado o fecho de varios sites do grupo do abelhas, o addon vai alterar-se para outro site do grupo.
+O copiapop e um site de alojamento publico estilo abelhas. O addon esta a ser re-escrito do zero e para ja apenas devem constar as funcionalidades basicas.
+
 [B]v1.1.4 (25 de Dezembro de 2015):[/B]
 - Pequenos fixes.
 

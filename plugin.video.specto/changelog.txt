@@ -1,4 +1,13 @@
 ------------------------
+Specto v2016.05.08.1
+------------------------
+Fix - dizilab for TV
+Fix - oneclickwatch
+Fix -videomega, uptobox resolvers
+Trakt.tv - now working
+
+
+------------------------
 Specto v2016.04.23.1
 ------------------------
 Fix scraper - beter handling cloudflare for 1080p sites

@@ -10,8 +10,10 @@ import urllib
 import urllib2
 import urlparse
 
+import ratocommon
+if "base_url" not in globals():
+    base_url = ratocommon.get_base_url()
 
-base_url = "http://ratotv.top"
 
 class LoginError(Exception):
     pass
@@ -70,6 +72,54 @@ def xmlhttp_request(url):
     response.close()
     return data
 
+def list_favorites_info(html_trunk):
+    url = img = category = None
+    url_img_pattern = re.compile(r'<a href="(?P<url>[^"]+)"><img src="(?P<img>[^"]+)"')
+    url_img_match = re.search(url_img_pattern, html_trunk)
+    if url_img_match:
+        url = url_img_match.group('url')
+        img = url_img_match.group('img')
+        category = 'movies' in url and 'movie' or 'tvshow'
+        print "url = %s, img = %s, category = %s"% (url, img, category)
+    genre = title = year = None
+    genre_title_pattern = re.compile(r'<li><strong>(?P<genre>[^<]+)</strong>[^<]+<i>(?P<title>[^<]+)')
+    genre_title_match = re.search(genre_title_pattern, html_trunk)
+    if genre_title_match:
+        genre = genre_title_match.group('genre')
+        genre_year_pattern = re.compile(r'(?P<genre>[^(]+)\((?P<year>\d{4})\)')
+        genre_year_match = re.search(genre_year_pattern, genre)
+        if genre_year_match:
+            genre = genre_year_match.group('genre').strip()
+            year = int(genre_year_match.group('year'))
+        title = genre_title_match.group('title')[1:-1]
+        print "genre = %s, year = %s, title = %s"% (genre, str(year), title)
+    director = actors = None
+    options_iter = re.compile(r'<span class="favorites-text">(?P<key>[^<]+)+</span>(?P<value>[^<]+)')
+    for option_match in re.finditer(options_iter, html_trunk):
+        key = option_match.group('key')
+        value = option_match.group('value').strip()
+        if 'Diretor' in key:
+            director = value
+        if 'Atores' in key:
+            actors = value
+    if director:
+        print 'director: %s'% director
+    if actors:
+        print 'actors: %s'% actors
+    rating = None
+    rating_pattern = re.compile(r'div class="10starfunc"[^>]+>((\d*[.]?\d+))')
+    rating_match = re.search(rating_pattern, html_trunk)
+    if rating_match:
+        rating = float(rating_match.group(1))
+        print 'rating: %.2f'% rating
+    plot = None
+    plot_pattern = re.compile(r'div class="post-des"><[^>]+>([^<]+)')
+    plot_match = re.search(plot_pattern, html_trunk)
+    if plot_match:
+        plot = plot_match.group(1)
+        print 'plot: %s'% plot
+    return {'url':url, 'img':img , 'category': category, 'genre':genre, 'year':year, 'title':title, 'director':director, 'actors':actors, 'rating':rating, 'plot':plot}
+
 
 def resolve_vmail(url):
     # http://my.mail.ru/mail/rishuam/video/_myvideo/5404.html
@@ -92,7 +142,7 @@ def resolve_vmail(url):
 
 
 def resolve_vkcom(url):
-    rato_vk_url = "http://ratotv.top/zencrypt/pluginsw/plugins_vk.php"
+    rato_vk_url = base_url + "zencrypt/pluginsw/plugins_vk.php"
     user_agent = "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3"
     post_data1 = [
         ("iagent", user_agent),
@@ -179,7 +229,7 @@ def resolve_ok(url):
         headers = {
             "User-Agent":user_agent,
             "Accept":accept,
-            "Referer":"http://ratotv.top"
+            "Referer":base_url
         }
         result.append({"provider":"ok.ru", "quality":quality, "url":vurl, "headers":headers})
     return result
@@ -265,7 +315,7 @@ def resolver_externos(link_data):
             request_data['poscom'] = link_data['poscom']
             request_data['response'] = data
             post_data = [('data', base64.encodestring(json.dumps(request_data)))]
-            data2 = json.loads(post_page_free('http://ratotv.top/newplay/gkpluginsphp.php', post_data))
+            data2 = json.loads(post_page_free(base_url + '/newplay/gkpluginsphp.php', post_data))
             #print '[resolve_externos] data2 = ', data2
             decoded_url = data2['link']
     except:
