@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="repository.kodiportugal" name="Repositório KodiPortugal" version="1.0.0" provider-name="Kodi Portugal">
+	<extension point="xbmc.addon.repository" name="Repositório KodiPortugal">
+		<info compressed="false">http://addon.kodiportugal.com/repository.kodiportugal/addons.xml</info>
+		<checksum>http://addon.kodiportugal.com/repository.kodiportugal/addons.xml.md5</checksum>
+		<datadir zip="true">http://addon.kodiportugal.com/repository.kodiportugal/repo/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Repositório KodiPortugal</summary>
+		<description>Repositório oficial do site KodiPortugal.pt</description>
+		<description>Para mais informações visite: http://kodiportugal.pt</description>
+		<disclaimer></disclaimer>
+		<platform>all</platform>
+	</extension>
+</addon>
