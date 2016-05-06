@@ -1,1 +1,0 @@
-Ace was originally created by MarcosQui, all credit goes to him. I've updated the skin for Kodi 14 (Helix).
