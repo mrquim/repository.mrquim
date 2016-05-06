@@ -995,7 +995,7 @@ Addons Included
 
 <addon id="plugin.video.adryanlist"
        name="AdryanList"
-       version="2.0.1"
+       version="2.3.4"
        provider-name="Doc Shadrach">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -1005,15 +1005,16 @@ Addons Included
     <import addon="script.module.requests" />
     <import addon="script.module.httplib2" />
     <import addon="script.module.youtube.dl" optional="true"/>
-    <import addon="plugin.video.youtube" />
+    <import addon="plugin.video.youtube" optional="true" />
     <import addon="script.module.urlresolver" optional="true"/>
-    <import addon="script.module.simplejson" />    
+    <import addon="script.module.simplejson" />
+	<import addon="script.module.livestreamer" optional="true"/>
   </requires>
   <extension point="xbmc.python.pluginsource" library="default.py">
     <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary>based on livestreamspro 2.0.1 by Shani</summary>
+    <summary>based on livestreamspro 2.3.4 by Shani</summary>
     <description>Lista de canales de Adryan.</description>
     <platform>all</platform>
   </extension>
@@ -1419,6 +1420,19 @@ and ALL addons. Addon developers do not need to change anything and Universal PC
 Highly configurable: Set your PIN, set your watershed time, exclude addons if required, exclude modes if required.</description>
     <platform>all</platform>
   </extension>
+</addon>
+
+<addon id="repository.docshadrach" name="Doc Shadrach's Add-ons" version="1.0" provider-name="Doc Shadrach">
+	<extension point="xbmc.addon.repository" name="Doc Shadrach's Add-ons Repo 1.0">
+		<info compressed="false">http://github.com/XBMCSpot/docshadrach.repository/raw/master/addons.xml</info>
+		<checksum>http://github.com/XBMCSpot/docshadrach.repository/raw/master/addons.xml.md5</checksum>
+		<datadir zip="true">http://github.com/XBMCSpot/docshadrach.repository/raw/master/zips</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Instala add-ons desde el repositorio de Doc Shadrach</summary>
+		<description>Visita el spot B75OYRJ de la app Spotbros para enterarte de las novedades.</description>
+		<platform>all</platform>
+	</extension>
 </addon>
 
 </addons>
