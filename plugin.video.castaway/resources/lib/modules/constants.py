@@ -1,1 +1,0 @@
-adult = ['adult','xxx', 'erotic', 'porn', 'sex']
