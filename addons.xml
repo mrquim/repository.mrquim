@@ -567,35 +567,6 @@ Addons Included
   </extension>
 </addon>
 
-<addon id="plugin.video.rosadintv"
-       name="Rosadin TV"
-       version="1.0.0"
-       provider-name="Carvalho Carlos">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-    <import addon="script.module.beautifulsoup" version="3.2.1"/>
-    <import addon="script.module.simple.downloader" version="0.9.4"/>
-    <import addon="script.module.beautifulsoup4" />
-    <import addon="script.module.requests" />
-    <import addon="script.module.httplib2" />
-    <import addon="script.module.youtube.dl" optional="true"/>
-    <import addon="plugin.video.youtube" />
-    <import addon="script.module.urlresolver" optional="true"/>
-    <import addon="script.module.simplejson" />    
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="default.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary>TV DOS POBRES</summary>
-    <description>
-        Lista de canais portugueses 
-        
-    </description>
-    <platform>all</platform>
-  </extension>
-</addon>
-
 <addon id="repository.exodus" version="1.0.0" name="Exodus repository" provider-name="l*m*d*">
 	<extension point="xbmc.addon.repository" name="Exodus repository">
 		<dir>
@@ -610,26 +581,6 @@ Addons Included
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en">Exodus repository</summary>
 		<description lang="en">Exodus repository</description>
-		<platform>all</platform>
-	</extension>
-</addon>
-
-<addon id="plugin.video.exodus" version="1.3.2" name="Exodus" provider-name="Exodus">
-	<requires>
-		<import addon="xbmc.python" version="2.19.0" />
-		<import addon="repository.exodus" version="1.0.0" />
-		<import addon="script.exodus.artwork" version="1.0.1" />
-		<import addon="script.module.urlresolver" version="3.0.0"/>
-		<import addon="script.module.metahandler" version="1.0.0" />
-		<import addon="plugin.video.youtube" optional="true" />
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Exodus</summary>
-		<description lang="en">Please visit www.tvaddons.ag for Exodus support and assistance! Kindly note that Exodus is not an official part of the media player you are running, and therefore not to be mentioned within official support channels, this addon has nothing to do with the media player itself, nor it’s intended use, it is simply a third party plugin which has been added to your system.</description>
-		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content provider.</disclaimer>
 		<platform>all</platform>
 	</extension>
 </addon>
@@ -1016,19 +967,6 @@ Addons Included
   </extension>
 </addon>
 
-<addon id="repo.natko1412" name="natko1412 repo" version="2.0.0" provider-name="natko1412">
-<extension point="xbmc.addon.repository" name="Natko's Addon Repository">
-<info compressed="false">https://offshoregit.com/natko1412/addons.xml</info>
-<checksum>https://offshoregit.com/natko1412/addons.xml.md5</checksum>
-<datadir zip="true">https://offshoregit.com/natko1412/zips/</datadir>
-</extension>
-<extension point="xbmc.addon.metadata">
-<summary>Install all of Natko's Addons</summary>
-<description>Download and install addons by natko1412. For support visit XBMC thread on forum.hr</description>
-<platform>all</platform>
-</extension>
-</addon>
-
 <addon id="plugin.video.castaway" name="Castaway" version="0.1.2" provider-name="natko1412">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
@@ -1077,33 +1015,6 @@ Addons Included
   <extension point="xbmc.addon.metadata">
     <summary>based on livestreamspro 2.0.1 by Shani</summary>
     <description>Lista de canales de Adryan.</description>
-    <platform>all</platform>
-  </extension>
-</addon>
-
-<addon id="plugin.video.ALOFLIX"
-       name="ALOFLIX"
-       version="1.1.0"
-       provider-name="JALEMAN">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-    <import addon="script.module.beautifulsoup" version="3.2.1"/>
-    <import addon="script.module.simple.downloader" version="0.9.4"/>
-    <import addon="script.module.beautifulsoup4" />
-    <import addon="script.module.simple.downloader" version="0.9.4"/>
-    <import addon="script.module.requests" />
-    <import addon="script.module.httplib2" />
-    <import addon="script.module.youtube.dl" optional="true"/>
-    <import addon="plugin.video.youtube" />
-    <import addon="script.module.urlresolver" optional="true"/>
-    <import addon="script.module.simplejson" />    
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="default.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary>Peliculas en SD y HD en audio latino e ingles</summary>
-    <description>Este es un add-on con las mejores peliculas para disfrutar en familia. Agradesco a Josue Aleman y Adrian Hernandez por apoyarme en este proyecto.</description>
     <platform>all</platform>
   </extension>
 </addon>
@@ -1176,29 +1087,6 @@ Addons Included
 	</extension>
 </addon>
 
-<addon id="repository.q"
-		name="[COLOR FF8ABEE2]Q[/COLOR]'s Repository"
-		version="0.0.1"
-		provider-name="[COLOR FF8ABEE2]Open[/COLOR][COLOR FF757677]ELEQ[/COLOR]">
-	<extension point="xbmc.addon.repository"
-		name="[COLOR FF8ABEE2]Q[/COLOR]'s Add-on Repository">
-		<dir>
-			<info compressed="false">https://github.com/OpenELEQ/repository.q/raw/master/openeleq-addons.xml</info>
-			<checksum>https://github.com/OpenELEQ/repository.q/raw/master/openeleq-addons.xml.md5</checksum>
-			<datadir zip="true">https://raw.github.com/OpenELEQ/repository.q/master/zips/</datadir>
-		</dir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">[COLOR FF8ABEE2]Q[/COLOR]'s Add-on Repository</summary>
-		<summary lang="nl">[COLOR FF8ABEE2]Q[/COLOR]'s Addon Depot</summary>
-		<description lang="en">This is my repository. I can and will do whatever I want with it. Some stuff in here can and will overwrite allready installed addons. If you do not want that, do not install this repo!</description>
-		<description lang="nl">Dit is mijn depot. Ik kan hiermee doen en laten wat ik wil. Sommige dingen in dit depot kunnen en zullen reeds geinstalleerde addons overschrijven. Als je dat niet wil, installeer dit depot dan niet!</description>
-		<disclaimer lang="en">[COLOR FF8ABEE2]Open[/COLOR][COLOR FF757677]ELEQ[/COLOR] did not make all the add-ons in this repository and is in no way responsible for their content.</disclaimer>
-		<disclaimer lang="nl">[COLOR FF8ABEE2]Open[/COLOR][COLOR FF757677]ELEQ[/COLOR] heeft niet alle add-ons in dit depot gemaakt en is ook op geen enkele manier verantwoordelijk voor hun inhoud.</disclaimer>
-		<platform>all</platform>
-	</extension>
-</addon>
-
 <addon id="plugin.video.TV-DOS-POBRES" name="TV-DOS-POBRES" version="0.0.1" provider-name="TV-DOS-POBRES">
     <requires>
     </requires>
@@ -1236,19 +1124,6 @@ Addons Included
 		<summary>XBMC Addons for Adults Only</summary>
 		<description>This repository contains addons that are for adults only. You may only view the contents of this repository if you are at least 18 years of age, or at least the age of majority in the jurisdiction where you reside or from which you access this content.</description>
 		<disclaimer>The owners and submitters to this repository do not host or distribute any of the content displayed by these addons nor do they have any affiliation with the content providers.</disclaimer>
-		<platform>all</platform>
-	</extension>
-</addon>
-
-<addon id="repository.unblockr" name="Unblockr Addons" version="1.3" provider-name="Unblockr">
-	<extension point="xbmc.addon.repository" name="unblockr add-on repository">
-		<info compressed="false">http://repository.unblockr.net/addons/addons.xml</info>
-		<checksum>http://repository.unblockr.net/addons/addons.xml.md5</checksum>
-		<datadir zip="true">http://repository.unblockr.net/addons</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary>Install addons from Unblockr.net</summary>
-		<description>Download and install addons from unblockr</description>
 		<platform>all</platform>
 	</extension>
 </addon>
@@ -1317,39 +1192,6 @@ Addons Included
     <email></email>
     <source></source>
  </extension>
-</addon>
-
-<addon id="plugin.video.PsychoTV"
-       name="[COLOR white][B]Psycho[/COLOR][COLOR lawgreen]TV[/B][/COLOR]"
-       version="0.0.2"
-       provider-name="Coelhon">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-	<import addon="script.module.t0mm0.common" version="2.0.0"/>
-    <import addon="script.module.beautifulsoup" version="3.2.1"/>
-    <import addon="script.module.simple.downloader" version="0.9.4"/>
-    <import addon="script.module.beautifulsoup4" />
-    <import addon="script.module.simple.downloader" version="0.9.4"/>
-    <import addon="script.module.requests" />
-    <import addon="script.module.httplib2" />
-    <import addon="script.module.youtube.dl" optional="true"/>
-    <import addon="plugin.video.youtube" version="3.0.0"/>
-    <import addon="script.module.urlresolver" optional="true"/>
-    <import addon="script.module.simplejson" /> 
-    <import addon="script.common.plugin.cache" version="2.5.2"/>
-    <import addon="script.module.metahandler" version="2.5.1"/>
-	<import addon="plugin.video.specto" />
-
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="default.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">Lista de Canais e Filmes PsychoTV</summary>
-    <description lang="en">Este Addon foi criado e desenvolvido pela[COLOR white][B] Team[/COLOR][/B][COLOR lawngreen][B]Maniac[/COLOR][/B] o mesmo nao se responsabiliza pelo que o uso do mesmo venha a causar.
-	Tudo o que aqui se encontra está ao alcance de qualquer um na internet...Para mais novidades adere ao grupo[COLOR red][B] https://www.facebook.com/groups/MANIACTV/[/COLOR][/B]</description>
-    <platform>all</platform>
-  </extension>
 </addon>
 
 <addon id="plugin.video.f4mTester" version="2.2.4" name="f4mTester" provider-name="Shani">
@@ -1579,54 +1421,4 @@ Highly configurable: Set your PIN, set your watershed time, exclude addons if re
   </extension>
 </addon>
 
-<addon id="plugin.video.infolistas"
-       name="infolistas Tv"
-       version="1.0.0"
-       provider-name="infolistas team">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-	<import addon="script.module.t0mm0.common" version="2.0.0"/>
-    <import addon="script.module.beautifulsoup" version="3.2.1"/>
-    <import addon="script.module.simple.downloader" version="0.9.4"/>
-    <import addon="script.module.beautifulsoup4" />
-    <import addon="script.module.simple.downloader" version="0.9.4"/>
-    <import addon="script.module.requests" />
-    <import addon="script.module.httplib2" />
-    <import addon="script.module.youtube.dl" optional="true"/>
-    <import addon="plugin.video.youtube" version="3.0.0"/>
-    <import addon="script.module.urlresolver" optional="true"/>
-    <import addon="script.module.simplejson" /> 
-    <import addon="script.common.plugin.cache" version="2.5.2"/>
-    <import addon="script.module.metahandler" version="2.5.1"/>
-
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="default.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">infolistas tv</summary>
-    <description lang="en">Assista a vários canais diretamente no Kodi / XBMC.</description>
-    <platform>all</platform>
-  </extension>
-</addon>
-
-<addon id="plugin.video.jami" name="jami" version="1.2" provider-name="frenchdj">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-    <import addon="script.module.addon.common" version="2.0.0"/>
-    <import addon="plugin.video.youtube" version="5.0.0"/>
-  </requires>
-	
-  <extension point="xbmc.python.pluginsource" library="default.py">
-    <provides>video</provides>
-  </extension>
-	
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">jami</summary>
-    <description lang="en">Canais de Animação em Português</description>
-    <platform>all</platform>
-    <forum></forum>
-    <website></website>
-  </extension>
-</addon>
 </addons>
