@@ -33,7 +33,6 @@ class NoRedirection(urllib2.HTTPErrorProcessor):
     def http_response(self, request, response):
         control.log('Stopping Redirect')
         return response
-
     https_response = http_response
 
 def shrink_host(url):
@@ -174,15 +173,17 @@ def cached_http_get(url, base_url, timeout, cookies=None, data=None, multipart_d
             control.log('Error (%s) during scraper http get: %s' % (str(e), url))
             return ''
     except Exception as e:
-        control.log('Error (%s) during scraper http get: %s' % (str(e), url))
+        control.log('Error (%s) during scraper get: %s' % (str(e), url))
         return ''
 
     cache.cache_url(url, html, data)
+
     return html
 
 def _set_cookies(base_url, cookies):
     cookie_file = os.path.join(control.cookieDir, '%s_cookies.lwp' % shrink_host((base_url)))
-    #cookie_file = os.path.join('/home/mrknow/Dokumenty/praca/kodi/plugin.video.specto/Cookies', '%s_cookies.lwp' % (base_url))
+    #cookie_file = os.path.join('/home/mrknow/.kodi/userdata/addon_data/plugin.video.specto/Cookies', '%s_cookies.lwp' % shrink_host((base_url)))
+    #control.log('control.cookieDir: %s' % (control.cookieDir))
 
     cj = cookielib.LWPCookieJar(cookie_file)
     try: cj.load(ignore_discard=True)

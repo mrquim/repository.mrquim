@@ -207,7 +207,7 @@ class movies:
 
 
             url = self.search_link % (urllib.quote_plus(self.query))
-            self.list = cache.get(self.trakt_list, 0, url)
+            self.list = cache.get(self.trakt_list, 0, url, self.trakt_user)
 
             self.worker()
             self.movieDirectory(self.list)
@@ -318,7 +318,9 @@ class movies:
 
         self.list = userlists
         for i in range(0, len(self.list)): self.list[i].update({'image': 'userlists.png', 'action': 'movies'})
-        self.addDirectory(self.list, queue=True)
+        #self.addDirectory(self.list, queue=True)
+        self.addDirectory(self.list)
+
         return self.list
 
     def trakt_list(self, url, user):

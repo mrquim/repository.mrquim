@@ -22,7 +22,7 @@
 import re,urlparse,time, urllib
 
 from resources.lib.libraries import client
-from resources.lib.libraries import cloudflare
+from resources.lib.libraries import client2
 from resources.lib.libraries import cleantitle
 
 from resources.lib.libraries import workers
@@ -31,26 +31,39 @@ from resources.lib.resolvers import cloudzilla
 from resources.lib.resolvers import openload
 from resources.lib.resolvers import uptobox
 from resources.lib.resolvers import zstream
-from resources.lib.resolvers import vidspot
+from resources.lib.resolvers import videomega
 
 
 from resources.lib import resolvers
-from resources.lib import sources
 
 
 class source:
     def __init__(self):
         self.base_link = 'http://oneclickwatch.ws'
-        self.search_link = '/search/%s/feed/rss2/'
+        self.search_link = '/search/%s'
         self.title = ''
-        #view-source:http://oneclickwatch.ws/search/game+of+thrones+s06e01/feed/rss2/
 
     def get_movie(self, imdb, title, year):
         try:
             query = self.search_link % urllib.quote_plus(title +' '+year)
-            #control.log("##OneClickWatch movie  - res00 %s" % query)
-            self.title = title +' '+year
-            return query
+            query = urlparse.urljoin(self.base_link, query)
+            result = client2.http_get(query)
+            years = ['%s' % str(year), '%s' % str(int(year) + 1), '%s' % str(int(year) - 1)]
+            result = client.parseDOM(result, 'h2', attrs={'class': 'title'})
+            result = [(client.parseDOM(i, 'a', ret='href')[0], client.parseDOM(i, 'a')[0]) for i in result]
+            print('R',result)
+            result = [i for i in result if cleantitle.movie(title.lower()) in cleantitle.movie(i[1]).lower()]
+            print('R',result)
+            result = [i for i in result if any(x in i[1] for x in years)]
+            print('R',result)
+            result2 = [i for i in result if '1080' in i[1]]
+            print('R',result)
+            result3 = [i for i in result if '720' in i[1].lower()]
+            print('R',result)
+            if len(result3) > 0: result = result3
+            if len(result2) > 0: result = result2
+            url = result[0][0]
+            return url
         except:
             return
 
@@ -68,15 +81,21 @@ class source:
     def get_episode(self, url, imdb, tvdb, title, date, season, episode):
         try:
             if url == None: return
-
+            mytitile = url.lower()
             url = '%s S%02dE%02d' % (url, int(season), int(episode))
-            self.title = url
             url = client.replaceHTMLCodes(url)
             url = url.encode('utf-8')
             url = self.search_link % urllib.quote_plus(url)
-            #control.log("##OneClickWatch movie  - Sess0 %s" % url)
-
-
+            query = urlparse.urljoin(self.base_link, url)
+            result = client2.http_get(query)
+            result = client.parseDOM(result, 'h2', attrs={'class': 'title'})
+            result = [(client.parseDOM(i, 'a', ret='href')[0], client.parseDOM(i, 'a')[0]) for i in result]
+            result = [i for i in result if mytitile in i[1].lower()]
+            result2 = [i for i in result if '1080' in i[1].lower()]
+            result3 = [i for i in result if '720' in i[1].lower()]
+            if len(result3) > 0: result = result3
+            if len(result2) > 0: result = result2
+            url=result[0][0]
             return url
         except:
             return
@@ -86,31 +105,20 @@ class source:
         try:
             self.sources =[]
             mylinks = []
-            control.log("##OneClickWatch movie  - res00 %s" % self.title)
-
-
-            query = urlparse.urljoin(self.base_link, url)
-
-            result = client.source(query)
-            result = re.compile('<item>(.*?)</item>', re.DOTALL).findall(result)
-
-            for y in result:
-                mytitle = re.compile('<title>(.*?)</title>', re.DOTALL).findall(y)[0]
-                if cleantitle.movie(self.title) in cleantitle.movie(mytitle):
-                    if any(word in mytitle for word in
-                           ['camrip', 'tsrip', 'hdcam', 'hdts', 'dvdcam', 'dvdts', 'cam', 'ts']):
-                        quality = 'CAM'
-                    elif '1080p' in mytitle:
-                        quality = '1080p'
-                    elif '720p' in mytitle:
-                        quality = 'HD'
-                    else:
-                        quality = 'MQ'
-                    links = client.parseDOM(y, 'a', attrs={'rel': 'nofollow'})
-                    links = [i for i in links if i.startswith('http')]
-                    for a in links:
-                        mylinks.append([a,quality])
-
+            result = client2.http_get(url)
+            mytitle = re.compile('<title>(.*?)</title>', re.DOTALL).findall(result)[0]
+            if any(word in mytitle.lower() for word in ['camrip', 'tsrip', 'hdcam', 'hdts', 'dvdcam', 'dvdts', 'cam', 'ts']):
+                quality = 'CAM'
+            elif '1080p' in mytitle:
+                quality = '1080p'
+            elif '720p' in mytitle:
+                quality = 'HD'
+            else:
+                quality = 'MQ'
+            links = client.parseDOM(result, 'a', attrs={'rel': 'nofollow'})
+            links = [i for i in links if i.startswith('http')]
+            for a in links:
+                mylinks.append([a,quality])
 
             threads = []
             for i in mylinks: threads.append(workers.Thread(self.check, i))
@@ -135,13 +143,14 @@ class source:
             host = host.lower()
             host = client.replaceHTMLCodes(host)
             host = host.encode('utf-8')
-            #control.log("##OneClickWatch %s - url %s" % (host, i[0]))
+            control.log("##OneClickWatch %s - url %s" % (host, i[0]))
+            #if host in i[2]: check = url = resolvers.request(url)
 
             if host == 'openload': check = openload.check(url)
             elif host == 'uptobox': check = uptobox.check(url)
             elif host == 'cloudzilla': check = cloudzilla.check(url)
             elif host == 'zstream': check = zstream.check(url)
-            elif host == 'vidspot': check = vidspot.check(url)
+            elif host == 'videomega': check = videomega.check(url)
 
             else: raise Exception()
 

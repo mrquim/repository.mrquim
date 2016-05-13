@@ -318,6 +318,7 @@ class libepisodes:
         if not query == None: control.idle()
 
         try:
+
             items = []
             season, episode = [], []
             show = [os.path.join(self.library_folder, i) for i in control.listDir(self.library_folder)[0]]
@@ -436,6 +437,7 @@ class libepisodes:
                     if int(self.date) <= int(re.sub('[^0-9]', '', str(i['date']))):
                         from resources.lib.sources import sources
                         src = sources().checkSources(i['name'], i['title'], i['year'], i['imdb'], i['tmdb'], i['tvdb'], i['tvrage'], i['season'], i['episode'], i['tvshowtitle'], i['alter'], i['date'])
+                        control.log('### SOURCES SRC 10 %s | %s' % (src,i['name']))
                         if src == False: raise Exception()
 
                     libtvshows().strmFile(i)

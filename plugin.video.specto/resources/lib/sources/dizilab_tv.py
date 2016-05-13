@@ -24,6 +24,7 @@ import re,urllib,urlparse
 from resources.lib.libraries import cache
 from resources.lib.libraries import cloudflare
 from resources.lib.libraries import client
+from resources.lib.libraries import client2
 from resources.lib.libraries import control
 from resources.lib import resolvers
 
@@ -73,14 +74,15 @@ class source:
 
 
     def get_sources(self, url, hosthdDict, hostDict, locDict):
+        control.log('######### DIZILAB ## %s ' % url)
         try:
             sources = []
 
             if url == None: return sources
 
             url = urlparse.urljoin(self.base_link, url)
-            result = client.source(url)
-
+            #result = client.source(url)
+            result = client2.http_get(url)
 
             try:
                 url = re.compile('"episode_player".*?src="([^"]+)"').findall(result)

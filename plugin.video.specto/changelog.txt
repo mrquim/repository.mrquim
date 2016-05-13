@@ -1,4 +1,18 @@
 ------------------------
+Specto v2016.05.10.5
+------------------------
+Small Fix - putlocker, muchmovies
+
+------------------------
+Specto v2016.05.08.7
+------------------------
+Fix - searching
+Fix - oneclickwatch
+Fix - putlocker
+Add - resolvers yadi.sk, cloud.mail.ru
+Add DAYT 1080p source
+
+------------------------
 Specto v2016.05.08.1
 ------------------------
 Fix - dizilab for TV

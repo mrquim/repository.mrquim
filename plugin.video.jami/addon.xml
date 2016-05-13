@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.jami" name="jami" version="1.3.1" provider-name="frenchdj">
+<addon id="plugin.video.jami" name="Jami" version="1.7" provider-name="frenchdj">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.addon.common" version="2.0.0"/>
@@ -12,7 +12,10 @@
 	
   <extension point="xbmc.addon.metadata">
     <summary lang="en">jami</summary>
-    <description lang="en">Canais de Animação em Português. Toda a fonte do conteúdo é do Youtube</description>
+    <description lang="en">Canais de Animação em Português. Toda a fonte do conteúdo é do Youtube.
+Playlists dedicadas aos mais pequenos com muita animação recente, animação clássica e musicais.
+Nota Importante: 
+É aconselhado a última versão do youtube 5.20.0.6 e respetivo Login.</description>
     <platform>all</platform>
     <forum></forum>
     <website></website>
