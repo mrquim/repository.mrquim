@@ -1,3 +1,8 @@
+v0.2.3 (15/05/2016)
+- Novo servidor
+- Integração com Trakt.tv (Algumas funcionalidades - entrem em contacto para mais sugestões)
+- Criação de BD local, para guardar as Infos das Series/Filmes (Primeiro carregamento de um determinado Filmes/Serie, vai à net buscar infos, depois carrega na BD para mostrar - o que torna mais rapido)
+
 v0.2.2 (06/04/2016)
 - Correcao de encondig na listagem dos episodios.
 - Correcao de numero de temporadas, em geral.

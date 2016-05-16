@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <settings>
     <category label="Definições Gerais">
-        <setting label="Conta MrPiracy.xyz:" type="lsep" />
+        <setting label="Conta MrPiracy.club:" type="lsep" />
         <setting id="email" type="text" label="Email" default=""/>
         <setting id="password" type="text" label="Password" default="" option="hidden" enable="!eq(-1,false)"/>
+        <setting type="sep" />
+        <setting id="utilizadorTrakt" type="action" label="Utilizador" option="close" action="RunPlugin(plugin://plugin.video.mrpiracy/?mode=700&url=necessario)" />
+    		<setting id="tokenTrakt" type="text" option="hidden" visible="false" label="" default="" />
+    		<setting id="refreshTrakt" type="text" option="hidden" visible="false" label="" default="" />
         <setting type="sep" />
         <setting id="trailer-filmes" type="bool" label="Procurar Trailers para Filmes" default="false"/>
     </category>

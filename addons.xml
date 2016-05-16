@@ -1131,11 +1131,12 @@ Addons Included
 	</extension>
 </addon>
 
-<addon id="plugin.video.mrpiracy" name="MrPiracy.club" provider-name="MrPiracy.club" version="0.2.2">
+<addon id="plugin.video.mrpiracy" name="MrPiracy.club" provider-name="MrPiracy.club" version="0.2.3">
  <requires>
   <import addon="xbmc.python" version="2.14.0"/>
   <import addon="script.module.beautifulsoup4" version="4.3.2"/>
   <import addon="script.module.t0mm0.common" version="1.0.0"/>
+  <import addon="plugin.video.youtube" optional="true" />
   </requires>
  <extension library="addon.py" point="xbmc.python.pluginsource">
   <provides>video</provides>
@@ -1590,6 +1591,58 @@ Nota Importante:
 		<disclaimer></disclaimer>
 		<platform>all</platform>
 	</extension>
+</addon>
+
+<addon id="plugin.video.Martunis"
+       name="Martunis"
+       version="1.1.1"
+       provider-name="Martunis">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.beautifulsoup" version="3.2.1"/>
+    <import addon="script.module.simple.downloader" version="0.9.4"/>
+    <import addon="script.module.beautifulsoup4" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.httplib2" />
+    <import addon="script.module.youtube.dl" optional="true"/>
+    <import addon="plugin.video.youtube" />
+    <import addon="script.module.urlresolver" optional="true"/>
+    <import addon="script.module.simplejson" />    
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>Martunis TV</summary>
+    <description>
+        Lista de canais  desporto, , música .
+
+.
+        
+    </description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.historytube"
+	name="History Tube"
+	version="1.0.0"
+	provider-name="coldkeys">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.addon.common" version="2.0.0"/>
+    <import addon="plugin.video.youtube" version="5.0.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">History Documentary Videos on YouTube</summary>
+    <description lang="en">Thousands of documentary videos on YouTube.</description>
+    <platform>all</platform>
+    <forum>n/a</forum>
+    <website>n/a</website>
+  </extension>
 </addon>
 
 </addons>

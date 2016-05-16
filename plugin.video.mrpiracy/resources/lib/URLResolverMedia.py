@@ -22,6 +22,30 @@ from bs4 import BeautifulSoup
 import jsunpacker
 import AADecoder
 
+class UpToStream():
+	def __init__(self, url):
+		self.url = url
+		self.net = Net()
+		self.headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:43.0) Gecko/20100101 Firefox/43.0', 'Accept-Charset': 'utf-8;q=0.7,*;q=0.7'}
+
+	def getId(self):
+		return re.compile('http\:\/\/uptostream\.com\/(.+)').findall(self.url)[0]
+
+	def getMediaUrl(self):
+		sourceCode = self.net.http_GET(self.url, headers=self.headers).content
+
+		links = re.compile('source\s+src=[\'\"]([^\'\"]+)[\'\"].+?data-res=[\'\"]([^\"\']+)[\'\"]').findall(sourceCode)
+		videos = []
+		qualidades = []
+		for link, qualidade in links:
+			if link.startswith('//'):
+				link = "http:"+link
+			videos.append(link)
+			qualidades.append(qualidade)
+		videos.reverse()
+		qualidades.reverse()
+		qualidade = xbmcgui.Dialog().select('Escolha a qualidade', qualidades)
+		return videos[qualidade]
 
 class OpenLoad():
 
@@ -188,14 +212,14 @@ class OpenLoad():
 				if jsonResult['status'] == 200:
 					return jsonResult['result']['url'] + '?mime=true'  #really?? :facepalm:
 				else:
-					self.messageOk('MrPiracy.xyz', "FILE: "+jsonResult['msg'])
+					self.messageOk('MrPiracy.club', "FILE: "+jsonResult['msg'])
 
 			else:
 
 				self.messageOk('MrPiracy.xyz', "TICKET: "+jsonResult['msg'])
 				return False
 		except:
-			self.messageOk('MrPiracy.xyz', 'Ocorreu um erro a obter o link. Escolha outro servidor.')
+			self.messageOk('MrPiracy.club', 'Ocorreu um erro a obter o link. Escolha outro servidor.')
 
 	def getCaptcha(self, image):
 		try:
@@ -211,11 +235,11 @@ class OpenLoad():
 			if(letters.isConfirmed()):
 				result = letters.getText()
 				if result == '':
-					self.messageOk('MrPiracy.xyz', 'Tens de colocar o texto da imagem para aceder ao video.')
+					self.messageOk('MrPiracy.club', 'Tens de colocar o texto da imagem para aceder ao video.')
 				else:
 					return result
 			else:
-				self.messageOk('MrPiracy.xyz', 'Erro no Captcha')
+				self.messageOk('MrPiracy.club', 'Erro no Captcha')
 		finally:
 			dialog.close()
 
@@ -276,7 +300,7 @@ class Vidzi():
 		sourceCode = self.net.http_GET(self.getNewHost(), headers=self.headers).content
 
 		if '404 Not Found' in sourceCode:
-			self.messageOk('MrPiracy.xyz', 'Ficheiro nao encontrado ou removido. Escolha outro servidor.')
+			self.messageOk('MrPiracy.club', 'Ficheiro nao encontrado ou removido. Escolha outro servidor.')
 
 		match = re.search('file\s*:\s*"([^"]+)', sourceCode)
 		if match:
@@ -289,15 +313,18 @@ class Vidzi():
 				#pprint.pprint(dataJs)
 
 				stream = re.search('file\s*:\s*"([^"]+)', dataJs)
-				"""
-				subtitle = re.compile('tracks:\[\{file:"(.+?)\.srt"').findall(dataJs)[0]
-				subtitle += ".srt"
-				self.subtitle = subtitle"""
-				self.subtitle = "Nao tem legenda!"
+				try:
+					subtitle = re.compile('tracks:\[\{file:"(.+?)\.srt"').findall(dataJs)[0]
+					subtitle += ".srt"
+				except:
+					subtitle = re.compile('tracks:\[\{file:"(.+?)\.vtt"').findall(dataJs)[0]
+					subtitle += ".vtt"
+				self.subtitle = subtitle
+
 				if stream:
 					return stream.group(1)
 
-		self.messageOk('MrPiracy.xyz', 'Video nao encontrado. Escolha outro servidor')
+		self.messageOk('MrPiracy.club', 'Video nao encontrado. Escolha outro servidor')
 
 
 	def getSubtitle(self):

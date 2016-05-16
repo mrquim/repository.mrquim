@@ -12,6 +12,8 @@ import re
 import sys
 import traceback
 import json
+import Trakt
+import Database
 from t0mm0.common.net import Net
 
 __SITE__ = 'http://kodi.mrpiracy.club/'
@@ -114,6 +116,16 @@ class Player(xbmc.Player):
         self.onPlayBackStopped()
 
     def adicionarVistoBiblioteca(self):
+        if self.content == 'episode':
+            Database.markwatchedEpisodioDB(self.idFilme, self.temporada, self.episodio)
+            if Trakt.loggedIn():
+                Trakt.markwatchedEpisodioTrakt(self.idFilme, self.temporada, self.episodio)
+        elif self.content == 'movie':
+            Database.markwatchedFilmeDB(self.idFilme)
+            if Trakt.loggedIn():
+                Trakt.markwatchedFilmeTrakt(self.idFilme)
+
+    def adicionarVistoBiblioteca2(self):
         pastaVisto=os.path.join(self.pastaData,'vistos')
 
         try:
