@@ -48,7 +48,7 @@ __SITE__ = 'http://kodi.mrpiracy.club/'
 
 __ALERTA__ = xbmcgui.Dialog().ok
 
-__COOKIE_FILE__ = os.path.join(xbmc.translatePath('special://userdata/addon_data/plugin.video.mrpiracy/'), 'cookie.mrpiracy')
+__COOKIE_FILE__ = os.path.join(xbmc.translatePath('special://userdata/addon_data/plugin.video.mrpiracy/').decode('utf8'), 'cookie.mrpiracy')
 __HEADERS__ = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:43.0) Gecko/20100101 Firefox/43.0', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'} #ISO-8859-1,
 
 
@@ -163,6 +163,14 @@ def getList(url, pagina):
     elif 'kodi_animes.php' in url:
         tipo = 'kodi_animes'
 
+    anoLink = ''
+    if 'ano' in url:
+        try:
+            anoLink = re.compile('ano(.+?)&').findall(url)[0]
+        except:
+            anoLink = re.compile('&ano(.+?)').findall(url)[0]
+        anoLink = '&ano'+anoLink
+
     if 'categoria=' in url:
         categoria = re.compile('categoria=(.+[0-9])').findall(url)[0]
 
@@ -254,9 +262,9 @@ def getList(url, pagina):
     #            pass"""
 
     if categoria == '':
-        addDir('Proximo', __SITE__+tipo+'.php?pagina='+str(int(pagina)+1), 1, __FANART__, int(pagina)+1, poster= os.path.join(__ART_FOLDER__, __SKIN__, 'proximo.png'))
+        addDir('Proximo', __SITE__+tipo+'.php?pagina='+str(int(pagina)+1)+''+anoLink, 1, __FANART__, int(pagina)+1, poster= os.path.join(__ART_FOLDER__, __SKIN__, 'proximo.png'))
     else:
-        addDir('Proximo', __SITE__+tipo+'.php?pagina='+str(int(pagina)+1)+'&categoria='+categoria, 1, __FANART__, int(pagina)+1, poster= os.path.join(__ART_FOLDER__, __SKIN__, 'proximo.png'))
+        addDir('Proximo', __SITE__+tipo+'.php?pagina='+str(int(pagina)+1)+'&categoria='+categoria+''+anoLink, 1, __FANART__, int(pagina)+1, poster= os.path.join(__ART_FOLDER__, __SKIN__, 'proximo.png'))
 
     vista_filmesSeries()
 

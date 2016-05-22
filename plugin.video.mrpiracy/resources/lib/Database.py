@@ -9,7 +9,7 @@ except:
 
 import xbmcvfs, os, sys, xbmc
 
-__DB_FILE__ = os.path.join(xbmc.translatePath('special://userdata/addon_data/plugin.video.mrpiracy/'), 'cache.db')
+__DB_FILE__ = os.path.join(xbmc.translatePath('special://userdata/addon_data/plugin.video.mrpiracy/').decode('utf8'), 'cache.db')
 
 def isExists():
     if not xbmcvfs.exists(__DB_FILE__):
@@ -20,7 +20,6 @@ def isExists():
 
 
 def createDB():
-    print __DB_FILE__
 
     if not xbmcvfs.exists(__DB_FILE__):
         f = open(__DB_FILE__, 'w')

@@ -1,3 +1,7 @@
+v0.2.4 (15/05/2016)
+- Paginação das paginas por ano, corrigido.
+- Correção de erros ao iniciar o addon.
+
 v0.2.3 (15/05/2016)
 - Novo servidor
 - Integração com Trakt.tv (Algumas funcionalidades - entrem em contacto para mais sugestões)
