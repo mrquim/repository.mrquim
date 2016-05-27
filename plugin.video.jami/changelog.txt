@@ -1,29 +1,52 @@
-[B]04/05/2016 - Versão 1.0[/B] 
-- Versão de teste não lançada
-[B]04/05/2016 - Versão 1.1[/B]
-- Adicionads mais 9 canais de animação do YouTube
-  Novas e renovadas imagens
-[B]05/05/2016 - Versão 1.2[/B]
-- Adicionads mais 3 canais de animação do YouTube
-  Identificação dos Desenhos animados em [PT] e [BR]
-[B]06/05/2016 - Versão 1.3[/B]
-- Adicionadas Playlists dedicadas
-  Adicionados mais desenhos animados em [PT]
-  Resolvido em parte o problema da versão do Youtube
-[B]07/05/2016 - Versão 1.4[/B]
-- Incluido fanart de backgrounk nos Links.
-  Troca de "j"  por "J" em Jami
-  Adicionadas mais séries de animação em [PT] e [BR]
-[B]08/05/2016 - Versão 1.5[/B]
-- Adicionadas todas as temporadas do Ruca
-  Desenhos animados classicos passaram para o fim da lista
-  Adicionadas 4 temporadas de " Era uma vez o Homem "  
+
+[B]16/05/2016 - Versão 2.1[/B]
+- Versão Angry Birds. 
+  Renovação estética em termos de capas para se adaptaram à skin Aeon Nox 5 
+  Imagens em 350x500 em modo DVD.
+  Adicionadas 3 novas séries.
+
+[B]16/05/2016 - Versão 2.0a[/B]
+- Pequena atualização
+
+[B]16/05/2016 - Versão 1.9[/B]
+- Pequena atualização
+
+[B]12/05/2016 - Versão 1.8[/B]
+- Playlists renovadas com apoio de abertura de canal Jami no Youtube 
+  Construção de repositório para alocar o addon
+  Ghithub oficial:  
+
+[B]09/05/2016 - Versão 1.7[/B]
+- Renovação e edição de todos os icones do addon
+  Predefinição de vista thumbernail
+  Adicionados mais desenhos animados em [PT], [BR] e indiferenciados. 
+
 [B]09/05/2016 - Versão 1.6[/B]
 - Playlists renovadas e por ordem 
   Ligeiro retoque no logo Jami
   Adicionados mais desenhos animados em [PT], [BR] e indiferenciados.  
-[B]09/05/2016 - Versão 1.7[/B]
-- Playlists renovadas com apoio de abertura de canal Jami no Youtube 
-  Renovação e edição de todos os icones do addon
-  Predefinição de vista thumbernail
-  Adicionados mais desenhos animados em [PT], [BR] e indiferenciados.  
+
+[B]08/05/2016 - Versão 1.5[/B]
+- Adicionadas todas as temporadas do Ruca
+  Desenhos animados classicos passaram para o fim da lista
+  Adicionadas 4 temporadas de " Era uma vez o Homem "
+
+[B]07/05/2016 - Versão 1.4[/B]
+- Incluido fanart de backgrounk nos Links.
+  Troca de "j"  por "J" em Jami
+  Adicionadas mais séries de animação em [PT] e [BR]
+
+[B]06/05/2016 - Versão 1.3[/B]
+- Adicionadas Playlists dedicadas
+  Adicionados mais desenhos animados em [PT]
+
+[B]05/05/2016 - Versão 1.2[/B]
+- Adicionads mais 3 canais de animação do YouTube
+  Identificação dos Desenhos animados em [PT] e [BR]
+
+[B]04/05/2016 - Versão 1.1[/B]
+- Adicionads mais 9 canais de animação do YouTube
+  Novas e renovadas imagens
+
+[B]04/05/2016 - Versão 1.0[/B] 
+- Versão de teste não lançada

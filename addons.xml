@@ -1314,7 +1314,7 @@ Plugin by @koderdude</description>
   </extension>
 </addon>
 
-<addon id="plugin.video.veetle" version="0.3.2" name="Veetle" provider-name="fightnight (creator: t0mm0)">
+<addon id="plugin.video.veetle" version="0.3.3" name="Veetle" provider-name="fightnight (creator: t0mm0)">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.simplejson" version="2.0.10"/>
@@ -1324,18 +1324,9 @@ Plugin by @koderdude</description>
         <provides>video</provides>
     </extension>
     <extension point= "xbmc.addon.metadata">
-        <summary lang="el">Αναζήτηση και ρεύμα από veetle.com</summary>
-		<summary lang="en">Browse and stream from veetle.com</summary>
-		<summary lang="pt">Veja canais de veetle.com</summary>
-		<summary lang="pt_BR">Veja canais de veetle.com</summary>
-        <description lang="el">Επιτρέπει βλέποντας ρέματα veetle.com που flash ενεργοποιηθεί.</description>
-		<description lang="en">Enables watching streams on veetle.com that are flash enabled.</description>
-		<description lang="pt">Permite visualizar streams de veetle.com que necessitam de flash.</description>
-		<description lang="pt_BR">Permite visualizar streams de veetle.com que necessitam de flash.</description>
-		<disclaimer lang="el">Δεν λειτουργεί για τις ροές 'HD' που απαιτούν λήψη λογισμικού.</disclaimer>
+	<summary lang="en">Browse and stream from veetle.com</summary>
+	<description lang="en">Enables watching streams on veetle.com that are flash enabled.</description>
         <disclaimer lang="en">Does not work for 'HD' streams which require a software download.</disclaimer>
-		<disclaimer lang="pt">Não funciona para streams 'HD' que necessitam do download de software.</disclaimer>
-		<disclaimer lang="pt_BR">Não funciona para streams 'HD' que necessitam do download de software.</disclaimer>
         <platform>all</platform>
     </extension>
 </addon>
@@ -1397,7 +1388,7 @@ Highly configurable: Set your PIN, set your watershed time, exclude addons if re
 	</extension>
 </addon>
 
-<addon id="plugin.video.jami" name="Jami" version="1.7" provider-name="frenchdj">
+<addon id="plugin.video.jami" name="Jami" version="2.1" provider-name="frenchdj">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.addon.common" version="2.0.0"/>
@@ -1410,10 +1401,9 @@ Highly configurable: Set your PIN, set your watershed time, exclude addons if re
 	
   <extension point="xbmc.addon.metadata">
     <summary lang="en">jami</summary>
-    <description lang="en">Canais de Animação em Português. Toda a fonte do conteúdo é do Youtube.
-Playlists dedicadas aos mais pequenos com muita animação recente, animação clássica e musicais.
-Nota Importante: 
-É aconselhado a última versão do youtube 5.20.0.6 e respetivo Login.</description>
+    <description lang="en">Videos Infantis em [PT] e [BR]. 
+Toda a fonte vem do Youtube com playlists dedicadas aos mais pequenos, recheadas de desenhos animados recentes, classicos e musicais.
+Nota Importante: Aconselhado a ultima versao do youtube 5.20.0.6 e respetivo Login.</description>
     <platform>all</platform>
     <forum></forum>
     <website></website>
