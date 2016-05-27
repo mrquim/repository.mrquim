@@ -1,0 +1,35 @@
+﻿<settings>
+ <category label="General">
+    <setting id="save_location" type="folder"  label="Select a download location." default=""/>
+    <setting id="use_thumb" type="bool" label="Use Thumbnails as Fanart" default="true" />
+    <setting id="logo-folderPath" type="folder"  label="Select Directory for logo." default=""/>
+    <setting id="add_playlist" type="bool" label="Add items with multiple links as play lists" default="true"/>
+    <setting id="ask_playlist_items" type="bool" label="Ask playlist items to choose from dialog" default="true" />
+    <setting id="debug" type="bool" label="Enable Add-on Debugging" default="true"/>
+    <setting id="1080pquality" label="Play 1080p video ON demand if available (Not live)" type="bool" default=""/>
+    <setting id="genesisorpulsar" type="enum" values="Genesis|Pulsar" label="Play IMDBid with:" default="Genesis"/>
+    <setting id="donotshowbychannels" label="Do Not show items under channel name" type="bool" default="true"/>
+	<setting id="searchotherplugins" label="Search Other plugins" type="bool" default="true"/>
+    
+  </category>
+   <category label="Adult Content Lock">
+    	<setting id="parentalblockedpin" label="Parental Block Pin" type="text"  option="hidden"  default="1234"/> 
+    <setting id="parentalblocked" label="Is Parental Blocked Applied?" type="bool" default="true" enable="true"/>
+    </category>
+
+	
+	<category label="Terms and Conditions" >
+     	<setting lable="T*C" type="text" label="T*C" default="Please be patient if a channel does not load on single click. Try multiple times. Due to heavy load on servers channel availability might be overbooked."  />
+   	 <setting id="Terms" type="bool" label="I Agree To The Terms?" default="true" />
+	 	<setting type="lsep" label="2" />
+	 
+   	 	
+    </category>
+	
+	
+	
+	
+	
+	
+	
+</settings>
