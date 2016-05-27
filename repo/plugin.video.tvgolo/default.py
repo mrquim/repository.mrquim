@@ -44,15 +44,14 @@ def epocasanteriores(url):
 def request(url,special=False):
       link=abrir_url(url).replace('&nbsp;','')
       if special:
-            #hack para epocas anteriores
-            listagolos=re.compile('<div class="matcheslisting"><a href="(.+?)"><img.+?src="images/(.+?)\..+?" />\s*(.+?)</a></div>').findall(link)
+            listagolos=re.compile('<div class=".+?"><a href="(.+?)"><img.+?src="images/(.+?)\..+?" />\s*(.+?)</a></div>').findall(link)
             for endereco,thumb,multiple in listagolos:
                   data=multiple.split('(')[0]
                   hora=multiple.split('(')[1].split(')')[0]
                   rest=''.join(')'.join('('.join(multiple.split('(')[1:]).split(')')).split('- ')[1:])
                   addDir('[COLOR orange]%s[/COLOR][COLOR darkorange](%s)[/COLOR][COLOR blue] - [/COLOR][COLOR white]%s[/COLOR]' % (data,hora,rest),MainURL + endereco,1,os.path.join(art,'%s.png' % (thumb)),len(listagolos),pasta=False)
       else:
-            listagolos=re.compile('<div class="matcheslisting"><a href="(.+?)"><img.+?src="images/(.+?)\..+?" />\s+?([0-9]{4}\.[0-9]{2}\.[0-9]{2})\s*(\([0-9]{2}h[0-9]{2}\))\s*-\s*([A-Za-z ]+?)\s*([0-9]*)\s*-\s*([0-9]*)\s*(.+?)</a></div>').findall(link)
+            listagolos=re.compile('<div class=".+?"><a href="(.+?)"><img.+?src="images/(.+?)\..+?" />\s+?([0-9]{4}\.[0-9]{2}\.[0-9]{2})\s*(\([0-9]{2}h[0-9]{2}\))\s*-\s*([A-Za-z ]+?)\s*([0-9]*)\s*-\s*([0-9]*)\s*(.+?)</a></div>').findall(link)
             for endereco,thumb,data,hora,equipa1,resultado1,resultado2,equipa2 in listagolos:
                   addDir('[COLOR orange]%s[/COLOR] [COLOR darkorange]%s[/COLOR][COLOR blue] - [/COLOR][COLOR white]%s[/COLOR] [COLOR yellow]%s - %s[/COLOR] [COLOR white]%s[/COLOR]' % (data,hora,equipa1,resultado1,resultado2,equipa2),MainURL + endereco,1,os.path.join(art,'%s.png' % (thumb)),len(listagolos),pasta=False)
 
