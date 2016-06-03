@@ -299,7 +299,7 @@ Addons Included
 	</extension>
 </addon>
 
-<addon id="plugin.video.specto" name="Specto - ... Fork"  version="2016.05.10.7" provider-name="mrknow" >
+<addon id="plugin.video.specto" name="Specto - ... Fork"  version="2016.06.01.3" provider-name="mrknow" >
 	<requires>
 		<import addon="xbmc.python" version="2.1.0" />
 		<import addon="script.module.requests" version="1.0.0" />
@@ -764,7 +764,7 @@ Addons Included
   </extension>
 </addon>
 
-<addon id="plugin.video.youtube" name="YouTube" version="5.2.1" provider-name="h0d3nt3uf3l, jdf76, bromix">
+<addon id="plugin.video.youtube" name="YouTube" version="5.2.2" provider-name="h0d3nt3uf3l, jdf76, bromix">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 	</requires>
@@ -939,7 +939,7 @@ Addons Included
 	</extension>
 </addon>
 
-<addon id="plugin.video.livemix" name="Live Mix" version="1.0.2" provider-name="MetalKettle">
+<addon id="plugin.video.livemix" name="Live Mix" version="1.0.3" provider-name="MetalKettle">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.addon.common" version="2.0.0" />
@@ -1000,7 +1000,7 @@ Addons Included
 	</extension>
 </addon>
 
-<addon id="plugin.video.sportsmix" name="Sports Mix" version="1.0.1" provider-name="MetalKettle">
+<addon id="plugin.video.sportsmix" name="Sports Mix" version="1.0.2" provider-name="MetalKettle">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
