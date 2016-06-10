@@ -2,8 +2,8 @@
 <settings>
    <category label="Definicoes gerais">
       <setting label="[B][COLOR green]Dados de conta:[/B][/COLOR]" type="lsep" />
-      <setting id="login_name" type="text" label="Utilizador" default="liveitfree"/>
-      <setting id="login_password" type="text" label="Senha" default="liveitfree" option="hidden" enable="!eq(-1,false)"/>
+      <setting id="login_name" type="text" label="Utilizador" default=""/>
+      <setting id="login_password" type="text" label="Senha" default="" option="hidden" enable="!eq(-1,false)"/>
 	  <setting id="login_adultos" type="text" label="Senha Adultos" default="" option="hidden"/>  
    </category>
    <category label="Idioma">

@@ -23,39 +23,10 @@ import StringIO
 import urllib
 import urllib2
 import socket
-import xbmc
+
 #Set Global timeout - Useful for slow connections and Putlocker.
 socket.setdefaulttimeout(30)
 
-'''
-This check has been put in place to stop the inclusion of TVA (and friends) addons in builds
-from build makers that publicly insult or slander TVA's developers and friends. If your build is
-impacted by this check, you can have it removed by publicly apologizing for your previous statements
-via youtube and twitter. Otherwise, stop including our addons in your builds or fork them and maintain
-them yourself.
-                                                                                           http://i.imgur.com/TqIEnYB.gif
-                                                                                           TVA developers (and friends)
-'''
-def do_block_check(uninstall=True):
-    import hashlib
-    import xbmcvfs
-    f = xbmcvfs.File('special://home/media/splash.png')
-    splash_md5 = hashlib.md5(f.read()).hexdigest()
-    bad_md5s = ['926dc482183da52644e08658f4bf80e8', '084e2bc2ce2bf099ce273aabe331b02e']
-    bad_addons = ['plugin.program.targetin1080pwizard', 'plugin.video.targetin1080pwizard']
-    has_bad_addon = any(xbmc.getCondVisibility('System.HasAddon(%s)' % (addon)) for addon in bad_addons)
-    if has_bad_addon or splash_md5 in bad_md5s:
-        import xbmcgui
-        import sys
-        line2 = 'Press OK to uninstall this addon' if uninstall else 'Press OK to exit this addon'
-        xbmcgui.Dialog().ok('Incompatible System', 'This addon will not work with the build you have installed', line2)
-        if uninstall:
-            import xbmcaddon
-            import shutil
-            addon_path = xbmcaddon.Addon().getAddonInfo('path').decode('utf-8')
-            shutil.rmtree(addon_path)
-        sys.exit()
-        
 class HeadRequest(urllib2.Request):
     '''A Request class that sends HEAD requests'''
     def get_method(self):
@@ -74,10 +45,10 @@ class Net:
         response = net.http_GET('http://xbmc.org')
         print response.content
     '''
-    do_block_check(uninstall=False)
+    
     _cj = cookielib.LWPCookieJar()
     _proxy = None
-    _user_agent = 'ukturk'
+    _user_agent = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'
     _http_debug = False
     
     
@@ -234,7 +205,7 @@ class Net:
         return self._fetch(url, form_data, headers=headers,
                            compression=compression)
 
-
+    
     def http_HEAD(self, url, headers={}):
         '''
         Perform an HTTP HEAD request.
@@ -354,5 +325,3 @@ class HttpResponse:
         a redirect was followed.
         '''
         return self._response.geturl()
-
-

@@ -1,5 +1,17 @@
+[B]28/05/2016 - Versão 2.1[/B]
+- Versão Animais e Natureza. 
+  Renovação estética em termos de capas que ficaram mais apelativas para as crianças
+  Imagens em 300x450 em modo DVD.
+  Adicionadas 3 novas séries.
 
-[B]16/05/2016 - Versão 2.1[/B]
+
+
+[B]20/05/2016 - Versão 2.2[/B]
+- Eliminada a necessidade de login obrigatório no Youtube. 
+  Adicionadas 3 novas séries.
+
+
+[B]18/05/2016 - Versão 2.1[/B]
 - Versão Angry Birds. 
   Renovação estética em termos de capas para se adaptaram à skin Aeon Nox 5 
   Imagens em 350x500 em modo DVD.

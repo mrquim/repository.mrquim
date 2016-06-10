@@ -56,7 +56,7 @@
 
 <addon id="plugin.video.pancas"
        name="PancasTV"
-       version="1.1.1"
+       version="1.1.3"
        provider-name="Pancas">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -299,7 +299,7 @@ Addons Included
 	</extension>
 </addon>
 
-<addon id="plugin.video.specto" name="Specto - ... Fork"  version="2016.06.01.3" provider-name="mrknow" >
+<addon id="plugin.video.specto" name="Specto - ... Fork"  version="2016.06.06.1" provider-name="mrknow" >
 	<requires>
 		<import addon="xbmc.python" version="2.1.0" />
 		<import addon="script.module.requests" version="1.0.0" />
@@ -523,10 +523,14 @@ Addons Included
 	</extension>
 </addon>
 
-<addon id="plugin.video.LiveTV" name="Live!t TV" provider-name="Live!t TV" version="5.4.1">
+<addon id="plugin.video.LiveTV" name="Live!t TV" provider-name="Live!t TV" version="5.4.5">
   <requires>
     <import addon="xbmc.python" version="2.19.0"/>
 	<import addon="script.module.t0mm0.common" version="1.0.0"/>
+	<import addon="script.module.urlresolver" version="1.0.0"/>
+	<import addon="script.module.metahandler" optional="true"/>
+	<import addon="script.module.simplejson" optional="true"/>
+	<import addon="script.module.parsedom" optional="true"/>
   </requires>
   <extension point="xbmc.python.pluginsource" library="defaut.py">
     <provides>video</provides>
@@ -819,7 +823,7 @@ Addons Included
 
 <addon
   id="plugin.video.SportsDevil"
-  version="2.1"
+  version="2016.3.9"
   name="SportsDevil"
   provider-name="SportsDevil">
   <requires>
@@ -834,7 +838,7 @@ Addons Included
   </extension>
   <extension point="xbmc.addon.metadata">
     <summary>Play videos of different sports streaming sites</summary>
-    <description>Play videos of different sports streaming sites</description>
+    <description>Play videos of different sports streaming sites. [CR]For more addons visit [COLOR blue]iwillfolo.com[/COLOR]</description>
     <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
     <platform>all</platform>
   </extension>
@@ -939,7 +943,7 @@ Addons Included
 	</extension>
 </addon>
 
-<addon id="plugin.video.livemix" name="Live Mix" version="1.0.3" provider-name="MetalKettle">
+<addon id="plugin.video.livemix" name="Live Mix" version="1.0.5" provider-name="MetalKettle">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.addon.common" version="2.0.0" />
@@ -1000,7 +1004,7 @@ Addons Included
 	</extension>
 </addon>
 
-<addon id="plugin.video.sportsmix" name="Sports Mix" version="1.0.2" provider-name="MetalKettle">
+<addon id="plugin.video.sportsmix" name="Sports Mix" version="1.0.4" provider-name="MetalKettle">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
@@ -1157,19 +1161,24 @@ Addons Included
  </extension>
 </addon>
 
-<addon id="plugin.video.f4mTester" version="2.2.4" name="f4mTester" provider-name="Shani">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-        <import addon="script.video.F4mProxy" version="2.2.3"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <summary>f4mTester</summary>
-        <description></description>
-        <platform>all</platform>
-    </extension>
+<addon id="script.video.F4mProxy" 
+	     name="F4mProxy" 
+	     version="2.5.0" 
+	     provider-name="Shani">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0" />
+    <import addon="script.module.requests" />
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+    <extension point="xbmc.python.pluginsource" library="addon.py">
+		<provides>executable</provides>
+  </extension>
+
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">Proxy for f4m</summary>
+    <description lang="en">Use this addon to play F4m v1 and v2 streams</description>
+  </extension>
 </addon>
 
 <addon id="plugin.video.tvdireto" name="LiveTV" version="1.0.7" provider-name="TV Direto">
@@ -1388,7 +1397,7 @@ Highly configurable: Set your PIN, set your watershed time, exclude addons if re
 	</extension>
 </addon>
 
-<addon id="plugin.video.jami" name="Jami" version="2.1" provider-name="frenchdj">
+<addon id="plugin.video.jami" name="Jami" version="3.0" provider-name="frenchdj">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.addon.common" version="2.0.0"/>
@@ -1403,7 +1412,7 @@ Highly configurable: Set your PIN, set your watershed time, exclude addons if re
     <summary lang="en">jami</summary>
     <description lang="en">Videos Infantis em [PT] e [BR]. 
 Toda a fonte vem do Youtube com playlists dedicadas aos mais pequenos, recheadas de desenhos animados recentes, classicos e musicais.
-Nota Importante: Aconselhado a ultima versao do youtube 5.20.0.6 e respetivo Login.</description>
+Nota Importante: Aconselhado a ultima versao do youtube 5.2.* </description>
     <platform>all</platform>
     <forum></forum>
     <website></website>

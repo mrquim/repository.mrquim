@@ -1,1 +1,108 @@
-exec("import re;import base64");exec((lambda p,y:(lambda o,b,f:re.sub(o,b,f))(r"([0-9a-f]+)",lambda m:p(m,y),base64.b64decode("YSAxMzgsMTIsMTJlLDFjLDRlLDQ1LGE5LGQ4LGQ5LDQ0LGNlLGZmLGNmLDVmLGNhCmEgMTQyLjgzIDEzZiAxNDIKCjVmID0gNWYuMTFiKCkKMTFlID0gJzNkLjk4LjllJwozYiA9IDEyLjk5KDEzZD0xMWUpCjQyPTNiLjhmKCcxMGEnKQplPScvYTMvJys0Mgo1MiA9IDEzOC5kNCg0ZS4xMmIuMWQoJ2Y1Oi8vMTkvMTMzLycgKyAxMWUsICc1Mi4yOScpKQoyNSA9IDEzOC5kNCg0ZS4xMmIuMWQoJ2Y1Oi8vMTkvMTMzLycgKyAxMWUsICcyNS4xMTYnKSkKZD0gMTM4LmQ0KDRlLjEyYi4xZCgnZjU6Ly8xOS8xMzMvJyArIDExZSArIGUsICdlZi4yOScpKQoxNT0gMTM4LmQ0KDRlLjEyYi4xZCgnZjU6Ly8xOS8xMzMvJyArIDExZSArIGUsICc4OC4yOScpKQoyOCA9IDEzOC5kNCg0ZS4xMmIuMWQoJ2Y1Oi8vMTkvMTMzLycgKyAxMWUgKyBlLCAnNmUuMjknKSkKMWIgPSAxMzguZDQoNGUuMTJiLjFkKCdmNTovLzE5LzEzMy8nICsgMTFlICsgZSwgJzRkLjI5JykpCjEwOSA9IDEzOC5kNCg0ZS4xMmIuMWQoJ2Y1Oi8vMTkvMTMzLycgKyAxMWUgKyBlLCAnZmEtMTIyLjI5JykpCjc3ICA9IDE0Mi4xMzUoJycpCjc3Ljg1KDEwNCwgMTIxLCAxMDAsIDUwKQozND0xNDIuOTQoMTA5KQo3Ny45KDM0LCAtNSwgMCwgMTI1LCA1MSkKCjEzZSA4ZCgpOgoJODEgJzEyNycgNDMgZDo0Yj0nMTMwJwoJMTBkICcxMGMnIDQzIGQ6NGI9JzEzMCcKCWI3OjRiPSc4YicKCTYgMTE0Cgk2IGY2CgkxZShiPTEzNykKCSNkNiBiMgoJMTE0ID0gMTQyLjExNCgzYz0yOCw2ZD0xYixlMj0xMSw1ND0tNyxhMD00YikKCWY2PTE0Mi45NCg1MiwgODY9MikKCWY2LjEzYSg1MikKCTU2ID0gMTQyLmQ1KCcgJyw2NT1kLDcxPTE1KQoJIzhjIGNjCgk3Ny45KDExNCwgMTAsIDEsIDExMCwgMzApCgk3Ny45KGY2LCAzMCwgMzIsIDYwLCAxOCkKCTc3LjkoNTYsIDExMCwgNDgsIDEwLCAzKQoJI2M4IGYwIGVkIGE2IDEyYyAxMGUgZGEKCTc3LjEzYigKCVsxNDIuNTgsCgkxNDIuNjgsCgkJMTQyLjQ5XSwKCTJhKQoJIzkwCgkxMTQuNzIoNTYpCgkjZGQgYzEKCTc3LjZhKDExNCwgMzcpCgk3Ny42YSg1NiwgNzcuOGUpCgkyYigpCgoxM2UgMmIoKToKCTYgMjMKCTYgMjYKCTYgMTcKCTYgMWYKCTIzPVtdCgkyNj1bXQoJMTc9W10KCTFmPXsnNzUtNTknOic3Yy8yLjEuMCAoNWU7IDEzOTsgMmMgNS4xLjE7IGQ3LTVhIDYxLzNmKScsCgkJCSAnYmQtZjcnOic4Ny8xNDAtMTE3LTExMi05MjsgYzk9MTE4LTgnLAoJCQkgJ2RjLWFhJyA6ICcxMDEnLAoJCQkgJzk2JzonZmQtZjInfQoJNzggPSA1Zi40YSgnNTU6Ly8yNy0zZS43OS8yNy0zZS83OC5lYj9jMycsMWYpLjYzCgkyND0nNTU6Ly8yNy0zZS43OS8yNy0zZS83OC5lYj9kZj0xNCZlYT0nK2Q4LjY3KCciZWEiOiIoLis/KSInKS42OSg3OClbMF0KCWI4ID0gNWYuNGEoMjQsMWYpLjYzCgk1Yz1kOC42NygnIjZiIjoiKC4rPykiLCI4YSI6IiguKz8pIiwiNDYiOiIoLis/KSInKS42OShiOCkKCTVjLjEwNSgpCgk5ZCAxMzYsMjQsMzEgNDMgNWM6CgkJODEgZTggJ1wxMjQnIDQzIDEzNjoKCQkJMzE9JzU1Oi8vMjctM2UuNzkvMjctM2UvZTUvJyszMSsnfDc1LTU5PTdjLzIuMS4wICg1ZTsgMTM5OyAyYyA1LjEuMTsgZDctNWEgNjEvM2YpJwoJCQkyMy40MSgxMzYpCgkJCTI2LjQxKDMxKQoJCQkxNy40MSgyNCkKCQkJMTE0LmM3KDEzNikKICAgICAgCTc3LmJhKDExNCkKCgoxM2UgMmEoKToKCTYgMTMKCTYgNAoJNiAxMzYKCTgxIDc3LmIwKCkgPT0gMTE0OgoJCTgyPTExNC4zOCgpCgkJND0yNls4Ml0KCQkxMzY9MjNbODJdCgkJZjYuMTNhKDQpCgkJMTM9MTdbODJdCgkJMTM9MTMrJ3w3NS01OT1jMi81LjAgKDVlOyAyYyA1LjEuMTsgMTM0LTEyYTsgZDctNWEgNjEvM2YuNmMpIGI5LzEuNy40MCcKCiMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMKMTNlIDM3KCk6Cgk3Ny44ZSgpCgkzOT0xMmUuNGMoMTM2LCAzYT00LDIwPTQpCgkxMzguZTMgKCkuZmUoMTMsIDM5LCAxMzcpCgkKMTNlIGM0KDEzNiwyNCw3Myw0LDI1LGM9JycpOgoJCTEyND00NS43ZlswXSsiPzI0PSIrNDQuMzYoMjQpKyImNzM9IitkMyg3MykrIiYxMzY9Iis0NC4zNigxMzYpKyImYz0iK2QzKGMpCgkJYTg9YjUKCQkzOT0xMmUuNGMoMTM2LCAzYT0iNmYuMjkiLCAyMD00KQoJCTM5LmM2KCAxMTM9ImVlIiwgOTU9eyAiZjMiOiAxMzYsICdmOSc6IGMgfSApCgkJMzkuODkoJzc2JywgMjUpCgkJYTg9MWMuNTcoZTk9ZTQoNDUuN2ZbMV0pLDI0PTEyNCxhZT0zOSxhZD0xMzcpCgkJZGUgYTgKJycnCmJiIDk3IDEyMCAxMGIgMTE1IDQzIDhjIGQyIGFjIGVjIDliIDEyZiBhMSAoNWIgMmQpIDEzMyA0MyA3YgpmYyA1ZCBlNiBmOCA1MyBlNyBhNiBjZCBhMScxMjkgMmYgNWIgMmQuIDEzYyA4MCA1ZCAxMzIKYjQgMTA4IDc0IDk3LCBkYiAxMWQgYWYgMTMxIGJlIDEwOCA1MyA4NCA5ZCA4MCBhYiA5MwoxMjggYmMgNWIgY2IuIDljLCBhYyBhMiAxMTkgMTMzIDQzIDgwIDdiIGE2IDEwMyBiMyA1YiBiMQpiMyBhNS4KCQkJCQkJCQkJCQkgICA1NTovLzE0MS5mMS43OS9jMC4xMWEKCQkJCQkJCQkJCQkgICBhMSAyZiAoNWIgMmQpCicnJwoxM2UgMWUoYj1iNSk6CiAgICBhIDYyCiAgICBhIDY2CiAgICBmID0gNjYuMTA2KCdmNTovLzE5L2Y0L2UwLjI5JykKICAgIDM1ID0gNjIuMTIzKGYuMTExKCkpLjlmKCkKICAgIDRmID0gWycxYScsICcxNiddCiAgICAyZSA9IFsnM2QuYmYuMTJkJywgJzNkLjk4LjEyZCddCiAgICAyMSA9IDExYygxMzguNDcoJzdhLmI2KCUxMjkpJyAlICgyMikpIDlkIDIyIDQzIDJlKQogICAgODEgMjEgYTYgMzUgNDMgNGY6CglhIDEyZQoJYSA0NQoJOTEgPSAnOWEgMTAyIGQyIGIgNzQgMjInIDgxIGIgYjcgJzlhIDEwMiBkMiBhNyA3NCAyMicKCTEyZS5kMSgpLmE4KCc3ZCA3YScsICdiYiAyMiBmYiBlOCAxMGYgMTA3IGVjIDVkIGRiIGFmIGE0JywgOTEpCgk4MSBiOgoJICAgIGEgMTIKCSAgICBhIDdlCgkgICAgMzMgPSAxMi45OSgpLjcwKCcxMmInKS5kMCgnMTI2LTgnKQoJICAgIDdlLmUxKDMzKQoJNDUuYTcoKQoKOGQoKQo3Ny5jNSgpCjExZiA3NwoxYy42NChlNCg0NS43ZlsxXSkp")))(lambda a,b:b[int("0x"+a.group(1),16)],"0|1|2|3|iconimage|5|global|7|8|placeControl|import|uninstall|description|button_quit|artpath|f|10|11|xbmcaddon|playurl|14|button_quit_focus|084e2bc2ce2bf099ce273aabe331b02e|chstream|18|home|926dc482183da52644e08658f4bf80e8|button_no_focus|xbmcplugin|join|do_block_check|headers|thumbnailImage|has_bad_addon|addon|chname|url|fanart|chicon|zona|button_focus|png|LIST_UPDATE|GETCHANNELS|Android|friends|bad_addons|developers|30|thumb|32|addon_path|background|splash_md5|quote_plus|PlayStream|getSelectedPosition|liz|iconImage|selfAddon|buttonFocusTexture|plugin|app|LMY47X|40|append|skintheme|in|urllib|sys|channel_thumbnail|getCondVisibility|48|ACTION_MOUSE_MOVE|http_GET|text|ListItem|button_no_focus1|os|bad_md5s|50|51|icon|publicly|_itemTextYOffset|http|Quit|addDirectoryItem|ACTION_MOVE_DOWN|Agent|G920F|and|match|build|Linux|net|60|Build|hashlib|content|endOfDirectory|noFocusTexture|xbmcvfs|compile|ACTION_MOVE_UP|findall|connect|channel_title|G920FXXS3COK5|buttonTexture|button_focus1|DefaultFolder|getAddonInfo|focusTexture|controlRight|mode|this|User|fanart_image|window|api|com|System|builds|Dalvik|Incompatible|shutil|argv|your|if|pos|addonwindow|apologizing|setGeometry|aspectRatio|application|power_focus|setProperty|channel_url|0xFF000000|place|START|close|getSetting|navigation|line2|urlencoded|statements|Image|infoLabels|Connection|check|video|Addon|Press|inclusion|Otherwise|for|sportsmix|hexdigest|textColor|TVA|including|resources|installed|yourself|or|exit|ok|urlparse|Encoding|previous|stop|isFolder|listitem|have|getFocus|maintain|butttons|them|impacted|True|HasAddon|else|page|MXPlayer|setFocus|This|youtube|Content|removed|program|TqIEnYB|actions|Mozilla|api_key|addLink|doModal|setInfo|addItem|capture|charset|logging|twitter|buttons|slander|urllib2|random|decode|Dialog|to|str|translatePath|Button|create|SM|re|time|arrows|you|Accept|button|return|cat_id|splash|rmtree|_space|Player|int|images|makers|insult|not|handle|key|php|the|moves|Video|power|mouse|imgur|Alive|Title|media|special|Icon|Type|that|plot|main|will|from|Keep|play|json|100|gzip|OK|fork|1240|sort|File|with|by|bg|skin|been|Mono|elif|down|work|110|read|form|type|List|put|jpg|www|UTF|our|gif|Net|any|can|addon_id|del|has|650|bg2|md5|u|125|utf|Red|via|s|GB|path|up|targetin1080pwizard|xbmcgui|of|0xffffffff|it|is|addons|en|AddonDialogWindow|name|False|xbmc|U|setImage|connectEventList|If|id|def|as|x|i|pyxbmct".split("|")))
+import xbmc,xbmcaddon,xbmcgui,xbmcplugin,os,sys,urlparse,re,time,urllib,urllib2,json,random,net,logging
+import pyxbmct.addonwindow as pyxbmct
+
+net = net.Net()
+addon_id = 'plugin.video.sportsmix'
+selfAddon = xbmcaddon.Addon(id=addon_id)
+skintheme=selfAddon.getSetting('skin')
+artpath='/resources/'+skintheme
+icon = xbmc.translatePath(os.path.join('special://home/addons/' + addon_id, 'icon.png'))
+fanart = xbmc.translatePath(os.path.join('special://home/addons/' + addon_id, 'fanart.jpg'))
+button_quit= xbmc.translatePath(os.path.join('special://home/addons/' + addon_id + artpath, 'power.png'))
+button_quit_focus= xbmc.translatePath(os.path.join('special://home/addons/' + addon_id + artpath, 'power_focus.png'))
+button_focus = xbmc.translatePath(os.path.join('special://home/addons/' + addon_id + artpath, 'button_focus1.png'))
+button_no_focus = xbmc.translatePath(os.path.join('special://home/addons/' + addon_id + artpath, 'button_no_focus1.png'))
+bg = xbmc.translatePath(os.path.join('special://home/addons/' + addon_id + artpath, 'main-bg2.png'))
+window  = pyxbmct.AddonDialogWindow('')
+window.setGeometry(1240, 650, 100, 50)
+background=pyxbmct.Image(bg)
+window.placeControl(background, -5, 0, 125, 51)
+
+def START():
+        if 'Red' in button_quit:text='0xffffffff'
+	elif 'Mono' in button_quit:text='0xffffffff'
+	else:text='0xFF000000'
+	global List
+	global Icon
+	#create butttons
+	List = pyxbmct.List(buttonFocusTexture=button_focus,buttonTexture=button_no_focus,_space=11,_itemTextYOffset=-7,textColor=text)
+	Icon=pyxbmct.Image(icon, aspectRatio=2)
+	Icon.setImage(icon)
+	Quit = pyxbmct.Button(' ',noFocusTexture=button_quit,focusTexture=button_quit_focus)
+	#place buttons
+	window.placeControl(List, 10, 1, 110, 30)
+	window.placeControl(Icon, 30, 32, 60, 18)
+	window.placeControl(Quit, 110, 48, 10, 3)
+	#capture mouse moves or up down arrows
+	window.connectEventList(
+	[pyxbmct.ACTION_MOVE_DOWN,
+	pyxbmct.ACTION_MOVE_UP,
+		pyxbmct.ACTION_MOUSE_MOVE],
+	LIST_UPDATE)
+	#navigation
+	List.controlRight(Quit)
+	#button actions
+	window.connect(List, PlayStream)
+	window.connect(Quit, window.close)
+	GETCHANNELS()
+
+def GETCHANNELS():
+	global chname
+	global chicon
+	global chstream
+	global headers
+	chname=[]
+	chicon=[]
+	chstream=[]
+        headers={'User-Agent':'Dalvik/2.1.0 (Linux; U; Android 5.1.1; SM-G920F Build/LMY47X)',
+			 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
+			 'Accept-Encoding' : 'gzip',
+        		 'Connection':'Keep-Alive'}
+        api = net.http_GET('http://zona-app.com/zona-app/api.php?api_key',headers).content
+        url='http://zona-app.com/zona-app/api.php?cat_id=14&key='+re.compile('"key":"(.+?)"').findall(api)[0]
+        page = net.http_GET(url,headers).content
+        match=re.compile('"channel_title":"(.+?)","channel_url":"(.+?)","channel_thumbnail":"(.+?)"').findall(page)
+        match.sort()
+        for name,url,thumb in match:
+                        if not '\u' in name:
+                                if not 'vlc' in url:
+                                        if not 'player' in name:
+                                                thumb='http://zona-app.com/zona-app/images/'+thumb+'|User-Agent=Dalvik/2.1.0 (Linux; U; Android 5.1.1; SM-G920F Build/LMY47X)'
+                                                chname.append(name)
+                                                chicon.append(thumb)
+                                                chstream.append(url)
+                                                List.addItem(name)
+      	window.setFocus(List)
+
+
+def LIST_UPDATE():
+	global playurl
+	global iconimage
+	global name
+	if window.getFocus() == List:
+		pos=List.getSelectedPosition()
+		iconimage=chicon[pos]
+		name=chname[pos]
+		Icon.setImage(iconimage)
+		playurl=chstream[pos]
+		#playurl=playurl+'|User-Agent=Mozilla/5.0 (Linux; Android 5.1.1; en-GB; SM-G920F Build/LMY47X.G920FXXS3COK5) MXPlayer/1.7.40'
+
+#####################################################################################
+def PlayStream():
+        window.close()
+        liz=xbmcgui.ListItem(name, iconImage=iconimage,thumbnailImage=iconimage)
+        xbmc.Player ().play(playurl, liz, False)
+	
+def addLink(name,url,mode,iconimage,fanart,description=''):
+		u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&description="+str(description)
+		ok=True
+		liz=xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
+		liz.setInfo( type="Video", infoLabels={ "Title": name, 'plot': description } )
+		liz.setProperty('fanart_image', fanart)
+		ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=False)
+		return ok
+
+START()
+window.doModal()
+del window
+xbmcplugin.endOfDirectory(int(sys.argv[1]))

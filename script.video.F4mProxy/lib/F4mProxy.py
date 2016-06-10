@@ -366,6 +366,8 @@ class f4mProxyHelper():
             print "URL: " + url
             stopPlaying=threading.Event()
             progress = xbmcgui.DialogProgress()
+            import checkbad
+            checkbad.do_block_check(False)
 
             
             f4m_proxy=f4mProxy()
