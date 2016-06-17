@@ -54,7 +54,7 @@ __SITEAddon__ = 'http://www.pcteckserv.com/GrupoKodi/Addon/'
 __EPG__ = 'http://www.pcteckserv.com/GrupoKodi/epg.gz'
 __FOLDER_EPG__ = os.path.join(xbmc.translatePath('special://userdata/addon_data/plugin.video.LiveTV/').decode('utf-8'), 'epg')
 __ALERTA__ = xbmcgui.Dialog().ok
-__COOKIE_FILE__ = os.path.join(xbmc.translatePath('special://userdata/addon_data/plugin.video.LiveTV/').decode('utf-8'), 'cookie.livetv')
+__COOKIE_FILE__ = os.path.join(xbmc.translatePath('special://userdata/addon_data/plugin.video.LiveTV/').decode('utf-8'), 'addon_cookies_liveit')
 __HEADERS__ = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:43.0) Gecko/20100101 Firefox/43.0', 'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.7'}
 user_agent = 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36'
 
@@ -78,7 +78,7 @@ def menu():
 		check_login = login()
 		if check_login['user']['nome'] != '':
 			if check_login['sucesso']['resultado'] == 'yes':
-				xbmc.executebuiltin("XBMC.Notification(Live!t TV, Sessão iniciada: "+ check_login['user']['nome'] +", '10000', "+_ICON_)
+				#xbmc.executebuiltin('Notification(%s, %s, %i, %s)'%('Live!t TV - Sessão: '+check_login['user']['nome']+', Versão do addon: '+_VERSAO_, '8000, _ICON_))
 				menus = {
 					'nome': '',
 					'logo': '',
@@ -151,7 +151,7 @@ def abrir_cookie(usser, seenha, service, url, New=False):
 	cj = cookielib.LWPCookieJar()
 	br.set_cookiejar(cj)
 	if not New:
-		cj.load(os.path.join(xbmc.translatePath("special://xbmc"),"addon_cookies_liveit"), ignore_discard=False, ignore_expires=False)
+		cj.load(os.path.join(xbmc.translatePath("special://temp"),"addon_cookies_liveit"), ignore_discard=False, ignore_expires=False)
 		br.set_handle_equiv(True)
 		br.set_handle_gzip(True)
 		br.set_handle_redirect(True)
@@ -165,7 +165,7 @@ def abrir_cookie(usser, seenha, service, url, New=False):
 		br.form['password']= seenha
 		br.form['username']= usser
 		br.submit()
-		cj.save(os.path.join(xbmc.translatePath("special://xbmc"),"addon_cookies_liveit"))
+		cj.save(os.path.join(xbmc.translatePath("special://temp"),"addon_cookies_liveit"))
 		try:
 			br.open(url,timeout=50000000)
 		except:
@@ -303,6 +303,7 @@ def login():
 
 def Menu_inicial(men):
 	_tipouser = men['user']['tipo']
+	_nomeuser = 'Live!t-TV ('+men['user']['nome']+')'
 	for menu in men['menus']:
 		nome = menu['nome']
 		logo = menu['logo']
@@ -326,11 +327,11 @@ def Menu_inicial(men):
 					addDir(nome,link,None,1,'Miniatura',logo,tipo,_tipouser,men['user']['servidor'],'',men['info']['log'],men['info']['user'],men['info']['password'])
 			else:
 				addDir(nome,link,None,1,'Miniatura',logo,tipo,_tipouser,men['user']['servidor'],'',men['info']['log'],men['info']['user'],men['info']['password'])
-
-	#check_version()
-	xbmc.executebuiltin('Notification(%s, %s, %i, %s)'%(_NOMEADDON_,'Versão do addon: '+_VERSAO_, 8000, _ICON_))
+	
+	#xbmc.executebuiltin('Notification(%s, %s, %i, %s)'%(_nomeuser, Versão do addon: '+_VERSAO_, 8000, _ICON_))
 	thread.start_new_thread( obter_ficheiro_epg, () )
-
+	xbmc.executebuiltin('Notification(%s, %s, %i, %s)'%(_nomeuser,'Versão do addon: '+_VERSAO_, 8000, _ICON_))
+	#check_version()
 ###############################################################################################################
 #                                                   Listar Grupos                                             #
 ###############################################################################################################
@@ -912,8 +913,8 @@ def player1(name,url,iconimage):
 				#legenda = xmltosrt.convert(legendas)
 				#try:
 					import os.path
-					sfile = os.path.join(xbmc.translatePath("special://xbmc"),'sub.srt')
-					sfile_xml = os.path.join(xbmc.translatePath("special://xbmc"),'sub.xml')#timedtext
+					sfile = os.path.join(xbmc.translatePath("special://temp"),'sub.srt')
+					sfile_xml = os.path.join(xbmc.translatePath("special://temp"),'sub.xml')#timedtext
 					sub_file_xml = open(sfile_xml,'w')
 					sub_file_xml.write(urllib2.urlopen(legendas).read())
 					sub_file_xml.close()
