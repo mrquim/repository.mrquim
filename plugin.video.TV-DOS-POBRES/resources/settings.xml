@@ -1,8 +1,0 @@
-<settings>
-	<category label="[COLOR red][B]ADD PATHS[/B][/COLOR]">
-		<setting label="[B]URL to m3u playlist[/B]" type="text"  id="online_m3u" default="http://api.ss-iptv.com/bridge/?p=EEcNAggcGBEYBhVbUVRNXl1AX1xLWFVVSQQaHwwWBUdDSQIcHyEWHAsVBAQdKAoXHwAXH0dVSQwdSV9NX1dKXV1VSRAQD0dDSVRJCARLWQQcD1UbCAAcWFIbCQdJXVUbWwRID1UcWlEaD11LCAccWQRbR0cKBBALCABbUUcaBAsNDgsNUUpWGBELDgQUGEdVSRYQDAsYHxALDkdDSVRLXlRNXwRJXQccWVNIDVMbXlJPU1wfWldLUlUcDgRNXVEcWQFMWAZbFg%3D%3D" />
-		<setting label="[B]Local path to m3u playlist[/B]" type="file"  id="local_m3u" default="" />	
-		<setting label="[COLOR red][B]URL to xml playlist[/B][/COLOR]" type="text"  id="online_xml" default="" />		
-		<setting label="[COLOR red][B]Local path to xml playlist[/B][/COLOR]" type="file"  id="local_xml" default="" />			
-	</category>
-</settings>

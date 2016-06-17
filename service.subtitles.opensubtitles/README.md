@@ -1,4 +1,0 @@
-OpenSubtitles-service
-=====================
-
-service.opensubtitles
