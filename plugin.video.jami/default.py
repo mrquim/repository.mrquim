@@ -16,6 +16,11 @@ icon    = local.getAddonInfo('icon')
 base    = 'plugin://plugin.video.youtube/'
 
 fan01 = 'special://home/addons/plugin.video.jami/resources/fan01.png'
+iconAA = 'special://home/addons/plugin.video.jami/resources/iconAA.png'
+iconAB = 'special://home/addons/plugin.video.jami/resources/iconAB.png'
+iconAC = 'special://home/addons/plugin.video.jami/resources/iconAC.png'
+iconAD = 'special://home/addons/plugin.video.jami/resources/iconAD.png'
+icon00 = 'special://home/addons/plugin.video.jami/resources/icon00.png'
 icon01 = 'special://home/addons/plugin.video.jami/resources/icon01.png'
 icon02 = 'special://home/addons/plugin.video.jami/resources/icon02.png'
 icon03 = 'special://home/addons/plugin.video.jami/resources/icon03.png'
@@ -51,6 +56,7 @@ icon32 = 'special://home/addons/plugin.video.jami/resources/icon32.png'
 icon33 = 'special://home/addons/plugin.video.jami/resources/icon33.png'
 icon34 = 'special://home/addons/plugin.video.jami/resources/icon34.png'
 icon35 = 'special://home/addons/plugin.video.jami/resources/icon35.png'
+icon36 = 'special://home/addons/plugin.video.jami/resources/icon36.png'
 
 def run():
     plugintools.log("jami.run")
@@ -63,41 +69,47 @@ def run():
 
 def main_list(params):
 	plugintools.log("jami ===> " + repr(params))
-	plugintools.add_item(title = "O mundo maravilhoso dos Animais", url = base + "playlist/PLsWbExGo1KPappAs8nPxrqDgrntNy9Sto/", thumbnail = icon01, fanart = fan01, folder = True)
-	plugintools.add_item(title = "Banana Cartoon [PT]", url = base + "channel/UCPeLZYqHrQdV4xdZ2Lj3Reg/", thumbnail = icon02, fanart = fan01, folder = True)
-	plugintools.add_item(title = "Angry Birds [PT]", url = base + "playlist/PLsWbExGo1KPbiUa9ZPIy1q7oUhsJq6uPT/", thumbnail = icon03, fanart = fan01, folder = True)
-	plugintools.add_item(title = "Ruca - T01 a T24 [PT]", url = base + "playlist/PLsWbExGo1KPaYUuRSfzyF1X11Czip4259/", thumbnail = icon04, fanart = fan01, folder = True)
-	plugintools.add_item(title = "Max - T01 a T05 [PT]", url = base + "playlist/PLsWbExGo1KPbil5fBWgJlv2gQPTcABI7x/", thumbnail = icon05, fanart = fan01, folder = True)
-	plugintools.add_item(title = "Octonautas [PT]", url = base + "playlist/PLsWbExGo1KPazbyjJE2UwlXn5rYZMDVoh/", thumbnail = icon06, fanart = fan01, folder = True)
-	plugintools.add_item(title = "Noddy [PT]", url = base + "playlist/PLsWbExGo1KPZTiUyNEHtkbN2atTuAoQHL/", thumbnail = icon07, fanart = fan01, folder = True)	
-	plugintools.add_item(title = "Pocoyo [PT]", url = base + "user/childrenvideos/", thumbnail = icon08, fanart = fan01, folder = True)
-	plugintools.add_item(title = "Heidi 3D [PT]", url = base + "playlist/PLsWbExGo1KPZKVQoMG3-ikbIIyU5_AsvY/", thumbnail = icon09, fanart = fan01, folder = True)	
-	plugintools.add_item(title = "Abelha Maia 3D [PT]", url = base + "playlist/PLsWbExGo1KPaQx2dXjba2q29_teZBeEfm/", thumbnail = icon10, fanart = fan01, folder = True)
-	plugintools.add_item(title = "Herois da Cidade [PT]", url = base + "playlist/PLFepGKlvmn74D95OwZkSSQR3uk4T2ReHD/", thumbnail = icon11, fanart = fan01, folder = True)
-	plugintools.add_item(title = "Bob o Construtor [PT]", url = base + "playlist/PLsWbExGo1KPZITh_DyO7ye-UVdMfAQXfh/", thumbnail = icon12, fanart = fan01, folder = True)
-	plugintools.add_item(title = "Thomas e Amigos [PT]", url = base + "playlist/PLsWbExGo1KPb3PoKuk3chB4460GEKgqjP/", thumbnail = icon13, fanart = fan01, folder = True)
-	plugintools.add_item(title = "Ovelha Choné [PT]", url = base + "playlist/PLsWbExGo1KParAPrKtn8aQfLnEFepaajb/", thumbnail = icon14, fanart = fan01, folder = True)
-	plugintools.add_item(title = "Vila Moleza [PT]", url = base + "playlist/PLsWbExGo1KPaYskF8yclTCPUNCvvNP35E/", thumbnail = icon15, fanart = fan01, folder = True)
-	plugintools.add_item(title = "Panda [PT]", url = base + "playlist/PLsWbExGo1KPaOQDuO_oLgY-ar_AzpF3c5/", thumbnail = icon16, fanart = fan01, folder = True)
-	plugintools.add_item(title = "Hello Kitty [PT]", url = base + "playlist/PLsWbExGo1KPZxKeoOmZQNe-UpKotBwcbt/", thumbnail = icon17, fanart = fan01, folder = True)
-	plugintools.add_item(title = "Xana Toc Toc [PT]", url = base + "playlist/PLsWbExGo1KPYu3w9mnbqvlPQMaTVEixF7/", thumbnail = icon18, fanart = fan01, folder = True)
-	plugintools.add_item(title = "Violetta [Musicais]", url = base + "playlist/PLsWbExGo1KPZW1aCXP-Z5FZW9ZfTOfeTY/", thumbnail = icon19, fanart = fan01, folder = True)
-	plugintools.add_item(title = "[ Bernard Bear ]", url = base + "playlist/PLsWbExGo1KPaloN_t_O2t1yHz_8uCBTVj/", thumbnail = icon20, fanart = fan01, folder = True)
+	plugintools.add_item(title = "Completos [BR/PT]", url = base + "playlist/PLsWbExGo1KPZxD6NThCNK4SaXzjQgEd24/", thumbnail = icon00, fanart = fan01, folder = True)
+	plugintools.add_item(title = "O Mundo dos Animais", url = base + "playlist/PLsWbExGo1KPappAs8nPxrqDgrntNy9Sto/", thumbnail = icon01, fanart = fan01, folder = True)
+	plugintools.add_item(title = "Ruca - T01 a T24 [PT]", url = base + "playlist/PLsWbExGo1KPaYUuRSfzyF1X11Czip4259/", thumbnail = icon02, fanart = fan01, folder = True)
+	plugintools.add_item(title = "Max - T01 a T05 [PT]", url = base + "playlist/PLsWbExGo1KPbil5fBWgJlv2gQPTcABI7x/", thumbnail = icon03, fanart = fan01, folder = True)
+	plugintools.add_item(title = "Octonautas [PT]", url = base + "playlist/PLsWbExGo1KPazbyjJE2UwlXn5rYZMDVoh/", thumbnail = icon04, fanart = fan01, folder = True)
+	plugintools.add_item(title = "Noddy [PT]", url = base + "playlist/PLsWbExGo1KPZTiUyNEHtkbN2atTuAoQHL/", thumbnail = icon05, fanart = fan01, folder = True)	
+	plugintools.add_item(title = "Pocoyo [PT]", url = base + "user/childrenvideos/", thumbnail = icon06, fanart = fan01, folder = True)
+	plugintools.add_item(title = "Heidi 3D [PT]", url = base + "playlist/PLsWbExGo1KPZKVQoMG3-ikbIIyU5_AsvY/", thumbnail = icon07, fanart = fan01, folder = True)	
+	plugintools.add_item(title = "Abelha Maia 3D [PT]", url = base + "playlist/PLsWbExGo1KPaQx2dXjba2q29_teZBeEfm/", thumbnail = icon08, fanart = fan01, folder = True)
+	plugintools.add_item(title = "Herois da Cidade [PT]", url = base + "playlist/PLFepGKlvmn74D95OwZkSSQR3uk4T2ReHD/", thumbnail = icon09, fanart = fan01, folder = True)
+	plugintools.add_item(title = "Bob o Construtor [PT]", url = base + "playlist/PLsWbExGo1KPZITh_DyO7ye-UVdMfAQXfh/", thumbnail = icon10, fanart = fan01, folder = True)
+	plugintools.add_item(title = "Vila Moleza [PT]", url = base + "playlist/PLsWbExGo1KPaYskF8yclTCPUNCvvNP35E/", thumbnail = icon11, fanart = fan01, folder = True)
+	plugintools.add_item(title = "Panda [PT]", url = base + "playlist/PLsWbExGo1KPaOQDuO_oLgY-ar_AzpF3c5/", thumbnail = icon12, fanart = fan01, folder = True)
+	plugintools.add_item(title = "Hello Kitty [PT]", url = base + "playlist/PLsWbExGo1KPZxKeoOmZQNe-UpKotBwcbt/", thumbnail = icon13, fanart = fan01, folder = True)
+	plugintools.add_item(title = "Xana Toc Toc [PT]", url = base + "playlist/PLsWbExGo1KPYu3w9mnbqvlPQMaTVEixF7/", thumbnail = icon14, fanart = fan01, folder = True)
+	plugintools.add_item(title = "Violetta [Musicais]", url = base + "playlist/PLsWbExGo1KPZW1aCXP-Z5FZW9ZfTOfeTY/", thumbnail = icon15, fanart = fan01, folder = True)
+	plugintools.add_item(title = "[ A Ovelha Choné ]", url = base + "playlist/PLsWbExGo1KParAPrKtn8aQfLnEFepaajb/", thumbnail = iconAA, fanart = fan01, folder = True)
+	plugintools.add_item(title = "[ Banana Cartoon ]", url = base + "channel/UCPeLZYqHrQdV4xdZ2Lj3Reg/", thumbnail = iconAB, fanart = fan01, folder = True)
+	plugintools.add_item(title = "[ Angry Birds ]", url = base + "playlist/PLsWbExGo1KPbiUa9ZPIy1q7oUhsJq6uPT/", thumbnail = iconAC, fanart = fan01, folder = True)
+	plugintools.add_item(title = "[ Bernard Bear ]", url = base + "playlist/PLsWbExGo1KPaloN_t_O2t1yHz_8uCBTVj/", thumbnail = iconAD, fanart = fan01, folder = True)
+	plugintools.add_item(title = "Thomas e Amigos [PT/BR]", url = base + "playlist/PLsWbExGo1KPb3PoKuk3chB4460GEKgqjP/", thumbnail = icon16, fanart = fan01, folder = True)
+	plugintools.add_item(title = "Planeta Animal [BR]", url = base + "playlist/PLsWbExGo1KPbbtDXfnoiTQk62BMthcbuZ/", thumbnail = icon17, fanart = fan01, folder = True)
+	plugintools.add_item(title = "Disney World [BR]", url = base + "playlist/PLsWbExGo1KPZX-FxRkMnPBDwDiecCzkm8/", thumbnail = icon18, fanart = fan01, folder = True)
+	plugintools.add_item(title = "Alvin e os Esquilos [BR]", url = base + "playlist/PLsWbExGo1KPZqgGbsYRrFXY9o0Dkh48Vp/", thumbnail = icon19, fanart = fan01, folder = True)
+	plugintools.add_item(title = "Mate e os Carrinhos [BR]", url = base + "playlist/PLsWbExGo1KPZCSUDX6kDYBG0UBMGaNjZK/", thumbnail = icon20, fanart = fan01, folder = True)
 	plugintools.add_item(title = "Chaves - T01 a T05 [BR]", url = base + "playlist/PLsWbExGo1KPYzBmOG6XPDby_xI3hVbXxm/", thumbnail = icon21, fanart = fan01, folder = True)
 	plugintools.add_item(title = "Charlie Brown [BR]", url = base + "playlist/PLsWbExGo1KPYzN1D-Dce-zBTH8GzS2QAl/", thumbnail = icon22, fanart = fan01, folder = True)
 	plugintools.add_item(title = "Daniel Tigre [BR]", url = base + "playlist/PLoaBAxtZve6nmFuNHCmIRLz_bo2aCD4wX/", thumbnail = icon23, fanart = fan01, folder = True)
 	plugintools.add_item(title = "Masha e o Urso [BR]", url = base + "playlist/PLsWbExGo1KPYsGKNTnOemWCEdxRNHJyRm/", thumbnail = icon24, fanart = fan01, folder = True)
 	plugintools.add_item(title = "Jelly Jamm [BR]", url = base + "playlist/PLsWbExGo1KPbgMZ7xHfz22oOLjT7TisY0/", thumbnail = icon25, fanart = fan01, folder = True)
 	plugintools.add_item(title = "Turma da Mónica [BR]", url = base + "playlist/PLsWbExGo1KPb3_KkJ3ekYws_Rivr-4x93/", thumbnail = icon26, fanart = fan01, folder = True)
-	plugintools.add_item(title = "Sonic X [BR]", url = base + "playlist/PLsWbExGo1KPY408CLKjPa1hko7rtTovFw/", thumbnail = icon27, fanart = fan01, folder = True)
+	plugintools.add_item(title = "Sonic Underground [BR]", url = base + "playlist/PLsWbExGo1KPZ_5YepijUOWyx5wSHdmpBo/", thumbnail = icon27, fanart = fan01, folder = True)
 	plugintools.add_item(title = "Sonic Boom [BR]", url = base + "playlist/PLsWbExGo1KPbeaWxsnpmRJOKABA6-DyN9/", thumbnail = icon28, fanart = fan01, folder = True)
-	plugintools.add_item(title = "Team Hot Wheels [BR]", url = base + "playlist/PLsWbExGo1KPb-TTwpvyEDIZa51JUYLr9l/", thumbnail = icon29, fanart = fan01, folder = True)
-	plugintools.add_item(title = "Tartarugas Ninja [PT]", url = base + "playlist/PLsWbExGo1KPZpo076XQwp5nzVco5ZRUcN/", thumbnail = icon30, fanart = fan01, folder = True)
-	plugintools.add_item(title = "Irmãos Grimm [PT]", url = base + "playlist/PLaerdHbAdrDIIi3LuIIdCRGdFoHe3lS_D/", thumbnail = icon31, fanart = fan01, folder = True)
-	plugintools.add_item(title = "Dartacão [PT]", url = base + "playlist/PLsWbExGo1KPb3QuNAHUoBDBGdA981SDjP/", thumbnail = icon32, fanart = fan01, folder = True)
-	plugintools.add_item(title = "Tom Sawyer [PT]", url = base + "playlist/PLsWbExGo1KPbgxDBmh-wn0zIzJY8kiqSY/", thumbnail = icon33, fanart = fan01, folder = True)
-	plugintools.add_item(title = "Rua Sésamo [PT]", url = base + "playlist/PLsWbExGo1KPZMSjszQz49Let2KEsNptif/", thumbnail = icon34, fanart = fan01, folder = True)
-	plugintools.add_item(title = "Era uma vez - 4 Temporadas [PT]", url = base + "playlist/PLsWbExGo1KPZRlqvLY2Ja_SAJZMgBcdxD/", thumbnail = icon35, fanart = fan01, folder = True)
+	plugintools.add_item(title = "Sonic X [BR]", url = base + "playlist/PLsWbExGo1KPY408CLKjPa1hko7rtTovFw/", thumbnail = icon29, fanart = fan01, folder = True)
+	plugintools.add_item(title = "Team Hot Wheels [BR]", url = base + "playlist/PLsWbExGo1KPb-TTwpvyEDIZa51JUYLr9l/", thumbnail = icon30, fanart = fan01, folder = True)
+	plugintools.add_item(title = "Tartarugas Ninja [PT]", url = base + "playlist/PLsWbExGo1KPZpo076XQwp5nzVco5ZRUcN/", thumbnail = icon31, fanart = fan01, folder = True)
+	plugintools.add_item(title = "Irmãos Grimm [PT]", url = base + "playlist/PLaerdHbAdrDIIi3LuIIdCRGdFoHe3lS_D/", thumbnail = icon32, fanart = fan01, folder = True)
+	plugintools.add_item(title = "Dartacão [PT]", url = base + "playlist/PLsWbExGo1KPb3QuNAHUoBDBGdA981SDjP/", thumbnail = icon33, fanart = fan01, folder = True)
+	plugintools.add_item(title = "Tom Sawyer [PT]", url = base + "playlist/PLsWbExGo1KPbgxDBmh-wn0zIzJY8kiqSY/", thumbnail = icon34, fanart = fan01, folder = True)
+	plugintools.add_item(title = "Rua Sésamo [PT]", url = base + "playlist/PLsWbExGo1KPZMSjszQz49Let2KEsNptif/", thumbnail = icon35, fanart = fan01, folder = True)
+	plugintools.add_item(title = "Era uma vez - 4 Temporadas [PT]", url = base + "playlist/PLsWbExGo1KPZRlqvLY2Ja_SAJZMgBcdxD/", thumbnail = icon36, fanart = fan01, folder = True)
 	xbmcplugin.setContent(int(sys.argv[1]), 'movies')
 	xbmc.executebuiltin('Container.SetViewMode(500)')
 	

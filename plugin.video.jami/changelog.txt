@@ -1,10 +1,13 @@
-[B]28/05/2016 - Versão 2.1[/B]
+
+[B]14/06/2016 - Versão 3.1[/B]
+-  Adicionadas categoria de filmes completos dobrados em BR e PT
+   Adicionadas 4 novas séries.
+
+[B]28/05/2016 - Versão 3.0[/B]
 - Versão Animais e Natureza. 
   Renovação estética em termos de capas que ficaram mais apelativas para as crianças
   Imagens em 300x450 em modo DVD.
   Adicionadas 3 novas séries.
-
-
 
 [B]20/05/2016 - Versão 2.2[/B]
 - Eliminada a necessidade de login obrigatório no Youtube. 
