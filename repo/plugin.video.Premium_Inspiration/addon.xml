@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.Premium_Inspiration" name="Inspiration.Links" version="0.2.1" provider-name="InspirationLinks">
+    <requires>
+    </requires>
+    <extension point="xbmc.python.pluginsource"
+               library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary>Adoon disponiblizada para todos Adoon for all</summary>
+        <description>Adoon By Inspiration Links BLOG: http://jerrymoz.wordpress.com/</description>
+    </extension>
+</addon>

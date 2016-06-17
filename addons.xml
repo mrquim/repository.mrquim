@@ -1673,4 +1673,43 @@ SEND E MAIL: tvsupertuga@gmail.com[/B][/COLOR]</description>
 	</extension>
 </addon>
 
+<addon id="plugin.video.loganaddon" name="loganaddon TV" version="0.0.2" provider-name="Vitor Pereira e Pedro Selva">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.beautifulsoup" version="3.2.1"/>
+    <import addon="script.module.simple.downloader" version="0.9.4"/>
+    <import addon="script.module.beautifulsoup4" />
+    <import addon="script.module.simple.downloader" version="0.9.4"/>
+    <import addon="script.module.requests" />
+    <import addon="script.module.httplib2" />
+    <import addon="script.module.youtube.dl" optional="true"/>
+    <import addon="plugin.video.youtube" />
+    <import addon="script.module.urlresolver" optional="true"/>
+    <import addon="script.module.simplejson" /> 
+	<import addon="script.module.livestreamer" optional="true"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>   </summary>
+    <description lang="en">  </description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.Premium_Inspiration" name="Inspiration.Links" version="0.2.1" provider-name="InspirationLinks">
+    <requires>
+    </requires>
+    <extension point="xbmc.python.pluginsource"
+               library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary>Adoon disponiblizada para todos Adoon for all</summary>
+        <description>Adoon By Inspiration Links BLOG: http://jerrymoz.wordpress.com/</description>
+    </extension>
+</addon>
+
 </addons>
