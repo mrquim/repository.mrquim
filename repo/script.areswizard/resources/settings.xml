@@ -1,0 +1,51 @@
+<settings>
+    <category label="30001">
+		<setting id="firstrun" type="bool" label="firstrun" default="true" visible="false"/>
+		<setting id="runonce" type="text" label="runonce" default="1" visible="false"/>
+		<setting id="username" type="text" label="Username" default=""/>
+		<setting id="deviceid" type="text" label="30008"  enable="false"/>
+		<setting id="accountstatus" type="text" label="30004"  default="not registered" enable="false"/>
+		<setting id="Subends" type="text" label="30005"  enable="false"/>
+		<setting id="activationsleft" type="text" label="30007"  enable="false"/>
+	</category>
+	<category label="Backup">
+		<setting type="lsep" label="[CR]Select backup destination folder:[CR]"/>
+        <setting id="backupdest" type="folder" label="Backup destination folder" default="" option="writeable"/>
+		<setting type="lsep" label="[CR]If you want a custom folder backed up, select that folder here:[CR]"/>
+		<setting id="customfolder" type="folder" label="Backup custom folder" default="special://home"/>
+    </category>
+	<category label="Restore">
+		<setting type="lsep" label="[CR]Select backup file:[CR]"/>
+        <setting id="backupfile" type="file" label="Backup file" default="" option="writeable"/>
+    </category>
+	<category label="Build Update">
+		<setting id="checkbuildupdate" type="bool" label="Check for build updates [when available]" default="true"/>
+		<setting id="buildupdatefreq" type="enum" label="30013" lvalues="30010|30011|30012" default="1" enable="!eq(-1,false)"/>
+		<setting id="buildname" type="text" label="Installed Build: " default=""/>
+		<setting id="buildcanupdate" type="text" label="Can check for update: " default=""/>
+		<setting id="buildinstalledversion" type="text" label="Installed Version: " default=""/>
+		<setting id="buildlatestversion" type="text" label="Latest Version: " default=""/>
+		<setting id="lastbuildcheck" type="text" label="Last check for update: " default=""/>
+		<setting type="lsep" label="[CR][CR]"/>
+		
+	</category>
+	<category label="Build Options">
+		<setting id="keepfavourites" type="bool" label="Keep my favourites" default="true"/>
+		<setting id="keepsources" type="bool" label="Keep my sources" default="true"/>
+	</category>
+	<category label="Stats">
+		<setting id="lastclearedthumbnails" type="text" label="Last time thumbnails were cleared: "  default="Never" enable="false"/>
+		<setting id="lastclearedpackages" type="text" label="Last time packages were cleared: "  default="Never" enable="false"/>
+		<setting id="lastclearedcache" type="text" label="Last time temp\cache was cleared: "  default="Never" enable="false"/>
+		<setting id="totaltempfiles" type="text" label="Number of temp files cleared: "  default="0" enable="false"/>
+		<setting id="totalspacegained" type="text" label="Total Space regained (MB): "  default="0" enable="false"/>
+	</category>
+	<category label="Show\Hide">
+	<setting id="showadult" type="bool" label="Show Adult Content" default="false"/>
+	</category>
+	<category label="30002">
+		<setting id="autoupdate" type="bool" label="30000" default="true"/>
+		<setting id="forceoffline" type="bool" label="Force Offline Mode" default="false"/>
+		<setting id="versionoverride" type="text" label="30003"/>
+	</category>
+</settings>

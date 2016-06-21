@@ -1,0 +1,136 @@
+
+###########
+     v0.0.41:
+###########
+
+
+         added prompt to get permission to scan for troublsome addons\code
+
+
+
+###########
+     v0.0.40:
+###########
+	
+          changed update check source
+
+          added 2nd source for update check, incase of connection issues
+
+          tweaked build listings in preperation for major update
+
+          added addon scanner  [can be enabled\disabled at any time and will only be used when necessary]
+
+          fixed error handling during build selection
+
+
+###########
+     v0.0.39:
+###########
+
+          BIG NEWS: We have invested in another server\upgrade for the wizard, hopefully this will improve reliability & performance.
+
+          Tweaked logging to accomodate Kodi 16 default log level
+         
+
+
+
+###########
+     v0.0.38:
+###########
+
+          undone some of the previous efficiency tweaks do reduce loading\wait times when browsing builds
+
+          looked into download stats not counting properly
+
+          disabled rating builds\addons (hopefully temporary)
+
+          added a bit more to the error handling when trying to connect to pages\sites
+
+
+
+###########
+     v0.0.37:
+###########
+
+
+          more tweaks to lessen load on server
+
+          backup filename will now have date + time added to avoid conflicts
+
+          Ares will now warn if a ZIP is corrupt\invalid when selecting a restore ZIP
+
+
+
+###########
+     v0.0.36:
+###########
+
+
+          looked into issue in new entries where all builds were saying they could update even though some couldn't
+
+          looked into issue where new builds were being assigned the wrong author name (sorry)
+
+          looked into issue where for some people it would continously fail to send stats after build install
+
+          looked into download stats not counting on total downloads
+
+          bundled both required modules within main zip.. may prevent dependancies not met issues
+
+          tweaked stats\listings to make it more efficient.. (hopefully, lol)
+
+
+
+###########
+     v0.0.35:
+###########
+
+          NEW FEATURE:  glad to say the backup feature is done, hope it helps ;)
+
+          Browse Builds revamp.. you can now easily view the top 20 builds [from the previous week], new entries and assorted builds
+
+          Increased GUI size, now runs full screen..little bit more space.
+
+          added news ticker to bottom of screen
+
+          added a label underneath big lists to indicate current selection and number of items in the list, (ie.. 1/10) hopefully this will make scrolling easier
+
+          the yellow arrows now also hide when at the end of a list.
+
+          tweaked error reporting on downloads
+
+          fixed issue where when changelog is still in the background, install button etc didn't show
+
+          lists now return to their orignal postions when browsing addons\builds etc.. will save a bit of scrolling ;)
+
+          shifted a few labels to avoid overlapping with non-standard fonts.
+
+          fixed ratings
+
+
+
+
+###########
+     v0.0.34:
+###########
+
+
+          corrected mistake in 33 [Doh!]
+
+
+###########
+     v0.0.33:
+###########
+
+
+          back-end fixes
+
+
+
+###########
+     v0.0.32:
+###########
+
+
+          fixed repo installs
+
+
