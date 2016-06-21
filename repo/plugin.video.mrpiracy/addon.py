@@ -198,7 +198,10 @@ def getList(url, pagina):
 
             dados = Database.selectFilmeDB(idIMDB)
             if dados is None:
-                infoFilme = json.loads(Trakt.getFilme(idIMDB, cat.decode('utf8')))
+                try:
+                    infoFilme = json.loads(Trakt.getFilme(idIMDB, cat.decode('utf8')))
+                except ValueError:
+                    continue
                 poster = infoFilme["poster"]
                 fanart = infoFilme["fanart"]
                 nomeOriginal = infoFilme["nome"]
@@ -395,6 +398,8 @@ def getStreamLegenda(siteBase, codigo_fonte):
         for link, legenda in match:
             titulos.append('Servidor #%s' % i)
             links.append(link)
+            if not '.srt' in legenda:
+                legend = legenda+'.srt'
             legendas.append('http://mrpiracy.club/subs/%s' % legenda)
             i = i+1
 
@@ -403,6 +408,8 @@ def getStreamLegenda(siteBase, codigo_fonte):
         legendaAux = ''
         for idS, link in match:
             if 'legenda' in idS:
+                if not '.srt' in link:
+                    link = link+'.srt'
                 legendaAux = 'http://mrpiracy.club/subs/%s' % link
                 continue
             if 'videomega' in idS:
@@ -428,6 +435,10 @@ def getStreamLegenda(siteBase, codigo_fonte):
         elif 'openload' in links[servidor]:
             stream = URLResolverMedia.OpenLoad(links[servidor]).getMediaUrl()
             legenda = URLResolverMedia.OpenLoad(links[servidor]).getSubtitle()
+        elif 'drive.google.com/' in links[servidor]:
+            stream = URLResolverMedia.GoogleVideo(links[servidor]).getMediaUrl()
+            legenda = legendaAux
+
     else:
 
         if 'server.mrpiracy.club' in links[0]:
@@ -436,6 +447,15 @@ def getStreamLegenda(siteBase, codigo_fonte):
         elif 'uptostream.com' in links[0]:
             stream = URLResolverMedia.UpToStream(links[0]).getMediaUrl()
             legenda = legendas[0]
+        elif 'drive.google.com/' in links[0]:
+            stream = URLResolverMedia.GoogleVideo(links[0]).getMediaUrl()
+            legenda = legendas[0]
+        elif 'openload' in links[0]:
+            stream = URLResolverMedia.OpenLoad(links[0]).getMediaUrl()
+            legenda = URLResolverMedia.OpenLoad(links[0]).getSubtitle()
+
+    print links
+
 
 
     """if match != []:
@@ -498,8 +518,9 @@ def getStreamLegenda(siteBase, codigo_fonte):
 
     """
 
-
-
+    print "~~~~~~~~~~~~~~~~~~~ MrPiracy: Stream Legenda"
+    print stream
+    print legenda
     return stream, legenda
 
 def pesquisa():

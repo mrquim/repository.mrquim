@@ -107,6 +107,7 @@ class HLSDownloader():
                 sp = url.split('|')
                 url = sp[0]
                 clientHeader = sp[1]
+                print clientHeader
                 clientHeader= urlparse.parse_qsl(clientHeader)
                 print 'header recieved now url and headers are',url, clientHeader 
             self.status='init done'
@@ -125,7 +126,7 @@ class HLSDownloader():
     def keep_sending_video(self,dest_stream, segmentToStart=None, totalSegmentToSend=0):
         try:
             self.status='download Starting'
-            downloadInternal(self.url,dest_stream,self.maxbitrate)
+            downloadInternal(self.url,dest_stream,self.maxbitrate,self.g_stopEvent)
         except: 
             traceback.print_exc()
         self.status='finished'
@@ -147,13 +148,14 @@ def getUrl(url,timeout=20,returnres=False):
         proxies={}
         
         if gproxy:
-            proxies= {"http": gproxy}
-         
+            proxies= {"http": "http://"+gproxy}
+        
         if post:
             req = session.post(url, headers = headers, data= post, proxies=proxies)
         else:
             req = session.get(url, headers=headers,proxies=proxies )
 
+        req.raise_for_status()
         if returnres: 
             return req
         else:
@@ -212,7 +214,7 @@ def getUrlold(url,timeout=20, returnres=False):
 
 def download_chunks(URL, chunk_size=4096, enc=False):
     #conn=urllib2.urlopen(URL)
-    print 'starting download'
+    #print 'starting download'
     if enc:
         if USEDec==1 :
             chunk_size*=1000
@@ -234,7 +236,7 @@ def download_chunks(URL, chunk_size=4096, enc=False):
         #yield data
         #if chunk_size==-1: return
     #return 
-    print 'function finished'
+    #print 'function finished'
 
     if 1==2:
         data= conn.read()
@@ -430,10 +432,12 @@ def send_back(data,file):
     file.write(data)
     file.flush()
         
-def downloadInternal(url,file,maxbitrate=0):
+def downloadInternal(url,file,maxbitrate=0,stopEvent=None):
     global key
     global iv
     global USEDec
+    if stopEvent and stopEvent.isSet():
+        return
     dumpfile = None
     #dumpfile=open('c:\\temp\\myfile.mp4',"wb")
     variants = []
@@ -495,17 +499,22 @@ def downloadInternal(url,file,maxbitrate=0):
 
     try:
         while 1==1:#thread.isAlive():
+            if stopEvent and stopEvent.isSet():
+                return
             medialist = list(handle_basic_m3u(url))
             playedSomething=False
+            if medialist==None: return
             if None in medialist:
                 # choose to start playback at the start, since this is a VOD stream
                 pass
             else:
                 # choose to start playback three files from the end, since this is a live stream
                 medialist = medialist[-3:]
-            #print medialist
+            #print 'medialist',medialist
             
             for media in medialist:
+                if stopEvent and stopEvent.isSet():
+                    return
                 if media is None:
                     #queue.put(None, block=True)
                     return
@@ -515,6 +524,8 @@ def downloadInternal(url,file,maxbitrate=0):
                     
                     if glsession: media_url=media_url.replace(glsession,glsession[:-10]+''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10)))
                     for chunk in download_chunks(urlparse.urljoin(url, media_url),enc=enc):
+                        if stopEvent and stopEvent.isSet():
+                            return
                         #print '1. chunk available %d'%len(chunk)
                         if enc: 
                              if not USEDec==3:

@@ -107,6 +107,16 @@ disabled check for naughty builds online
 request module in hls
 [B]Version 2.5.0[/B]
 request module in hls
+[B]Version 2.5.1[/B]
+proxy issue in hls
+[B]Version 2.5.2[/B]
+hls stop bug
+[B]Version 2.5.3[/B]
+iconImage added
 
+[B]Version 2.5.4[/B]
+iconImage added
+[B]Version 2.5.5[/B]
+hls top when error
 
 

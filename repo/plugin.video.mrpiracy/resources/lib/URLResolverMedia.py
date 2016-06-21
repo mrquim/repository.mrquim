@@ -16,11 +16,62 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import json, re, xbmc, urllib, xbmcgui, os, sys, pprint
+import json, re, xbmc, urllib, xbmcgui, os, sys, pprint, urlparse
 from t0mm0.common.net import Net
 from bs4 import BeautifulSoup
 import jsunpacker
 import AADecoder
+
+class GoogleVideo():
+	def __init__(self, url):
+		self.url = url
+		self.net = Net()
+		self.headers = {"User-Agent": "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3"}
+
+	def getId(self):
+		return urlparse.urlparse(self.url).path.split("/")[-2]
+
+	def getMediaUrl(self):
+		sourceCode = self.net.http_GET(self.url, headers=self.headers).content.decode('unicode_escape')
+		formatos = {
+		'5': {'ext': 'flv'},
+		'6': {'ext': 'flv'},
+		'13': {'ext': '3gp'},
+		'17': {'ext': '3gp'},
+		'18': {'ext': 'mp4'},
+		'22': {'ext': 'mp4'},
+		'34': {'ext': 'flv'},
+		'35': {'ext': 'flv'},
+		'36': {'ext': '3gp'},
+		'37': {'ext': 'mp4'},
+		'38': {'ext': 'mp4'},
+		'43': {'ext': 'webm'},
+		'44': {'ext': 'webm'},
+		'45': {'ext': 'webm'},
+		'46': {'ext': 'webm'},
+		'59': {'ext': 'mp4'}
+		}
+		formatosLista = re.search(r'"fmt_list"\s*,\s*"([^"]+)', sourceCode).group(1)
+		formatosLista = formatosLista.split(',')
+		streamsLista = re.search(r'"fmt_stream_map"\s*,\s*"([^"]+)', sourceCode).group(1)
+		streamsLista = streamsLista.split(',')
+
+		videos = []
+		qualidades = []
+		i = 0
+		for stream in streamsLista:
+			formatoId, streamUrl = stream.split('|')
+			form = formatos.get(formatoId)
+			extensao = form['ext']
+			resolucao = formatosLista[i].split('/')[1]
+			largura, altura = resolucao.split('x')
+			if 'mp' in extensao or 'flv' in extensao:
+				qualidades.append(altura+'p '+extensao)
+				videos.append(streamUrl)
+			i+=1
+		qualidade = xbmcgui.Dialog().select('Escolha a qualidade', qualidades)
+		return videos[qualidade]
+
 
 class UpToStream():
 	def __init__(self, url):
@@ -56,7 +107,7 @@ class OpenLoad():
 		self.messageOk = xbmcgui.Dialog().ok
 		self.site = 'https://openload.co'
 		self.headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:43.0) Gecko/20100101 Firefox/43.0', 'Accept-Charset': 'utf-8;q=0.7,*;q=0.7'}
-
+		
 
 	def getId(self):
 		#return self.url.split('/')[-1]
@@ -68,31 +119,31 @@ class OpenLoad():
 
 	def base10toN(self,num,n):
 		num_rep={10:'a',
-		 11:'b',
-		 12:'c',
-		 13:'d',
-		 14:'e',
-		 15:'f',
-		 16:'g',
-		 17:'h',
-		 18:'i',
-		 19:'j',
-		 20:'k',
-		 21:'l',
-		 22:'m',
-		 23:'n',
-		 24:'o',
-		 25:'p',
-		 26:'q',
-		 27:'r',
-		 28:'s',
-		 29:'t',
-		 30:'u',
-		 31:'v',
-		 32:'w',
-		 33:'x',
-		 34:'y',
-		 35:'z'}
+         11:'b',
+         12:'c',
+         13:'d',
+         14:'e',
+         15:'f',
+         16:'g',
+         17:'h',
+         18:'i',
+         19:'j',
+         20:'k',
+         21:'l',
+         22:'m',
+         23:'n',
+         24:'o',
+         25:'p',
+         26:'q',
+         27:'r',
+         28:'s',
+         29:'t',
+         30:'u',
+         31:'v',
+         32:'w',
+         33:'x',
+         34:'y',
+         35:'z'}
 		new_num_string=''
 		current=num
 		while current!=0:
@@ -108,40 +159,44 @@ class OpenLoad():
 		return new_num_string
 
 	def decodeOpenLoad(self, html):
+		# decodeOpenLoad made by mortael, please leave this line for proper credit :) //SPECTO ADDON
+		aastring = re.compile("<script[^>]+>(ﾟωﾟﾉ[^<]+)<", re.DOTALL | re.IGNORECASE).findall(html)
+		haha = re.compile(r"welikekodi_ya_rly = (\d+) - (\d+)", re.DOTALL | re.IGNORECASE).findall(html)
+		haha = int(haha[0][0]) - int(haha[0][1])
 
-		aastring = re.search(r"<video(?:.|\s)*?<script\s[^>]*?>((?:.|\s)*?)</script", html, re.DOTALL | re.IGNORECASE).group(1)
+		aastring = aastring[haha]
 
-		aastring = aastring.replace("(ﾟДﾟ)[ﾟεﾟ]+(oﾟｰﾟo)+ ((c^_^o)-(c^_^o))+ (-~0)+ (ﾟДﾟ) ['c']+ (-~-~1)+","")
+		aastring = aastring.replace("(ﾟДﾟ)[ﾟεﾟ]+(oﾟｰﾟo)+ ((c^_^o)-(c^_^o))+ (-~0)+ (ﾟДﾟ) ['c']+ (-~-~1)+", "")
 		aastring = aastring.replace("((ﾟｰﾟ) + (ﾟｰﾟ) + (ﾟΘﾟ))", "9")
-		aastring = aastring.replace("((ﾟｰﾟ) + (ﾟｰﾟ))","8")
-		aastring = aastring.replace("((ﾟｰﾟ) + (o^_^o))","7")
-		aastring = aastring.replace("((o^_^o) +(o^_^o))","6")
-		aastring = aastring.replace("((ﾟｰﾟ) + (ﾟΘﾟ))","5")
-		aastring = aastring.replace("(ﾟｰﾟ)","4")
-		aastring = aastring.replace("((o^_^o) - (ﾟΘﾟ))","2")
-		aastring = aastring.replace("(o^_^o)","3")
-		aastring = aastring.replace("(ﾟΘﾟ)","1")
-		aastring = aastring.replace("(+!+[])","1")
-		aastring = aastring.replace("(c^_^o)","0")
-		aastring = aastring.replace("(0+0)","0")
-		aastring = aastring.replace("(ﾟДﾟ)[ﾟεﾟ]","\\")
-		aastring = aastring.replace("(3 +3 +0)","6")
-		aastring = aastring.replace("(3 - 1 +0)","2")
-		aastring = aastring.replace("(!+[]+!+[])","2")
-		aastring = aastring.replace("(-~-~2)","4")
-		aastring = aastring.replace("(-~-~1)","3")
-		aastring = aastring.replace("(-~0)","1")
-		aastring = aastring.replace("(-~1)","2")
-		aastring = aastring.replace("(-~3)","4")
-		aastring = aastring.replace("(0-0)","0")
+		aastring = aastring.replace("((ﾟｰﾟ) + (ﾟｰﾟ))", "8")
+		aastring = aastring.replace("((ﾟｰﾟ) + (o^_^o))", "7")
+		aastring = aastring.replace("((o^_^o) +(o^_^o))", "6")
+		aastring = aastring.replace("((ﾟｰﾟ) + (ﾟΘﾟ))", "5")
+		aastring = aastring.replace("(ﾟｰﾟ)", "4")
+		aastring = aastring.replace("((o^_^o) - (ﾟΘﾟ))", "2")
+		aastring = aastring.replace("(o^_^o)", "3")
+		aastring = aastring.replace("(ﾟΘﾟ)", "1")
+		aastring = aastring.replace("(+!+[])", "1")
+		aastring = aastring.replace("(c^_^o)", "0")
+		aastring = aastring.replace("(0+0)", "0")
+		aastring = aastring.replace("(ﾟДﾟ)[ﾟεﾟ]", "\\")
+		aastring = aastring.replace("(3 +3 +0)", "6")
+		aastring = aastring.replace("(3 - 1 +0)", "2")
+		aastring = aastring.replace("(!+[]+!+[])", "2")
+		aastring = aastring.replace("(-~-~2)", "4")
+		aastring = aastring.replace("(-~-~1)", "3")
+		aastring = aastring.replace("(-~0)", "1")
+		aastring = aastring.replace("(-~1)", "2")
+		aastring = aastring.replace("(-~3)", "4")
+		aastring = aastring.replace("(0-0)", "0")
 
 		decodestring = re.search(r"\\\+([^(]+)", aastring, re.DOTALL | re.IGNORECASE).group(1)
-		decodestring = "\\+"+ decodestring
-		decodestring = decodestring.replace("+","")
-		decodestring = decodestring.replace(" ","")
+		decodestring = "\\+" + decodestring
+		decodestring = decodestring.replace("+", "")
+		decodestring = decodestring.replace(" ", "")
 
 		decodestring = self.decode(decodestring)
-		decodestring = decodestring.replace("\\/","/")
+		decodestring = decodestring.replace("\\/", "/")
 
 		if 'toString' in decodestring:
 			base = re.compile(r"toString\(a\+(\d+)", re.DOTALL | re.IGNORECASE).findall(decodestring)[0]
@@ -150,10 +205,10 @@ class OpenLoad():
 			for repl in match:
 				match1 = re.compile(r"(\d+),(\d+)", re.DOTALL | re.IGNORECASE).findall(repl)
 				base2 = base + int(match1[0][0])
-				repl2 = self.base10toN(int(match1[0][1]),base2)
-				decodestring = decodestring.replace(repl,repl2)
-			decodestring = decodestring.replace("+","")
-			decodestring = decodestring.replace("\"","")
+				repl2 = self.base10toN(int(match1[0][1]), base2)
+				decodestring = decodestring.replace(repl, repl2)
+			decodestring = decodestring.replace("+", "")
+			decodestring = decodestring.replace("\"", "")
 			videourl = re.search(r"(http[^\}]+)", decodestring, re.DOTALL | re.IGNORECASE).group(1)
 		else:
 			videourl = re.search(r"vr\s?=\s?\"|'([^\"']+)", decodestring, re.DOTALL | re.IGNORECASE).group(1)

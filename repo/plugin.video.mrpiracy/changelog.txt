@@ -1,3 +1,6 @@
+v0.2.5 (17/06/2016)
+- Novo servidor
+
 v0.2.4 (15/05/2016)
 - Paginação das paginas por ano, corrigido.
 - Correção de erros ao iniciar o addon.

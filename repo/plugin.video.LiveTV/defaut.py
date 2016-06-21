@@ -109,7 +109,7 @@ def menu():
 					menus2['nome'] = check_login['datafim']['data']
 					menus2['logo'] = __SITEAddon__+"Imagens/estadomembro.png"
 					menus2['link'] = 'url'
-					menus2['tipo'] = ""
+					menus2['tipo'] = "estado"
 					menus2['senha'] = ""
 					check_login['menus'].append(menus2)
 				menus['nome'] = "Participacoes"
@@ -179,9 +179,9 @@ def getSoup(url):
 ###################################################################################
 #                              Login Addon		                                  #
 ###################################################################################
-def minhaConta(data_user):
-	addDir(data_user, 'url', None, None, 'Miniatura', __SITEAddon__+"Imagens/estadomembro.png",'','','','','','','')
-	addDir('Definições', 'url', None, 1000, 'Miniatura', __SITEAddon__+"Imagens/definicoes.png",'','','','','','','')
+def minhaConta(data_user,estilo):
+	addDir(data_user, 'url', None, None, estilo, __SITEAddon__+"Imagens/estadomembro.png",'','','','','','','')
+	addDir('Definições', 'url', None, 1000, estilo, __SITEAddon__+"Imagens/definicoes.png",'','','','','','','')
 
 def login():
 	informacoes = {
@@ -318,6 +318,8 @@ def Menu_inicial(men):
 			addDir(nome,link,None,21,'Miniatura',logo,tipo,_tipouser,men['user']['servidor'],'',men['info']['log'],men['info']['user'],men['info']['password'])
 		elif(tipo == 'Serie'):
 			addDir(nome,link,None,20,'Miniatura',logo,tipo,_tipouser,men['user']['servidor'],'',men['info']['log'],men['info']['user'],men['info']['password'])
+		elif(tipo == 'estado'):
+			addDir(nome,link,None,10,'Lista',logo,tipo,_tipouser,men['user']['servidor'],'',men['info']['log'],men['info']['user'],men['info']['password'])
 		else:
 			if _tipouser == 'Administrador' or _tipouser == 'Patrocinador' or _tipouser == 'PatrocinadorPagante':
 				if nome == 'TVs':
@@ -354,52 +356,53 @@ def listar_grupos_adultos(url,senha,estilo,tipo,tipo_user,servidor_user,sserv,su
 			listar_grupos('',url,estilo,tipo,tipo_user,servidor_user,sserv,suser,spass)
 
 def listar_grupos(nome_nov,url,estilo,tipo,tipo_user,servidor_user,sservee,suseree,spassee):
-	if tipo == 'Filme' or nome_nov == 'TVs-Free' or (tipo_user == 'Teste' and nome_nov == 'TVs'):
-		xbmc.executebuiltin('Notification(%s, %s, %i, %s)'%(_NOMEADDON_,'A verificar os seus dados de acesso.', 2000, _ICON_))
-		estado = abrir_cookie(suseree, spassee, sservee, sservee + 'canais/liberar/', True)
-	page_with_xml = urllib2.urlopen(url).readlines()
-	for line in page_with_xml:
-		objecto = line.decode('latin-1').encode("utf-8")
-		params = objecto.split(',')
-		try:
-			nomee = params[0]
-			imag = params[1]
-			urlll = params[2]
-			estil = params[3]
-			urlllserv1 = params[4]
-			urlllserv2 = params[5]
-			urlllserv3 = params[6]
-			paramss = estil.split('\n')
-			if tipo_user == 'Administrador' or tipo_user == 'Pagante' or tipo_user == 'PatrocinadorPagante':
-				if nome_nov == 'TVs-Free':
-					addDir(nomee,urlll,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'','','','')
-				elif servidor_user == 'Servidor1':
-					addDir(nomee,urlllserv1,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'','','','')
-				elif servidor_user == 'Servidor2':
-					addDir(nomee,urlllserv2,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'','','','')
-				else:
-					addDir(nomee,urlllserv3,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'','','','')
-			elif tipo_user == 'Patrocinador':
-				if nome_nov == 'TVs-Free':
-					addDir(nomee,urlll,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'','','','')
-			else:
-				if tipo_user == 'Teste':
-					if servidor_user == "Teste":
+	if url != 'url':
+		if tipo == 'Filme':
+			xbmc.executebuiltin('Notification(%s, %s, %i, %s)'%(_NOMEADDON_,'A verificar os seus dados de acesso.', 2000, _ICON_))
+			estado = abrir_cookie(suseree, spassee, sservee, sservee + 'canais/liberar/', True)
+		page_with_xml = urllib2.urlopen(url).readlines()
+		for line in page_with_xml:
+			objecto = line.decode('latin-1').encode("utf-8")
+			params = objecto.split(',')
+			try:
+				nomee = params[0]
+				imag = params[1]
+				urlll = params[2]
+				estil = params[3]
+				urlllserv1 = params[4]
+				urlllserv2 = params[5]
+				urlllserv3 = params[6]
+				paramss = estil.split('\n')
+				if tipo_user == 'Administrador' or tipo_user == 'Pagante' or tipo_user == 'PatrocinadorPagante':
+					if nome_nov == 'TVs-Free':
 						addDir(nomee,urlll,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'','','','')
+					elif servidor_user == 'Servidor1':
+						addDir(nomee,urlllserv1,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'','','','')
+					elif servidor_user == 'Servidor2':
+						addDir(nomee,urlllserv2,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'','','','')
 					else:
-						if servidor_user != '':
-							if servidor_user == 'Servidor1':
-								addDir(nomee,urlllserv1,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'','','','')
-							elif servidor_user == 'Servidor2':
-								addDir(nomee,urlllserv2,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'','','','')
-							else:
-								addDir(nomee,urlllserv3,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'','','','')
-						else:
-							addDir(nomee,urlll,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'','','','')
+						addDir(nomee,urlllserv3,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'','','','')
+				elif tipo_user == 'Patrocinador':
+					if nome_nov == 'TVs-Free':
+						addDir(nomee,urlll,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'','','','')
 				else:
-					addDir(nomee,urlll,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'','','','')
-		except:
-			pass
+					if tipo_user == 'Teste':
+						if servidor_user == "Teste":
+							addDir(nomee,urlll,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'','','','')
+						else:
+							if servidor_user != '':
+								if servidor_user == 'Servidor1':
+									addDir(nomee,urlllserv1,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'','','','')
+								elif servidor_user == 'Servidor2':
+									addDir(nomee,urlllserv2,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'','','','')
+								else:
+									addDir(nomee,urlllserv3,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'','','','')
+							else:
+								addDir(nomee,urlll,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'','','','')
+					else:
+						addDir(nomee,urlll,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'','','','')
+			except:
+				pass
 	estiloSelect = returnestilo(estilo)
 	xbmc.executebuiltin(estiloSelect)	
 	
@@ -1195,7 +1198,7 @@ elif mode==6: listar_series(url)
 elif mode==7: listar_series_f2(name,url)	
 elif mode==8: pesquisa_serie()
 elif mode==9: listar_animes(url)
-elif mode==10: minhaConta(data_user)
+elif mode==10: minhaConta(str(name),estilo)
 elif mode==11: categorias()
 elif mode==12: listar_temporadas(url)
 elif mode==13: listar_videos(url)
