@@ -1,78 +1,208 @@
 <settings>
-	<category label="Account Settings">
-		<setting type="lsep" label="Trakt Account"/>
-		<setting id="trakt_account" label="Authorize Trakt" type="action" default="" action="RunScript(plugin.video.theroyalwe, ?mode=authorize_trakt)"/>
-		<setting id="trakt_authorized" type="bool" default="false" visible="false" />
-		<setting id="trakt_client_id" type="text" label="Trakt Client ID" default="dbe260b94e985159dde067ea1f1702174bc9ab69e4c2aa8560cd7fc6b024c27a" visible="false"/>
-		<setting id="trakt_secret" type="text" label="Trakt Secret" default="198b3b421f09fa0de96b38ebda1b3c9ae848e189c8b5dec5d8f04768e06d05e2" visible="false"/>
-		<setting id="trakt_pin_url" type="text" label="Trakt Pin URL" default="http://trakt.tv/pin/6170" visible="false"/>
-		<setting id="trakt_oauth_token" type="text" default="" visible="false" />
-		<setting id="trakt_refresh_token" type="text" default="" visible="false" />
-		<setting type="lsep" label="Enter account information here."/>
-		<setting type="lsep" label="These are optional, These accounts will be disabled without credientials"/>
-		<setting type="lsep" label="Alluc"/>
-		<setting id="alluc_api_username" type="text" label="Alluc Username" option="hidden" default=""/>
-		<setting id="alluc_api_password" type="text" label="Alluc Password" option="hidden" default=""/>
-		<setting type="lsep" label="Furk.net"/>
-		<setting id="furk_username" type="text" label="Furk.net Username" option="hidden" default=""/>
-		<setting id="furk_password" type="text" label="Furk.net Password" option="hidden" default=""/>
-		<setting type="lsep" label="Ororo.tv"/>
-		<setting id="ororo_username" type="text" label="Ororo.tv Username" option="hidden" default=""/>
-		<setting id="ororo_password" type="text" label="Ororo.tv Password" option="hidden" default=""/>
-		<setting id="ororo_premium" type="bool" label="Premium Account" default="false" subsetting="true"/>
-	</category>
-	<category label="Scraper Settings">
-		<setting type="lsep" label="Nothing to see here! Enable advanced settings for more." visible="eq(1,false)"/>
-		<setting id="advanced_mode" type="bool" default="false" visible="false" />
-		<setting type="lsep" label="Advanced Settings" visible="eq(-1,true)"/>
-		<setting id="enable_result_caching" type="bool" label="Enable Result Caching" default="false" visible="eq(-2,true)" />
-		<setting id="enable_result_filters" type="bool" label="Enable Result Filters" default="false" visible="eq(-3,true)" />
-		<setting id="threadpool_size" type="slider" label="ThreadPool Size" default="10" option="int" range="1,20" visible="eq(-4,true)" enable="" />
-		<setting id="hide_watched_episodes" type="bool" label="Hide Watched Episodes" default="false" visible="!eq(-5,false)" enable="!eq(-5,false)"/>
-		<setting id="enable_transmogrifier" type="bool" label="Enable Transmogrifier (Expirimental)" default="false" visible="System.HasAddon(service.transmogrifier)+!eq(-6,false)" enable="!eq(-6,false)"/>
-		<setting id="enable_transmogrifier_streaming" type="bool" label="Enable Transmogrifer Streaming (Expirimental)" default="false" visible="eq(-1,true)" enable="eq(-1,true)"/>
-		<setting id="enable_result_sorting" type="bool" label="Change Result Sorting Order" default="false" visible="eq(-8,true)" enable="eq(-8,true)" />
-		<setting id="custom_result_sorting"  type="enum" label="Sort Order" values="Quality,Rank,Service,Host|Quality,Rank,Debrid,Host|Debrid,Rank,Quality,Host" default="0" subsetting="true"  visible="eq(-1,true)" enable="eq(-1,true)"/>
-		
-		<setting id="agent_refresh_time" type="text" default="" visible="false" />
-		<setting id="user_agent" type="text" default="" visible="false" />
-		<setting id="setup_run" type="bool" default="false" visible="false" />
-		<setting id="version" type="string" visible="false" default=""/>
-	</category>
-	<category label="Display (Advanced Mode)">
-		<setting id="enable_scraper_progress" type="bool" label="Show Scraper Progress" default="false"/>
-		<setting id="advanced_mode" type="text" default="false" visible="false" />
-		<setting id="enable_default_views" type="bool" label="Enable Default Views" default="false" visible="!eq(-1,false)"/>
-		<setting id="default_folder_view" type="number" label="Default Folder View" default="500" visible="!eq(-1,false) + !eq(-2,false)" enable="!eq(-1,false)" subsetting="true" />
-		<setting id="default_list_view" type="number" label="Default List View" default="50" visible="!eq(-2,false) + !eq(-3,false)" enable="!eq(-2,false)" subsetting="true" />
-		<setting id="default_tvshow_view" type="number" label="Default TV Show View" default="50" visible="!eq(-3,false) + !eq(-4,false)" enable="!eq(-3,false)" subsetting="true" />
-		<setting id="default_season_view" type="number" label="Default Season View" default="50" visible="!eq(-4,false) + !eq(-5,false)" enable="!eq(-4,false)" subsetting="true" />
-		<setting id="default_episode_view" type="number" label="Default Episode View" default="50" visible="!eq(-5,false) + !eq(-6,false)" enable="!eq(-5,false)" subsetting="true" />
-		<setting id="default_movie_view" type="number" label="Default Movie View" default="50" visible="!eq(-6,false) + !eq(-7,false)" enable="!eq(-6,false)" subsetting="true" />
-		<setting id="source_selection_mode" type="labelenum" label="Source Selection Mode" values="Dialog|Directory" default="Directory" visible="!eq(-8,false)" enable="!eq(-8,false)"/>
-		<setting id="enable_full_context" type="bool" label="Show Full Context Menus" default="false" visible="!eq(-9,false)"/>
-	</category>
-	<category label="Database (Advanced Mode)">
-		<setting id="advanced_mode" type="text" default="false" visible="false" />
-		<setting id="database_type" type="enum" label="Database Type" values="SQLite|MySQL" default="0" enabled="!eq(-1,false)"/>
-		<setting type="lsep" label="SQLite"/>
-		<setting id="database_sqlite_file" type="file" label="Database File" default="special://userdata/addon_data/plugin.video.theroyalwe/theroyalwe.db" enable="eq(-2,0)" subsetting="true" />
-		<setting type="lsep" label="MySQL"/>
-		<setting id="database_mysql_host" type="text" label="Host" default="" enable="eq(-4,1)" subsetting="true" />
-		<setting id="database_mysql_name" type="text" label="Schema" default="theroyalwe" enable="eq(-5,1)" subsetting="true" />
-		<setting id="database_mysql_user" type="text" label="Username" default="" enable="eq(-6,1)" subsetting="true" />
-		<setting id="database_mysql_pass" type="text" label="Password" option="hidden" default="" enable="eq(-7,1)" subsetting="true" />
-		<setting id="database_mysql_port" type="number" label="Port" default="3306" enable="eq(-8,1)" subsetting="true" />
-		<setting id="database_sqlite_init" type="text" default="false" visible="false" />
-		<setting id="database_sqlite_init.cache" type="text" default="false" visible="false" />
-		<setting id="database_mysql_init" type="text" default="false" visible="false" />
-		<setting id="database_mysql_init.cache" type="text" default="false" visible="false" />
-		<setting id="database_sqlite_version" type="number" default="1" visible="false" />
-		<setting id="database_mysql_version" type="number" default="1" visible="false" />
-		<setting id="database_sqlite_version.cache" type="number" default="1" visible="false" />
-		<setting id="database_mysql_version.cache" type="number" default="1" visible="false" />
-	</category>
-	<category label="Misc">
-		<setting id="log_level" type="enum" values="Standard|Verbose" label="Log Level" default="1"/>
-	</category>
+    <category label="Account Settings">
+        <setting label="Trakt Account" type="lsep" />
+        <setting action="RunScript(plugin.video.theroyalwe, ?mode=authorize_trakt)" default="" id="trakt_account" label="Authorize Trakt" type="action" />
+        <setting default="false" id="trakt_authorized" type="bool" visible="false" />
+        <setting default="dbe260b94e985159dde067ea1f1702174bc9ab69e4c2aa8560cd7fc6b024c27a" id="trakt_client_id" label="Trakt Client ID" type="text" visible="false" />
+        <setting default="198b3b421f09fa0de96b38ebda1b3c9ae848e189c8b5dec5d8f04768e06d05e2" id="trakt_secret" label="Trakt Secret" type="text" visible="false" />
+        <setting default="http://trakt.tv/pin/6170" id="trakt_pin_url" label="Trakt Pin URL" type="text" visible="false" />
+        <setting default="" id="trakt_oauth_token" type="text" visible="false" />
+        <setting default="" id="trakt_refresh_token" type="text" visible="false" />
+        <setting label="Enter account information here." type="lsep" />
+        <setting label="These are optional, These accounts will be disabled without credientials" type="lsep" />
+        <setting label="Alluc" type="lsep" />
+        <setting default="" id="alluc_api_username" label="Alluc Username" option="hidden" type="text" />
+        <setting default="" id="alluc_api_password" label="Alluc Password" option="hidden" type="text" />
+        <setting label="Furk.net" type="lsep" />
+        <setting default="" id="furk_username" label="Furk.net Username" option="hidden" type="text" />
+        <setting default="" id="furk_password" label="Furk.net Password" option="hidden" type="text" />
+        <setting label="TMDb Key" type="lsep" />
+        <setting default="" id="tmdb_key" label="TMDB Key" type="text" />
+    </category>
+    <category label="Source Settings">
+        <setting label="Nothing to see here! Enable advanced settings for more." type="lsep" visible="eq(1,false)" />
+        <setting default="false" id="advanced_mode" type="bool" visible="false" />
+        <setting label="Advanced Settings" type="lsep" visible="eq(-1,true)" />
+        <setting default="false" id="enable_result_caching" label="Enable Result Caching" type="bool" visible="eq(-2,true)" />
+        <setting default="false" id="enable_result_filters" label="Enable Result Filters" type="bool" visible="eq(-3,true)" />
+        <setting default="false" enable="eq(-4,true)" id="enable_result_sorting" label="Enable Result Sorting" type="bool" visible="eq(-4,true)" />
+        <setting default="0" enable="eq(-1,true)" id="custom_result_sorting" label="Sort Order" subsetting="true" type="enum" values="Quality,Rank,Service,Host|Quality,Rank,Debrid,Host|Debrid,Rank,Quality,Host" visible="eq(-1,true)" />
+        <setting default="15" enable="" id="threadpool_size" label="ThreadPool Size (Set 0 for infinate)" option="int" range="0,30" type="slider" visible="eq(-6,true)" />
+        <setting default="false" enable="!eq(-7,false)" id="hide_watched_episodes" label="Hide Watched Episodes" type="bool" visible="!eq(-7,false)" />
+        <setting default="false" enable="!eq(-8,false)" id="enable_transmogrifier" label="Enable Transmogrifier (Expirimental)" type="bool" visible="System.HasAddon(service.transmogrifier)+!eq(-8,false)" />
+        <setting default="false" enable="eq(-1,true)" id="enable_transmogrifier_streaming" label="Enable Transmogrifer Streaming (Expirimental)" type="bool" visible="eq(-1,true)+!eq(-9,false)" />
+        <setting default="" id="agent_refresh_time" type="text" visible="false" />
+        <setting default="" id="user_agent" type="text" visible="false" />
+        <setting default="false" id="setup_run" type="bool" visible="false" />
+        <setting default="" id="version" type="string" visible="false" />
+    </category>
+    <category label="Scrapers Settings">
+        <setting label="Settings for alluc_api" type="lsep" />
+        <setting default="false" id="overide_scraper_alluc_api" label="Override alluc_api" type="bool" />
+        <setting default="alluc.ee" id="name_scraper_alluc_api" label="Name" subsetting="true" type="text" visible="eq(-1,true)" />
+        <setting default="http://www.alluc.ee" id="base_url_scraper_alluc_api" label="Base URL" subsetting="true" type="text" visible="eq(-2,true)" />
+        <setting default="2" id="timeout_scraper_alluc_api" label="Timeout (seconds)" option="float" range="1,10" subsetting="true" type="slider" visible="eq(-3,true)" />
+        <setting label="Settings for cravings" type="lsep" />
+        <setting default="false" id="overide_scraper_cravings" label="Override cravings" type="bool" />
+        <setting default="cravings.me" id="name_scraper_cravings" label="Name" subsetting="true" type="text" visible="eq(-1,true)" />
+        <setting default="http://series-cravings.me" id="base_url_scraper_cravings" label="Base URL" subsetting="true" type="text" visible="eq(-2,true)" />
+        <setting default="3" id="timeout_scraper_cravings" label="Timeout (seconds)" option="float" range="1,10" subsetting="true" type="slider" visible="eq(-3,true)" />
+        <setting label="Settings for dizilab" type="lsep" />
+        <setting default="false" id="overide_scraper_dizilab" label="Override dizilab" type="bool" />
+        <setting default="dizilab.com" id="name_scraper_dizilab" label="Name" subsetting="true" type="text" visible="eq(-1,true)" />
+        <setting default="http://dizilab.com" id="base_url_scraper_dizilab" label="Base URL" subsetting="true" type="text" visible="eq(-2,true)" />
+        <setting default="2" id="timeout_scraper_dizilab" label="Timeout (seconds)" option="float" range="1,10" subsetting="true" type="slider" visible="eq(-3,true)" />
+        <setting label="Settings for furk" type="lsep" />
+        <setting default="false" id="overide_scraper_furk" label="Override furk" type="bool" />
+        <setting default="furk.net" id="name_scraper_furk" label="Name" subsetting="true" type="text" visible="eq(-1,true)" />
+        <setting default="https://www.furk.net/api" id="base_url_scraper_furk" label="Base URL" subsetting="true" type="text" visible="eq(-2,true)" />
+        <setting default="1" id="timeout_scraper_furk" label="Timeout (seconds)" option="float" range="1,10" subsetting="true" type="slider" visible="eq(-3,true)" />
+        <setting label="Settings for icefilms" type="lsep" />
+        <setting default="false" id="overide_scraper_icefilms" label="Override icefilms" type="bool" />
+        <setting default="icefilms.info" id="name_scraper_icefilms" label="Name" subsetting="true" type="text" visible="eq(-1,true)" />
+        <setting default="http://www.icefilms.info" id="base_url_scraper_icefilms" label="Base URL" subsetting="true" type="text" visible="eq(-2,true)" />
+        <setting default="1" id="timeout_scraper_icefilms" label="Timeout (seconds)" option="float" range="1,10" subsetting="true" type="slider" visible="eq(-3,true)" />
+        <setting label="Settings for local" type="lsep" />
+        <setting default="false" id="overide_scraper_local" label="Override local" type="bool" />
+        <setting default="VideoLibrary" id="name_scraper_local" label="Name" subsetting="true" type="text" visible="eq(-1,true)" />
+        <setting default="http://localhost" id="base_url_scraper_local" label="Base URL" subsetting="true" type="text" visible="eq(-2,true)" />
+        <setting default="1" id="timeout_scraper_local" label="Timeout (seconds)" option="float" range="1,10" subsetting="true" type="slider" visible="eq(-3,true)" />
+        <setting label="Settings for losmovies" type="lsep" />
+        <setting default="false" id="overide_scraper_losmovies" label="Override losmovies" type="bool" />
+        <setting default="losmovies.is" id="name_scraper_losmovies" label="Name" subsetting="true" type="text" visible="eq(-1,true)" />
+        <setting default="http://losmovies.ws" id="base_url_scraper_losmovies" label="Base URL" subsetting="true" type="text" visible="eq(-2,true)" />
+        <setting default="3" id="timeout_scraper_losmovies" label="Timeout (seconds)" option="float" range="1,10" subsetting="true" type="slider" visible="eq(-3,true)" />
+        <setting label="Settings for movie4k" type="lsep" />
+        <setting default="false" id="overide_scraper_movie4k" label="Override movie4k" type="bool" />
+        <setting default="movie4k.to" id="name_scraper_movie4k" label="Name" subsetting="true" type="text" visible="eq(-1,true)" />
+        <setting default="http://www.movie4k.to" id="base_url_scraper_movie4k" label="Base URL" subsetting="true" type="text" visible="eq(-2,true)" />
+        <setting default="1" id="timeout_scraper_movie4k" label="Timeout (seconds)" option="float" range="1,10" subsetting="true" type="slider" visible="eq(-3,true)" />
+        <setting label="Settings for ninemovies" type="lsep" />
+        <setting default="false" id="overide_scraper_ninemovies" label="Override ninemovies" type="bool" />
+        <setting default="9movies.to" id="name_scraper_ninemovies" label="Name" subsetting="true" type="text" visible="eq(-1,true)" />
+        <setting default="http://9movies.to" id="base_url_scraper_ninemovies" label="Base URL" subsetting="true" type="text" visible="eq(-2,true)" />
+        <setting default="3" id="timeout_scraper_ninemovies" label="Timeout (seconds)" option="float" range="1,10" subsetting="true" type="slider" visible="eq(-3,true)" />
+        <setting label="Settings for ororo" type="lsep" />
+        <setting default="false" id="overide_scraper_ororo" label="Override ororo" type="bool" />
+        <setting default="ororo.tv" id="name_scraper_ororo" label="Name" subsetting="true" type="text" visible="eq(-1,true)" />
+        <setting default="http://ororo.tv" id="base_url_scraper_ororo" label="Base URL" subsetting="true" type="text" visible="eq(-2,true)" />
+        <setting default="1" id="timeout_scraper_ororo" label="Timeout (seconds)" option="float" range="1,10" subsetting="true" type="slider" visible="eq(-3,true)" />
+        <setting label="Settings for primewire" type="lsep" />
+        <setting default="false" id="overide_scraper_primewire" label="Override primewire" type="bool" />
+        <setting default="primewire" id="name_scraper_primewire" label="Name" subsetting="true" type="text" visible="eq(-1,true)" />
+        <setting default="http://primewire.ag" id="base_url_scraper_primewire" label="Base URL" subsetting="true" type="text" visible="eq(-2,true)" />
+        <setting default="1" id="timeout_scraper_primewire" label="Timeout (seconds)" option="float" range="1,10" subsetting="true" type="slider" visible="eq(-3,true)" />
+        <setting label="Settings for projectfreetv" type="lsep" />
+        <setting default="false" id="overide_scraper_projectfreetv" label="Override projectfreetv" type="bool" />
+        <setting default="projectfreetv.so" id="name_scraper_projectfreetv" label="Name" subsetting="true" type="text" visible="eq(-1,true)" />
+        <setting default="http://projectfreetv.so" id="base_url_scraper_projectfreetv" label="Base URL" subsetting="true" type="text" visible="eq(-2,true)" />
+        <setting default="1" id="timeout_scraper_projectfreetv" label="Timeout (seconds)" option="float" range="1,10" subsetting="true" type="slider" visible="eq(-3,true)" />
+        <setting label="Settings for putlocker" type="lsep" />
+        <setting default="false" id="overide_scraper_putlocker" label="Override putlocker" type="bool" />
+        <setting default="putlocker.is" id="name_scraper_putlocker" label="Name" subsetting="true" type="text" visible="eq(-1,true)" />
+        <setting default="http://putlocker.is" id="base_url_scraper_putlocker" label="Base URL" subsetting="true" type="text" visible="eq(-2,true)" />
+        <setting default="1" id="timeout_scraper_putlocker" label="Timeout (seconds)" option="float" range="1,10" subsetting="true" type="slider" visible="eq(-3,true)" />
+        <setting label="Settings for releasebb" type="lsep" />
+        <setting default="false" id="overide_scraper_releasebb" label="Override releasebb" type="bool" />
+        <setting default="releasebb" id="name_scraper_releasebb" label="Name" subsetting="true" type="text" visible="eq(-1,true)" />
+        <setting default="http://rlsbb.com" id="base_url_scraper_releasebb" label="Base URL" subsetting="true" type="text" visible="eq(-2,true)" />
+        <setting default="3" id="timeout_scraper_releasebb" label="Timeout (seconds)" option="float" range="1,10" subsetting="true" type="slider" visible="eq(-3,true)" />
+        <setting label="Settings for sezonlukdizi" type="lsep" />
+        <setting default="false" id="overide_scraper_sezonlukdizi" label="Override sezonlukdizi" type="bool" />
+        <setting default="sezonlukdizi" id="name_scraper_sezonlukdizi" label="Name" subsetting="true" type="text" visible="eq(-1,true)" />
+        <setting default="http://sezonlukdizi.com/" id="base_url_scraper_sezonlukdizi" label="Base URL" subsetting="true" type="text" visible="eq(-2,true)" />
+        <setting default="3" id="timeout_scraper_sezonlukdizi" label="Timeout (seconds)" option="float" range="1,10" subsetting="true" type="slider" visible="eq(-3,true)" />
+        <setting label="Settings for solarmovie" type="lsep" />
+        <setting default="false" id="overide_scraper_solarmovie" label="Override solarmovie" type="bool" />
+        <setting default="solarmovie.is" id="name_scraper_solarmovie" label="Name" subsetting="true" type="text" visible="eq(-1,true)" />
+        <setting default="https://www.solarmovie.is" id="base_url_scraper_solarmovie" label="Base URL" subsetting="true" type="text" visible="eq(-2,true)" />
+        <setting default="2" id="timeout_scraper_solarmovie" label="Timeout (seconds)" option="float" range="1,10" subsetting="true" type="slider" visible="eq(-3,true)" />
+        <setting label="Settings for transmogrified" type="lsep" />
+        <setting default="false" id="overide_scraper_transmogrified" label="Override transmogrified" type="bool" />
+        <setting default="transmogrified" id="name_scraper_transmogrified" label="Name" subsetting="true" type="text" visible="eq(-1,true)" />
+        <setting default="http://localhost" id="base_url_scraper_transmogrified" label="Base URL" subsetting="true" type="text" visible="eq(-2,true)" />
+        <setting default="2" id="timeout_scraper_transmogrified" label="Timeout (seconds)" option="float" range="1,10" subsetting="true" type="slider" visible="eq(-3,true)" />
+        <setting label="Settings for tvonline" type="lsep" />
+        <setting default="false" id="overide_scraper_tvonline" label="Override tvonline" type="bool" />
+        <setting default="tvonline.tw" id="name_scraper_tvonline" label="Name" subsetting="true" type="text" visible="eq(-1,true)" />
+        <setting default="http://tvonline.tw" id="base_url_scraper_tvonline" label="Base URL" subsetting="true" type="text" visible="eq(-2,true)" />
+        <setting default="1" id="timeout_scraper_tvonline" label="Timeout (seconds)" option="float" range="1,10" subsetting="true" type="slider" visible="eq(-3,true)" />
+        <setting label="Settings for vidics" type="lsep" />
+        <setting default="false" id="overide_scraper_vidics" label="Override vidics" type="bool" />
+        <setting default="vidics.ch" id="name_scraper_vidics" label="Name" subsetting="true" type="text" visible="eq(-1,true)" />
+        <setting default="http://www.vidics.ch" id="base_url_scraper_vidics" label="Base URL" subsetting="true" type="text" visible="eq(-2,true)" />
+        <setting default="2" id="timeout_scraper_vidics" label="Timeout (seconds)" option="float" range="1,10" subsetting="true" type="slider" visible="eq(-3,true)" />
+        <setting label="Settings for vumoo" type="lsep" />
+        <setting default="false" id="overide_scraper_vumoo" label="Override vumoo" type="bool" />
+        <setting default="vumoo.ch" id="name_scraper_vumoo" label="Name" subsetting="true" type="text" visible="eq(-1,true)" />
+        <setting default="http://vumoo.ch" id="base_url_scraper_vumoo" label="Base URL" subsetting="true" type="text" visible="eq(-2,true)" />
+        <setting default="3" id="timeout_scraper_vumoo" label="Timeout (seconds)" option="float" range="1,10" subsetting="true" type="slider" visible="eq(-3,true)" />
+        <setting label="Settings for watchepisode" type="lsep" />
+        <setting default="false" id="overide_scraper_watchepisode" label="Override watchepisode" type="bool" />
+        <setting default="watchepisode.tv" id="name_scraper_watchepisode" label="Name" subsetting="true" type="text" visible="eq(-1,true)" />
+        <setting default="http://www.watchepisode.tv" id="base_url_scraper_watchepisode" label="Base URL" subsetting="true" type="text" visible="eq(-2,true)" />
+        <setting default="1" id="timeout_scraper_watchepisode" label="Timeout (seconds)" option="float" range="1,10" subsetting="true" type="slider" visible="eq(-3,true)" />
+        <setting label="Settings for watchseries" type="lsep" />
+        <setting default="false" id="overide_scraper_watchseries" label="Override watchseries" type="bool" />
+        <setting default="watchseries.to" id="name_scraper_watchseries" label="Name" subsetting="true" type="text" visible="eq(-1,true)" />
+        <setting default="http://thewatchseries.to" id="base_url_scraper_watchseries" label="Base URL" subsetting="true" type="text" visible="eq(-2,true)" />
+        <setting default="1" id="timeout_scraper_watchseries" label="Timeout (seconds)" option="float" range="1,10" subsetting="true" type="slider" visible="eq(-3,true)" />
+        <setting label="Settings for pvr" type="lsep" />
+        <setting default="false" id="overide_scraper_pvr" label="Override pvr" type="bool" />
+        <setting default="PVRLibrary" id="name_scraper_pvr" label="Name" subsetting="true" type="text" visible="eq(-1,true)" />
+        <setting default="http://localhost" id="base_url_scraper_pvr" label="Base URL" subsetting="true" type="text" visible="eq(-2,true)" />
+        <setting default="1" id="timeout_scraper_pvr" label="Timeout (seconds)" option="float" range="1,10" subsetting="true" type="slider" visible="eq(-3,true)" />
+        <setting label="Settings for oneclicktv" type="lsep" />
+        <setting default="false" id="overide_scraper_oneclicktv" label="Override oneclicktv" type="bool" />
+        <setting default="oneclicktvshows.com" id="name_scraper_oneclicktv" label="Name" subsetting="true" type="text" visible="eq(-1,true)" />
+        <setting default="http://oneclicktvshows.com" id="base_url_scraper_oneclicktv" label="Base URL" subsetting="true" type="text" visible="eq(-2,true)" />
+        <setting default="3" id="timeout_scraper_oneclicktv" label="Timeout (seconds)" option="float" range="1,10" subsetting="true" type="slider" visible="eq(-3,true)" />
+</category>
+    <category label="Playback">
+        <setting default="false" id="advanced_mode" type="text" visible="false" />
+        <setting default="false" id="enable_scraper_progress" label="Show Scraper Progress" type="bool" />
+        <setting default="false" id="enable_autoplay" label="Enable AutoPlay" type="bool" visible="!eq(-2,false)" />
+        <setting default="3" enable="eq(-1,true)" id="autoplay_attempts" label="Number of sources for AutoPlay" option="int" range="1,10" subsetting="true" type="slider" visible="eq(-1,true)" />
+        <setting default="Directory" enable="!eq(-4,false)" id="source_selection_mode" label="Source Selection Mode" type="labelenum" values="Dialog|Directory" visible="!eq(-4,false)" />
+        <setting default="false" id="enable_resume" label="Enable Playback Resume" type="bool" visible="!eq(-5,false)" />
+    </category>
+    <category label="Display (Advanced Mode)">
+        <setting label="Nothing to see here! Enable advanced settings for more." type="lsep" visible="eq(1,false)" />
+        <setting default="false" id="advanced_mode" type="text" visible="false" />
+        <setting default="false" id="enable_default_views" label="Enable Default Views" type="bool" visible="!eq(-1,false)" />
+        <setting default="500" enable="!eq(-1,false)" id="default_folder_view" label="Default Folder View" subsetting="true" type="number" visible="!eq(-1,false) + !eq(-2,false)" />
+        <setting default="50" enable="!eq(-2,false)" id="default_list_view" label="Default List View" subsetting="true" type="number" visible="!eq(-2,false) + !eq(-3,false)" />
+        <setting default="50" enable="!eq(-3,false)" id="default_tvshow_view" label="Default TV Show View" subsetting="true" type="number" visible="!eq(-3,false) + !eq(-4,false)" />
+        <setting default="50" enable="!eq(-4,false)" id="default_season_view" label="Default Season View" subsetting="true" type="number" visible="!eq(-4,false) + !eq(-5,false)" />
+        <setting default="50" enable="!eq(-5,false)" id="default_episode_view" label="Default Episode View" subsetting="true" type="number" visible="!eq(-5,false) + !eq(-6,false)" />
+        <setting default="50" enable="!eq(-6,false)" id="default_movie_view" label="Default Movie View" subsetting="true" type="number" visible="!eq(-6,false) + !eq(-7,false)" />
+        <setting default="false" id="enable_full_context" label="Show Full Context Menus" type="bool" visible="!eq(-8,false)" />
+    </category>
+    <category label="Database (Advanced Mode)">
+        <setting default="false" id="advanced_mode" type="text" visible="false" />
+        <setting default="0" enabled="!eq(-1,false)" id="database_type" label="Database Type" type="enum" values="SQLite|MySQL" />
+        <setting label="SQLite" type="lsep" />
+        <setting default="special://userdata/addon_data/plugin.video.theroyalwe/theroyalwe.db" enable="eq(-2,0)" id="database_sqlite_file" label="Database File" subsetting="true" type="file" />
+        <setting label="MySQL" type="lsep" />
+        <setting default="" enable="eq(-4,1)" id="database_mysql_host" label="Host" subsetting="true" type="text" />
+        <setting default="theroyalwe" enable="eq(-5,1)" id="database_mysql_name" label="Schema" subsetting="true" type="text" />
+        <setting default="" enable="eq(-6,1)" id="database_mysql_user" label="Username" subsetting="true" type="text" />
+        <setting default="" enable="eq(-7,1)" id="database_mysql_pass" label="Password" option="hidden" subsetting="true" type="text" />
+        <setting default="3306" enable="eq(-8,1)" id="database_mysql_port" label="Port" subsetting="true" type="number" />
+        <setting default="false" id="database_sqlite_init" type="text" visible="false" />
+        <setting default="false" id="database_sqlite_init.cache" type="text" visible="false" />
+        <setting default="false" id="database_mysql_init" type="text" visible="false" />
+        <setting default="false" id="database_mysql_init.cache" type="text" visible="false" />
+        <setting default="1" id="database_sqlite_version" type="number" visible="false" />
+        <setting default="1" id="database_mysql_version" type="number" visible="false" />
+        <setting default="1" id="database_sqlite_version.cache" type="number" visible="false" />
+        <setting default="1" id="database_mysql_version.cache" type="number" visible="false" />
+    </category>
+    <category label="Misc">
+        <setting default="false" id="advanced_mode" type="text" visible="false" />
+        <setting default="false" enable="!eq(-1,false)" id="enable_calendar_browser" label="Enable Calendar Browser" type="bool" visible="!eq(-1,false)" />
+        <setting default="false" enable="!eq(-2,false)" id="enable_episodes_ondeck" label="Enable Ondeck Episodes" type="bool" visible="!eq(-2,false)" />
+        <setting default="watchlist" id="ondeck_list" type="text" visible="false" />
+        <setting default="1" id="log_level" label="Log Level" type="enum" values="Standard|Verbose" />
+    </category>
 </settings>

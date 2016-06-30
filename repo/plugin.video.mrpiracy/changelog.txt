@@ -1,3 +1,13 @@
+v0.2.8 (28/06/2016)
+- Correção do openload
+
+v0.2.7 (27/06/2016)
+- Novo servidor/legenda (séries)
+
+v0.2.6 (27/06/2016)
+- Novo servidor (séries)
+- Correção de utilização na primeira vez (criação de BD)
+
 v0.2.5 (17/06/2016)
 - Novo servidor
 

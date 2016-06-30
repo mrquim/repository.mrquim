@@ -57,7 +57,6 @@ def menu():
     check_login = login()
     database = Database.isExists()
 
-
     if check_login:
         addDir('Filmes', __SITE__+'kodi_filmes.php', 1, __FANART__, 1, poster=os.path.join(__ART_FOLDER__, __SKIN__, 'filmes.png'))
         addDir('Series', __SITE__+'kodi_series.php', 1, __FANART__, 1, poster=os.path.join(__ART_FOLDER__, __SKIN__, 'series.png'))
@@ -89,6 +88,7 @@ def menu():
         addDir('Alterar Definições', 'url', 1000, __FANART__, 0, poster=os.path.join(__ART_FOLDER__, __SKIN__, 'definicoes.png'))
         addDir('Entrar novamente', 'url', None, __FANART__, 0, poster=os.path.join(__ART_FOLDER__, __SKIN__, 'retroceder.png'))
         vista_menu()
+
 
 def minhaConta():
     addDir('Favoritos', __SITE__+'favoritos.php', 11, __FANART__, 1, poster=os.path.join(__ART_FOLDER__, __SKIN__, 'favoritos.png'))
@@ -353,8 +353,7 @@ def getEpisodes(url):
 
         episodioInfo = Database.selectEpisodioDB(imdbid, temporadaNumero, episodioN)
         if episodioInfo is None:
-            infoEpis = json.loads(Trakt.getTVDBByEpSe(imdbid, temporada, episodio))
-
+            infoEpis = json.loads(Trakt.getTVDBByEpSe(imdbid, temporadaNumero, episodioN))
             Database.insertEpisodio(infoEpis["name"], infoEpis["plot"], infoEpis["imdb"], infoEpis["tvdb"], infoEpis["season"], infoEpis["episode"], infoEpis["fanart"], infoEpis["poster"], infoEpis["aired"], infoEpis["serie"], infoEpis["traktid"], actores=infoEpis['actors'])
             infoLabels = {'Title':infoEpis["name"], 'Actors':infoEpis['actors'], 'Plot':infoEpis["plot"], 'Season':infoEpis["season"], 'Episode':infoEpis["episode"], "Code":imdbid, 'Aired': infoEpis["aired"] }
             poster = infoEpis["poster"]
@@ -364,7 +363,17 @@ def getEpisodes(url):
             numeroEpisodioDB = infoEpis["episode"]
             serieTitulo = infoEpis["serie"]
         else:
-            #nome, plot, temporada, episodio, fanart, poster, aired, actores, categoria, visto
+            """if int(episodioInfo[3]) is not int(episodioN):
+                infoEpis = json.loads(Trakt.getTVDBByEpSe(imdbid, temporadaNumero, episodioN))
+                Database.updateEpisodioDB(infoEpis["name"], infoEpis["plot"], infoEpis["imdb"], infoEpis["tvdb"], infoEpis["season"], infoEpis["episode"], infoEpis["fanart"], infoEpis["poster"], infoEpis["aired"], infoEpis["serie"], infoEpis["traktid"], actores=infoEpis['actors'])
+                infoLabels = {'Title':infoEpis["name"], 'Actors':infoEpis['actors'], 'Plot':infoEpis["plot"], 'Season':infoEpis["season"], 'Episode':infoEpis["episode"], "Code":imdbid, 'Aired': infoEpis["aired"] }
+                poster = infoEpis["poster"]
+                fanart = infoEpis["fanart"]
+                nomeEpisodio = infoEpis["name"]
+                temporadaEpisodioDB = infoEpis["season"]
+                numeroEpisodioDB = infoEpis["episode"]
+                serieTitulo = infoEpis["serie"]
+            else:"""
             infoLabels = {'Title':episodioInfo[0], 'Actors':episodioInfo[7], 'Plot':episodioInfo[1], 'Season':episodioInfo[2], 'Episode':episodioInfo[3], "Code":imdbid, 'Aired': episodioInfo[6] }
             poster = episodioInfo[5]
             fanart = episodioInfo[4]
@@ -394,6 +403,7 @@ def getStreamLegenda(siteBase, codigo_fonte):
     i = 1
     if siteBase == 'serie.php':
         match = re.compile('<div\s+id="welele"\s+link="(.+?)"\s+legenda="(.+?)">').findall(codigo_fonte)
+        match += re.compile('<div\s+id="welele2"\s+link="(.+?)"\s+legenda="(.+?)">').findall(codigo_fonte)
 
         for link, legenda in match:
             titulos.append('Servidor #%s' % i)
@@ -428,16 +438,16 @@ def getStreamLegenda(siteBase, codigo_fonte):
             legenda = vidzi.getSubtitle()
         elif 'uptostream.com' in links[servidor]:
             stream = URLResolverMedia.UpToStream(links[servidor]).getMediaUrl()
-            legenda = legendaAux
+            legenda = legendas[0]
         elif 'server.mrpiracy.club' in links[servidor]:
             stream = links[servidor]
-            legenda = legendaAux
+            legenda = legendas[0]
         elif 'openload' in links[servidor]:
             stream = URLResolverMedia.OpenLoad(links[servidor]).getMediaUrl()
             legenda = URLResolverMedia.OpenLoad(links[servidor]).getSubtitle()
         elif 'drive.google.com/' in links[servidor]:
             stream = URLResolverMedia.GoogleVideo(links[servidor]).getMediaUrl()
-            legenda = legendaAux
+            legenda = legendas[0]
 
     else:
 
@@ -453,9 +463,6 @@ def getStreamLegenda(siteBase, codigo_fonte):
         elif 'openload' in links[0]:
             stream = URLResolverMedia.OpenLoad(links[0]).getMediaUrl()
             legenda = URLResolverMedia.OpenLoad(links[0]).getSubtitle()
-
-    print links
-
 
 
     """if match != []:
@@ -518,9 +525,6 @@ def getStreamLegenda(siteBase, codigo_fonte):
 
     """
 
-    print "~~~~~~~~~~~~~~~~~~~ MrPiracy: Stream Legenda"
-    print stream
-    print legenda
     return stream, legenda
 
 def pesquisa():
@@ -1382,8 +1386,8 @@ def addVideo(name,url,mode,iconimage,tipo,temporada,episodio,infoLabels,poster,s
         else:
             linkTrailer = ''
     elif tipo == 'serie':
-        print temporada
-        print episodio
+        print(""+str(temporada))
+        print(""+str(episodio))
         xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
         visto = checkVisto(url, temporada, episodio)
 
@@ -1391,6 +1395,10 @@ def addVideo(name,url,mode,iconimage,tipo,temporada,episodio,infoLabels,poster,s
 
         linkTrailer = ""
     elif tipo == 'episodio':
+        print temporada
+        print episodio
+        print(""+str(temporada))
+        print(""+str(episodio))
         xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
         visto = checkVisto(url, temporada, episodio)
         idIMDb = re.compile('imdb=(tt[0-9]{7})&').findall(url)[0]
@@ -1584,7 +1592,9 @@ print "Episodio: "+str(episodio)
 ###############################################################################################################
 #                                                   MODOS                                                     #
 ###############################################################################################################
-if mode==None or url==None or len(url)<1: menu()
+if mode==None or url==None or len(url)<1:
+    menu()
+    xbmcplugin.endOfDirectory(int(sys.argv[1]))
 elif mode==1: getList(url, pagina)
 elif mode==2: getSeries(url, pagina)
 elif mode==3: player(name, url, iconimage, temporada, episodio, serieNome)

@@ -1,4 +1,12 @@
 
+[B]24/06/2016 - Versão 4.0[/B]
+-  Mudança de Addon. Divisão por 10 categorisas/pastas base com temas dedicados.
+   Possibilidade de escolher o numero de videos por página e a percentagem de "já visto".
+   Capacidade de enviar os videos que mais gostam para os Favoritos do Kodi.
+   Adicionado a função de reprodução automática de todos os videos.
+   Tempo e qualidade dos videos apresentados nas playlists de cada categoria.
+   Em relação à bonecada foram inseridos mais..... xiiiiiiii que exagero !!!
+
 [B]14/06/2016 - Versão 3.1[/B]
 -  Adicionadas categoria de filmes completos dobrados em BR e PT
    Adicionadas 4 novas séries.

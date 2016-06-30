@@ -35,6 +35,11 @@ class STRINGS():
 			'manage_hosts':			30029,
 			'my_collection':		30030,
 			'my_favorites':			30031,
+			'movie_tmdb':			30032,
+			'scraper_settings':		30033,
+			'manage_walter':		30034,
+			'ondeck':				30036,
+			'clear_cache':			30037,
 		}
 		if key in table.keys():
 			return i18n(table[key])

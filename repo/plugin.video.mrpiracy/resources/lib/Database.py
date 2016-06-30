@@ -22,9 +22,9 @@ def isExists():
 def createDB():
 
     if not xbmcvfs.exists(__DB_FILE__):
-        f = open(__DB_FILE__, 'w')
+        """f = open(__DB_FILE__, 'w')
         f.write('')
-        f.close()
+        f.close()"""
 
         con, dbcursor = connect()
 
@@ -151,3 +151,15 @@ def isWatchedSerieDB(imdb, temporada, episodio):
         return False
     elif visto[0] == "sim":
         return True
+
+def updateEpisodioDB(nome, plot, imdb, tvdb, temporada, episodio, fanart, poster, aired, serienome, traktid, categoria=None, actores=None):
+    conn, dbcursor = connect()
+    if categoria == None:
+        categoria = ''
+    if actores == None:
+        actores = ''
+    dbcursor.execute("DELETE FROM episodios WHERE imdb=? AND temporada=? AND episodio is NULL", (imdb, temporada))
+    #dbcursor.execute("UPDATE episodios SET nome=?, plot=?, tvdb=?, episodio=?, fanart=?, poster=?, aired=?, serienome=?, traktid=?, categoria=?, actores=? WHERE imdb=? AND temporada=?", (nome, plot, tvdb, episodio, fanart, poster, aired, serienome, traktid, categoria, actores, imdb, temporada)")
+    conn.commit()
+
+    insertEpisodio(nome, plot, imdb, tvdb, temporada, episodio, fanart, poster, aired, serienome, traktid, categoria, actores)

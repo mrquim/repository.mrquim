@@ -15,26 +15,20 @@
 
 
 ##############BIBLIOTECAS A IMPORTAR E DEFINICOES####################
-import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon,xbmc,HTMLParser,xmltosrt,os,json,threading,xbmcvfs,sys,platform,time,gzip,glob,datetime,thread
-from BeautifulSoup import BeautifulSoup
-from BeautifulSoup import BeautifulStoneSoup, BeautifulSoup, BeautifulSOAP
-from t0mm0.common.net import Net
-from datetime import date
+import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon,xbmc,os,json,glob,threading,gzip,xbmcvfs,cookielib,pprint,datetime,thread,time
 import xml.etree.ElementTree as ET
-import urlresolver
-import jsunpack
-import mechanize, cookielib
+#from BeautifulSoup import BeautifulStoneSoup, BeautifulSoup, BeautifulSOAP
+from datetime import date
 from bs4 import BeautifulSoup
-
-try:
-    import json
-except:
-    import simplejson as json
-h = HTMLParser.HTMLParser()
-
-import re, htmlentitydefs
-reload(sys)
-sys.setdefaultencoding('utf-8')
+from resources.lib import Downloader #Enen92 class
+from resources.lib import Player
+from t0mm0.common.net import Net
+from t0mm0.common.addon import Addon
+from t0mm0.common.net import HttpResponse
+from resources.lib import URLResolverMedia
+from resources.lib import Trakt
+from resources.lib import Database
+from unicodedata import normalize
 
 ####################################################### CONSTANTES #####################################################
 
@@ -42,40 +36,48 @@ global g_timer
 
 __ADDON_ID__   = xbmcaddon.Addon().getAddonInfo("id")
 __ADDON__	= xbmcaddon.Addon(__ADDON_ID__)
+__ADDONVERSION__ = __ADDON__.getAddonInfo('version')
 __CWD__ = xbmc.translatePath( __ADDON__.getAddonInfo('path') ).decode("utf-8")
 __ADDON_FOLDER__	= __ADDON__.getAddonInfo('path')
 __SETTING__	= xbmcaddon.Addon().getSetting
 __ART_FOLDER__	= __ADDON_FOLDER__ + '/resources/img/'
 __FANART__ 		= os.path.join(__ADDON_FOLDER__,'fanart.jpg')
 _ICON_ = __ADDON_FOLDER__ + '/icon.png'
-__SKIN__ = 'v1'
-__SITE__ = 'http://www.pcteckserv.com/GrupoKodi/PHP/'
-__SITEAddon__ = 'http://www.pcteckserv.com/GrupoKodi/Addon/'
-__EPG__ = 'http://www.pcteckserv.com/GrupoKodi/epg.gz'
-__FOLDER_EPG__ = os.path.join(xbmc.translatePath('special://userdata/addon_data/plugin.video.LiveTV/').decode('utf-8'), 'epg')
+__SKIN__ = 'v2'
+__SITE__ = 'http://liveitkodi.com/PHP/'
+__SITEAddon__ = 'http://liveitkodi.com/Addon/'
+__EPG__ = 'http://liveitkodi.com/epg.gz'
+__FOLDER_EPG__ = os.path.join(xbmc.translatePath('special://userdata/addon_data/plugin.video.LiveTV/').decode('utf-8'), 'epglive')
 __ALERTA__ = xbmcgui.Dialog().ok
-__COOKIE_FILE__ = os.path.join(xbmc.translatePath('special://userdata/addon_data/plugin.video.LiveTV/').decode('utf-8'), 'addon_cookies_liveit')
-__HEADERS__ = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:43.0) Gecko/20100101 Firefox/43.0', 'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.7'}
-user_agent = 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36'
-
-xml = BeautifulSOAP(open(__ADDON_FOLDER__+'/addon.xml','r'), convertEntities=BeautifulStoneSoup.XML_ENTITIES)
-_VERSAO_ = str(xml.addon['version'])
-_NOMEADDON_ = str(xml.addon['name'])
+__COOKIE_FILE__ = os.path.join(xbmc.translatePath('special://userdata/addon_data/plugin.video.LiveTV/').decode('utf-8'), 'cookie.liveittv')
+__HEADERS__ = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:43.0) Gecko/20100101 Firefox/43.0', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'}
+debug = __ADDON__.getSetting('debug')
+#xml = BeautifulSOAP(open(__ADDON_FOLDER__+'/addon.xml','r'), convertEntities=BeautifulStoneSoup.XML_ENTITIES)
+#_VERSAO_ = str(xml.addon['version'])
+#_NOMEADDON_ = str(xml.addon['name'])
 check_login = {}
-
-#reload(sys)
-#sys.setdefaultencoding('utf-8')
+__PASTA_DADOS__ = Addon(__ADDON_ID__).get_profile().decode("utf-8")
+__PASTA_FILMES__ = xbmc.translatePath(__ADDON__.getSetting('bibliotecaFilmes'))
+__PASTA_SERIES__ = xbmc.translatePath(__ADDON__.getSetting('bibliotecaSeries'))
+__SITEFILMES__ = 'http://kodi.mrpiracy.club/'
 
 ###################################################################################
 #                              Iniciar Addon		                                  #
 ###################################################################################
-  
+def addon_log(string):
+	if debug == 'true':
+		xbmc.log("[addon.live!t-tv-%s]: %s" %(__ADDONVERSION__, string))
+
 def menu():
 	if (not __ADDON__.getSetting('login_name') or not __ADDON__.getSetting('login_password')):
 		__ALERTA__('Live!t TV', 'Precisa de definir o seu Utilizador e Senha')
 		abrirDefinincoes()
 	else:
 		check_login = login()
+
+		database = Database.isExists()
+		#__ALERTA__('Live!t TV', database)
+		
 		if check_login['user']['nome'] != '':
 			if check_login['sucesso']['resultado'] == 'yes':
 				#xbmc.executebuiltin('Notification(%s, %s, %i, %s)'%('Live!t TV - Sessão: '+check_login['user']['nome']+', Versão do addon: '+_VERSAO_, '8000, _ICON_))
@@ -87,6 +89,13 @@ def menu():
 					'senha': ''
 					}
 				menus1 = {
+					'nome': '',
+					'logo': '',
+					'link': '',
+					'tipo': '',
+					'senha': ''
+					}
+				menus3 = {
 					'nome': '',
 					'logo': '',
 					'link': '',
@@ -124,6 +133,12 @@ def menu():
 				menus1['tipo'] = "novidades"
 				menus1['senha'] = ""
 				check_login['menus'].append(menus1)
+				menus3['nome'] = "Pesquisa"
+				menus3['logo'] = os.path.join(__ART_FOLDER__, __SKIN__, 'pesquisa.png')
+				menus3['link'] = __SITEFILMES__
+				menus3['tipo'] = "pesquisa"
+				menus3['senha'] = ""
+				check_login['menus'].append(menus3)
 				Menu_inicial(check_login)
 			elif check_login['sucesso']['resultado'] == 'utilizador':
 				__ALERTA__('Live!t TV', 'Utilizador incorreto.')
@@ -140,41 +155,9 @@ def menu():
 		else:
 			addDir('Alterar Definições', 'url', None, 1000, 'Miniatura', __SITEAddon__+"Imagens/definicoes.png",'','','','','','','')
 			addDir('Entrar novamente', 'url', None, None, 'Miniatura', __SITEAddon__+"Imagens/retroceder.png",'','','','','','','')
-
-		xbmc.executebuiltin("Container.SetViewMode(500)")
-	
-def abrir_cookie(usser, seenha, service, url, New=False):
-	import mechanize
-	import cookielib
-
-	br = mechanize.Browser()
-	cj = cookielib.LWPCookieJar()
-	br.set_cookiejar(cj)
-	if not New:
-		cj.load(os.path.join(xbmc.translatePath("special://temp"),"addon_cookies_liveit"), ignore_discard=False, ignore_expires=False)
-		br.set_handle_equiv(True)
-		br.set_handle_gzip(True)
-		br.set_handle_redirect(True)
-		br.set_handle_referer(True)
-		br.set_handle_robots(False)
-		br.set_handle_refresh(mechanize._http.HTTPRefreshProcessor(), max_time=1)
-		br.addheaders = [('User-agent', 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1')]
-	if New:
-		br.open(service + 'admin/')
-		br.select_form(nr=0)
-		br.form['password']= seenha
-		br.form['username']= usser
-		br.submit()
-		cj.save(os.path.join(xbmc.translatePath("special://temp"),"addon_cookies_liveit"))
-		try:
-			br.open(url,timeout=50000000)
-		except:
-			br.open(url)
-		return br.response().read()
-
-def getSoup(url):
-	data = abrir_cookie('','','',url).decode('utf8')
-	return BeautifulSOAP(data, convertEntities=BeautifulStoneSoup.XML_ENTITIES)
+		
+		vista_menu()
+		#xbmc.executebuiltin("Container.SetViewMode(500)")
 
 ###################################################################################
 #                              Login Addon		                                  #
@@ -258,13 +241,13 @@ def login():
 					elif(e.tag == 'logo2'):
 						informacoes['info']['logo2'] = e.text
 					elif(e.tag == 'link2'):
-						informacoes['info']['link2'] = e.text
+						informacoes['info']['link2'] = ''
 					elif(e.tag == 'log'):
 						informacoes['info']['log'] = e.text
 					elif(e.tag == 'user'):
-						informacoes['info']['user'] = e.text
+						informacoes['info']['user'] = ''
 					elif(e.tag == 'password'):
-						informacoes['info']['password'] = e.text
+						informacoes['info']['password'] = ''
 			elif(child.tag == 'menus'):
 				menu = {
 						'nome': '',
@@ -297,13 +280,40 @@ def login():
 
 	return informacoes
 
+def login2():
+	resultado = True
+	try:
+		net = Net()
+		dados = {'email': __ADDON__.getSetting("email"), 'password': __ADDON__.getSetting("password"), 'lembrar_senha': 'lembrar'}
+		codigo_fonte = net.http_POST(__SITEFILMES__+'login_bd.php',form_data=dados,headers=__HEADERS__).content.encode('utf-8')
+		match = re.compile('class="myAccount">(.+?)<\/a>').findall(codigo_fonte)
+	except:
+		resultado = False
+		match = ''
+		return resultado
+
+	if match == []:
+		match = re.compile('class="myAccount">(.+?)<\/a>').findall(codigo_fonte)
+		if match == []:
+			resultado = False
+			return resultado
+		else:
+			resultado = True
+			return resultado
+	else:
+		net.save_cookies(__COOKIE_FILE__)
+		resultado = True
+		return resultado
+
 ###############################################################################################################
 #                                                   Menus                                                     #
 ###############################################################################################################
 
 def Menu_inicial(men):
 	_tipouser = men['user']['tipo']
-	_nomeuser = 'Live!t-TV ('+men['user']['nome']+')'
+	_servuser = men['user']['servidor']
+	_nomeuser = men['user']['nome']
+	#_nomeuser = 'Live!t-TV ('+men['user']['nome']+')'
 	for menu in men['menus']:
 		nome = menu['nome']
 		logo = menu['logo']
@@ -311,28 +321,31 @@ def Menu_inicial(men):
 		tipo = menu['tipo']
 		senha = menu['senha']
 		if tipo == 'Adulto' :
-			addDir(nome,link,senha,3,'Miniatura',logo,tipo,_tipouser,men['user']['servidor'],'',men['info']['log'],men['info']['user'],men['info']['password'])
+			addDir(nome,link,senha,3,'Miniatura',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
 		elif tipo == 'patrocinadores' or tipo == 'novidades':
-			addDir(nome,link,None,1,'Lista',logo,tipo,_tipouser,men['user']['servidor'],'',men['info']['log'],men['info']['user'],men['info']['password'])
+			addDir(nome,link,None,1,'Lista',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
 		elif(tipo == 'Filme'):
-			addDir(nome,link,None,21,'Miniatura',logo,tipo,_tipouser,men['user']['servidor'],'',men['info']['log'],men['info']['user'],men['info']['password'])
+			addDir(nome,link,None,21,'Miniatura',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
 		elif(tipo == 'Serie'):
-			addDir(nome,link,None,20,'Miniatura',logo,tipo,_tipouser,men['user']['servidor'],'',men['info']['log'],men['info']['user'],men['info']['password'])
+			addDir(nome,link,None,20,'Miniatura',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
 		elif(tipo == 'estado'):
-			addDir(nome,link,None,10,'Lista',logo,tipo,_tipouser,men['user']['servidor'],'',men['info']['log'],men['info']['user'],men['info']['password'])
+			addDir(nome,link,None,10,'Lista',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
+		elif(tipo == 'pesquisa'):
+			if _tipouser != 'Teste':
+				addDir(nome,link,None,120,'Lista',logo,tipo,_tipouser,_servuser,'','','','')
 		else:
 			if _tipouser == 'Administrador' or _tipouser == 'Patrocinador' or _tipouser == 'PatrocinadorPagante':
 				if nome == 'TVs':
-					addDir(nome,link,None,1,'Miniatura',logo,tipo,_tipouser,men['user']['servidor'],'',men['info']['log'],men['info']['user'],men['info']['password'])
-					addDir('TVs-Free',link,None,1,'Miniatura',logo,tipo,_tipouser,men['user']['servidor'],'',men['info']['log'],men['info']['user'],men['info']['password'])
+					addDir(nome,link,None,1,'Miniatura',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
+					addDir('TVs-Free',link,None,1,'Miniatura',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
 				else:
-					addDir(nome,link,None,1,'Miniatura',logo,tipo,_tipouser,men['user']['servidor'],'',men['info']['log'],men['info']['user'],men['info']['password'])
+					addDir(nome,link,None,1,'Miniatura',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
 			else:
-				addDir(nome,link,None,1,'Miniatura',logo,tipo,_tipouser,men['user']['servidor'],'',men['info']['log'],men['info']['user'],men['info']['password'])
+				addDir(nome,link,None,1,'Miniatura',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
 	
 	#xbmc.executebuiltin('Notification(%s, %s, %i, %s)'%(_nomeuser, Versão do addon: '+_VERSAO_, 8000, _ICON_))
 	thread.start_new_thread( obter_ficheiro_epg, () )
-	xbmc.executebuiltin('Notification(%s, %s, %i, %s)'%(_nomeuser,'Versão do addon: '+_VERSAO_, 8000, _ICON_))
+	xbmc.executebuiltin('Notification(%s, %s, %i, %s)'%('Live!t-TV','Secção Iniciada: '+_nomeuser, 8000, _ICON_))
 	#check_version()
 ###############################################################################################################
 #                                                   Listar Grupos                                             #
@@ -347,7 +360,7 @@ def listar_grupos_adultos(url,senha,estilo,tipo,tipo_user,servidor_user,sserv,su
 			if servidor_user == 'Teste':
 				passa = False
 				__ALERTA__('Live!t TV', 'Não tem acesso a este menu. Faça a sua doação.')	
-	if passa == True:
+	if passa:
 		if(__ADDON__.getSetting("login_adultos") == ''):
 			__ALERTA__('Live!t TV', 'Preencha o campo senha para adultos.')
 		elif(__ADDON__.getSetting("login_adultos") != senha):
@@ -357,9 +370,6 @@ def listar_grupos_adultos(url,senha,estilo,tipo,tipo_user,servidor_user,sserv,su
 
 def listar_grupos(nome_nov,url,estilo,tipo,tipo_user,servidor_user,sservee,suseree,spassee):
 	if url != 'url':
-		if tipo == 'Filme':
-			xbmc.executebuiltin('Notification(%s, %s, %i, %s)'%(_NOMEADDON_,'A verificar os seus dados de acesso.', 2000, _ICON_))
-			estado = abrir_cookie(suseree, spassee, sservee, sservee + 'canais/liberar/', True)
 		page_with_xml = urllib2.urlopen(url).readlines()
 		for line in page_with_xml:
 			objecto = line.decode('latin-1').encode("utf-8")
@@ -403,9 +413,11 @@ def listar_grupos(nome_nov,url,estilo,tipo,tipo_user,servidor_user,sservee,suser
 						addDir(nomee,urlll,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'','','','')
 			except:
 				pass
-	estiloSelect = returnestilo(estilo)
-	xbmc.executebuiltin(estiloSelect)	
 	
+	vista_menu()
+	#estiloSelect = returnestilo(estilo)
+	#xbmc.executebuiltin(estiloSelect)	
+
 ###############################################################################################################
 #                                                   Listar Canais                                             #
 ###############################################################################################################
@@ -457,15 +469,15 @@ def listar_canais_url(nome,url,estilo,tipo,tipo_user,servidor_user,sservee,suser
 				descri = ''
 				if grup == nome:
 					twrv = ThreadWithReturnValue(target=getProgramacaoDiaria, args=(id_it, st,codigo))
-
+					
 					twrv.start()
 					programa = twrv.join() 
-
+					
 					if programa != '':
 						nomewp = nomee + " | "+ programa
 					else:
 						nomewp = nomee
-
+					
 					if	tipo == 'Filme' or tipo == 'Serie':
 						srt_f = params[6]
 						ano = params[7]
@@ -477,61 +489,25 @@ def listar_canais_url(nome,url,estilo,tipo,tipo_user,servidor_user,sservee,suser
 						detalhes2 = ano
 						imdb = '4510398'
 						votes = '5 estrelas'
-						infoLabels = {'Title':nomewp, 'Plot':plot, 'Writer': argumento, 'Director':realizador, 'Genre':detalhes1, 'Year': detalhes2, 'Aired':detalhes2, 'IMDBNumber':imdb, 'Votes':votes}
+						infoLabels = {'title':nomewp, 'plot':plot, 'writer': argumento, 'director':realizador, 'genre':detalhes1, 'year': detalhes2, 'aired':detalhes2, 'IMDBNumber':imdb, 'votes':votes, "credits": nomewp}
 					else:
-						infoLabels = {'Title':nomewp}
-						
+						infoLabels = {"title": nomewp, "genre": tipo, "credits": nomewp}
+					
+					#print 'Nome Novo: '+nomewp
 					addLink(nomewp,rtmp,img,id_it,srt_f,descri,tipo,tipo_user,id_p,infoLabels,total)
 			except:
 				pass
-		estiloSelect = returnestilo(estilo)
-		xbmc.executebuiltin(estiloSelect)
-
-def play_mult_canal(arg, icon, nome, tipouser):
-	#playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
-	playlist = xbmc.PlayList(1)
-	playlist.clear()
-	#__ALERTA__('Live!t TV', 'Zequinha')
-	listitem = xbmcgui.ListItem(name, iconImage=iconimage, thumbnailImage=iconimage)
-	listitem.setInfo("Video", {"title":name})
-	listitem.setProperty('mimetype', 'video/x-msvideo')
-	listitem.setProperty('IsPlayable', 'true')
-	playlist.add(url, listitem)
-	xbmcplugin.setResolvedUrl(handle=int(sys.argv[1]), succeeded=True, listitem=listitem)
-	player = xbmc.Player()		
-	try:
-		player.play(playlist)
-	except:
-		if tipouser == 'Teste':
-			__ALERTA__('Live!t TV', 'Sendo Free tem estas paragens ou falhas. Adquire agora o premium vai ao grupo e fala com o Administrador.')
-		else:
-			__ALERTA__('Live!t TV', 'Faça Retroceder 3 vezes no comando e tente novamente.')
+		
+		vista_Canais()
+		#estiloSelect = returnestilo(estilo)
+		#xbmc.executebuiltin(estiloSelect)
 
 ###############################################################################################################
 #                                                   EPG                                                     #
 ###############################################################################################################
 def obter_ficheiro_epg():
-
 	if not xbmcvfs.exists(__FOLDER_EPG__):
 		xbmcvfs.mkdirs(__FOLDER_EPG__)
-
-	"""horaAtual = time.strftime("%d/%m/%Y")
-	
-	ficheiroData = os.path.join(__FOLDER_EPG__, 'ultima.txt')
-
-	if not xbmcvfs.exists(ficheiroData):
-		f = open(ficheiroData, mode="w")
-		f.write("")
-		f.close()
-
-	f = open(ficheiroData, mode="r")
-	dataAntiga = f.read()
-	f.close()
-
-	if (time.strptime(dataAntiga, "%d/%m/%Y")) < horaAtual or not dataAntiga:
-		f = open(ficheiroData, mode="w")
-		f.write(str(horaAtual))
-		f.close()"""
 
 	urllib.urlretrieve(__EPG__, os.path.join(__FOLDER_EPG__, 'epg.gz'))		
 
@@ -618,369 +594,824 @@ class ThreadWithReturnValue(Thread):
 ############################################################################################################
 #                                               Addon Filmes e Series                                      #
 ############################################################################################################ 
+def menuFilmes():
+	database = Database.isExists()
+	addDir2('Filmes', __SITEFILMES__+'kodi_filmes.php', 111, __FANART__, 1, poster=os.path.join(__ART_FOLDER__, __SKIN__, 'filmes.png'))
+	addDir2('', '', '', __FANART__, 0, poster=os.path.join(__ART_FOLDER__,'nada.png'))
+	addDir2('Filmes por Ano', __SITEFILMES__+'kodi_filmes.php', 119, __FANART__, 1, poster=os.path.join(__ART_FOLDER__, __SKIN__, 'ano.png'))
+	addDir2('Filmes por Genero', __SITEFILMES__+'kodi_filmes.php', 118, __FANART__, 1, poster=os.path.join(__ART_FOLDER__, __SKIN__, 'genero.png'))
+	#if Trakt.loggedIn():
+	#	dp = xbmcgui.DialogProgress()
+	#	dp.create('Live!t-TV Trakt')
+	#	dp.update(0, "A Carregar os Filmes vistos no Trakt")
+	#	filmesTraktVistos()
 
-def listamenusseries(nome_nov,url,estilo,tipo,tipo_user,servidor_user,iconimage,sserv,suser,spass):
-	addDir('Series Live!t',url,None,1,'Miniatura',iconimage,tipo,tipo_user,servidor_user,'',sserv,suser,spass)
-	addDir('Series Web','-',None,22,estilo,iconimage,'','','','','','','')
-	estiloSelect = returnestilo(estilo)
-	xbmc.executebuiltin(estiloSelect)
+	#	dp.close()
 
-def listamenusfilmes(nome_nov,url,estilo,tipo,tipo_user,servidor_user,iconimage,sserv,suser,spass):
-	addDir('Filmes Live!t',url,None,1,estilo,iconimage,tipo,tipo_user,servidor_user,'',sserv,suser,spass)
-	addDir('Filmes Web','-',None,23,estilo,iconimage,'','','','',sserv,suser,spass)
-	estiloSelect = returnestilo(estilo)
-	xbmc.executebuiltin(estiloSelect)
+	#	addDir('Trakt', __SITEFILMES__, 701, __FANART__, 0, poster=os.path.join(__ART_FOLDER__, __SKIN__, 'trakt.png'))
 
-def listaseries(estilo):
-	addDir('Pesquisar Series','-',estilo,8,'',__ART_FOLDER__ + 'pesquisa.png','','','','','','','')
-	listar_series('http://www.armagedomfilmes.biz/?cat=21|1')
-	estiloSelect = returnestilo(estilo)
-	xbmc.executebuiltin(estiloSelect)
+	vista_menu()
 
-def listafilmes(estilo):
-	addDir('Pesquisar Filmes','-',estilo,14,'',__ART_FOLDER__ + 'pesquisa.png','','','','','','','')
-	addDir('Lançamentos','http://www.armagedomfilmes.biz/?cat=3236',estilo,13,'',__ART_FOLDER__ + 'upfolder.png','','','','','','','')
-	categorias(estilo)
-	estiloSelect = returnestilo(estilo)
-	xbmc.executebuiltin(estiloSelect)
+def menuSeries():
+	database = Database.isExists()
+	addDir2('Series', __SITEFILMES__+'kodi_series.php', 111, __FANART__, 1, poster=os.path.join(__ART_FOLDER__, __SKIN__, 'series.png'))
+	addDir2('', '', '', __FANART__, 0, poster=os.path.join(__ART_FOLDER__,'nada.png'))
+	addDir2('Series por Ano', __SITEFILMES__+'kodi_series.php', 119, __FANART__, 1, poster=os.path.join(__ART_FOLDER__, __SKIN__, 'ano.png'))
+	addDir2('Series por Genero', __SITEFILMES__+'kodi_series.php', 118, __FANART__, 1, poster=os.path.join(__ART_FOLDER__, __SKIN__, 'genero.png'))
+	#if Trakt.loggedIn():
+	#	dp = xbmcgui.DialogProgress()
+	#	dp.create('Live!t-TV Trakt')
+	#	dp.update(50, "A Carregar as Series vistas no Trakt")
+	#	seriesTraktVistos()
 
-def categorias(estilo):
-	addDir('BLURAY','http://www.armagedomfilmes.biz/?cat=5529',None,13,estilo,__ART_FOLDER__ + 'bluray.png','','','','','','','')
-	addDir('LEGENDADOS','http://www.armagedomfilmes.biz/?s=legendado',None,13,estilo,__ART_FOLDER__ + 'legendados.png','','','','','','','')
-	addDir('ACAO','http://www.armagedomfilmes.biz/?cat=3227',None,13,estilo,__ART_FOLDER__ + 'action.png','','','','','','','')
-	addDir('ANIMACAO','http://www.armagedomfilmes.biz/?cat=3228',None,13,estilo,__ART_FOLDER__ + 'cartoons.png','','','','','','','')
-	addDir('AVENTURA','http://www.armagedomfilmes.biz/?cat=3230',None,13,estilo,__ART_FOLDER__ + 'adventure.png','','','','','','','')
-	addDir('COMEDIA ','http://www.armagedomfilmes.biz/?cat=3229',None,13,estilo,__ART_FOLDER__ + 'comedy.png','','','','','','','')
-	addDir('COMEDIA ROMANTICA','http://www.armagedomfilmes.biz/?cat=3231',None,13,estilo,__ART_FOLDER__ + 'romance.png','','','','','','','')
-	addDir('DRAMA','http://www.armagedomfilmes.biz/?cat=3233',None,13,estilo,__ART_FOLDER__ + 'drama.png','','','','','','','')
-	addDir('FAROESTE','http://www.armagedomfilmes.biz/?cat=18',None,13,estilo,__ART_FOLDER__ + 'faroeste.png','','','','','','','')
-	addDir('FICCAO CIENTIFICA','http://www.armagedomfilmes.biz/?cat=3235',None,13,estilo,__ART_FOLDER__ + 'scifi.png','','','','','','','')
-	addDir('LUTAS UFC','http://www.armagedomfilmes.biz/?cat=3394',None,13,estilo,__ART_FOLDER__ + 'sports.png','','','','','','','')
-	addDir('NACIONAL','http://www.armagedomfilmes.biz/?cat=3226',None,13,estilo,__ART_FOLDER__ + 'homemovies.png','','','','','','','')
-	addDir('POLICIAL','http://www.armagedomfilmes.biz/?cat=72',None,13,estilo,__ART_FOLDER__ + 'war.png','','','','','','','')
-	addDir('RELIGIOSO','http://www.armagedomfilmes.biz/?cat=20',None,13,estilo,__ART_FOLDER__ + 'classics.png','','','','','','','')
-	addDir('ROMANCE','http://www.armagedomfilmes.biz/?cat=3232',None,13,estilo,__ART_FOLDER__ + 'romance.png','','','','','','','')
-	addDir('SHOWS','http://www.armagedomfilmes.biz/?cat=30',None,13,estilo,__ART_FOLDER__ + 'musicals.png','','','','','','','')
-	addDir('SUSPENSE','http://www.armagedomfilmes.biz/?cat=3239',None,13,estilo,__ART_FOLDER__ + 'mystery.png','','','','','','','')
-	addDir('TERROR','http://www.armagedomfilmes.biz/?cat=3238',None,13,estilo,__ART_FOLDER__ + 'horror.png','','','','','','','')
-	addDir('THRILLER','http://www.armagedomfilmes.biz/?cat=30',None,13,estilo,__ART_FOLDER__ + 'thriller.png','','','','','','','')
+	#	dp.close()
 
-def listar_videos(url):
-	codigo_fonte = abrir_url(url)
-	soup = BeautifulSoup(abrir_url(url))
-	content = BeautifulSoup(soup.find("div", { "class" : "bic-miniaturas" }).prettify())
-	filmes = content("div", { "class" : "bic-miniatura" })
-	for filme in filmes:
-		titulo = filme.a["title"].replace('Assistir ','')
-		url = filme.a["href"]
-		img = filme.img["src"]
-		addDir(titulo.encode('utf8'),url,None,4,'Lista',img,'','','','','','','',False,len(filmes))
-		
-	pagenavi = BeautifulSoup(soup.find('div', { "class" : "wp-pagenavi" }).prettify())("a", { "class" : "nextpostslink" })[0]["href"]
-	addDir('Página Seguinte >>',pagenavi,None,13,'',__ART_FOLDER__ + 'prox.png','','','','','','','')
+	#	addDir('Trakt', __SITEFILMES__, 701, __FANART__, 0, poster=os.path.join(__ART_FOLDER__, __SKIN__, 'trakt.png'))
+	vista_menu()
 
-	xbmcplugin.setContent(int(sys.argv[1]), 'movies')
-	estiloSelect = returnestilo('Lista')
-	xbmc.executebuiltin(estiloSelect)
-	
-def listar_series(url):
-	pagina = str(int(url.split('|')[1])+1)
-	url = url.split('|')[0]
+def removerAcentos(txt, encoding='utf-8'):
+	return normalize('NFKD', txt.decode(encoding)).encode('ASCII','ignore')
 
-	soup = BeautifulSoup(abrir_url(url))
-	content = BeautifulSoup(soup.find("div", { "class" : "bic-miniaturas" }).prettify())
-	series = content("div", { "class" : "bic-miniatura" })
-	codigo_fonte = abrir_url(url)
-	
-	total = len(series)
-	for serie in series:
-		titulo = serie.a['title']
-		titulo = titulo.replace('&#8211;',"-").replace('&#8217;',"'").replace('Assistir ','')
-		try:
-			addDir(titulo.encode('utf-8'),serie.a['href'],None,12,'Lista',serie.img['src'],'','','','','','','',True,total)
-		except:
-			pass
+def getList(url, pagina):
+	tipo = ''
+	categoria = ''
+	naovai = False
+	net = Net()
+	net.set_cookies(__COOKIE_FILE__)
+	try:
+		codigo_fonte = net.http_GET(url, headers=__HEADERS__).content.encode('utf8')
+	except:
+		naovai = True
+	if naovai == False:
+		if 'kodi_filmes.php' in url:
+			tipo = 'kodi_filmes'
+		elif 'kodi_series.php' in url:
+			tipo = 'kodi_series'
 
-	addDir('Página Seguinte >>','http://www.armagedomfilmes.biz/?cat=21&paged='+pagina+'|'+pagina,None,6,'',__ART_FOLDER__ + 'prox.png','','','','','','','')
-	estiloSelect = returnestilo('Lista')
-	xbmc.executebuiltin(estiloSelect)
-
-def listar_temporadas(url):
-	codigo_fonte = abrir_url(url)
-	soup = BeautifulSoup(abrir_url(url))
-	conteudo = BeautifulSoup(soup.find("ul", { "class" : "bp-series" }).prettify())
-	temporadas = conteudo("li")
-	total = len(temporadas)
-	i=1
-	#print total
-	
-	while i <= total:
-		temporada = conteudo("li", { "class" : "serie"+str(i)+"-code"})
-		for temp in temporada:
-			img = temp.img["src"]
-			titulo = str(i)+" temporada"
+		anoLink = ''
+		if 'ano' in url:
 			try:
-				addDir(titulo,url,None,7,'',img,'','','','','','','',True,total)
+				anoLink = re.compile('ano(.+?)&').findall(url)[0]
 			except:
-				pass
-		i=i+1
-	
-	estiloSelect = returnestilo('Lista')
-	xbmc.executebuiltin(estiloSelect)
+				anoLink = re.compile('&ano(.+?)').findall(url)[0]
+			anoLink = '&ano'+anoLink
 
-def listar_series_f2(name,url):
-	n = name.replace(' temporada','')
-	soup = BeautifulSoup(abrir_url(url))
-	content = BeautifulSoup(soup.find("li", { "class" : "serie"+n+"-code" }).prettify())
-	episodios = content.findAll("a")
-	#print episodios[0]
-	a = [] # url titulo img
-	for episodio in episodios:
-		try:
-			xml = BeautifulSoup(abrir_url(episodio["href"]+'/feed'))
-			title = xml.title.string.encode('utf-8').replace('Comentários sobre: Assistir ','')
-			try:
-				if "html" in os.path.basename(episodio["href"]):
-					temp = [episodio["href"],title]
-					a.append(temp)
-			except:
-				pass
-		except:
-			pass
+		if 'categoria=' in url:
+			categoria = re.compile('categoria=(.+[0-9])').findall(url)[0]
 
-	total = len(a)
-	for url2, titulo, in a:
-		titulo = titulo.replace('&#8211;',"-").replace('&#8217;',"'").replace('Assistir ','')
-		addDir(titulo,url2,None,4,'','','','','','','','','',False,total) 
+		if tipo == 'kodi_filmes':
+			match = re.compile('<div\s+class="movie-info">\s+<a\s+href="(.+?)"\s+class="movie-name">.+?<\/a>\s+<d.+?><\/div>\s+<d.+?>\s+<d.+?>\s+<span\s+class="genre">(.+?)<\/span>').findall(codigo_fonte)
+		elif tipo == 'kodi_series':
+			match = re.compile('<div\s+class="movie-info">\s+<a\s+href="(.+?)"\s+class="movie-name">.+?<\/a>\s+<d.+?><\/div>\s+<d.+?>\s+<d.+?>\s+<span\s+class="genre">(.+?)<\/span>').findall(codigo_fonte)
+		database = Database.isExists()
+		if tipo == 'kodi_filmes':
 
-	estiloSelect = returnestilo('Lista')
-	xbmc.executebuiltin(estiloSelect)
+			for link, cat in match:
+				idIMDB = re.compile('imdb=(.+)').findall(link)[0]
+				if not idIMDB.startswith('tt'):
+					continue
 
-def obtem_url_dropvideo(url):
-	codigo_fonte = abrir_url(url)
-	try:
-		soup = BeautifulSoup(codigo_fonte)
-		lista = soup.findAll('script')
-		js = str(lista[9]).replace('<script>',"").replace('</script>',"")
-		sUnpacked = jsunpack.unpack(js)
-		#print sUnpacked
-		url_video = re.findall(r'var vurl2="(.*?)";', sUnpacked)
-		url_video = str(url_video).replace("['","").replace("']","")
-		return [url_video,"-"]
-	except:
-		pass	
-	
-def obtem_videobis(url):
-	codigo_fonte = abrir_url(url)
-	try:
-		url_video = re.findall(r'file: "(.*?)"',codigo_fonte)[1]
-		return [url_video,"-"]
-	except:
-		return ["-","-"]
-		
-def obtem_neodrive(url):
-	codigo_fonte = abrir_url(url)
-	try:
-		url_video = re.findall(r'vurl.=."(.*?)";',codigo_fonte)[0]
-		return [url_video,"-"]
-	except:
-		return ["-","-"]
+				idIMDB = re.compile('imdb=(tt[0-9]{7})').findall(link)[0]
 
-def obtem_videopw(url):
-	codigo_fonte = abrir_url(url)
-	try:
-		url_video = re.findall(r'var vurl2 = "(.*?)";',codigo_fonte)[0]
-		return [url_video,"-"]
-	except:
-		return ["-","-"]		
-	
-def obtem_cloudzilla(url):
-	codigo_fonte = abrir_url(url)
-	try:
-		url_video = re.findall(r'vurl.=."(.*?)";',codigo_fonte)[0]
-		return [url_video,"-"]
-	except:
-		return ["-","-"]
-
-def player1(name,url,iconimage):
-	try:
-		dropvideo = r'src="(.*?dropvideo.*?/embed.*?)"'
-		dropmega = r'src=".*?drop.*?id=(.*?)"'
-		neodrive = r'src="(.*?neodrive.*?/embed.*?)"'
-		neomega = r'src=".*?neodrive.*?id=(.*?)"'
-		videobis = r'SRC="(.*?videobis.*?/embed.*?)"'
-		videopw = r'src=".*?videopw.*?id=(.*?)"'
-		cloudzilla = r'cloudzilla.php.id=(.*?)"'
-		cloudzilla_f = r'http://www.cloudzilla.to/share/file/(.*?)"'
-		
-		mensagemprogresso = xbmcgui.DialogProgress()
-		mensagemprogresso.create('Live!t-TV', 'A resolver link','Por favor aguarde...')
-		mensagemprogresso.update(33)
-		links = []
-		hosts = []
-		matriz = []
-		codigo_fonte = abrir_url(url)
-		
-		try:
-			links.append(re.findall(dropvideo, codigo_fonte)[0])
-			hosts.append('Dropvideo')
-		except:
-			pass
-		
-		try:
-			links.append('http://www.dropvideo.com/embed/'+re.findall(dropmega, codigo_fonte)[0])
-			hosts.append('Dropvideo')
-		except:
-			pass
-		
-		try:
-			links.append('http://videopw.com/e/'+re.findall(videopw, codigo_fonte)[0])
-			hosts.append('Videopw')
-		except:
-			pass
-			
-		try:
-			links.append(re.findall(videobis, codigo_fonte)[0])
-			hosts.append('Videobis')
-		except:
-			pass
-		
-		try:
-			links.append(re.findall(neodrive, codigo_fonte)[0])
-			hosts.append('Neodrive')
-		except:
-			pass
-		
-		try:
-			links.append('http://neodrive.co/embed/'+re.findall(neomega, codigo_fonte)[0])
-			hosts.append('Neodrive')
-		except:
-			pass	
-			
-		try:
-			links.append('http://www.cloudzilla.to/embed/'+re.findall(cloudzilla,codigo_fonte)[0])
-			hosts.append('CloudZilla')
-		except:
-			pass
-		
-		try:
-			links.append('http://www.cloudzilla.to/embed/'+re.findall(cloudzilla_t,codigo_fonte)[0])
-			hosts.append('CloudZilla(Legendado)')
-		except:
-			pass
-			
-		if not hosts:
-			return
-		
-		index = xbmcgui.Dialog().select('Selecione um dos hosts suportados :', hosts)
-		
-		if index == -1:
-			return
-		
-		url_video = links[index]
-		mensagemprogresso.update(66)
-		
-		#print 'Player url: %s' % url_video
-		if 'dropvideo.com/embed' in url_video:
-			matriz = obtem_url_dropvideo(url_video)  
-		elif 'cloudzilla' in url_video:
-			matriz = obtem_cloudzilla(url_video)
-		elif 'videobis' in url_video:
-			matriz = obtem_videobis(url_video)
-		elif 'neodrive' in url_video:
-			matriz = obtem_neodrive(url_video)
-		elif 'videopw' in url_video:
-			matriz = obtem_videopw(url_video)			
+				dados = Database.selectFilmeDB(idIMDB)
+				if dados is None:
+					try:
+						infoFilme = json.loads(Trakt.getFilme(idIMDB, cat.decode('utf8')))
+					except ValueError:
+						continue
+					poster = infoFilme["poster"]
+					fanart = infoFilme["fanart"]
+					nomeOriginal = infoFilme["nome"]
+					ano = infoFilme["ano"]
+					infoLabels = {'Title': infoFilme["nome"], 'Year': infoFilme["ano"], 'Genre': cat.decode('utf8'), 'Plot': infoFilme["plot"], 'Code': idIMDB}
+				else:
+					infoLabels = {'Title': dados[1], 'Year': dados[8], 'Genre': dados[3], 'Plot': dados[2], 'Code': dados[0] }
+					poster = dados[6]
+					fanart = dados[5]
+					nomeOriginal = dados[1]
+					ano = dados[8]
+				try:
+					nomeOriginal = unicode(nomeOriginal, 'utf-8')
+				except:
+					nomeOriginal = nomeOriginal
+				addVideo(nomeOriginal+' ('+ano+')', __SITEFILMES__+"kodi_"+link, 113, fanart, 'filme', 0, 0, infoLabels, poster)
 		else:
-			print "Falha: " + str(url_video)
-		#print matriz
-		url = matriz[0]
-		#print url
-		if url=='-': return
-		legendas = matriz[1]
-		#print "Url do gdrive: " + str(url_video)
-		#print "Legendas: " + str(legendas)
-		
-		mensagemprogresso.update(100)
-		mensagemprogresso.close()
-		
-		listitem = xbmcgui.ListItem() # name, iconImage="DefaultVideo.png", thumbnailImage="DefaultVideo.png"
-		listitem.setPath(url)
-		listitem.setProperty('mimetype','video/mp4')
-		listitem.setProperty('IsPlayable', 'true')
-		#try:
-		player = xbmc.Player(xbmc.PLAYER_CORE_AUTO)
-		player.play(url)
-		if legendas != '-':
-			if 'timedtext' in legendas:
-				#legenda = xmltosrt.convert(legendas)
-				#try:
-					import os.path
-					sfile = os.path.join(xbmc.translatePath("special://temp"),'sub.srt')
-					sfile_xml = os.path.join(xbmc.translatePath("special://temp"),'sub.xml')#timedtext
-					sub_file_xml = open(sfile_xml,'w')
-					sub_file_xml.write(urllib2.urlopen(legendas).read())
-					sub_file_xml.close()
-					#print "Sfile.srt : " + sfile_xml
-					xmltosrt.main(sfile_xml)
-					xbmcPlayer.setSubtitles(sfile)
-				#except:
-				#	pass
+			for link, cat in match:
+				idIMDB = re.compile('imdb=(.+)').findall(link)[0]
+				if not idIMDB.startswith('tt'):
+					continue
+				idIMDB = re.compile('imdb=(tt[0-9]{7})').findall(link)[0]
+				dados = Database.selectSerieDB(idIMDB)
+				if dados is None:
+					try:
+						infoSerie = json.loads(Trakt.getSerie(idIMDB, cat.decode('utf8')))
+					except:
+						infoSerie = ''
+						continue
+					poster = infoSerie["poster"]
+					fanart = infoSerie["fanart"]
+					nomeOriginal = infoSerie["nome"]
+					ano = infoSerie["ano"]
+					infoLabels = {"Title": infoSerie["nome"], 'Aired':infoSerie['aired'], 'Plot':infoSerie['plot'], 'Year':infoSerie['ano'], 'Genre':infoSerie['categoria'], 'Code': infoSerie["imdb"]}
+				else:
+					infoLabels = {"Title": dados[0], 'Aired':dados[8], 'Plot':dados[1], 'Genre':dados[5], 'Code':dados[2], 'Year': dados[9]}
+					poster = dados[7]
+					fanart = dados[6]
+					nomeOriginal = dados[0]
+					ano = dados[9]
+				try:
+					nomeOriginal = unicode(nomeOriginal, 'utf-8')
+				except:
+					nomeOriginal = nomeOriginal
+				addDir2(nomeOriginal, __SITEFILMES__+"kodi_"+link, 114, fanart, pagina, 'serie', infoLabels, poster)
+		if categoria == '':
+			addDir2('Proximo', __SITEFILMES__+tipo+'.php?pagina='+str(int(pagina)+1)+''+anoLink, 111, __FANART__, int(pagina)+1, poster= os.path.join(__ART_FOLDER__, __SKIN__, 'proximo.png'))
+		else:
+			addDir2('Proximo', __SITEFILMES__+tipo+'.php?pagina='+str(int(pagina)+1)+'&categoria='+categoria+''+anoLink, 111, __FANART__, int(pagina)+1, poster= os.path.join(__ART_FOLDER__, __SKIN__, 'proximo.png'))
+		vista_filmesSeries()
+	else:
+		__ALERTA__('Live!t-TV', 'Não foi possível abrir a página. Por favor tente novamente mais tarde.')
+
+def getSeasons(url):
+	net = Net()
+	codigo_fonte = net.http_GET(url, headers=__HEADERS__).content
+
+	match = re.compile('<div\s+class="season"><a\s+href="(.+?)">(.+?)<\/a><\/div>').findall(codigo_fonte)
+	match += re.compile('<div\s+class="season"><a\s+href="(.+?)" >(.+?)<\/a><\/div>').findall(codigo_fonte)
+
+	for link, temporada in match:
+		if '" class="slctd' in link:
+			link = re.compile('(.+?)" class="slctd').findall(link)[0]
+		addDir2Season("[B]Temporada[/B] "+temporada, __SITEFILMES__+"kodi_"+link, 115, os.path.join(__ART_FOLDER__, __SKIN__, 'temporadas', 'temporada'+temporada+'.png'), 1, temporada)
+	vista_temporadas()
+
+def getEpisodes(url):
+	net = Net()
+	net.set_cookies(__COOKIE_FILE__)
+	codigo_fonte = net.http_GET(url, headers=__HEADERS__).content
+	match = re.compile('<div id=".+?" class="item">\s+<div.+>\s+<a.+href="(.+?)">\s+').findall(codigo_fonte)
+	temporadaNumero = re.compile('<div\s+class="season"><a\s+href="(.+?)"\s+class="slctd">(.+?)<\/a>').findall(codigo_fonte)[0][1]
+	for link in match:
+		imdbid = re.compile('imdb=(.+?)&').findall(link)[0]
+		imdbid = re.compile('imdb=(tt[0-9]{7})').findall(link)[0]
+		episodioN = re.compile('e=(.+?)&').findall(link)[0]
+		if 'e' in episodioN:
+			episodioN = re.compile('(.+)e').findall(episodioN)[0]
+
+		if '/' in episodioN:
+			episodioN = episodioN.split('/')[0]
+
+		episodioInfo = Database.selectEpisodioDB(imdbid, temporadaNumero, episodioN)
+		if episodioInfo is None:
+			infoEpis = json.loads(Trakt.getTVDBByEpSe(imdbid, temporada, episodio))
+
+			Database.insertEpisodio(infoEpis["name"], infoEpis["plot"], infoEpis["imdb"], infoEpis["tvdb"], infoEpis["season"], infoEpis["episode"], infoEpis["fanart"], infoEpis["poster"], infoEpis["aired"], infoEpis["serie"], infoEpis["traktid"], actores=infoEpis['actors'])
+			infoLabels = {'Title':infoEpis["name"], 'Actors':infoEpis['actors'], 'Plot':infoEpis["plot"], 'Season':infoEpis["season"], 'Episode':infoEpis["episode"], "Code":imdbid, 'Aired': infoEpis["aired"] }
+			poster = infoEpis["poster"]
+			fanart = infoEpis["fanart"]
+			nomeEpisodio = infoEpis["name"]
+			temporadaEpisodioDB = infoEpis["season"]
+			numeroEpisodioDB = infoEpis["episode"]
+			serieTitulo = infoEpis["serie"]
+		else:
+			infoLabels = {'Title':episodioInfo[0], 'Actors':episodioInfo[7], 'Plot':episodioInfo[1], 'Season':episodioInfo[2], 'Episode':episodioInfo[3], "Code":imdbid, 'Aired': episodioInfo[6] }
+			poster = episodioInfo[5]
+			fanart = episodioInfo[4]
+			nomeEpisodio = episodioInfo[0]
+			temporadaEpisodioDB = episodioInfo[2]
+			numeroEpisodioDB = episodioInfo[3]
+			serieTitulo = episodioInfo[11]
+
+		addVideo('[B]Episodio '+episodioN+'[/B] | '+nomeEpisodio, __SITEFILMES__+"kodi_"+link, 113, fanart, 'episodio', temporadaEpisodioDB, numeroEpisodioDB, infoLabels, poster, serieTitulo)
+
+	vista_episodios()
+
+def getStreamLegenda(siteBase, codigo_fonte):
+	stream = ''
+	legenda = ''
+	net = Net()
+	servidor = ''
+	titulos = []
+	links = []
+	legendas = []
+	stuff = []
+	i = 1
+	if siteBase == 'serie.php':
+		match = re.compile('<div\s+id="welele"\s+link="(.+?)"\s+legenda="(.+?)">').findall(codigo_fonte)
+		match += re.compile('<div\s+id="welele2"\s+link="(.+?)"\s+legenda="(.+?)">').findall(codigo_fonte)
+		for link, legenda in match:
+			titulos.append('Servidor #%s' % i)
+			links.append(link)
+			if not '.srt' in legenda:
+				legend = legenda+'.srt'
+			legendas.append('http://mrpiracy.club/subs/%s' % legenda)
+			i = i+1
+
+	else:
+		match = re.compile('<div\s+id="(.+?)"\s+link="(.+?)">').findall(codigo_fonte)
+		legendaAux = ''
+		for idS, link in match:
+			if 'legenda' in idS:
+				if not '.srt' in link:
+					link = link+'.srt'
+				legendaAux = 'http://mrpiracy.club/subs/%s' % link
+				continue
+			if 'videomega' in idS:
+				continue
+
+			titulos.append('Servidor #%s' % i)
+			links.append(link)
+			i = i+1
+
+	if len(titulos) > 1:
+		servidor = xbmcgui.Dialog().select('Escolha o servidor', titulos)
+		if 'vidzi' in links[servidor]:
+			vidzi = URLResolverMedia.Vidzi(links[servidor])
+			stream = vidzi.getMediaUrl()
+			legenda = vidzi.getSubtitle()
+		elif 'uptostream.com' in links[servidor]:
+			stream = URLResolverMedia.UpToStream(links[servidor]).getMediaUrl()
+			legenda = legendaAux
+		elif 'server.mrpiracy.club' in links[servidor]:
+			stream = links[servidor]
+			legenda = legendaAux
+		elif 'openload' in links[servidor]:
+			stream = URLResolverMedia.OpenLoad(links[servidor]).getMediaUrl()
+			legenda = URLResolverMedia.OpenLoad(links[servidor]).getSubtitle()
+		elif 'drive.google.com/' in links[servidor]:
+			stream = URLResolverMedia.GoogleVideo(links[servidor]).getMediaUrl()
+			legenda = legendaAux
+	else:
+		if 'server.mrpiracy.club' in links[0]:
+			stream = links[0]
+			legenda = legendas[0]
+		elif 'uptostream.com' in links[0]:
+			stream = URLResolverMedia.UpToStream(links[0]).getMediaUrl()
+			legenda = legendas[0]
+		elif 'drive.google.com/' in links[0]:
+			stream = URLResolverMedia.GoogleVideo(links[0]).getMediaUrl()
+			legenda = legendas[0]
+		elif 'openload' in links[0]:
+			stream = URLResolverMedia.OpenLoad(links[0]).getMediaUrl()
+			legenda = URLResolverMedia.OpenLoad(links[0]).getSubtitle()
+
+	return stream, legenda
+
+def pesquisa(urlpa,tipp_uss,tipooo,servuss):
+	codigo_fonte = ''
+	dados = ''
+	net = Net()
+	net.set_cookies(__COOKIE_FILE__)
+	
+	dialog = xbmcgui.Dialog()
+	server = dialog.select(u'Onde quer pesquisar?', ['Filmes', 'Series', 'Canais', 'Praias', 'Rádios'])
+	
+	if server == 0:
+		site = urlpa+'kodi_procurarf.php'
+	elif server == 1:
+		site = urlpa+'kodi_procurars.php'
+	elif server == 2 or  server == 3 or server == 4:
+		site = __SITE__+'search.php'
+	
+	teclado = xbmc.Keyboard('', 'O que quer pesquisar?')
+	teclado.doModal()
+	
+	if teclado.isConfirmed():
+		strPesquisa = teclado.getText()
+		if server == 2 or  server == 3 or server == 4:
+			tabela = ''
+			if server == 2:
+				tabela = 'canais_kodi'
+			elif server == 3:
+				tabela = 'praias_kodi'
+			elif server == 4:
+				tabela = 'radios_kodi'
 			else:
-				xbmcPlayer.setSubtitles(legendas)
-		#except:
-			dialog = xbmcgui.Dialog()
-			dialog.ok("Live!t-TV Erro:", " Impossível abrir vídeo! ")
-		#	pass
+				tabela = 'programas_kodi'
+			
+			dados = {'searchBox': strPesquisa, 'tabela': tabela}
+			codigo_fonte = net.http_POST(site, form_data=dados, headers=__HEADERS__).content
+		else:
+			dados = {'searchBox': strPesquisa}
+		
+		if server == 0 or server == 1:
+			check_login = login2()
+			net = Net()
+			net.set_cookies(__COOKIE_FILE__)
+			codigo_fonte = net.http_POST(site, form_data=dados, headers=__HEADERS__).content.encode('utf8')
+			match = re.compile('<div\s+class="movie-info".+>\s+<a\s+href="(.+?)".+class="movie-name">.+?<\/a>\s+<d.+\s+<d.+\s+<d.+\s+<span\s+class="genre">(.+?)<\/span>').findall(codigo_fonte)
+			if match != []:
+				for link, cat in match:
+					if server == 0:
+						idIMDB = re.compile('imdb=(.+)').findall(link)[0]
+						if not idIMDB.startswith('tt'):
+							continue
+						
+						idIMDB = re.compile('imdb=(tt[0-9]{7})').findall(link)[0]
+						dados = Database.selectFilmeDB(idIMDB)
+						if dados is None:
+							infoFilme = json.loads(Trakt.getFilme(idIMDB, cat.decode('utf8')))
+							poster = infoFilme["poster"]
+							fanart = infoFilme["fanart"]
+							nomeOriginal = infoFilme["nome"]
+							ano = infoFilme["ano"]
+							infoLabels = {'Title': infoFilme["nome"], 'Year': infoFilme["ano"], 'Genre': cat.decode('utf8'), 'Plot': infoFilme["plot"], 'Code': idIMDB}
+						else:
+							infoLabels = {'Title': dados[1], 'Year': dados[8], 'Genre': dados[3], 'Plot': dados[2], 'Code': dados[0] }
+							poster = dados[6]
+							fanart = dados[5]
+							nomeOriginal = dados[1]
+							ano = dados[8]
+
+						try:
+							nomeOriginal = unicode(nomeOriginal, 'utf-8')
+						except:
+							nomeOriginal = nomeOriginal
+						
+						addVideo(nomeOriginal+' ('+ano+')', __SITEFILMES__+"kodi_"+link, 113, fanart, 'filme', 0, 0, infoLabels, poster)
+					else:
+						idIMDB = re.compile('imdb=(.+)').findall(link)[0]
+						if not idIMDB.startswith('tt'):
+							continue
+						
+						idIMDB = re.compile('imdb=(tt[0-9]{7})').findall(link)[0]
+						
+						dados = Database.selectSerieDB(idIMDB)
+						if dados is None:
+							infoSerie = json.loads(Trakt.getSerie(idIMDB, cat.decode('utf8')))
+							poster = infoSerie["poster"]
+							fanart = infoSerie["fanart"]
+							nomeOriginal = infoSerie["nome"]
+							ano = infoSerie["ano"]
+							infoLabels = {"Title": infoSerie["nome"], 'Aired':infoSerie['aired'], 'Plot':infoSerie['plot'], 'Year':infoSerie['ano'], 'Genre':infoSerie['categoria'], 'Code': infoSerie["imdb"]}
+						else:
+							infoLabels = {"Title": dados[0], 'Aired':dados[8], 'Plot':dados[1], 'Genre':dados[5], 'Code':dados[2], 'Year': dados[9]}
+							poster = dados[7]
+							fanart = dados[6]
+							nomeOriginal = dados[0]
+							ano = dados[9]
+
+						try:
+							nomeOriginal = unicode(nomeOriginal, 'utf-8')
+						except:
+							nomeOriginal = nomeOriginal
+						
+						addDir2(nomeOriginal, __SITEFILMES__+"kodi_"+link, 114, fanart, pagina, 'serie', infoLabels, poster)
+						
+				vista_filmesSeries()
+			else:
+				addDir2('Voltar', 'url', None, os.path.join(__ART_FOLDER__, __SKIN__, 'retroceder.png'), 0)
+				vista_filmesSeries()
+		else:
+			informa = {
+				'servidor' : {
+					'nome': '',
+					'serv': ''
+				},
+				'servidores': [],
+				'canais': []
+			}
+			sucesso = 'no'
+			elems = ET.fromstring(codigo_fonte)
+			
+			for childee in elems:
+				if(childee.tag == 'servidores'):
+					servidor = {
+						'nome': '',
+						'link': ''
+					}
+					for gg in childee:	
+						if(gg.tag == 'Nome'):
+							servidor['nome'] = gg.text	
+						elif(gg.tag == 'Servidor'):
+							servidor['link'] = gg.text		
+						informa['servidores'].append(servidor)
+					
+			for servvvv in informa['servidores']:
+				if(servvvv['nome'] == servuss):
+					informa['servidor']['nome'] = servvvv['nome']
+					informa['servidor']['serv'] = servvvv['link']			
+			
+			for child in elems:
+				if(child.tag == 'sucesso'):
+					sucesso = child.text
+				elif(child.tag == 'canais'):
+					canal = {
+						'nome': '',
+						'logo': '',
+						'link': '',
+						'grupo': '',
+						'nomeid': '',
+						'idnovo': ''
+					}
+					adiciona = True
+					for g in child:
+						adiciona = True
+						if(g.tag == 'Nome'):
+							canal['nome'] = g.text
+						elif(g.tag == 'Imagem'):
+							canal['logo'] = g.text
+						elif(g.tag == 'Url'):
+							urlchama = g.text.split(';')
+							urlnoo = ''
+							try:
+								urlnoo = urlchama[2]
+								if(servuss == 'Servidor1'):
+									urlnoo = urlchama[0]
+								elif(servuss == 'Servidor2'):
+									urlnoo = urlchama[1]
+								elif(servuss == 'Servidor3'):
+									urlnoo = urlchama[2]
+								
+								if(urlnoo == 'nada'):
+									adiciona = False
+								else:
+									canal['link'] = informa['servidor']['serv']+'/live/utilizadorliveit/senhaliveit/'+urlnoo
+							except:
+								canal['link'] = g.text
+						elif(g.tag == 'Grupo'):
+							canal['grupo'] = g.text
+						elif(g.tag == 'NomeID'):
+							canal['nomeid'] = g.text
+						elif(g.tag == 'ID'):
+							canal['idnovo'] = g.text
+					if adiciona:
+						informa['canais'].append(canal)
+
+			if sucesso == 'yes':
+				for cann in informa['canais']:
+					nomee = cann['nome']
+					img = cann['logo']
+					rtmp = cann['link'].replace(' rtmp','rtmp').replace(' rtsp','rtsp').replace(' http','http').replace('utilizadorliveit',__ADDON__.getSetting("login_name")).replace('senhaliveit',__ADDON__.getSetting("login_password"))
+					grup = cann['grupo']
+					id_it = cann['nomeid']
+					id_p = cann['idnovo']
+					srt_f = ''
+					descri = ''
+					
+					addLink2(nomee,rtmp,'http://liveitkodi.com/Logos/'+img)
+				
+				vista_Canais()
+			else:
+				addDir2('Voltar', 'url', None, os.path.join(__ART_FOLDER__, __SKIN__, 'retroceder.png'), 0)
+				vista_filmesSeries()
+	else:
+		addDir2('Voltar', 'url', None, os.path.join(__ART_FOLDER__, __SKIN__, 'retroceder.png'), 0)
+		vista_filmesSeries()
+
+def download(url,name, temporada,episodio,serieNome):
+
+    legendasOn = False
+    isFilme = False
+
+    if 'serie.php' in url:
+        siteBase = 'serie.php'
+        isFilme = False
+    elif 'filme.php' in url:
+        siteBase = 'filme.php'
+        isFilme = True
+
+    net = Net()
+    net.set_cookies(__COOKIE_FILE__)
+    codigo_fonte = net.http_GET(url, headers=__HEADERS__).content
+
+    match = re.compile('<a id="(.+?)" class="btn(.+?)?" onclick=".+?"><img src="(.+?)"><\/a>').findall(codigo_fonte)
+
+    if isFilme:
+        linkOpenload = re.compile('<iframe id="reprodutor" src="(.+?)" scrolling="no"').findall(codigo_fonte)[0]
+    else:
+        linkOpenload = re.compile('<iframe src="(.+?)" scrolling="no"').findall(codigo_fonte)[0]
+
+    idOpenLoad = URLResolverMedia.OpenLoad(linkOpenload).getId()
+
+    legenda = URLResolverMedia.OpenLoad(linkOpenload).getSubtitle()
+    stream = URLResolverMedia.OpenLoad('https://openload.co/f/'+idOpenLoad+'/').getDownloadUrl()
+
+    folder = xbmc.translatePath(__ADDON__.getSetting('pastaDownloads'))
+
+    if temporada and episodio:
+        if not xbmcvfs.exists(os.path.join(folder,'series')):
+            xbmcvfs.mkdirs(os.path.join(folder,'series'))
+        if not xbmcvfs.exists(os.path.join(folder,'series',serieNome)):
+            xbmcvfs.mkdirs(os.path.join(folder,'series',serieNome))
+        if not xbmcvfs.exists(os.path.join(folder,'series',serieNome,"Temporada "+str(temporada))):
+            xbmcvfs.mkdirs(os.path.join(folder,'series',serieNome,"Temporada "+str(temporada)))
+
+        folder = os.path.join(folder,'series',serieNome,"Temporada "+str(temporada))
+        name = "e"+str(episodio)+" - "+clean(name.split('|')[-1])
+    else:
+        if not xbmcvfs.exists(os.path.join(folder,'filmes')):
+            xbmcvfs.mkdirs(os.path.join(folder,'filmes'))
+        folder = os.path.join(folder,'filmes')
+
+    streamAux = clean(stream.split('/')[-1])
+    extensaoStream = clean(streamAux.split('.')[-1])
+
+    if '?mim' in extensaoStream:
+        extensaoStream = re.compile('(.+?)\?mime=').findall(extensaoStream)[0]
+
+    nomeStream = name+'.'+extensaoStream
+
+    if '.vtt' in legenda:
+        legendaAux = clean(legenda.split('/')[-1])
+        extensaoLegenda = clean(legendaAux.split('.')[1])
+        nomeLegenda = name+'.'+extensaoLegenda
+        legendasOn = True
+
+
+    Downloader.Downloader().download(os.path.join(folder.decode("utf-8"),nomeStream), stream, name)
+
+    if legendasOn:
+        download_legendas(legenda, os.path.join(folder,nomeLegenda))
+
+def download_legendas(url,path):
+    contents = abrir_url(url)
+    if contents:
+        fh = open(path, 'w')
+        fh.write(contents)
+        fh.close()
+    return
+
+def getGeneros(url):
+	net = Net()
+	codigo_fonte = net.http_GET(url, headers=__HEADERS__).content
+
+	match = re.compile('<label for="genre1" id="genre1Label"><a style="font-family: Tahoma; color: #8D8D8D;font-size: 11px;padding-left: 5px;float: left;width: 142px;font-weight: normal;text-decoration: initial;" href="(.+?)">(.+?)<\/a><\/label>').findall(codigo_fonte)
+	match += re.compile('<label for="genre1" id="genre1Label"><a style="font-family: Tahoma; color: #8D8D8D;font-size: 11px;padding-left: 5px;float: left;width: 142px;text-decoration: initial;" href="(.+?)">(.+?)<\/a><\/label>').findall(codigo_fonte)
+	
+	for link, nome in match:
+		if 'kodi_filmes.php' in url:
+			addDir2(nome.encode('utf8'), __SITEFILMES__+"kodi_"+link, 111, os.path.join(__ART_FOLDER__, __SKIN__, 'genero.png'), 1)
+		else:
+			addDir2(nome.encode('utf8'), url+link, 111, os.path.join(__ART_FOLDER__, __SKIN__, 'genero.png'), 1)
+
+def getYears(url):
+	net = Net()
+	codigo_fonte = net.http_GET(url, headers=__HEADERS__).content
+
+	match = re.compile('<label for="(.+?)" id="(.+?)"><a style=\'font-family: Tahoma; color: #8D8D8D;\' class="active" href="(.+?)">(.+?)<\/a><\/label>').findall(codigo_fonte)
+	for lixo1, lixo2, link, nome in match:
+		addDir2(nome.encode('utf-8'), url+link, 111, os.path.join(__ART_FOLDER__, __SKIN__, 'ano.png'), 1)
+
+def getTrailer(idIMDB):
+	net = Net()
+	url = 'http://api.themoviedb.org/3/movie/'+idIMDB+'/videos?api_key=3421e679385f33e2438463e286e5c918'
+
+	try:
+		codigo_fonte = net.http_GET(url, headers=__HEADERS__).content
+		match = json.loads(codigo_fonte)
+
 	except:
-		#print "erro ao abrir o video"
-		#print url_video
-		pass
+		match = ''
+		urlTrailer = ''
+	try:
+		idYoutube = match["results"][0]["key"]
+		urlTrailer = 'plugin://plugin.video.youtube/?action=play_video&videoid='+idYoutube
+	except:
+		urlTrailer = ''
+
+	return urlTrailer
+
+def addDir2Season(name,url,mode,iconimage,pagina,temporada):
+    u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&pagina="+str(pagina)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&temporada="+str(temporada)
+    ok=True
+    xbmcplugin.setContent(int(sys.argv[1]), 'Movies')
+    liz=xbmcgui.ListItem(name, iconImage="fanart.jpg", thumbnailImage=iconimage)
+    liz.setProperty('fanart_image', __FANART__)
+    ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=True)
+    return ok
+
+def marcarVisto(url, temporada=None, episodio=None):
+    if temporada and episodio:
+        idIMDb = re.compile('imdb=(tt[0-9]{7})&').findall(url)[0]
+        Database.markwatchedEpisodioDB(idIMDb, temporada, episodio)
+        if Trakt.loggedIn():
+            Trakt.markwatchedEpisodioTrakt(idIMDb, temporada, episodio)
+    else:
+        idIMDb = re.compile('imdb=(tt[0-9]{7})').findall(url)[0]
+        Database.markwatchedFilmeDB(idIMDb)
+        if Trakt.loggedIn():
+            Trakt.markwatchedFilmeTrakt(idIMDb)
+
+    xbmc.executebuiltin("XBMC.Notification(Live!t-TV,"+"Marcado como visto"+","+"6000"+","+ os.path.join(__ADDON_FOLDER__,'icon.png')+")")
+    xbmc.executebuiltin("Container.Refresh")
+
+def addVideo(name,url,mode,iconimage,tipo,temporada,episodio,infoLabels,poster,serieNome=False):
+	menu = []
+
+	try:
+		name = name.encode('utf-8')
+	except:
+		name = name
+
+	if tipo == 'filme':
+		xbmcplugin.setContent(int(sys.argv[1]), 'Movies')
+		#visto = checkVisto(url)
+		idIMDb = re.compile('imdb=(tt[0-9]{7})').findall(url)[0]
+		if __ADDON__.getSetting('trailer-filmes') == 'true':
+			linkTrailer = getTrailer(idIMDb)
+		else:
+			linkTrailer = ''
+	elif tipo == 'serie':
+		xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
+		#visto = checkVisto(url, temporada, episodio)
+		idIMDb = re.compile('imdb=(tt[0-9]{7})&').findall(url)[0]
+		linkTrailer = ""
+	elif tipo == 'episodio':
+		xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
+		#visto = checkVisto(url, temporada, episodio)
+		idIMDb = re.compile('imdb=(tt[0-9]{7})&').findall(url)[0]
+		linkTrailer = ""
+	else:
+		xbmcplugin.setContent(int(sys.argv[1]), 'Movies')
+		linkTrailer = ""
 	
-def pesquisa_filme():
-	keyb = xbmc.Keyboard('', 'faca a procura') #Chama o keyboard do XBMC com a frase indicada
-	keyb.doModal() #Espera ate que seja confirmada uma determinada string
-	if (keyb.isConfirmed()): #Se a entrada estiver confirmada (isto e, se carregar no OK)
-		search = keyb.getText() #Variavel search fica definida com o conteudo do formulario
-		parametro_pesquisa=urllib.quote(search) #parametro_pesquisa faz o quote da expressao search, isto Ã©, escapa os parametros necessarios para ser incorporado num endereÃ§o url
-		url = 'http://www.armagedomfilmes.biz/?s=%s&s-btn=buscar' % str(parametro_pesquisa) #nova definicao de url. str forÃ§a o parametro de pesquisa a ser uma string
-		#print url
-		soup = BeautifulSoup(abrir_url(url))
-		content = BeautifulSoup(soup.find("div", { "class" : "bic-miniaturas" }).prettify())
-		filmes = content("div", { "class" : "bic-miniatura" })
-		#print filmes[0]
-		for filme in filmes:
-			titulo = filme.a["title"].replace('Assistir ','')
-			url = filme.a["href"]
-			img = filme.img["src"]
-			addDir(titulo.encode('utf8'),url,None,4,'',img,'','','','','','','',False,len(filmes))
+	overlay = 6
+	playcount = 0
 
-	estiloSelect = returnestilo('Lista')
-	xbmc.executebuiltin(estiloSelect)
+	infoLabels["overlay"] = overlay
+	infoLabels["playcount"] = playcount
 
-def pesquisa_serie():
-	keyb = xbmc.Keyboard('', 'faca a procura') #Chama o keyboard do XBMC com a frase indicada
-	keyb.doModal() #Espera ate que seja confirmada uma determinada string
-	if (keyb.isConfirmed()): #Se a entrada estiver confirmada (isto e, se carregar no OK)
-		search = keyb.getText() #Variavel search fica definida com o conteudo do formulario
-		parametro_pesquisa=urllib.quote(search)
-		url = 'http://www.armagedomfilmes.biz/?s=%s&s-btn=buscar' % str(parametro_pesquisa)
-		soup = BeautifulSoup(abrir_url(url))
-		content = BeautifulSoup(soup.find("div", { "class" : "bic-miniaturas" }).prettify())
-		series = content("div", { "class" : "bic-miniatura" })
-		codigo_fonte = abrir_url(url)
+	liz=xbmcgui.ListItem(name, iconImage=poster, thumbnailImage=poster)
+	liz.setProperty('fanart_image', iconimage)
+	liz.setInfo( type="Video", infoLabels=infoLabels )
 
-		total = len(series)
-		for serie in series:
-			titulo = serie.a['title']
-			titulo = titulo.replace('&#8211;',"-").replace('&#8217;',"'").replace('Assistir ','')
-			try:
-				addDir(titulo.encode('utf-8'),serie.a['href'],None,12,'',serie.img['src'],'','','','','','','',True,total)
-			except:
-				pass
+	if not serieNome:
+		serieNome = ''
+
+	u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&temporada="+str(temporada)+"&episodio="+str(episodio)+"&name="+urllib.quote_plus(name)+"&iconimage="+urllib.quote_plus(iconimage)+"&serieNome="+urllib.quote_plus(serieNome)
+	ok=True
+
+	if linkTrailer != "":
+		menu.append(('Ver trailer', 'XBMC.PlayMedia(%s)' % (linkTrailer)))
+
+	menu.append(('Download', 'XBMC.RunPlugin(%s?mode=117&name=%s&url=%s&iconimage=%s&serieNome=%s&temporada=%s&episodio=%s)'%(sys.argv[0],urllib.quote_plus(name), urllib.quote_plus(url), urllib.quote_plus(iconimage), urllib.quote_plus(serieNome), str(temporada), str(episodio))))
+	liz.addContextMenuItems(menu, replaceItems=True)
+	ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=False)
+	return ok
+
+def clean(text):
+    command={'&#8220;':'"','&#8221;':'"', '&#8211;':'-','&amp;':'&','&#8217;':"'",'&#8216;':"'"}
+    regex = re.compile("|".join(map(re.escape, command.keys())))
+    return regex.sub(lambda mo: command[mo.group(0)], text)
+
+def player(name,url,iconimage,temporada,episodio,serieNome):
+
+	pastaData = ''
+	stream = False
+	net = Net()
+	net.set_cookies(__COOKIE_FILE__)
+	codigo_fonte = net.http_GET(url, headers=__HEADERS__).content
+
+	infolabels = dict()
+
+	if temporada == 0 and episodio == 0:
+		pastaData = __PASTA_DADOS__
+		idIMDb = re.compile('imdb=(tt[0-9]{7})').findall(url)[0]
+		ano = str(re.compile('<span class="year"><span>\s+-\s+\(<\/span>(.+?)<span>\)').findall(codigo_fonte)[0])
+		siteBase = 'filme.php'
+	else:
+		pastaData = __PASTA_DADOS__
+		ano = str(re.compile('<span class="year"><span>\s+-\s+\(<\/span>(.+?)<span>\)').findall(codigo_fonte)[0])
+		idIMDb = re.compile('imdb=(tt[0-9]{7})&').findall(url)[0]
+		siteBase = 'serie.php'
+		infolabels['TVShowTitle'] = serieNome
+
+	infolabels['Code'] = idIMDb
+	infolabels['Year'] = ano
+
+	mensagemprogresso = xbmcgui.DialogProgress()
+	mensagemprogresso.create('Live!t-TV', u'Abrir emissão','Por favor aguarde...')
+	mensagemprogresso.update(25, "", u'Obter video e legenda', "")
+
+	try: stream, legenda = getStreamLegenda(siteBase, codigo_fonte)
+	except: stream = False
+
+	mensagemprogresso.update(50, "", u'Prepara-te, vai começar!', "")
+
+	playlist = xbmc.PlayList(1)
+	playlist.clear()
+	listitem = xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage=iconimage)
+
+	listitem.setInfo(type="Video", infoLabels=infolabels)
+	listitem.setProperty('mimetype', 'video/x-msvideo')
+	listitem.setProperty('IsPlayable', 'true')
+	if stream != False:
+		listitem.setPath(path=stream)
+		playlist.add(stream, listitem)
+		xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, listitem)
+		mensagemprogresso.update(75, "", u'Boa Sessão!!!', "")
+
+	if stream == False:
+		__ALERTA__('Live!t-TV', 'O servidor escolhido não disponível, escolha outro ou tente novamente mais tarde.')
+	else:
+		player_mr = Player.Player(url=url, idFilme=idIMDb, pastaData=pastaData, temporada=temporada, episodio=episodio, nome=name, ano=ano, logo=os.path.join(__ADDON_FOLDER__,'icon.png'), serieNome=serieNome)
+
+		mensagemprogresso.close()
+		player_mr.play(playlist)
+		player_mr.setSubtitles(legenda)
+
+		while player_mr.playing:
+			xbmc.sleep(5000)
+			player_mr.trackerTempo()
+
+###################################################################################
+#                               FUNCOES JA FEITAS                                 #
+###################################################################################
+def abrirNada():
+	xbmc.executebuiltin("Container.SetViewMode(51)")
 	
-	estiloSelect = returnestilo('Lista')
-	xbmc.executebuiltin(estiloSelect)
+def addDir(name,url,senha,mode,estilo,iconimage,tipo,tipo_user,servidor_user,data_user,sserv,suser,spass,pasta=True,total=1):
+	if(tipo == 'pesquisa'):
+		u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&tipologia="+str(tipo)+"&tipo_user="+str(tipo_user)+"&servidor_user="+str(servidor_user)
+	else:
+		u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&senha="+str(senha)+"&estilo="+urllib.quote_plus(estilo)+"&tipologia="+str(tipo)+"&tipo_user="+str(tipo_user)+"&servidor_user="+str(servidor_user)+"&data_user="+str(data_user)+"&lolserv="+sserv+"&loluser="+suser+"&lolpass="+spass
+	ok=True
+	liz=xbmcgui.ListItem(name, iconImage=iconimage, thumbnailImage=iconimage)
+	
+	liz.setProperty('fanart_image', iconimage)
+	liz.setArt({'fanart': os.path.join(__ART_FOLDER__, __SKIN__, 'fundo_addon.png')})
+
+	ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=pasta,totalItems=total)
+	return ok
+	
+def addFolder(name,url,mode,iconimage,folder):
+	u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
+	ok=True
+	liz=xbmcgui.ListItem(name, iconImage=iconimage, thumbnailImage=iconimage)
+	liz.setProperty('fanart_image', iconimage)
+	ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=folder)
+	return ok
+
+def addLink(name,url,iconimage,idCanal,srtfilm,descricao,tipo,tipo_user,id_p,infoLabelssss,total=1):
+	ok=True
+	cm=[]
+	if tipo != 'Praia' and tipo != 'ProgramasTV' and tipo != 'Filme' and tipo != 'Serie' and tipo != 'Adulto':
+		cm.append(('Ver programação', 'XBMC.RunPlugin(%s?mode=31&name=%s&url=%s&iconimage=%s&idCanal=%s&idffCanal=%s)'%(sys.argv[0],urllib.quote_plus(name), urllib.quote_plus(url), urllib.quote_plus(iconimage), idCanal, id_p)))
+	liz=xbmcgui.ListItem(label=str(name), iconImage="DefaultVideo.png", thumbnailImage=iconimage)
+	liz.setProperty('fanart_image', iconimage)
+	liz.setInfo( type="Video", infoLabels=infoLabelssss)
+	liz.addContextMenuItems(cm, replaceItems=False)
+	ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=liz)
+	return ok
+
+def abrir_url(url,pesquisa=False):
+
+	header = {'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3','Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8','Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'Connection': 'keep-alive'}
+
+	if pesquisa:
+		data = urllib.urlencode({'searchBox' : pesquisa})
+		req = urllib2.Request(url,data, headers=header)
+	else:
+		req = urllib2.Request(url, headers=header)
+
+	response = urllib2.urlopen(req)
+	link=response.read()
+	return link
+
+def addLink2(name,url,iconimage):
+	ok=True
+	liz=xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage=iconimage)
+	liz.setProperty('fanart_image', iconimage)
+	liz.setInfo( type="Video", infoLabels={ "Title": name } )
+	ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=liz)
+	return ok
+
+def addDir2(name,url,mode,iconimage,pagina,tipo=None,infoLabels=None,poster=None):
+	if infoLabels: infoLabelsAux = infoLabels
+	else: infoLabelsAux = {'Title': name}
+
+	if poster: posterAux = poster
+	else: posterAux = iconimage
+
+	try:
+		name = name.encode('utf-8')
+	except:
+		name = name
+
+	u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&pagina="+str(pagina)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
+	ok=True
+
+	fanart = __FANART__
+
+	if tipo == 'filme':
+		fanart = posterAux
+		xbmcplugin.setContent(int(sys.argv[1]), 'Movies')
+	elif tipo == 'serie':
+		fanart = posterAux
+		xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
+	elif tipo == 'episodio':
+		fanart = posterAux
+		xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
+	else:
+		xbmcplugin.setContent(int(sys.argv[1]), 'Movies')
+
+	liz=xbmcgui.ListItem(name, iconImage=posterAux, thumbnailImage=posterAux)
+	liz.setProperty('fanart_image', iconimage)
+	liz.setInfo( type="Video", infoLabels=infoLabelsAux )
+
+	ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=True)
+	return ok
 
 ###################################################################################
 #                              DEFININCOES		                                  #
@@ -1005,80 +1436,59 @@ def returnestilo(estilonovo):
 	elif estilonovo == "Media Info 3":
 		__estilagem__ = "Container.SetViewMode(515)"
 	return __estilagem__
+	
+def vista_Canais():
+	opcao = __ADDON__.getSetting('canaisView')
+	if opcao == '0': xbmc.executebuiltin("Container.SetViewMode(50)")
+	elif opcao == '1': xbmc.executebuiltin("Container.SetViewMode(51)")
+	elif opcao == '2': xbmc.executebuiltin("Container.SetViewMode(500)")
+	elif opcao == '3': xbmc.executebuiltin("Container.SetViewMode(501)")
+	elif opcao == '4': xbmc.executebuiltin("Container.SetViewMode(508)")
+	elif opcao == '5': xbmc.executebuiltin("Container.SetViewMode(504)")
+	elif opcao == '6': xbmc.executebuiltin("Container.SetViewMode(503)")
+	elif opcao == '7': xbmc.executebuiltin("Container.SetViewMode(515)")
 
 def abrirDefinincoes():
 	__ADDON__.openSettings()
-	addDir('Entrar novamente', 'url', None, None, 'Lista Grande', __SITEAddon__+"Imagens/retroceder.png",'','','','','','','')
+	addDir2('Entrar novamente', 'url', None, None, 'Lista Grande', __SITEAddon__+"Imagens/retroceder.png",'','','','','','','')
 	xbmc.executebuiltin("Container.SetViewMode(51)")
 
-def abrirNada():
-	xbmc.executebuiltin("Container.SetViewMode(51)")
-	
-def addDir(name,url,senha,mode,estilo,iconimage,tipo,tipo_user,servidor_user,data_user,sserv,suser,spass,pasta=True,total=1):
-	u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&senha="+str(senha)+"&estilo="+urllib.quote_plus(estilo)+"&tipologia="+str(tipo)+"&tipo_user="+str(tipo_user)+"&servidor_user="+str(servidor_user)+"&data_user="+str(data_user)+"&lolserv="+sserv+"&loluser="+suser+"&lolpass="+spass
-	ok=True
-	liz=xbmcgui.ListItem(name, iconImage=iconimage, thumbnailImage=iconimage)
-	liz.setProperty('fanart_image', iconimage)
-	ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=pasta,totalItems=total)
-	return ok
-	
-def addFolder(name,url,mode,iconimage,folder):
-	u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
-	ok=True
-	liz=xbmcgui.ListItem(name, iconImage=iconimage, thumbnailImage=iconimage)
-	liz.setProperty('fanart_image', iconimage)
-	ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=folder)
-	return ok
-	
-def addLink(name,url,iconimage,idCanal,srtfilm,descricao,tipo,tipo_user,id_p,infoLabels,total=1):
-	cm=[]
-	ok=True
-	liz=xbmcgui.ListItem(name, iconImage=iconimage, thumbnailImage=iconimage)
-	liz.setProperty('fanart_image', iconimage)
-	if tipo == 'Filme' or tipo == 'Serie':
-		u = sys.argv[0] + "?url=" + urllib.quote_plus(url) + "&mode=333&name=" + urllib.quote_plus(name) + "&iconimage=" + urllib.quote_plus(iconimage)+ "&srtfilm=" + urllib.quote_plus(srtfilm)+"&tipo_user="+str(tipo_user)
-	else:
-		u = sys.argv[0] + "?url=" + urllib.quote_plus(url) + "&mode=105&name=" + urllib.quote_plus(name) + "&iconimage=" + urllib.quote_plus(iconimage)+"&tipo_user="+str(tipo_user)
-		if tipo != 'Praia' and tipo != 'ProgramasTV':
-			cm.append(('Ver programação', 'XBMC.RunPlugin(%s?mode=31&name=%s&url=%s&iconimage=%s&idCanal=%s&idffCanal=%s)'%(sys.argv[0],urllib.quote_plus(name), urllib.quote_plus(url), urllib.quote_plus(iconimage), idCanal, id_p)))
-	liz.setInfo( type="Video", infoLabels=infoLabels)
-	if tipo == 'Filme':	
-		xbmcplugin.setContent(int(sys.argv[1]), 'Movies')
-	elif tipo == 'Serie':
-		xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
+def vista_menu():
+	opcao = __ADDON__.getSetting('menuView')
+	if opcao == '0': xbmc.executebuiltin("Container.SetViewMode(50)")
+	elif opcao == '1': xbmc.executebuiltin("Container.SetViewMode(51")
+	elif opcao == '2': xbmc.executebuiltin("Container.SetViewMode(500)")
+	elif opcao == '3': xbmc.executebuiltin("Container.SetViewMode(501)")
+	elif opcao == '4': xbmc.executebuiltin("Container.SetViewMode(508)")
 
-	if tipo == 'Filme' or tipo == 'Serie':
-		ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
-	else:
-		liz.addContextMenuItems(cm, replaceItems=False)
-		xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
-		ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
-	return ok
+def vista_filmesSeries():
+	opcao = __ADDON__.getSetting('filmesSeriesView')
+	if opcao == '0': xbmc.executebuiltin("Container.SetViewMode(50)")
+	elif opcao == '1': xbmc.executebuiltin("Container.SetViewMode(51)")
+	elif opcao == '2': xbmc.executebuiltin("Container.SetViewMode(500)")
+	elif opcao == '3': xbmc.executebuiltin("Container.SetViewMode(501)")
+	elif opcao == '4': xbmc.executebuiltin("Container.SetViewMode(508)")
+	elif opcao == '5': xbmc.executebuiltin("Container.SetViewMode(504)")
+	elif opcao == '6': xbmc.executebuiltin("Container.SetViewMode(503)")
+	elif opcao == '7': xbmc.executebuiltin("Container.SetViewMode(515)")
 
-def play_srt(name,url,iconimage,legendas):
-	playlist = xbmc.PlayList(1)
-	playlist.clear()
-	listitem = xbmcgui.ListItem(name, iconImage=iconimage, thumbnailImage=iconimage)
-	listitem.setInfo("Video", {"title":name})
-	listitem.setProperty('mimetype', 'video/x-msvideo')
-	listitem.setProperty('IsPlayable', 'true')
-	playlist.add(url, listitem)
-	xbmcplugin.setResolvedUrl(handle=int(sys.argv[1]), succeeded=True, listitem=listitem)
-	player = xbmc.Player()
-	player.play(playlist)
-	while not (player.isPlaying()):
-		xbmc.sleep(80)
-		time.sleep(80)
-	if legendas != '':
-		player.setSubtitles(legendas)
 
-def abrir_url(url):
-	req = urllib2.Request(url)
-	req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-	response = urllib2.urlopen(req)
-	link=response.read()
-	response.close()
-	return link
+def vista_temporadas():
+	opcao = __ADDON__.getSetting('temporadasView')
+	if opcao == '0': xbmc.executebuiltin("Container.SetViewMode(50)")
+	elif opcao == '1': xbmc.executebuiltin("Container.SetViewMode(51)")
+	elif opcao == '2': xbmc.executebuiltin("Container.SetViewMode(500)")
+	elif opcao == '3': xbmc.executebuiltin("Container.SetViewMode(501)")
+
+def vista_episodios():
+	opcao = __ADDON__.getSetting('episodiosView')
+	if opcao == '0': xbmc.executebuiltin("Container.SetViewMode(50)")
+	elif opcao == '1': xbmc.executebuiltin("Container.SetViewMode(51)")
+	elif opcao == '2': xbmc.executebuiltin("Container.SetViewMode(500)")
+	elif opcao == '3': xbmc.executebuiltin("Container.SetViewMode(501)")
+	elif opcao == '4': xbmc.executebuiltin("Container.SetViewMode(504)")
+	elif opcao == '5': xbmc.executebuiltin("Container.SetViewMode(503)")
+	elif opcao == '6': xbmc.executebuiltin("Container.SetViewMode(515)")
 
 ############################################################################################################
 #                                               GET PARAMS                                                 #
@@ -1118,6 +1528,11 @@ data_user=None
 s_serv=None
 s_user=None
 s_pass=None
+legenda=None
+pagina=None
+temporada=None
+episodio=None
+serieNome=None
 
 try:
         url=urllib.unquote_plus(params["url"])
@@ -1183,34 +1598,50 @@ try:
 		s_pass=urllib.unquote_plus(params["lolpass"])
 except:
 		pass
+try: link=urllib.unquote_plus(params["link"])
+except: pass
+try: legenda=urllib.unquote_plus(params["legenda"])
+except: pass
+try: name=urllib.unquote_plus(params["name"])
+except: pass
+try: temporada=int(params["temporada"])
+except: pass
+try: episodio=int(params["episodio"])
+except: pass
+try: mode=int(params["mode"])
+except: pass
+try: pagina=int(params["pagina"])
+except: pass
+try: iconimage=urllib.unquote_plus(params["iconimage"])
+except: pass
+try : serieNome=urllib.unquote_plus(params["serieNome"])
+except: pass
 
 ###############################################################################################################
 #                                                   MODOS                                                     #
 ###############################################################################################################
 
-if mode==None or url==None or len(url)<1: menu()
+if mode==None or url==None or len(url)<1:
+	menu()
+	xbmcplugin.endOfDirectory(int(sys.argv[1]))
 elif mode==1: listar_grupos(str(name),str(url),estilo,tipologia,tipo_user,servidor_user,s_serv,s_user,s_pass)
 elif mode==2: listar_canais_url(str(name),str(url),estilo,tipologia,tipo_user,servidor_user,s_serv,s_user,s_pass)
 elif mode==3: listar_grupos_adultos(str(url),str(senha),estilo,tipologia,tipo_user,servidor_user,s_serv,s_user,s_pass)
-elif mode==4: player1(name,url,iconimage)
-elif mode==5: listar_videos_M18(url)
-elif mode==6: listar_series(url)
-elif mode==7: listar_series_f2(name,url)	
-elif mode==8: pesquisa_serie()
-elif mode==9: listar_animes(url)
 elif mode==10: minhaConta(str(name),estilo)
-elif mode==11: categorias()
-elif mode==12: listar_temporadas(url)
-elif mode==13: listar_videos(url)
-elif mode==14: pesquisa_filme()
-elif mode==20: listamenusseries(str(name),str(url),estilo,tipologia,tipo_user,servidor_user,iconimage,s_serv,s_user,s_pass)
-elif mode==21: listamenusfilmes(str(name),str(url),estilo,tipologia,tipo_user,servidor_user,iconimage,s_serv,s_user,s_pass)
-elif mode==22: listaseries(estilo)
-elif mode==23: listafilmes(estilo)
+elif mode==20: menuSeries()
+elif mode==21: menuFilmes()
 elif mode==31: programacao_canal(idCanal)
-elif mode==105: play_mult_canal(url, iconimage, name, tipo_user)
+elif mode==110: minhaConta2()
+elif mode==111: getList(url, pagina)
+elif mode==112: getSeries(url, pagina)
+elif mode==113: player(name, url, iconimage, temporada, episodio, serieNome)
+elif mode==114: getSeasons(url)
+elif mode==115: getEpisodes(url)
+elif mode==117: download(url, name, temporada, episodio, serieNome)
+elif mode==118: getGeneros(url)
+elif mode==119: getYears(url)
+elif mode==120: pesquisa(url,tipo_user,tipologia,servidor_user)
 elif mode==1000: abrirDefinincoes()
 elif mode==2000: abrirNada()
-elif mode==333: play_srt(str(name),str(url),iconimage,srtfilm)
 
 xbmcplugin.endOfDirectory(int(sys.argv[1]))

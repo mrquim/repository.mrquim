@@ -146,3 +146,27 @@ msgstr ""
 msgctxt "#30031"
 msgid "My Favorites"
 msgstr ""
+
+msgctxt "#30032"
+msgid "Lists From TMDb"
+msgstr ""
+
+msgctxt "#30033"
+msgid "Scraper Settings"
+msgstr ""
+
+msgctxt "#30034"
+msgid "Manage Walter Sobchak"
+msgstr ""
+
+msgctxt "#30035"
+msgid "Option Installer"
+msgstr ""
+
+msgctxt "#30036"
+msgid "Episodes OnDeck"
+msgstr ""
+
+msgctxt "#30037"
+msgid "Clear Cache"
+msgstr ""

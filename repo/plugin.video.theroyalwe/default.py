@@ -57,12 +57,32 @@ def validate_watched():
 		return False
 	return ADDON.get_setting('hide_watched_episodes') == "true"
 
+def validate_calendar_browser():
+	if validate_advanced() is False or validate_trakt() is False: return False
+	return ADDON.get_setting('enable_calendar_browser') == "true"
+
+def validate_ondeck():
+	if validate_advanced() is False or validate_trakt() is False: return False
+	return ADDON.get_setting('enable_episodes_ondeck') == "true"
+
 def validate_transmogrifier():
 	installed = xbmc.getCondVisibility('System.HasAddon(service.transmogrifier)') == 1
 	if installed:
 		return ADDON.get_setting('enable_transmogrifier') == "true"
 	else:
 		return False
+
+def validate_kat():
+	urlresolver = xbmcaddon.Addon('script.module.urlresolver')
+	pm = urlresolver.getSetting('PremiumizeMeResolver_username') != "" and urlresolver.getSetting('PremiumizeMeResolver_password') != ""
+	return validate_transmogrifier() and pm
+	
+def validate_walter():
+	installed = xbmc.getCondVisibility('System.HasAddon(service.walter.sobchak)') == 1
+	if validate_advanced() and installed:
+		return True
+	else:
+		return False	
 
 def validate_transmogrifier_streaming():
 	if validate_transmogrifier() and ADDON.get_setting('enable_transmogrifier_streaming') == "true":
@@ -73,32 +93,76 @@ def validate_transmogrifier_streaming():
 def validate_source_filter():
 	return validate_advanced() and ADDON.get_setting('enable_result_filters') == 'true'
 
+def validate_tmdb():
+	return ADDON.get_setting('tmdb_key') != ''
+
+def validate_default_views():
+	return ADDON.get_setting('enable_default_views') == "true"
+
+def validate_show_settings():
+	return ADDON.get_setting('enable_full_context') != "true"
+
+
+CONTEXT_PRIORITIES = enum(WATCHFLAG=1, FAVORITE=30, WATCHLIST=30, FAVLIST=31, CUSTOMLIST=32, SIMILAR=11, SEASONS=12, TRAILER=10, CACHEFILE=41, PLAY_CACHE=42, DELETE_CACHE=43, SCRAPERS=90, FILTERS=91, VISIBILITY=92, SET_VIEW=95, WALTER=99, TRANSMOGRIFY=100, KAT=101, TM_STREAMING=105, TM_QUEUE=106, SETTINGS=1000)
+
 '''*	I want the context menu to be empty by default except for the items defined in this array
 		Plugin.replace_context_menu_by_default is False by default and so any default or menu dependent
 		context menu items would be added to the system default.
+		The default priority is 50. Custom priorities are defined in the ENUM below. Sorting is accending .:
+			Context menu items will appear in lowest to highest order of priority.
 *'''
 
 plugin.replace_context_menu_by_default = ADDON.get_setting('enable_full_context') == 'false'
 plugin.set_default_context_menu([
-	('Enable/Disable Scrapers', {"mode": "scraper_list"}, True),
-	('Set Result Filters', {'mode': 'set_source_filter'}, True, validate_source_filter),
-	('Hide Watched', {'mode': 'toggle_hide_watched'}, True, (validate_watched()==False and validate_trakt())),
-	('Show Watched', {'mode': 'toggle_hide_watched'}, True, validate_watched),
-	('Enable Transmogrifier Streaming', {'mode': 'toggle_transmogrifier_streaming'}, True, (validate_transmogrifier() and validate_transmogrifier_streaming()==False)),
-	('Disable Transmogrifier Streaming', {'mode': 'toggle_transmogrifier_streaming'}, True, validate_transmogrifier_streaming),
-	('Transmogrifier Queue', {'mode': 'manage_transmogrifier'}, True, validate_transmogrifier)
+	('Enable/Disable Scrapers', {"mode": "scraper_list"}, True, CONTEXT_PRIORITIES.SCRAPERS),
+	('Set Result Filters', {'mode': 'set_source_filter'}, True, validate_source_filter, CONTEXT_PRIORITIES.FILTERS),
+	('Hide Watched', {'mode': 'toggle_hide_watched'}, True, (validate_watched()==False and validate_trakt()), CONTEXT_PRIORITIES.VISIBILITY),
+	('Show Watched', {'mode': 'toggle_hide_watched'}, True, validate_watched, CONTEXT_PRIORITIES.WATCHFLAG),
+	('Enable Transmogrifier Streaming', {'mode': 'toggle_transmogrifier_streaming'}, True, (validate_transmogrifier() and validate_transmogrifier_streaming()==False), CONTEXT_PRIORITIES.TM_STREAMING),
+	('Disable Transmogrifier Streaming', {'mode': 'toggle_transmogrifier_streaming'}, True, validate_transmogrifier_streaming, CONTEXT_PRIORITIES.TM_STREAMING),
+	('Add-on settings', {'mode': 'settings_theroyalwe'}, True, validate_show_settings, CONTEXT_PRIORITIES.SETTINGS),
+	('Transmogrifier Queue', {'mode': 'manage_transmogrifier'}, True, validate_transmogrifier, CONTEXT_PRIORITIES.TM_QUEUE),
+	('Walter Sobchak', {'mode': 'manage_walter'}, True, validate_walter, CONTEXT_PRIORITIES.WALTER)
+	
 ])
 
 def update_run():
-	if plugin.check_version(ADDON.get_setting('version'), '0.8.0'):
-		ADDON.set_setting('database_sqlite_init', "false")
-		ADDON.set_setting('database_sqlite_init.cache', "false")
-		ADDON.set_setting('database_mysql_init', "false")
-		ADDON.set_setting('database_mysql_init.cache', "false")
-		ADDON.set_setting('database_mysql_version', "1")
-		ADDON.set_setting('database_mysql_version.cache', "1")
-		first_run(True)
+	if plugin.check_version(ADDON.get_setting('version'), '0.9.5'):
+		from dudehere.routines.window import Window
+		vfs = VFSClass()
+		class UpdateWindow(Window):
+			def __init__(self, title, show_frame=True):
+				super(self.__class__,self).__init__(title,width=750, height=650, columns=3, rows=10)
+			
+			def abide(self):
+				clear_cache(True)
+				ADDON.set_setting('version', VERSION)
+				self.close()
+			
+			def set_info_controls(self):
+				self.main_bg = xbmcgui.ControlImage(1, 1, 1280, 720, vfs.join(ROOT_PATH, 'fanart.jpg'))
+				self.addControl(self.main_bg)
+
+				label = self.create_label("The Royal We: %s" % VERSION, alignment=2, textColor='0xFFFFA500', font='font13_title')
+				self.add_label(label, 0, 0, pad_x=15, pad_y=10, columnspan=3)
+				
+				
+				label = self.create_label("This version requires a quick update.\n\nClick the button to start.", alignment=2)
+				self.add_label(label, 1, 0, pad_x=15, pad_y=10, columnspan=3, rowspan=4)
+				
+				
+				self.create_button("abide", "ABIDE")
+				self.add_object("abide", 8, 1)
+				self.set_focus("abide")
+				self.set_object_event('action', "abide", self.abide)
+		
+		U = UpdateWindow('TRW Update %s' % VERSION)
+		U.show()
+		del U
+		
 plugin.update_run = update_run
+
+
 
 '''* 	Initial Run routine
 		Plugin.first_run method
@@ -144,7 +208,7 @@ def first_run(update=False):
 			
 	class ThirdPage(Window):	
 		def set_info_controls(self):
-			content = '''The Royal We can be used in Basic or Advanced Mode.\nTRW is intended to require minimal configuration.\nIf that is what you want, just leave it.\nAdvanced Mode enables some setting and customization.'''
+			content = '''The Royal We can be used in Basic or Advanced Mode.\nTRW is intended to require minimal configuration.\nIf that is what you want, just leave it.\nAdvanced Mode enables many settings and customization.'''
 			self.add_label(self.create_label(content), 0, 0, columnspan=4, rowspan=3, pad_x=15, pad_y=10)
 			
 			self.create_list('usage')
@@ -152,38 +216,34 @@ def first_run(update=False):
 			self.add_list_items('usage', ["Basic Mode", "Advanced Mode"], 0, allow_multiple=False, allow_toggle=False)
 	
 	class FourthPage(Window):
+		def __init__(self, title):
+			super(self.__class__,self).__init__(title, width=800, height=400, columns=4, rows=6)
+		
+		def cancel(self):
+			plugin.set_property('Abort', "true")
+			self.close()
+
 		def authorize(self):
-			pin = self.get_value('pin')
-			from dudehere.routines.trakt import TraktAPI
-			trakt = TraktAPI()
-			response = trakt.authorize(pin)
-			if response:
+			
+			authorize_trakt()
+			'''if ADDON.get_setting('trakt_oauth_token'):
+				from dudehere.routines.trakt import TraktAPI
+				trakt = TraktAPI()
 				settings = trakt.get_settings()
 				if settings:
 					ADDON.set_setting('trakt_account', settings['user']['username'])
-				plugin.notify("Trakt Authorization", "Success", image=ARTWORK + "trakt.png")	
-			else:
-				ADDON.set_setting('trakt_account', '')
-				plugin.notify("Trakt Authorization", "Failed", image=ARTWORK + "trakt.png")
+			'''		
 
 		def set_info_controls(self):
-			self.create_image('trakt', ARTWORK + 'trakt.png', aspectRatio=1)
-			self.add_object('trakt', 0, 0, columnspan=3, rowspan=3)
 			
-			content = '''[B]The Royal We is even better with a Trakt.TV account.\nIf you have one, you may authorize it now.\nOtherwise you can use TRW without trakt.\nYou can always authorize or re-authorize TRW.\nJust look in the Settings Menu.[/B]'''
-			self.add_label(self.create_label(content), 0, 0, columnspan=3, rowspan=3, pad_x=15, pad_y=10)
+			content = '''The Royal We is even better with a Trakt.TV account.\nIf you have one, you may authorize it now.\nOtherwise you can use TRW without Trakt.\nYou can always authorize or re-authorize TRW.\nJust look in the Settings Menu.\n\n[COLOR yellow][B]TRW now uses the offical Trakt addon for watched syncing.[/B][/COLOR]'''
+			self.add_label(self.create_label(content), 0, 0, columnspan=4, rowspan=4, pad_x=15, pad_y=10)
+
+			self.url_label =  self.create_label('')
+			self.placeControl(self.url_label, 5, 0, columnspan=4, pad_x=15, pad_y=10)
 			
-			content = "Open a browser and navigate to:\n[B][COLOR red]%s[/COLOR][/B]" % ADDON.get_setting('trakt_pin_url')
-			self.add_label(self.create_label(content), 3, 0, columnspan=3, rowspan=2, pad_x=15, pad_y=10)
-			
-			self.create_input('pin', _alignment=2)
-			self.add_object('pin', 4, 0, columnspan=3)
-			
-			self.create_image('qr_code', ARTWORK + 'pin.png', aspectRatio=2)
-			self.add_object('qr_code', 0, 3, columnspan=1, rowspan=2)
-			
-			self.create_button('authorize', 'Authorize')
-			self.add_object('authorize', 4, 3)
+			self.create_button('authorize', 'Authorize Now')
+			self.add_object('authorize', 5, 2)
 			self.set_object_event('action', "authorize", self.authorize)	
 	
 	class FifthPage(Window):
@@ -235,7 +295,7 @@ def first_run(update=False):
 	WM.add_page(FifthPage('Scraper Accounts: v%s!' % VERSION))
 	WM.add_page(SixthPage('Basic Usage: v%s!' % VERSION))
 	WM.add_confirmation(ConfirmationPage('Setup Complete!'))
-	WM.build()
+	WM.build(vfs.join(ROOT_PATH, 'fanart.jpg'))
 	
 	WM.set_object_event(0, 'focus', 'next_button')
 	WM.set_object_event(1, 'focus', 'decline')
@@ -250,14 +310,10 @@ def first_run(update=False):
 	WM.set_object_event(2, 'up', 'previous_button', 'usage')
 	WM.set_object_event(2, 'down', 'usage', 'next_button')
 	WM.set_object_event(3, 'focus', 'next_button')
-	WM.set_object_event(3, 'left', 'next_button', 'previous_button')
-	WM.set_object_event(3, 'right', 'previous_button', 'next_button')
-	WM.set_object_event(3, 'up', 'next_button', 'pin')
-	WM.set_object_event(3, 'up', 'previous_button', 'pin')
-	WM.set_object_event(3, 'down', 'pin', 'next_button')
-	WM.set_object_event(3, 'down', 'authorize', 'next_button')
-	WM.set_object_event(3, 'right', 'pin', 'authorize')
-	WM.set_object_event(3, 'left', 'authorize', 'pin')
+	WM.set_object_event(3, 'left', 'next_button', 'authorize')
+	WM.set_object_event(3, 'left', 'authorize', 'previous_button')
+	WM.set_object_event(3, 'right', 'previous_button', 'authorize')
+	WM.set_object_event(3, 'right', 'authorize', 'next_button')
 	WM.set_object_event(4, 'focus', 'next_button')
 	WM.set_object_event(4, 'left', 'next_button', 'previous_button')
 	WM.set_object_event(4, 'right', 'previous_button', 'next_button')
@@ -292,14 +348,28 @@ def main():
 	plugin.add_menu_item({'mode': 'settings_menu'}, {'title': STRINGS.map('settings_menu')}, image=ARTWORK + "settings.jpg")
 	plugin.add_menu_item({'mode': 'show_about'}, {'title': STRINGS.map('show_about')}, image=ARTWORK + "about.jpg")
 	plugin.add_menu_item({'mode': 'authorize_trakt'}, {'title': STRINGS.map('authorize_trakt')}, image=ARTWORK + "authorize.jpg", visible=validate_trakt()==False)
+	
+	vfs = VFSClass()
+	if vfs.exists(vfs.join(DATA_PATH, 'fav_lists.json')):
+		favorites = vfs.read_file(vfs.join(DATA_PATH, 'fav_lists.json'), json=True)
+		for fav in favorites['tv']:
+			menu = ContextMenu()
+			menu.add('Remove Favorite', {"mode": "toggle_favorite_list", "slug": fav, "name": favorites['tv'][fav]['name'], "media": 'tv'}, script=True, priority=CONTEXT_PRIORITIES.FAVLIST)
+			plugin.add_menu_item({"mode": "tv_custom_list", 'slug': fav, "media": 'tv'}, {"title": favorites['tv'][fav]['name']}, menu=menu, image=ARTWORK + "trakt_custom_lists.jpg", visible=validate_trakt)
+
+		for fav in favorites['movie']:
+			menu = ContextMenu()
+			menu.add('Remove Favorite', {"mode": "toggle_favorite_list", "slug": fav, "name": favorites['movie'][fav]['name'], "media": 'movie'}, script=True, priority=CONTEXT_PRIORITIES.FAVLIST)
+			plugin.add_menu_item({"mode": "movie_custom_list", 'slug': fav, "media": 'movie'}, {"title": favorites['movie'][fav]['name']}, menu=menu, image=ARTWORK + "trakt_custom_lists.jpg", visible=validate_trakt)
+		
 	plugin.eod(clear_search=True)
 plugin.register('main', main)
 
 def tvshow_menu():
 	plugin.add_menu_item({'mode': 'tv_favorites'}, {'title': STRINGS.map('my_favorites')}, image=ARTWORK + "favorites.jpg", visible=validate_trakt()==False)
 	plugin.add_menu_item({'mode': 'calendar'}, {'title': STRINGS.map('calendar')}, image=ARTWORK + "calendar.jpg", visible=validate_trakt)
-	plugin.add_menu_item({'mode': 'calendar_browser'}, {'title': STRINGS.map('calendar_browser')}, image=ARTWORK + "calendar_browser.jpg", visible=validate_trakt)
-	plugin.add_menu_item({'mode': 'tv_genres'}, {'title': STRINGS.map('genres')}, image=ARTWORK + "genres/genre.jpg")
+	plugin.add_menu_item({'mode': 'calendar_browser'}, {'title': STRINGS.map('calendar_browser')}, image=ARTWORK + "calendar_browser.jpg", visible=validate_calendar_browser)
+	plugin.add_menu_item({'mode': 'episodes_ondeck'}, {'title': STRINGS.map('ondeck')}, image=ARTWORK + "ondeck.jpg", visible=validate_ondeck)
 	plugin.add_menu_item({'mode': 'tv_watchlist'}, {'title': STRINGS.map('tv_watchlist')}, image=ARTWORK + "trakt_watchlist.jpg", visible=validate_trakt)
 	plugin.add_menu_item({'mode': 'tv_collection'}, {'title': STRINGS.map('my_collection')}, image=ARTWORK + "my_collection.jpg", visible=validate_trakt)
 	plugin.add_menu_item({'mode': 'tv_custom_lists'}, {'title': STRINGS.map('custom_lists')}, image=ARTWORK + "trakt_custom_lists.jpg", visible=validate_trakt)
@@ -307,17 +377,29 @@ def tvshow_menu():
 	plugin.add_menu_item({'mode': 'tv_popular'}, {'title': STRINGS.map('tv_popular')}, image=ARTWORK + "trakt_popular.jpg")
 	plugin.add_menu_item({'mode': 'tv_recommended'}, {'title': STRINGS.map('tv_recommended')}, image=ARTWORK + "trakt_recommended.jpg", visible=validate_trakt)
 	plugin.add_menu_item({'mode': 'tv_anticipated'}, {'title': STRINGS.map('tv_anticipated')}, image=ARTWORK + "trakt_anticipated.jpg")
-	plugin.add_menu_item({'mode': 'tv_networks'}, {'title': "Networks"}, image=ARTWORK + "networks.jpg")
+	
+	plugin.add_menu_item({'mode': 'tv_tmdb_lists'}, {'title': STRINGS.map('movie_tmdb')}, image=ARTWORK + "tvshows.jpg", visible=validate_tmdb)
 	plugin.add_menu_item({'mode': 'tv_search'}, {'title': STRINGS.map('search')}, image=ARTWORK + "search.jpg")
 	plugin.eod(clear_search=True)
 plugin.register('tv_menu', tvshow_menu)
+
+def tv_tmdb_lists():
+	plugin.add_menu_item({'mode': 'tv_genres'}, {'title': STRINGS.map('genres')}, image=ARTWORK + "tvshows.jpg")
+	plugin.add_menu_item({'mode': 'tv_networks'}, {'title': "Networks"}, image=ARTWORK + "tvshows.jpg")
+	plugin.add_menu_item({'mode': 'tv_tmdb_latest'}, {'title': "Latest Shows"}, image=ARTWORK + "tvshows.jpg")
+	plugin.add_menu_item({'mode': 'tv_tmdb_popular'}, {'title': "Popular Shows"}, image=ARTWORK + "tvshows.jpg")
+	plugin.add_menu_item({'mode': 'tv_tmdb_top_rated'}, {'title': "Top Rated Shows"}, image=ARTWORK + "tvshows.jpg")
+	plugin.add_menu_item({'mode': 'tv_tmdb_airing_today'}, {'title': "On Air Today"}, image=ARTWORK + "tvshows.jpg")
+	plugin.add_menu_item({'mode': 'tv_tmdb_airing_soon'}, {'title': "On Air Soon"}, image=ARTWORK + "tvshows.jpg")
+	plugin.eod(clear_search=True)
+plugin.register("tv_tmdb_lists", tv_tmdb_lists)
 
 def tv_genres():
 	from dudehere.routines.tmdb import TV_GENRES as GENRES
 	for id in sorted(GENRES.r_map.keys()):
 		genre = GENRES.r_map[id].lower()
 		plugin.add_menu_item({'mode': 'tv_genre', "id": id}, {'title': genre}, image=ARTWORK + "genres/%s.jpg" % genre)
-	plugin.eod(VIEWS.LIST)
+	plugin.eod()
 plugin.register("tv_genres", tv_genres)	
 
 def tv_networks():
@@ -328,20 +410,21 @@ def tv_networks():
 		image = "networks/%s.png" % re.sub(r'\W+', '', network.lower())
 		image = vfs.join(ARTWORK, image)
 		plugin.add_menu_item({'mode': 'tv_network', "id": id}, {'title': network}, image=image)
-	plugin.eod(VIEWS.LIST)
+	plugin.eod()
 plugin.register("tv_networks", tv_networks)	
 
 def movie_menu():
 	plugin.add_menu_item({'mode': 'movie_favorites'}, {'title': STRINGS.map('my_favorites')}, image=ARTWORK + "favorites.jpg", visible=validate_trakt()==False)
 	plugin.add_menu_item({'mode': 'movie_watchlist'}, {'title': STRINGS.map('movie_watchlist')}, image=ARTWORK + "trakt_watchlist.jpg", visible=validate_trakt)
 	plugin.add_menu_item({'mode': 'movie_collection'}, {'title': STRINGS.map('my_collection')}, image=ARTWORK + "my_collection.jpg", visible=validate_trakt)
-	plugin.add_menu_item({'mode': 'movie_genres'}, {'title': STRINGS.map('genres')}, image=ARTWORK + "genres/genre.jpg")
+	plugin.add_menu_item({'mode': 'movie_genres'}, {'title': STRINGS.map('genres')}, image=ARTWORK + "genres/genre.jpg", visible=validate_tmdb)
 	plugin.add_menu_item({'mode': 'movie_custom_lists'}, {'title': STRINGS.map('custom_lists')}, image=ARTWORK + "trakt_custom_lists.jpg", visible=validate_trakt)
 	plugin.add_menu_item({'mode': 'movie_trending'}, {'title': STRINGS.map('movie_trending')}, image=ARTWORK + "trakt_trending.jpg")
 	plugin.add_menu_item({'mode': 'movie_popular'}, {'title': STRINGS.map('movie_popular')}, image=ARTWORK + "trakt_popular.jpg")
 	plugin.add_menu_item({'mode': 'movie_recommended'}, {'title': STRINGS.map('movie_recommended')}, image=ARTWORK + "trakt_recommended.jpg", visible=validate_trakt)
 	plugin.add_menu_item({'mode': 'movie_search'}, {'title': STRINGS.map('search')}, image=ARTWORK +"search.jpg")
-	plugin.add_menu_item({'mode': 'movie_discover'}, {'title': STRINGS.map('movie_discover')}, image=ARTWORK +"discover.jpg")
+	plugin.add_menu_item({'mode': 'movie_discover'}, {'title': STRINGS.map('movie_discover')}, image=ARTWORK +"discover.jpg", visible=validate_tmdb)
+	plugin.add_menu_item({'mode': 'movie_tmdb_lists'}, {'title': STRINGS.map('movie_tmdb')}, image=ARTWORK +"movies.jpg", visible=validate_tmdb)
 	plugin.eod(clear_search=True)
 plugin.register('movie_menu', movie_menu)
 
@@ -350,21 +433,33 @@ def movie_genres():
 	for id in sorted(GENRES.r_map.keys()):
 		genre = GENRES.r_map[id].lower()
 		plugin.add_menu_item({'mode': 'movie_genre', "id": id}, {'title': genre}, image=ARTWORK + "genres/%s.jpg" % genre)
-	plugin.eod(VIEWS.LIST, 'tvshows', clear_search=True)
+	plugin.eod(clear_search=True)
 plugin.register("movie_genres", movie_genres)	
+
+def movie_tmdb_lists():
+	plugin.add_menu_item({'mode': 'movie_tmdb_latest'}, {'title': "Latest Movies"}, image=ARTWORK + "movies.jpg")
+	plugin.add_menu_item({'mode': 'movie_tmdb_popular'}, {'title': "Popular Movies"}, image=ARTWORK + "movies.jpg")
+	plugin.add_menu_item({'mode': 'movie_tmdb_top_rated'}, {'title': "Top Rated Movies"}, image=ARTWORK + "movies.jpg")
+	plugin.add_menu_item({'mode': 'movie_tmdb_in_theaters'}, {'title': "In Theaters"}, image=ARTWORK + "movies.jpg")
+	plugin.add_menu_item({'mode': 'movie_tmdb_coming_soon'}, {'title': "Coming Soon"}, image=ARTWORK + "movies.jpg")
+	plugin.eod(clear_search=True)
+plugin.register("movie_tmdb_lists", movie_tmdb_lists)
 
 def settings_menu():
 	plugin.add_menu_item({'mode': 'scraper_list'}, {'title': STRINGS.map('scraper_list')}, image=ARTWORK + "scraper_list.jpg")
 	plugin.add_menu_item({'mode': 'scraper_accounts'}, {'title': STRINGS.map('scraper_accounts')}, image=ARTWORK + "none")
 	plugin.add_menu_item({'mode': 'set_source_filter'}, {'title': 'Set Result Filters'}, image=ARTWORK + "none", visible=validate_source_filter)
 	plugin.add_menu_item({'mode': 'manage_hosts'}, {'title': STRINGS.map('manage_hosts')}, image=ARTWORK + "none", visible=validate_advanced())
+	plugin.add_menu_item({'mode': 'set_ondeck_list'}, {'title': 'Set Ondeck List'}, image=ARTWORK + "none", visible=validate_ondeck)
 	plugin.add_menu_item({'mode': 'manage_transmogrifier'}, {'title': STRINGS.map('manage_transmogrifier')}, image=ARTWORK + "none", visible=validate_transmogrifier)
+	plugin.add_menu_item({'mode': 'manage_walter'}, {'title': STRINGS.map('manage_walter')}, image=ARTWORK + "walter.jpg", visible=validate_walter)
 	plugin.add_menu_item({'mode': 'settings_transmogrifier'}, {'title': STRINGS.map('settings_transmogrifier')}, image=ARTWORK + "none", visible=validate_transmogrifier)
 	plugin.add_menu_item({'mode': 'settings_urlresolver'}, {'title': STRINGS.map('settings_urlresolver')}, image=ARTWORK + "none")
 	plugin.add_menu_item({'mode': 'settings_theroyalwe'}, {'title': STRINGS.map('settings_theroyalwe')}, image=ARTWORK + "none")
 	plugin.add_menu_item({'mode': 'authorize_trakt'}, {'title': STRINGS.map('authorize_trakt')}, image=ARTWORK + "authorize.jpg")
 	plugin.add_menu_item({'mode': 'advanced_mode'}, {'title': STRINGS.map('enable_basic_mode')}, image=ARTWORK + "none", visible=validate_advanced())
 	plugin.add_menu_item({'mode': 'advanced_mode'}, {'title': STRINGS.map('enable_advanced_mode')}, image=ARTWORK + "none", visible=validate_advanced() is False)
+	plugin.add_menu_item({'mode': 'clear_cache'}, {'title': STRINGS.map('clear_cache')}, image=ARTWORK + "clear_cache.jpg")
 	plugin.add_menu_item({'mode': 'reset_trw'}, {'title': STRINGS.map('reset_trw')}, image=ARTWORK + "reset.jpg")
 	plugin.eod(VIEWS.LIST, clear_search=True)
 plugin.register('settings_menu', settings_menu)
@@ -372,7 +467,7 @@ plugin.register('settings_menu', settings_menu)
 '''* 	Media Search and List Functions
 *'''
 
-def tv_discover():
+def tv_tmdb_list():
 	from dudehere.routines.tmdb import TMDB_API
 	tmdb = TMDB_API()
 	from dudehere.routines.trakt import TraktAPI
@@ -386,24 +481,43 @@ def tv_discover():
 		results = tmdb.list_tv_genre(plugin.args['id'], page=page)
 	elif plugin.mode == 'tv_network':
 		results = tmdb.list_tv_network(plugin.args['id'], page=page)
+	elif plugin.mode == 'tv_tmdb_latest':
+		results = tmdb.get_latest_shows(page=page)
+	elif plugin.mode == 'tv_tmdb_popular':
+		results = tmdb.get_popular_shows(page=page)
+	elif plugin.mode == 'tv_tmdb_top_rated':
+		results = tmdb.get_top_rated_shows(page=page)
+	elif plugin.mode == 'tv_tmdb_airing_today':
+		results = tmdb.shows_airing_today(page=page)
+	elif plugin.mode == 'tv_tmdb_airing_soon':
+		results = tmdb.shows_airing_soon(page=page)
+		
 	count = len(results)
-	total_pages = results['total_pages']
+	total_pages = results['total_pages'] if 'total_pages' in results else 1
 	for result in results['results']:
 		record = tmdb.process_record(result, 'tvshow')
 		menu = ContextMenu()
-		menu.add('Find Similar Shows', {"mode": "tv_similar", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id']})
-		menu.add('Save as Favorite', {"mode": "add_to_favorites", "media": "tvshow",  "record": record}, script=True, visible=validate_trakt()==False)
+		menu.add('Set Show View', {"mode": "set_default_view", "view": "tvshow"}, visible=validate_default_views, priority=CONTEXT_PRIORITIES.SET_VIEW)
+		menu.add('Find Similar Shows', {"mode": "tv_similar", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id']}, priority=CONTEXT_PRIORITIES.SIMILAR)
+		menu.add('Save as Favorite', {"mode": "add_to_favorites", "media": "tvshow",  "record": record}, script=True, visible=validate_trakt()==False, priority=CONTEXT_PRIORITIES.FAVORITE)
 		
 		if record['tmdb_id'] in watchlist:
 			record['title'] = '[COLOR %s]%s[/COLOR]' % (WATCHLIST_COLOR, record['title'])
-			menu.add('Remove from Watchlist', {"mode": "tv_delete_from_watchlist", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "name": record['title']}, script=True, visible=validate_trakt)
+			menu.add('Remove from Watchlist', {"mode": "tv_delete_from_watchlist", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "name": record['title']}, script=True, visible=validate_trakt, priority=CONTEXT_PRIORITIES.WATCHLIST)
 		else:
-			menu.add('Add to Watchlist', {"mode": "tv_add_to_watchlist", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id']}, script=True, visible=validate_trakt)
-		menu.add('Add to custom list', {"mode": "add_to_custom_list", "media": "tvshow", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id']}, script=True, visible=validate_trakt)
+			menu.add('Add to Watchlist', {"mode": "tv_add_to_watchlist", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id']}, script=True, visible=validate_trakt, priority=CONTEXT_PRIORITIES.WATCHLIST)
+		menu.add('Add to custom list', {"mode": "add_to_custom_list", "media": "tvshow", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id']}, script=True, visible=validate_trakt, priority=CONTEXT_PRIORITIES.CUSTOMLIST)
+		if record['year']:
+			try:
+				record['title'] = u"%s (%s)" % (record['title'], record['year'])
+			except UnicodeDecodeError:
+				record['title'] = u"%s (%s)" % (record['title'].decode("utf-8"), record['year'])
 		plugin.add_menu_item({'mode': 'season_list', "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "fanart": record['backdrop_url']}, record, menu=menu, image=record['cover_url'], fanart=record['backdrop_url'])
-	if total_pages > 1: plugin.add_menu_item({'mode': plugin.mode, "id": plugin.args['id'], "page": page+1}, {'title': '[COLOR blue]Next Page %s/%s >>[/COLOR]' % (page+1, total_pages)}, image=ARTWORK + "next_page.jpg")
+	if total_pages > 1: plugin.add_menu_item({'mode': plugin.mode, "id": plugin.get_arg('id', ''), "page": page+1}, {'title': '[COLOR blue]Next Page %s/%s >>[/COLOR]' % (page+1, total_pages)}, image=ARTWORK + "next_page.jpg")
 	plugin.eod(VIEWS.LIST, 'tvshows')
-plugin.register(["tv_genre", "tv_network"], tv_discover)
+plugin.register(["tv_genre", "tv_network", "tv_tmdb_latest", "tv_tmdb_popular", "tv_tmdb_top_rated", "tv_tmdb_airing_today", "tv_tmdb_airing_soon"], tv_tmdb_list)
+
+
 
 def tv_list():
 	from dudehere.routines.trakt import TraktAPI
@@ -466,24 +580,25 @@ def tv_list():
 			record['cast'] = []
 		menu = ContextMenu()
 		menu.add('Find Similar Shows', {"mode": "tv_similar", "imdb_id": record['imdb_id']})
+		menu.add('Set Show View', {"mode": "set_default_view", "view": "tvshow"}, visible=validate_default_views, priority=CONTEXT_PRIORITIES.SET_VIEW)
 		if plugin.mode == 	'tv_watchlist':
-			menu.add('Remove from Watchlist', {"mode": "tv_delete_from_watchlist", "imdb_id": record['imdb_id'], "name": record['title']}, script=True, visible=validate_trakt)
+			menu.add('Remove from Watchlist', {"mode": "tv_delete_from_watchlist", "imdb_id": record['imdb_id'], "name": record['title']}, script=True, visible=validate_trakt, priority=CONTEXT_PRIORITIES.WATCHLIST)
 		else:
 			if record['imdb_id'] in watchlist: 
 				record['title'] = '[COLOR %s]%s[/COLOR]' % (WATCHLIST_COLOR, record['title'])
-				menu.add('Remove from Watchlist', {"mode": "tv_delete_from_watchlist", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "trakt_id": record['trakt_id'], "name": record['title']}, script=True, visible=validate_trakt)
+				menu.add('Remove from Watchlist', {"mode": "tv_delete_from_watchlist", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "trakt_id": record['trakt_id'], "name": record['title']}, script=True, visible=validate_trakt, priority=CONTEXT_PRIORITIES.WATCHLIST)
 			else:
-				menu.add('Add to Watchlist', {"mode": "tv_add_to_watchlist", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "trakt_id": record['trakt_id']}, script=True, visible=validate_trakt)
+				menu.add('Add to Watchlist', {"mode": "tv_add_to_watchlist", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "trakt_id": record['trakt_id']}, script=True, visible=validate_trakt, priority=CONTEXT_PRIORITIES.WATCHLIST)
 				
 		if plugin.mode ==	'tv_custom_list':
-			menu.add('Remove from custom list', {"mode": "delete_from_custom_list", "media": "tvshow", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "trakt_id": record['trakt_id'], "slug": plugin.args['slug'], "name": record['title']}, script=True, visible=validate_trakt)
+			menu.add('Remove from custom list', {"mode": "delete_from_custom_list", "media": "tvshow", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "trakt_id": record['trakt_id'], "slug": plugin.args['slug'], "name": record['title']}, script=True, visible=validate_trakt, priority=CONTEXT_PRIORITIES.CUSTOMLIST)
 		else:
-			menu.add('Add to custom list', {"mode": "add_to_custom_list", "media": "tvshow", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "trakt_id": record['trakt_id']}, script=True, visible=validate_trakt)
+			menu.add('Add to custom list', {"mode": "add_to_custom_list", "media": "tvshow", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "trakt_id": record['trakt_id']}, script=True, visible=validate_trakt, priority=CONTEXT_PRIORITIES.CUSTOMLIST)
 		
 		if plugin.mode ==	'tv_favorites':
-			menu.add('Delete Favorite', {"mode": "delete_from_favorites", "media": "tvshow", "title": record['title'], "id": record['id']}, script=True, visible=validate_trakt()==False)
+			menu.add('Delete Favorite', {"mode": "delete_from_favorites", "media": "tvshow", "title": record['title'], "id": record['id']}, script=True, visible=validate_trakt()==False, priority=CONTEXT_PRIORITIES.FAVORITE)
 		else:
-			menu.add('Save as Favorite', {"mode": "add_to_favorites", "media": "tvshow",  "record": record}, script=True, visible=validate_trakt()==False)
+			menu.add('Save as Favorite', {"mode": "add_to_favorites", "media": "tvshow",  "record": record}, script=True, visible=validate_trakt()==False, priority=CONTEXT_PRIORITIES.FAVORITE)
 		query = {
 			'mode': 'season_list',
 			"trakt_id": record['trakt_id'], 
@@ -492,6 +607,11 @@ def tv_list():
 			"slug": record['slug'],
 			"fanart": record['backdrop_url']
 		}
+		if record['year']:
+			try:
+				record['title'] = u"%s (%s)" % (record['title'], record['year'])
+			except UnicodeDecodeError:
+				record['title'] = u"%s (%s)" % (record['title'].decode("utf-8"), record['year'])
 		plugin.add_menu_item(query, record, menu=menu, replace_menu=True, image=record['cover_url'], fanart=record['backdrop_url'])
 	ADDON.save_data('last_directory.qs', sys.argv[0]+sys.argv[2])
 	plugin.eod(VIEWS.TV_DEFAULT, 'tvshows')	
@@ -500,7 +620,7 @@ plugin.register(['tv_watchlist', 'tv_trending', 'tv_popular', 'tv_recommended', 
 def season_list():
 	from dudehere.routines.trakt import TraktAPI
 	trakt = TraktAPI()
-	imdb_id = trakt.query_id('tmdb', plugin.args['tmdb_id']) if 'tmdb_id' in plugin.args.keys() else plugin.args['imdb_id']
+	imdb_id = trakt.query_id('tmdb', plugin.args['tmdb_id']) if ('tmdb_id' in plugin.args.keys() and plugin.get_arg('imdb_id') is None ) else plugin.args['imdb_id']
 	if plugin.get_arg('slug'):
 		results = trakt.get_show_seasons(plugin.args['slug'])
 	else:
@@ -515,7 +635,8 @@ def season_list():
 			fanart = plugin.args['fanart']
 			season = record['number']
 			record = {"title": 'Season %s' % season}
-			menu.add('Mark Season Watched', {"mode": "set_watched", "media": "season", "id": season, "imdb_id": imdb_id}, visible=validate_trakt)
+			menu.add('Set Season View', {"mode": "set_default_view", "view": "season"}, visible=validate_default_views, priority=CONTEXT_PRIORITIES.SET_VIEW)
+			menu.add('Mark Season Watched', {"mode": "set_watched", "media": "season", "id": season, "imdb_id": imdb_id}, visible=validate_trakt, priority=CONTEXT_PRIORITIES.WATCHFLAG)
 			query = {
 				'mode': 'episode_list', 
 				"imdb_id": imdb_id, 
@@ -547,6 +668,7 @@ def episode_list():
 		from dudehere.routines.transmogrifier import TransmogrifierAPI
 		TM = TransmogrifierAPI()
 		path, transmogrified = TM.get_videos('tv')
+		ADDON.log(path)
 	else:
 		transmogrified = []
 		is_local = False
@@ -557,26 +679,33 @@ def episode_list():
 		if record is False: continue
 		if record['episode'] == 0: continue
 		if validate_transmogrifier():
-			filename = "%s %sx%s" % (utf8(show['title']), record['season'], record['episode'])
+			filename = "%s.S%sE%s" % (utf8(show['title']), str(record['season']).zfill(2), str(record['episode']).zfill(2))
 			is_local = any(filename in test for test in transmogrified)
+			if not is_local:
+				filename = "%s.%sx%s" % (utf8(show['title']) , record['season'], record['episode'])
+				is_local = any(filename in test for test in transmogrified)
 		menu = ContextMenu()
+		menu.add('Set Episode View', {"mode": "set_default_view", "view": "episode"}, visible=validate_default_views, priority=CONTEXT_PRIORITIES.SET_VIEW)
 		record['showtitle'] = show['title']
 		record['year'] = show['year']
-		pattern = "[COLOR "+HAS_TRANMOGRIFIED+"]%s. %s[TM][/COLOR]" if is_local else "%s. %s"
+		pattern = "[COLOR "+HAS_TRANMOGRIFIED+"]%s. %s [TM][/COLOR]" if is_local else "%s. %s"
 		record['title'] = pattern % (record['episode'], record['title'])
 		record['imdb_id'] = plugin.args['imdb_id']
 		if record['playcount'] == 0:
-			menu.add('Mark Watched', {"mode": "set_watched", "media": "episode", "id": record['trakt_id'], "imdb_id": record['imdb_id']}, visible=validate_trakt)
+			menu.add('Mark Watched', {"mode": "set_watched", "media": "episode", "id": record['trakt_id'], "imdb_id": record['imdb_id'], "slug": record['slug']}, visible=validate_trakt, priority=CONTEXT_PRIORITIES.WATCHFLAG)
 		else:
 			if ADDON.get_setting('hide_watched_episodes') == "true" : continue
 			record['overlay'] = 7
-			menu.add('Mark Unwatched', {"mode": "set_unwatched", "media": "episode", "id": record['trakt_id']}, visible=validate_trakt)
+			menu.add('Mark Unwatched', {"mode": "set_unwatched", "media": "episode", "id": record['trakt_id'], "slug": record['slug']}, visible=validate_trakt, priority=CONTEXT_PRIORITIES.WATCHFLAG)
 		if is_local:
-			menu.add('Play Cache File', {'mode': 'play_tv_cache', "title": record['showtitle'], "season": record['season'], "episode": record['episode']}, visible=validate_transmogrifier)
-			menu.add('Delete Cache File', {'mode': 'delete_tv_cache', "title": record['showtitle'], "season": record['season'], "episode": record['episode']}, visible=validate_transmogrifier)
+			menu.add('Play Cache File', {'mode': 'play_tv_cache', "title": record['showtitle'], "season": record['season'], "episode": record['episode']}, visible=validate_transmogrifier, priority=CONTEXT_PRIORITIES.CACHEFILE)
+			menu.add('Delete Cache File', {'mode': 'delete_tv_cache', "title": record['showtitle'], "season": record['season'], "episode": record['episode']}, visible=validate_transmogrifier, priority=CONTEXT_PRIORITIES.CACHEFILE)
 		else:
-			menu.add('Transmogrify', {'mode': 'tv_transmogrify', "display": record['title'], "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "year": record['year'], "showtitle": record['showtitle'], "season": record['season'], "episode": record['episode']}, visible=validate_transmogrifier)
-		if ADDON.get_setting('source_selection_mode') == 'Directory':
+			menu.add('Transmogrify', {'mode': 'tv_transmogrify', "display": record['title'], "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "year": record['year'], "showtitle": record['showtitle'], "season": record['season'], "episode": record['episode']}, visible=validate_transmogrifier, priority=CONTEXT_PRIORITIES.TRANSMOGRIFY)
+		
+		menu.add("Search KAT", {"mode": "search_kat", "media": "episode", "title": record['showtitle'], "season": record['season'], "episode": record['episode']}, script=True, priority=CONTEXT_PRIORITIES.KAT, visible=validate_kat)
+
+		if ADDON.get_setting('source_selection_mode') == 'Directory' and ADDON.get_setting('enable_autoplay') != 'true':
 			query = {
 				'mode': 'get_episode_sources', 
 				"display": record['title'], 
@@ -605,6 +734,47 @@ def episode_list():
 	ADDON.save_data('last_directory.qs', sys.argv[0]+sys.argv[2])
 	plugin.eod(VIEWS.EPISODE_DEFAULT, 'tvshows')	
 plugin.register('episode_list', episode_list)
+
+def episodes_ondeck():
+	from dudehere.routines.trakt import TraktAPI
+	trakt = TraktAPI()
+	ondeck_list = ADDON.get_setting('ondeck_list')
+	results = trakt.get_episodes_ondeck(ondeck_list)
+	for record in results:
+		display = "%s %sx%s %s" % (record['showtitle'], record['season'], record['episode'], record['title'])
+		if ADDON.get_setting('source_selection_mode') == 'Directory' and ADDON.get_setting('enable_autoplay') != 'true':
+			query = {
+				'mode': 'get_episode_sources', 
+				"display": record['title'], 
+				"imdb_id": record['imdb_id'], 
+				"tmdb_id": record['tmdb_id'], 
+				"trakt_id": record['trakt_id'], 
+				"year": record['year'], 
+				"showtitle": record['showtitle'], 
+				"season": record['season'], 
+				"episode": record['episode']
+			}
+			record['title'] = display
+			plugin.add_menu_item(query, record, image=record['cover_url'], fanart='')
+		else:
+			query = {
+				'mode': 'play_episode', 
+				"display": record['title'], 
+				"imdb_id": record['imdb_id'], 
+				"tmdb_id": record['tmdb_id'], 
+				"trakt_id": record['trakt_id'], 
+				"year": record['year'], 
+				"showtitle": record['showtitle'], 
+				"season": record['season'], 
+				"episode": record['episode']
+			}
+			record['title'] = display
+			plugin.add_video_item(query, record, image=record['cover_url'], fanart='')
+	ADDON.save_data('last_directory.qs', sys.argv[0]+sys.argv[2])
+	plugin.eod(VIEWS.EPISODE_DEFAULT, 'tvshows')
+		
+plugin.register('episodes_ondeck', episodes_ondeck)
+
 	
 def calendar():
 	from dudehere.routines.trakt import TraktAPI
@@ -627,31 +797,37 @@ def calendar():
 	for record in results:
 		record = trakt.process_record(record, media='episode')
 		if record['season'] == 0 or record['episode'] == 0: continue
-		if validate_trakt():
-			if record['imdb_id'] in watched.keys():
+		if validate_trakt() and watched:
+			if record['imdb_id'] in watched:
 				if record['season'] in watched[record['imdb_id']]:
 					record['playcount'] = 1 if record['episode'] in watched[record['imdb_id']][record['season']] else 0
 					if ADDON.get_setting('hide_watched_episodes') == "true" and record['playcount'] == 1: continue
 		if validate_transmogrifier():
-			filename = "%s %sx%s" % (utf8(record['showtitle']), record['season'], record['episode'])
-			is_local = any(filename  in test for test in transmogrified)
+			filename = "%s.S%sE%s" % (utf8(record['showtitle']), str(record['season']).zfill(2), str(record['episode']).zfill(2))
+			is_local = any(filename in test for test in transmogrified)
+			if not is_local:
+				filename = "%s.%sx%s" % (utf8(record['showtitle']), record['season'], record['episode'])
+				is_local = any(filename  in test for test in transmogrified)
 		menu = ContextMenu()
+		menu.add('Set Episode View', {"mode": "set_default_view", "view": "episode"}, visible=validate_default_views, priority=CONTEXT_PRIORITIES.SET_VIEW)
+		menu.add("Search KAT", {"mode": "search_kat", "media": "episode", "title": record['showtitle'], "season": record['season'], "episode": record['episode']}, script=True, priority=CONTEXT_PRIORITIES.KAT, visible=validate_kat)
+
 		if record['playcount'] == 0:
-			menu.add('Mark Watched', {"mode": "set_watched", "media": "episode", "imdb_id": record['imdb_id'], "id": record['trakt_id']})
+			menu.add('Mark Watched', {"mode": "set_watched", "media": "episode", "imdb_id": record['imdb_id'], "id": record['trakt_id']}, priority=CONTEXT_PRIORITIES.WATCHFLAG)
 		else:
 			record['overlay'] = 7
-			menu.add('Mark Unwatched', {"mode": "set_unwatched", "media": "episode", "id": record['trakt_id']})
-		menu.add('Find Similar Shows', {"mode": "tv_similar", "imdb_id": record['imdb_id']})
-		menu.add('Go to Seasons', {"mode": "season_list", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "slug": record['slug'], "trakt_id": record['trakt_id'],  "fanart": record['backdrop_url']})
+			menu.add('Mark Unwatched', {"mode": "set_unwatched", "media": "episode", "id": record['trakt_id']}, priority=CONTEXT_PRIORITIES.WATCHFLAG)
+		menu.add('Find Similar Shows', {"mode": "tv_similar", "imdb_id": record['imdb_id']}, priority=CONTEXT_PRIORITIES.SIMILAR)
+		menu.add('Go to Seasons', {"mode": "season_list", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "slug": record['slug'], "trakt_id": record['trakt_id'],  "fanart": record['backdrop_url']}, priority=CONTEXT_PRIORITIES.SEASONS)
 		pattern = "[COLOR "+HAS_TRANMOGRIFIED+"]%sx%s. %s - %s [TM][/COLOR]" if is_local else "%sx%s. %s - %s"
 		record['title'] = pattern % (record['season'], record['episode'], record['showtitle'], record['title'])
 		if is_local:
-			menu.add('Play Cache File', {'mode': 'play_tv_cache', "imdb_id": record['imdb_id'], "title": record['showtitle'], "season": record['season'], "episode": record['episode']}, visible=validate_transmogrifier, script=False)
-			menu.add('Delete Cache File', {'mode': 'delete_tv_cache', "title": record['showtitle'], "season": record['season'], "episode": record['episode']}, visible=validate_transmogrifier)
+			menu.add('Play Cache File', {'mode': 'play_tv_cache', "imdb_id": record['imdb_id'], "title": record['showtitle'], "season": record['season'], "episode": record['episode']}, visible=validate_transmogrifier, script=False, priority=CONTEXT_PRIORITIES.DELETE_CACHE)
+			menu.add('Delete Cache File', {'mode': 'delete_tv_cache', "title": record['showtitle'], "season": record['season'], "episode": record['episode']}, visible=validate_transmogrifier, priority=CONTEXT_PRIORITIES.PLAY_CACHE)
 		else:
 			query = {'mode': 'tv_transmogrify', "display": record['title'], "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "year": record['year'], "showtitle": record['showtitle'], "season": record['season'], "episode": record['episode']}
-			menu.add('Transmogrify', query, visible=validate_transmogrifier)
-		if ADDON.get_setting('source_selection_mode') == 'Directory':
+			menu.add('Transmogrify', query, visible=validate_transmogrifier, priority=CONTEXT_PRIORITIES.TRANSMOGRIFY)
+		if ADDON.get_setting('source_selection_mode') == 'Directory' and ADDON.get_setting('enable_autoplay') != 'true':
 			query = {
 				'mode': 'get_episode_sources', 
 				"display": record['title'], 
@@ -796,7 +972,7 @@ def calendar_browser():
 						season = show['episode']['season']
 						episode = show['episode']['number']
 						if season == 0 or episode == 0: continue
-						if imdb in watched.keys():
+						if watched and imdb in watched:
 							if season in watched[imdb]:
 								w = 1 if episode in watched[imdb][season] else 0
 						show['show']['playcount'] = w
@@ -930,14 +1106,26 @@ def calendar_browser():
 	cal.doModal()
 plugin.register('calendar_browser', calendar_browser)
 
-def movie_genre():
+def movie_tmdb_list():
 	from dudehere.routines.tmdb import TMDB_API
 	tmdb = TMDB_API()
 	from dudehere.routines.trakt import TraktAPI
-	trakt = TraktAPI()	
+	trakt = TraktAPI()
 	page = int(plugin.args['page']) if 'page' in plugin.args.keys() else 1
-	results = tmdb.list_movie_genre(plugin.args['id'], page=page)
-	total_pages = results['total_pages']
+	if plugin.mode == 'movie_genre':
+		results = tmdb.list_movie_genre(plugin.args['id'], page=page)
+	elif plugin.mode == 'movie_tmdb_latest':
+		results = tmdb.get_latest_movies(page=page)
+	elif plugin.mode == 'movie_tmdb_popular':
+		results = tmdb.get_popular_movies(page=page)	
+	elif plugin.mode == 'movie_tmdb_top_rated':
+		results = tmdb.get_top_rated_movies(page=page)
+	elif plugin.mode == 'movie_tmdb_in_theaters':
+		results = tmdb.get_in_theaters_movies(page=page)
+	elif plugin.mode == 'movie_tmdb_coming_soon':
+		results = tmdb.movie_tmdb_coming_soon(page=page)	
+		
+	total_pages = results['total_pages'] if 'total_pages' in results else 1
 	count = len(results)
 	if validate_trakt():
 		watchlist = trakt.get_watchlist_movies(simple=True, id_type='tmdb')
@@ -957,34 +1145,42 @@ def movie_genre():
 		record = tmdb.process_record(result, 'movie')
 		movie_title = record['title']
 		menu = ContextMenu()
-		menu.add("Watch Trailer", {"mode": "movie_trailers", "tmdb_id": record['tmdb_id']}, script=True)
-		menu.add('Find Similar Movies', {"mode": "movie_similar", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id']})
-		menu.add('Save as Favorite', {"mode": "add_to_favorites", "media": "movie",  "record": record}, script=True, visible=validate_trakt()==False)
+		menu.add('Set Movie View', {"mode": "set_default_view", "view": "movie"}, visible=validate_default_views, priority=CONTEXT_PRIORITIES.SET_VIEW)
+		menu.add("Watch Trailer", {"mode": "movie_trailers", "tmdb_id": record['tmdb_id']}, script=True, priority=CONTEXT_PRIORITIES.TRAILER, visible=validate_tmdb)
+		menu.add('Find Similar Movies', {"mode": "movie_similar", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id']}, priority=CONTEXT_PRIORITIES.SIMILAR)
+		menu.add('Save as Favorite', {"mode": "add_to_favorites", "media": "movie",  "record": record}, script=True, visible=validate_trakt()==False, priority=CONTEXT_PRIORITIES.FAVORITE)
 		if int(record['tmdb_id']) in watchlist:
 			record['title'] = '[COLOR %s]%s[/COLOR]'% (WATCHLIST_COLOR, record['title'])
-			menu.add('Remove from Watchlist', {"mode": "movie_delete_from_watchlist", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "name": movie_title}, script=True, visible=validate_trakt)
+			menu.add('Remove from Watchlist', {"mode": "movie_delete_from_watchlist", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "name": movie_title}, script=True, visible=validate_trakt, priority=CONTEXT_PRIORITIES.WATCHLIST)
 		else:
-			menu.add('Add to Watchlist', {"mode": "movie_add_to_watchlist", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id']}, script=True, visible=validate_trakt)
-		menu.add('Add to custom list', {"mode": "add_to_custom_list", "media": "movie", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id']}, script=True, visible=validate_trakt)	
+			menu.add('Add to Watchlist', {"mode": "movie_add_to_watchlist", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id']}, script=True, visible=validate_trakt, priority=CONTEXT_PRIORITIES.WATCHLIST)
+		menu.add('Add to custom list', {"mode": "add_to_custom_list", "media": "movie", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id']}, script=True, visible=validate_trakt, priority=CONTEXT_PRIORITIES.CUSTOMLIST)	
 		
 		if validate_transmogrifier():
 			filename = "%s (%s)" % (utf8(movie_title), record['year'])	
 			is_local = any(filename  in test for test in transmogrified)
 		
 		if is_local:
-			menu.add('Play Cache File', {'mode': 'play_movie_cache', "title": movie_title, "year": record['year']}, visible=validate_transmogrifier)
-			menu.add('Delete Cache File', {'mode': 'delete_movie_cache', "title": movie_title, "year": record['year']}, visible=validate_transmogrifier)
+			menu.add('Play Cache File', {'mode': 'play_movie_cache', "title": movie_title, "year": record['year']}, visible=validate_transmogrifier, priority=CONTEXT_PRIORITIES.PLAY_CACHE)
+			menu.add('Delete Cache File', {'mode': 'delete_movie_cache', "title": movie_title, "year": record['year']}, visible=validate_transmogrifier, priority=CONTEXT_PRIORITIES.DELETE_CACHE)
 			record['title'] = record['title'] + ' [TM]'
 		else:
 			query = {'mode': 'movie_transmogrify', "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "year": record['year'], "title": movie_title}
-			menu.add('Transmogrify', query, visible=validate_transmogrifier)
-		if ADDON.get_setting('source_selection_mode') == 'Directory':
+			menu.add('Transmogrify', query, visible=validate_transmogrifier, priority=CONTEXT_PRIORITIES.TRANSMOGRIFY)
+		
+		if record['year']:
+			try:
+				record['title'] = u"%s (%s)" % (record['title'], record['year'])
+			except UnicodeDecodeError:
+				record['title'] = u"%s (%s)" % (record['title'].decode("utf-8"), record['year'])
+		
+		if ADDON.get_setting('source_selection_mode') == 'Directory' and ADDON.get_setting('enable_autoplay') != 'true':
 			plugin.add_menu_item({'mode': 'get_movie_sources', "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "year": record['year'], "title": movie_title}, record, menu=menu, total_items=count, image=record['cover_url'], fanart=record['backdrop_url'])
 		else:
 			plugin.add_video_item({'mode': 'play_movie', "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "year": record['year'], "title": movie_title}, record, menu=menu, total_items=count, image=record['cover_url'], fanart=record['backdrop_url'])
-	if total_pages> 1: plugin.add_menu_item({'mode': 'movie_genre', "id": plugin.args['id'], "page": page+1}, {'title': '[COLOR blue]Next Page %s/%s >>[/COLOR]' % (page+1, total_pages)}, image=ARTWORK + "next_page.jpg")
+	if total_pages> 1: plugin.add_menu_item({'mode': plugin.args['mode'], "id": plugin.get_arg('id', ''), "page": page+1}, {'title': '[COLOR blue]Next Page %s/%s >>[/COLOR]' % (page+1, total_pages)}, image=ARTWORK + "next_page.jpg")
 	plugin.eod(VIEWS.MOVIE_DEFAULT, 'movies')
-plugin.register("movie_genre", movie_genre)
+plugin.register(["movie_genre", "movie_tmdb_latest", "movie_tmdb_popular", "movie_tmdb_top_rated", "movie_tmdb_in_theaters", "movie_tmdb_coming_soon"], movie_tmdb_list)
 
 def movie_list():
 	from dudehere.routines.trakt import TraktAPI
@@ -1053,35 +1249,38 @@ def movie_list():
 		else:
 			record['cast'] = []
 		menu = ContextMenu()
-		menu.add("Watch Trailer", {"mode": "movie_trailers", "tmdb_id": record['tmdb_id']}, script=True)
-		menu.add('Find Similar Movies', {"mode": "movie_similar", "imdb_id": record['imdb_id']})
+		menu.add('Set Movie View', {"mode": "set_default_view", "view": "movie"}, visible=validate_default_views, priority=CONTEXT_PRIORITIES.SET_VIEW)
+		menu.add("Watch Trailer", {"mode": "movie_trailers", "tmdb_id": record['tmdb_id']}, script=True, priority=CONTEXT_PRIORITIES.TRAILER, visible=validate_tmdb)
+		menu.add('Find Similar Movies', {"mode": "movie_similar", "imdb_id": record['imdb_id']}, priority=CONTEXT_PRIORITIES.SIMILAR)
+		menu.add("Search KAT", {"mode": "search_kat", "media": "movie", "title": record['title'], "year": record['year']}, script=True, priority=CONTEXT_PRIORITIES.KAT, visible=validate_kat)
+		
 		movie_title = record['title']
-		if validate_trakt():
-			if record['imdb_id'] in watched['imdb']:
+		if validate_trakt() and watched:
+			if 'imdb' in watched and record['imdb_id'] in watched['imdb']:
 				record['playcount'] = 1
 				record['overlay'] = 7
-				menu.add('Mark Unwatched', {"mode": "set_unwatched", "media": "movie", "id": record['imdb_id']})
+				menu.add('Mark Unwatched', {"mode": "set_unwatched", "media": "movie", "id": record['imdb_id']}, priority=CONTEXT_PRIORITIES.WATCHFLAG)
 			else:
-				menu.add('Mark Watched', {"mode": "set_watched", "media": "movie", "id": record['imdb_id']})
+				menu.add('Mark Watched', {"mode": "set_watched", "media": "movie", "id": record['imdb_id']}, priority=CONTEXT_PRIORITIES.WATCHFLAG)
 					
 		if plugin.args['mode']=='movie_watchlist':
-			menu.add('Remove from Watchlist', {"mode": "movie_delete_from_watchlist", "imdb_id": record['imdb_id'], "name": movie_title}, script=True, visible=validate_trakt)
+			menu.add('Remove from Watchlist', {"mode": "movie_delete_from_watchlist", "imdb_id": record['imdb_id'], "name": movie_title}, script=True, visible=validate_trakt, priority=CONTEXT_PRIORITIES.WATCHLIST)
 		else:
 			if record['imdb_id'] in watchlist:
 				record['title'] = '[COLOR %s]%s[/COLOR]' % (WATCHLIST_COLOR, record['title'])
-				menu.add('Remove from Watchlist', {"mode": "movie_delete_from_watchlist", "imdb_id": record['imdb_id'], "name": movie_title}, script=True, visible=validate_trakt)
+				menu.add('Remove from Watchlist', {"mode": "movie_delete_from_watchlist", "imdb_id": record['imdb_id'], "name": movie_title}, script=True, visible=validate_trakt, priority=CONTEXT_PRIORITIES.WATCHLIST)
 			else:
-				menu.add('Add to Watchlist', {"mode": "movie_add_to_watchlist", "imdb_id": record['imdb_id']}, script=True, visible=validate_trakt)
+				menu.add('Add to Watchlist', {"mode": "movie_add_to_watchlist", "imdb_id": record['imdb_id']}, script=True, visible=validate_trakt, priority=CONTEXT_PRIORITIES.WATCHLIST)
 			
 		if plugin.args['mode']=='movie_custom_list':
-			menu.add('Remove from custom list', {"mode": "delete_from_custom_list", "media": "movie", "imdb_id": record['imdb_id'], "slug": plugin.args['slug'], "name": record['title']}, script=True, visible=validate_trakt)
+			menu.add('Remove from custom list', {"mode": "delete_from_custom_list", "media": "movie", "imdb_id": record['imdb_id'], "slug": plugin.args['slug'], "name": record['title']}, script=True, visible=validate_trakt, priority=CONTEXT_PRIORITIES.CUSTOMLIST)
 		else:
-			menu.add('Add to custom list', {"mode": "add_to_custom_list", "media": "movie", "imdb_id": record['imdb_id']}, script=True, visible=validate_trakt)	
+			menu.add('Add to custom list', {"mode": "add_to_custom_list", "media": "movie", "imdb_id": record['imdb_id']}, script=True, visible=validate_trakt, priority=CONTEXT_PRIORITIES.CUSTOMLIST)	
 		
 		if plugin.mode ==	'movie_favorites':
-			menu.add('Delete Favorite', {"mode": "delete_from_favorites", "media": "movie", "title": record['title'], "id": record['id']}, script=True, visible=validate_trakt()==False)
+			menu.add('Delete Favorite', {"mode": "delete_from_favorites", "media": "movie", "title": record['title'], "id": record['id']}, script=True, visible=validate_trakt()==False, priority=CONTEXT_PRIORITIES.FAVORITE)
 		else:
-			menu.add('Save as Favorite', {"mode": "add_to_favorites", "media": "movie",  "record": record}, script=True, visible=validate_trakt()==False)
+			menu.add('Save as Favorite', {"mode": "add_to_favorites", "media": "movie",  "record": record}, script=True, visible=validate_trakt()==False, priority=CONTEXT_PRIORITIES.FAVORITE)
 	
 		
 		if validate_transmogrifier():
@@ -1089,14 +1288,20 @@ def movie_list():
 			is_local = any(filename  in test for test in transmogrified)
 		
 		if is_local:
-			menu.add('Play Cache File', {'mode': 'play_movie_cache', "title": movie_title, "year": record['year']}, visible=validate_transmogrifier)
-			menu.add('Delete Cache File', {'mode': 'delete_movie_cache', "title": movie_title, "year": record['year']}, visible=validate_transmogrifier)
+			menu.add('Play Cache File', {'mode': 'play_movie_cache', "title": movie_title, "year": record['year']}, visible=validate_transmogrifier, priority=CONTEXT_PRIORITIES.PLAY_CACHE)
+			menu.add('Delete Cache File', {'mode': 'delete_movie_cache', "title": movie_title, "year": record['year']}, visible=validate_transmogrifier, priority=CONTEXT_PRIORITIES.DELETE_CACHE)
 			record['title'] = record['title'] + ' [TM]'
 		else:
 			query = {'mode': 'movie_transmogrify', "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "year": record['year'], "title": movie_title}
-			menu.add('Transmogrify', query, visible=validate_transmogrifier)
+			menu.add('Transmogrify', query, visible=validate_transmogrifier, priority=CONTEXT_PRIORITIES.TRANSMOGRIFY)
 
-		if ADDON.get_setting('source_selection_mode') == 'Directory':
+		if record['year']:
+				try:
+					record['title'] = u"%s (%s)" % (record['title'], record['year'])
+				except UnicodeDecodeError:
+					record['title'] = u"%s (%s)" % (record['title'].decode("utf-8"), record['year'])
+
+		if ADDON.get_setting('source_selection_mode') == 'Directory' and ADDON.get_setting('enable_autoplay') != 'true':
 			plugin.add_menu_item({'mode': 'get_movie_sources', "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "year": record['year'], "title": movie_title}, record, menu=menu, total_items=count, image=record['cover_url'], fanart=record['backdrop_url'])
 		else:
 			plugin.add_video_item({'mode': 'play_movie', "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "year": record['year'], "title": movie_title}, record, menu=menu, total_items=count, image=record['cover_url'], fanart=record['backdrop_url'])
@@ -1133,28 +1338,35 @@ def discover_results():
 		record = tmdb.process_record(result, 'movie')
 		movie_title = record['title']
 		menu = ContextMenu()
-		menu.add("Watch Trailer", {"mode": "movie_trailers", "tmdb_id": record['tmdb_id']}, script=True)
-		menu.add('Find Similar Movies', {"mode": "movie_similar", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id']})
-		menu.add('Save as Favorite', {"mode": "add_to_favorites", "media": "movie",  "record": record}, script=True, visible=validate_trakt()==False)
+		menu.add('Set Movie View', {"mode": "set_default_view", "view": "movie"}, visible=validate_default_views, priority=CONTEXT_PRIORITIES.SET_VIEW)
+		menu.add("Watch Trailer", {"mode": "movie_trailers", "tmdb_id": record['tmdb_id']}, script=True, priority=CONTEXT_PRIORITIES.TRAILER)
+		menu.add('Find Similar Movies', {"mode": "movie_similar", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id']}, priority=CONTEXT_PRIORITIES.SIMILAR)
+		menu.add('Save as Favorite', {"mode": "add_to_favorites", "media": "movie",  "record": record}, script=True, visible=validate_trakt()==False, priority=CONTEXT_PRIORITIES.FAVORITE)
 		if int(record['tmdb_id']) in watchlist:
 			record['title'] = '[COLOR %s]%s[/COLOR]' % (WATCHLIST_COLOR, record['title'])
-			menu.add('Remove from Watchlist', {"mode": "movie_delete_from_watchlist", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "name": movie_title}, script=True, visible=validate_trakt)
+			menu.add('Remove from Watchlist', {"mode": "movie_delete_from_watchlist", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "name": movie_title}, script=True, visible=validate_trakt, priority=CONTEXT_PRIORITIES.WATCHLIST)
 		else:
-			menu.add('Add to Watchlist', {"mode": "movie_add_to_watchlist", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id']}, script=True, visible=validate_trakt)
-		menu.add('Add to custom list', {"mode": "add_to_custom_list", "media": "movie", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id']}, script=True, visible=validate_trakt)
+			menu.add('Add to Watchlist', {"mode": "movie_add_to_watchlist", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id']}, script=True, visible=validate_trakt, priority=CONTEXT_PRIORITIES.WATCHLIST)
+		menu.add('Add to custom list', {"mode": "add_to_custom_list", "media": "movie", "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id']}, script=True, visible=validate_trakt, priority=CONTEXT_PRIORITIES.CUSTOMLIST)
 		if validate_transmogrifier():
 			filename = "%s (%s)" % (utf8(movie_title), record['year'])
 			is_local = any(filename  in test for test in transmogrified)
 		
 		if is_local:
-			menu.add('Play Cache File', {'mode': 'play_movie_cache', "title": movie_title, "year": record['year']}, visible=validate_transmogrifier)
-			menu.add('Delete Cache File', {'mode': 'delete_movie_cache', "title": movie_title, "year": record['year']}, visible=validate_transmogrifier)
+			menu.add('Play Cache File', {'mode': 'play_movie_cache', "title": movie_title, "year": record['year']}, visible=validate_transmogrifier, priority=CONTEXT_PRIORITIES.PLAY_CACHE)
+			menu.add('Delete Cache File', {'mode': 'delete_movie_cache', "title": movie_title, "year": record['year']}, visible=validate_transmogrifier, priority=CONTEXT_PRIORITIES.DELETE_CACHE)
 			record['title'] = record['title'] + ' [TM]'
 		else:
 			query = {'mode': 'movie_transmogrify', "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "year": record['year'], "title": movie_title}
-			menu.add('Transmogrify', query, visible=validate_transmogrifier)
-			
-		if ADDON.get_setting('source_selection_mode') == 'Directory':
+			menu.add('Transmogrify', query, visible=validate_transmogrifier, priority=CONTEXT_PRIORITIES.TRANSMOGRIFY)
+		
+		if record['year']:
+			try:
+				record['title'] = u"%s (%s)" % (record['title'], record['year'])
+			except UnicodeDecodeError:
+				record['title'] = u"%s (%s)" % (record['title'].decode("utf-8"), record['year'])
+
+		if ADDON.get_setting('source_selection_mode') == 'Directory' and ADDON.get_setting('enable_autoplay') != 'true':
 			plugin.add_menu_item({'mode': 'get_movie_sources', "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "year": record['year'], "title": movie_title}, record, menu=menu, total_items=count, image=record['cover_url'], fanart=record['backdrop_url'])
 		else:
 			plugin.add_video_item({'mode': 'play_movie', "imdb_id": record['imdb_id'], "tmdb_id": record['tmdb_id'], "year": record['year'], "title": movie_title}, record, menu=menu, total_items=count, image=record['cover_url'], fanart=record['backdrop_url'])
@@ -1170,42 +1382,48 @@ def movie_discover():
 	
 	class DiscoverWindow(Window):
 		def __init__(self, title):
-			super(self.__class__,self).__init__(title,width=750, height=525, columns=4, rows=9)
+			super(self.__class__,self).__init__(title,width=750, height=525, columns=4, rows=11, quiet=True)
 			self.draw()
 		
 		def set_info_controls(self):
-			self.add_label(self.create_label('Rating: ', textColor="0xFF0088FF"), 0, 2,  pad_x=42, pad_y=30)
+			self.add_label(self.create_label('Rating: ', textColor="0xFF0088FF"), 0, 2,  pad_x=42, pad_y=15)
 			items = ["G", "PG", "PG-13", "R", "NC-17"]
 			self.create_list('rating')
-			self.add_object('rating', 1,2,6,1)
+			self.add_object('rating', 1,2,8,1)
 			self.add_list_items('rating', items, allow_multiple=False, allow_toggle=True)
 			
-			
-			self.add_label(self.create_label('Genre: ', textColor="0xFF0088FF"), 0, 3,  pad_x=42, pad_y=30)
+			self.add_label(self.create_label('Genre: ', textColor="0xFF0088FF"), 0, 3,  pad_x=42, pad_y=15)
 			items = [GENRES.r_map[id].lower() for id in GENRES.r_map.keys()]
 			self.create_list('genre')
-			self.add_object('genre', 1,3,7,1)
+			self.add_object('genre', 1,3,9,1)
 			self.add_list_items('genre', items, allow_multiple=True, allow_toggle=True)
 			
-			self.add_label(self.create_label('Keyword: ', textColor="0xFF0088FF"), 0, 0, pad_x=15, pad_y=30)
+			self.add_label(self.create_label('Keyword: ', textColor="0xFF0088FF"), 0, 0, pad_x=15, pad_y=15)
 			self.create_input('keyword')
 			self.add_object('keyword', 1, 0, columnspan=2, pad_x=15)
 			
-			self.add_label(self.create_label('Actor: ', textColor="0xFF0088FF"), 2, 0,  pad_x=15, pad_y=30)
+			self.add_label(self.create_label('Actor: ', textColor="0xFF0088FF"), 2, 0,  pad_x=15, pad_y=15)
 			self.create_input('actor')
 			self.add_object('actor', 3, 0, columnspan=2, pad_x=15)
 			
-			self.add_label(self.create_label('Sorting: ', textColor="0xFF0088FF"), 4, 0, pad_x=15, pad_y=30)
+			self.add_label(self.create_label('Year: ', textColor="0xFF0088FF"), 4, 0,  pad_x=15, pad_y=15)
+			self.create_input('year')
+			self.add_object('year', 5, 0, columnspan=2, pad_x=15)
+			
+			self.add_label(self.create_label('Sorting: ', textColor="0xFF0088FF"), 6, 0, pad_x=15, pad_y=15)
 			items = ["Popularity", "Release Date", "User Rating", "Revenue"]
 			self.create_list('sorting')
-			self.add_object('sorting', 5,0,3,2)
+			self.add_object('sorting', 7,0,3,2)
 			self.add_list_items('sorting', items, 0, allow_multiple=False, allow_toggle=False)
 			
+			#self.create_checkbox('save', 'Save Search')
+			#self.add_object('save', 10,0)
+			
 			self.create_button('cancel', 'Cancel')
-			self.add_object('cancel',  8, 1)
+			self.add_object('cancel', 10, 1)
 			
 			self.create_button('discover', 'Discover')
-			self.add_object('discover',  8, 2)
+			self.add_object('discover', 10, 2)
 	
 	def discover():
 		actor = w.get_value('actor')
@@ -1215,6 +1433,13 @@ def movie_discover():
 		sorting = w.get_value('sorting', return_index=True)
 		sorting = ["popularity.desc", "release_date.desc", "vote_average.desc", "revenue.desc"][sorting[0]]
 		query = {"sort_by": sorting, "page": 1}
+		try:
+			year = int(w.get_value('year'))
+		except:
+			year = ''
+		if year:
+			query['primary_release_year'] = year
+			
 		if keyword:
 			keyword_ids = tmdb.query_keyword_id(keyword)
 			if len(keyword_ids) > 0:
@@ -1241,12 +1466,14 @@ def movie_discover():
 	w.set_object_event('action', 'discover', discover)
 	w.set_object_event('focus', 'keyword')
 	w.set_object_event('down', 'keyword', 'actor')
-	w.set_object_event('down', 'actor', 'sorting')
+	w.set_object_event('down', 'actor', 'year')
+	w.set_object_event('down', 'year', 'sorting')
 	w.set_object_event('down', 'sorting', 'discover')
 	w.set_object_event('down', 'rating', 'discover')
 	w.set_object_event('down', 'genre', 'discover')
 	w.set_object_event('right', 'keyword', 'rating')
 	w.set_object_event('right', 'actor', 'rating')
+	w.set_object_event('right', 'year', 'rating')
 	w.set_object_event('right', 'rating', 'genre')
 	w.set_object_event('right', 'sorting', 'rating')
 	w.set_object_event('left', 'genre', 'rating')
@@ -1254,7 +1481,8 @@ def movie_discover():
 	
 	w.set_object_event('left', 'discover', 'cancel')
 	w.set_object_event('up', 'actor', 'keyword')
-	w.set_object_event('up', 'sorting', 'actor')
+	w.set_object_event('up', 'sorting', 'year')
+	w.set_object_event('up', 'year', 'actor')
 	w.set_object_event('up', 'cancel', 'sorting')
 	w.set_object_event('up', 'discover', 'sorting')
 	w.show()
@@ -1290,7 +1518,7 @@ def scraper_accounts():
 		name = Scraper.get_scraper_by_index(index).name
 		service = Scraper.get_scraper_by_index(index).service
 		if Scraper.get_scraper_by_index(index).require_auth:
-			plugin.add_menu_item({'mode': 'scraper_account', "service": service, "name": name}, {'title': name}, image=ARTWORK + "about.jpg")
+			plugin.add_menu_item({'mode': 'scraper_account', "service": service, "name": name}, {'title': name}, image=ARTWORK + "authorize.jpg")
 	plugin.eod()
 plugin.register('scraper_accounts', scraper_accounts)
 
@@ -1303,7 +1531,7 @@ def scraper_account(name=None, service=None):
 		service = plugin.args['service']
 	class AccountWindow(Window):
 		def __init__(self, title):
-			super(self.__class__,self).__init__(title,width=650, height=200, columns=4, rows=3)
+			super(self.__class__,self).__init__(title,width=650, height=200, columns=4, rows=3, quiet=True)
 			self.return_val = False
 		def update(self):
 			valid = True
@@ -1374,7 +1602,7 @@ def scraper_list():
 		if scraper['enabled']: enabled.append(scrapers.index(scraper))
 	class ScraperWindow(Window):
 		def __init__(self, title):
-			super(self.__class__,self).__init__(title,width=650, height=470, columns=3, rows=8)
+			super(self.__class__,self).__init__(title,width=650, height=470, columns=3, rows=8, quiet=True)
 		
 		def togglez(self):
 			list_item = self.getFocus().getSelectedItem()
@@ -1441,7 +1669,7 @@ def set_source_filter():
 	vfs = VFSClass()
 	cache_file = vfs.join(DATA_PATH, "filters.cache")
 
-	items = [QUALITY.r_map[i] for i in range(1,9)] + ["AllDebrid", "RealDebrid", "Premiumize.ME", "RPNET"]
+	items = [QUALITY.r_map[i] for i in range(1,10)] + ["x265", "AllDebrid", "RealDebrid", "Premiumize.ME", "RPNET"]
 	if vfs.exists(cache_file):
 		temp = ADDON.load_data(cache_file)
 		enabled = []
@@ -1453,7 +1681,7 @@ def set_source_filter():
 		ADDON.save_data(cache_file, items)
 	class FilterWindow(Window):
 		def __init__(self, title):
-			super(self.__class__,self).__init__(title,width=650, height=470, columns=3, rows=8)
+			super(self.__class__,self).__init__(title,width=650, height=470, columns=3, rows=8, quiet=True)
 		
 		def togglez(self):
 			list_item = self.getFocus().getSelectedItem()
@@ -1504,68 +1732,26 @@ def transmogrifier_queue():
 	plugin.run_command('RunAddon("service.transmogrifier")')
 plugin.register('manage_transmogrifier', transmogrifier_queue)
 
-def authorize_trakt():
-	vfs = VFSClass()
-	from dudehere.routines.window import Window
-	class AuthorizationWindow(Window):
-		def __init__(self, title):
-			super(self.__class__,self).__init__(title,width=800, height=400, columns=4, rows=6)
-			
-		def authorize(self):
-			pin = self.get_value('pin')
-			from dudehere.routines.trakt import TraktAPI
-			trakt = TraktAPI()
-			response = trakt.authorize(pin)
-			if response:
-				settings = trakt.get_settings()
-				if settings:
-					ADDON.set_setting('trakt_account', settings['user']['username'])
-				plugin.notify("Trakt Authorization", "Success", image=ARTWORK + "trakt.png")
-				self.close()
-			else:
-				ADDON.set_setting('trakt_account', '')
-				plugin.notify("Trakt Authorization", "Failed", image=ARTWORK + "trakt.png")
+def manage_walter():
+	plugin.run_command('RunAddon("service.walter.sobchak")')
+plugin.register('manage_walter', manage_walter)
 
-		def set_info_controls(self):
-			self.create_image('trakt', ARTWORK + 'trakt.png', aspectRatio=1)
-			self.add_object('trakt', 0, 0, columnspan=3, rowspan=3)
-			
-			content = '''[B]The Royal We is even better with a Trakt.TV account.\nIf you have one, you may authorize it now.\nOtherwise you can use TRW without trakt.\nYou can always authorize or re-authorize TRW.\nJust look in the Settings Menu.[/B]'''
-			self.add_label(self.create_label(content), 0, 0, columnspan=3, rowspan=3, pad_x=15, pad_y=10)
-			
-			content = "Open a browser and navigate to:\n[B][COLOR red]%s[/COLOR][/B]" % ADDON.get_setting('trakt_pin_url')
-			self.add_label(self.create_label(content), 3, 0, columnspan=3, rowspan=2, pad_x=15, pad_y=10)
-			
-			self.create_input('pin', _alignment=2)
-			self.add_object('pin', 4, 0, columnspan=4)
-			
-			self.create_image('qr_code', ARTWORK + 'pin.png', aspectRatio=2)
-			self.add_object('qr_code', 0, 3, columnspan=1, rowspan=2)
-			
-			self.create_button('later', 'Maybe Later')
-			self.add_object('later', 5, 1)	
-			
-			self.create_button('authorize', 'Authorize')
-			self.add_object('authorize', 5, 2)	
-			self.set_object_event('action', "later", self.close)
-			self.set_object_event('action', "authorize", self.authorize)
-			self.set_object_event('focus', 'pin')
-			self.set_object_event('left', 'authorize', 'later')
-			self.set_object_event('left', 'later', 'authorize')
-			self.set_object_event('up', 'authorize', 'pin')
-			self.set_object_event('up', 'later', 'pin')
-			self.set_object_event('down', 'pin', 'authorize')
+def authorize_trakt():
+	from dudehere.routines.trakt import TraktAPI
+	trakt = TraktAPI()
+	response = trakt.do_authorization()
+	if response:
+		plugin.notify("Trakt Authorization", "Success", image=ARTWORK + "trakt.png")
+	else:
+		plugin.notify("Trakt Authorization", "Failed", image=ARTWORK + "trakt.png")
 	
-	A = AuthorizationWindow('Enter Trakt.tv Pin')
-	A.show()
-	del A	
 plugin.register('authorize_trakt', authorize_trakt)
 
 def reset_trw():
 	from dudehere.routines.window import Window
 	class ResetWindow(Window):
 		def __init__(self, title):
-			super(self.__class__,self).__init__(title,width=700, height=300, columns=4, rows=6)
+			super(self.__class__,self).__init__(title,width=700, height=300, columns=4, rows=6, quiet=True)
 			self.draw()
 			
 		def set_info_controls(self):
@@ -1618,6 +1804,26 @@ def reset_trw():
 	reset.show()
 plugin.register('reset_trw', reset_trw)
 
+def clear_cache(ok=False):
+	if not ok:
+		ok = plugin.confirm("Clear Cache", "Are you sure?", "This is your delete you cached data")
+	if ok:
+		from dudehere.routines.trakt import TraktAPI
+		trakt = TraktAPI()
+		tables = ['activities', 'activity_cache', 'cache', 'episode_cache', 'id_cache', 'movie_cache', 'show_cache']
+		PB = ProgressBar()
+		PB.new('Clear cache tables', len(tables))
+		print len(tables)
+		for table in tables:
+			SQL = "DELETE FROM %s" % table
+			ADDON.log( SQL )
+			PB.next(table)
+			trakt.get_db_connection().execute(SQL)
+		trakt.get_db_connection().commit()
+		del PB
+		plugin.notify("Success", "Cache Cleared")
+plugin.register('clear_cache', clear_cache)
+
 def host_manager():
 	from dudehere.routines.scrapers import CommonScraper
 	Scraper = CommonScraper(load=False)
@@ -1668,6 +1874,34 @@ def change_host_priority():
 		Scraper.change_host_weight(plugin.args['host'], weight)
 		plugin.refresh()
 plugin.register("change_host_priority", change_host_priority)
+
+def set_default_view():
+	name, id = plugin.get_view()
+	if not id:
+		plugin.error_message('View Error', 'Could not detect current view') 
+		return
+	if plugin.args['view'] == 'tvshow':
+		ADDON.set_setting('default_tvshow_view', str(id))
+		plugin.notify('Show view set', name)
+		
+	elif plugin.args['view'] == 'season':
+		ADDON.set_setting('default_season_view', str(id))
+		plugin.notify('Season view set', name)
+	
+	elif plugin.args['view'] == 'episode':
+		ADDON.set_setting('default_episode_view', str(id))
+		plugin.notify('Episode view set', name)	
+	
+	elif plugin.args['view'] == 'movie':
+		ADDON.set_setting('default_movie_view', str(id))
+		plugin.notify('Movie view set', name)
+	
+	elif plugin.args['view'] == 'folder':
+		ADDON.set_setting('default_folder_view', str(id))
+		plugin.notify('Folder view set', name)
+	
+
+plugin.register('set_default_view', set_default_view)
 	
 def movie_trailers():
 	from dudehere.routines.tmdb import TMDB_API
@@ -1688,7 +1922,7 @@ def toggle_watched():
 		watched = True
 		if plugin.args['media'] == 'episode' or plugin.args['media'] == 'season':
 			watchlist = trakt.get_watchlist_tvshows(simple=True)
-			re_watchlist = plugin.args['imdb_id'] in watchlist
+			re_watchlist = (plugin.get_arg('imdb_id') in watchlist or plugin.get_arg('slug') in watchlist)
 	else:
 		watched = False
 	if plugin.args['media'] == 'season':
@@ -1717,14 +1951,26 @@ def set_watched(media, imdb_id, season=None, episode=None, refresh=True):
 def custom_list_menu():
 	from dudehere.routines.trakt import TraktAPI
 	trakt = TraktAPI()
+	vfs = VFSClass()
 	lists = trakt.get_custom_lists()
-	if not lists: return	
+	if not lists: return
 	media = 'tv' if plugin.mode == 'tv_custom_lists' else 'movie'
+	if vfs.exists(vfs.join(DATA_PATH, 'fav_lists.json')):
+		favorites = vfs.read_file(vfs.join(DATA_PATH, 'fav_lists.json'), json=True)
+	else:
+		favorites = {"movie": {}, "tv": {}}
 	plugin.add_menu_item({'mode': 'new_custom_list', "media": media}, {"title": '***New Custom List***'}, image=ARTWORK+'/create_trakt_list.jpg')
 	for list in lists:
 		menu = ContextMenu()
-		menu.add('Delete Custom List', {"mode": "delete_custom_list", "slug": list['ids']['slug'], "name": list['name']}, script=True)
-		plugin.add_menu_item({"mode": media + "_custom_list", 'slug': list['ids']['slug'], "media": media}, {"title": list['name']}, menu=menu)
+		if list['ids']['slug'] in favorites[media]:
+			display = "[COLOR yellow]%s[/COLOR]" % list['name']
+			menu.add('Remove Favorite', {"mode": "toggle_favorite_list", "slug": list['ids']['slug'], "name": list['name'], "media": media}, script=True, priority=CONTEXT_PRIORITIES.FAVLIST)
+		else:
+			display = list['name']
+			menu.add('Mark Favorite', {"mode": "toggle_favorite_list", "slug": list['ids']['slug'], "name": list['name'], "media": media}, script=True, priority=CONTEXT_PRIORITIES.FAVLIST)
+		
+		menu.add('Delete Custom List', {"mode": "delete_custom_list", "slug": list['ids']['slug'], "name": list['name']}, script=True, priority=CONTEXT_PRIORITIES.CUSTOMLIST)
+		plugin.add_menu_item({"mode": media + "_custom_list", 'slug': list['ids']['slug'], "media": media}, {"title": display}, menu=menu)
 	plugin.add_menu_item({"mode": "dummy"}, {"title": "--- Liked Lists ---"}, menu=menu)
 	lists = trakt.get_liked_lists()
 	for list in lists:
@@ -1737,82 +1983,73 @@ def dummy():
 plugin.register("dummy", dummy)
 
 
+def toggle_favorite_list():
+	vfs = VFSClass()
+	if vfs.exists(vfs.join(DATA_PATH, 'fav_lists.json')):
+		favorites = vfs.read_file(vfs.join(DATA_PATH, 'fav_lists.json'), json=True)
+	else:
+		favorites = {"movie": {}, "tv": {}}
+	slug = plugin.args['slug']
+	media = plugin.args['media']
+	if slug in favorites[media]:
+		del favorites[media][slug]
+	else:
+		favorites[media][slug] = {"name": plugin.args['name'], "slug": slug}
+	vfs.write_file(vfs.join(DATA_PATH, 'fav_lists.json'), favorites, json=True)
+	plugin.refresh()
+	
+plugin.register("toggle_favorite_list", toggle_favorite_list)
+
+
 def get_tv_favorites():
+	import cPickle as pickle
 	records = []
 	plugin.DB.connect()
-	results = plugin.DB.query_assoc("SELECT * FROM tvshow_favorites ORDER BY title ASC", force_double_array=True)
+	results = plugin.DB.query("SELECT id, cache FROM my_favorites WHERE media='tvshow' ORDER BY title ASC", force_double_array=True)
 	plugin.DB.disconnect()
 	if results:
-		return results
+		for row in results:
+			record = pickle.loads(str(row[1]))
+			record['id'] = row[0]	
+			records += [record]
+		return records
 	else:
 		plugin.notify('Favorites is empty', 'Add something to the list!')
 		return records
 	
 def get_movie_favorites():
+	import cPickle as pickle
 	records = []
 	plugin.DB.connect()
-	results = plugin.DB.query_assoc("SELECT * FROM movie_favorites ORDER BY title ASC", force_double_array=True)
+	results = plugin.DB.query("SELECT id, cache FROM my_favorites WHERE media='movie' ORDER BY title ASC", force_double_array=True)
 	plugin.DB.disconnect()
 	if results:
-		return results
+		for row in results:
+			record = pickle.loads(str(row[1]))
+			record['id'] = row[0]	
+			records += [record]
+		return records
 	else:
 		plugin.notify('Favorites is empty', 'Add something to the list!')
 		return records
 
 def add_to_favorites():
 	import ast
+	import cPickle as pickle
 	record = plugin.args['record']
 	record = ast.literal_eval(record)
-	if plugin.args['media'] == 'tvshow':
-		SQL = """INSERT OR REPLACE INTO tvshow_favorites (
-				imdb_id,
-				tmdb_id,
-				tvdb_id,
-				trakt_id,
-				slug,
-				title,
-				year,
-				TVShowTitle,
-				duration,
-				rating,
-				plot,
-				mpaa,
-				cover_url,
-				banner_url,
-				backdrop_url,
-				trailer_url
-				) VALUES(?,?,?,?,? ,?,?,?,?,?, ?,?,?,?,?, ?)
-				"""
-				
-		values = [record[k] for k in ["imdb_id","tmdb_id","tvdb_id","trakt_id","slug","title","year","TVShowTitle","duration","rating","plot","mpaa","cover_url","banner_url","backdrop_url","trailer_url"]]
-	else:
-		SQL = """INSERT OR REPLACE INTO movie_favorites (
-				imdb_id,
-				tmdb_id,
-				trakt_id,
-				slug,
-				title,
-				year,
-				tagline,
-				duration,
-				rating,
-				votes,
-				plot,
-				mpaa,
-				premiered,
-				cover_url,
-				thumb_url,
-				backdrop_url,
-				trailer_url
-				) VALUES(?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?)
-				"""
-		values = [record[k] for k in ["imdb_id","tmdb_id","trakt_id","slug", "title","year","tagline","duration","rating","votes","plot","mpaa","premiered","cover_url","thumb_url","backdrop_url","trailer_url"]]
 	plugin.DB.connect()
-	plugin.DB.execute(SQL, values)
+	if plugin.args['media'] == 'tvshow':
+		SQL = 'INSERT OR REPLACE ' if plugin.DB.db_type =='sqlite' else 'REPLACE '
+		SQL += "INTO my_favorites (media, imdb_id, tmdb_id, tvdb_id, trakt_id, slug, title, cache) VALUES('tvshow',?,?,?,?,?,?,?)"
+		plugin.DB.execute(SQL, [record['imdb_id'], record['tmdb_id'], record['tvdb_id'], record['trakt_id'], record['slug'], record['title'], pickle.dumps(record)])
+	else:
+		SQL = 'INSERT OR REPLACE ' if plugin.DB.db_type =='sqlite' else 'REPLACE '
+		SQL += "INTO my_favorites (media, imdb_id, tmdb_id, trakt_id, slug, title, cache) VALUES('movie',?,?,?,?,?,?)"
+		plugin.DB.execute(SQL, [record['imdb_id'], record['tmdb_id'], record['trakt_id'], record['slug'], record['title'], pickle.dumps(record)])
 	plugin.DB.commit()
 	plugin.DB.disconnect()	
 	plugin.notify('Success', 'Added Favorite: %s' % record['title'])
-	plugin.refresh()
 
 plugin.register('add_to_favorites', add_to_favorites)
 
@@ -1820,8 +2057,7 @@ def delete_from_favorites():
 	ok = plugin.confirm('Delete favorite', "click YES to continue", plugin.args['title'])
 	if ok:
 		plugin.DB.connect()
-		SQL = "DELETE FROM %s_favorites WHERE id=?" % plugin.args['media']
-		plugin.DB.execute(SQL, [plugin.args['id']])
+		plugin.DB.execute("DELETE FROM my_favorites WHERE id=? AND media=?", [plugin.args['id'], plugin.args['media']])
 		plugin.DB.commit()
 		plugin.DB.disconnect()
 		plugin.notify('Success', 'Favorite deleted: %s' % plugin.args['title'])
@@ -1873,6 +2109,25 @@ def delete_from_custom_list():
 		else:
 			plugin.notify('Failed', 'Please check your log for details', image=ARTWORK + 'trakt.png')
 plugin.register('delete_from_custom_list', delete_from_custom_list)
+
+def set_ondeck_list():
+	from dudehere.routines.trakt import TraktAPI
+	trakt = TraktAPI()
+	lists = trakt.get_custom_lists()
+	if not lists:
+		return
+	ondeck_list = ADDON.get_setting('ondeck_list')
+	options = ['[COLOR yellow]My Watchlist[/COLOR]' if ondeck_list == 'watchlist' else 'My Watchlist']
+	options += ['[COLOR yellow]%s[/COLOR]' % lists[index]['name'] if ondeck_list == lists[index]['ids']['slug'] else lists[index]['name'] for index in xrange(len(lists))]
+	index = plugin.dialog_select('Add to List', options)
+	if index is False: return
+	if index == 0:
+		slug = 'watchlist'
+	else:
+		slug = lists[index-1]['ids']['slug']
+	ADDON.set_setting('ondeck_list', slug)
+	plugin.notify('Success', 'Ondeck list changed', image=ARTWORK + 'trakt.png')
+plugin.register('set_ondeck_list', set_ondeck_list)	
 
 def add_to_custom_list():
 	from dudehere.routines.trakt import TraktAPI
@@ -1951,6 +2206,25 @@ def delete_from_watchlist():
 		
 plugin.register(['tv_delete_from_watchlist', 'movie_delete_from_watchlist'], delete_from_watchlist)
 
+def search_kat():
+	from dudehere.routines.kat import KatAPI
+	from dudehere.routines.premiumize import PremiumizeAPI
+	kat = KatAPI()
+	
+	
+	if plugin.args['media'] == 'movie':
+		link = kat.search(plugin.args['title'], year=plugin.args['year'])
+	else:
+		link = kat.search(plugin.args['title'], season=plugin.args['season'], episode=plugin.args['episode'])
+	if link:
+		pm = PremiumizeAPI()
+		response = pm.queue(link, True)
+		if response['status'] == 'success':
+			plugin.notify('Success', 'Added to download queue')
+		else:
+			plugin.notify('Failed', response['status'] + '. Please check your log for details')
+	
+plugin.register("search_kat", search_kat)
 
 def toggle_transmogrifier_streaming():
 	val = 'false' if ADDON.get_setting('enable_transmogrifier_streaming') == "true" else 'true'
@@ -1989,63 +2263,66 @@ def get_meta_data():
 	imdb_id = plugin.get_arg('imdb_id', '')
 	tmdb_id = plugin.get_arg('tmdb_id', '')
 	trakt_id = plugin.get_arg('trakt_id', '')
+	slug = plugin.get_arg('slug', '')
 	season = plugin.get_arg('season', '')
 	episode = plugin.get_arg('episode', '')
 	if plugin.mode in ['play_episode', 'play_directory_episode']:
-		metadata = trakt.get_metadata('episode', imdb_id, tmdb_id, trakt_id, season, episode)
+		metadata = trakt.get_metadata('episode', imdb_id, tmdb_id, trakt_id, slug, season, episode)
+		metadata["tvshowtitle"] = metadata["showtitle"]
 	else:
-		metadata = trakt.get_metadata('movie', imdb_id, tmdb_id, trakt_id)
+		metadata = trakt.get_metadata('movie', imdb_id, tmdb_id, slug, trakt_id)
+	if not metadata:
+		metadata = {"title": "", "cover_url": "",  "imdb_id": imdb_id, "tmdb_id": tmdb_id, "slug": slug}
+	metadata["VideoPlayer.OriginalTitle"] = metadata["title"]
 	return metadata
-	'''
-	try:
-		query_id = plugin.args['imdb_id'] if plugin.args['imdb_id'] != 'None' else plugin.args['trakt_id']
-	except:
-		query_id = plugin.args['tmdb_id']
-	
-	#if 'trakt_id' in plugin.args:
-	#S	query_id = plugin.args['trakt_id']
-		
-	if plugin.mode in ['play_episode', 'play_directory_episode']:
-		season = plugin.args['season']
-		episode = plugin.args['episode']
-		metadata = trakt.get_episode_details(query_id, season, episode)
-	else:
-		metadata = trakt.get_movie_details(query_id)
-	return metadata'''
 
 def on_playback_stop():
 	data = plugin.get_stream_stop_times()
 	media = 'episode' if plugin.mode in ['play_episode', 'play_directory_episode'] else 'movie'
 	imdb_id = plugin.args['imdb_id']
+
+	refresh = False
 	navigate_back = False
-	refresh = False if ADDON.get_setting('source_selection_mode') == 'Directory' else True
+
+	if ADDON.get_setting('enable_resume') == 'true':
+			hash_id = plugin.get_hash_id(plugin.get_arg('imdb_id',''),plugin.get_arg('season', ''),plugin.get_arg('episode', ''))
+	
 	if data['percent'] >= WATCH_PERCENT:
 		if media == 'episode':
-			season = plugin.args['season']
-			episode = plugin.args['episode']
-			set_watched(media, imdb_id, season, episode, refresh=refresh)
+			plugin.set_watched('episode', plugin.get_arg('showtitle',''), plugin.get_arg('year',''), plugin.get_arg('season',''), plugin.get_arg('episode',''))
 		else:
-			set_watched(media, imdb_id, refresh=refresh)
-		if refresh is False:
+			plugin.set_watched('movie', plugin.get_arg('title',''), plugin.get_arg('year',''))
+
+		if ADDON.get_setting('enable_resume') == 'true':
+			plugin.clear_resume_point(hash_id)	
+		
+		if ADDON.get_setting('source_selection_mode') == 'Directory' and plugin.is_playlist() is False:
+			refresh = False
 			navigate_back = True
+		elif ADDON.get_setting('source_selection_mode') == 'Dialog' and plugin.is_playlist() is False:
+			refresh = True
+			navigate_back = False
+			
+			
 	else:
-		if media == 'episode':
-			season = plugin.args['season']
-			episode = plugin.args['episode']
-			plugin.set_resume_point(imdb_id, data['current'], season, episode)
-		else:
-			plugin.set_resume_point(imdb_id, data['current'])
+		if ADDON.get_setting('enable_resume') == 'true':
+			plugin.set_resume_point(hash_id, data['current'])
 			
 	path = plugin.get_property('Path')
 	if path:
 		c = plugin.confirm('Confirm Delete', 'Do you want to delete the cached file?')
 		if c: VFSClass().rm(path)
 		plugin.clear_property('Path')
-	
+
 	if navigate_back:
 		plugin_url  = ADDON.load_data('last_directory.qs')
+		xbmc.sleep(1000)
 		plugin.refresh(plugin_url)
 	
+	elif refresh:
+		xbmc.sleep(1000)
+		plugin.refresh()
+		
 	if plugin.get_property('Calendar.Resume'):
 		calendar_browser()
 
@@ -2053,14 +2330,15 @@ plugin.on_playback_stop = on_playback_stop
 
 def play_episode():
 	from dudehere.routines.scrapers import CommonScraper
-	Scraper = CommonScraper(cache_results=ADDON.get_setting('enable_result_caching')=="true")
+	Scraper = CommonScraper(cache_results=ADDON.get_setting('enable_result_caching')=="true", is_stream=plugin.is_playlist())
 	Scraper.threadpool_size = int(ADDON.get_setting('threadpool_size'))
 	imdb_id = plugin.args['imdb_id']
 	title = plugin.args['showtitle']
 	season = int(plugin.args['season'])
 	episode = int(plugin.args['episode'])
 	year = int(plugin.args['year'])
-	resolved_url = Scraper.search_tvshow(title, season, episode, year, imdb_id)
+	resolved_url = Scraper.search_tvshows(title, season, episode, year, imdb_id)
+
 	if not resolved_url: return
 	if validate_transmogrifier_streaming():
 		from dudehere.routines.transmogrifier import TransmogrifierAPI
@@ -2082,7 +2360,7 @@ def get_episode_sources():
 	season = int(plugin.args['season'])
 	episode = int(plugin.args['episode'])
 	year = int(plugin.args['year'])
-	sources, raw_urls, results = Scraper.search_tvshow(title, season, episode, year, imdb_id, return_sources=True)
+	sources, raw_urls, results = Scraper.search_tvshows(title, season, episode, year, imdb_id, return_sources=True)
 	count = len(sources)
 	if count == 0:
 		plugin.error_message('Search Error', 'No results, consider changing scrapers.')
@@ -2094,23 +2372,26 @@ def get_episode_sources():
 		raw_url = raw_urls[sources.index(source)]
 		data = results[sources.index(source)]
 		try:
-			quality = data['quality']
-			hostname = data['host']
-		except:
 			quality = data.quality
 			hostname = data.hostname
-		if quality < 6:
+			if quality < 6:
+				image = vfs.join(ARTWORK, 'definition/480.png')
+			else:
+				image = vfs.join(ARTWORK, 'definition/720.png')
+		except:
 			image = vfs.join(ARTWORK, 'definition/480.png')
-		else:
-			image = vfs.join(ARTWORK, 'definition/720.png')
-		menu.add('Transmogrify', {'mode': 'tv_directory_transmogrify', "url": raw_url, "display": title, "imdb_id": imdb_id,"tmdb_id": tmdb_id, "year": year, "showtitle": title, "season": season, "episode": episode}, visible=validate_transmogrifier)	
+			hostname = ''
+
+		menu.add('Transmogrify', {'mode': 'tv_directory_transmogrify', "url": raw_url, "display": title, "imdb_id": imdb_id,"tmdb_id": tmdb_id, "year": year, "showtitle": title, "season": season, "episode": episode, "hostname": hostname}, visible=validate_transmogrifier, priority=100)	
 		
 		query = {
 			'mode': 'play_directory_episode', 
 			"display": source, 
 			"raw_url": raw_url, 
-			"imdb_id": imdb_id, 
-			"trakt_id": trakt_id,
+			"imdb_id": plugin.get_arg('imdb_id', ''), 
+			"tmdb_id": plugin.get_arg('tmdb_id', ''), 
+			"trakt_id": plugin.get_arg('trakt_id', ''), 
+			"slug": plugin.get_arg('slug', ''), 
 			"year": year, 
 			"showtitle": title, 
 			"season": season, 
@@ -2167,13 +2448,13 @@ plugin.register(['play_tv_cache', 'play_movie_cache'], play_transmogrified_file)
 
 def play_movie():
 	from dudehere.routines.scrapers import CommonScraper
-	Scraper = CommonScraper(cache_results=ADDON.get_setting('enable_result_caching')=="true")
+	Scraper = CommonScraper(cache_results=ADDON.get_setting('enable_result_caching')=="true", is_stream=plugin.is_playlist())
 	Scraper.threadpool_size = int(ADDON.get_setting('threadpool_size'))
 	imdb_id = plugin.args['imdb_id']
 	tmdb_id = plugin.args['tmdb_id']
 	title = plugin.args['title']
 	year = plugin.args['year']
-	resolved_url = Scraper.search_movie(title, year, imdb_id=imdb_id)
+	resolved_url = Scraper.search_movies(title, year, imdb_id=imdb_id)
 	if not resolved_url: return
 	if validate_transmogrifier_streaming():
 		from dudehere.routines.transmogrifier import TransmogrifierAPI
@@ -2203,7 +2484,7 @@ def get_movie_sources():
 	tmdb_id = plugin.args['tmdb_id']
 	title = plugin.args['title']
 	year = int(plugin.args['year'])
-	sources, raw_urls, results = Scraper.search_movie(title, year, imdb_id, return_sources=True)
+	sources, raw_urls, results = Scraper.search_movies(title, year, imdb_id, return_sources=True)
 	count = len(sources)
 	if count == 0:
 		plugin.error_message('Search Error', 'No results, consider changing scrapers.')
@@ -2215,14 +2496,17 @@ def get_movie_sources():
 		raw_url = raw_urls[sources.index(source)]
 		data = results[sources.index(source)]
 		try:
-			quality = data['quality']
-		except:
 			quality = data.quality
-		if quality < 6:
+			hostname = data.hostname
+			if quality < 6:
+				image = vfs.join(ARTWORK, 'definition/480.png')
+			else:
+				image = vfs.join(ARTWORK, 'definition/720.png')
+		except:
 			image = vfs.join(ARTWORK, 'definition/480.png')
-		else:
-			image = vfs.join(ARTWORK, 'definition/720.png')
-		menu.add('Transmogrify', {'mode': 'movie_directory_transmogrify', "url": raw_url, "display": title, "imdb_id": imdb_id, "tmdb_id": tmdb_id, "year": year, "title": title}, visible=validate_transmogrifier)	
+			hostname = ''
+
+		menu.add('Transmogrify', {'mode': 'movie_directory_transmogrify', "url": raw_url, "display": title, "imdb_id": imdb_id, "tmdb_id": tmdb_id, "year": year, "title": title, "hostname": hostname}, visible=validate_transmogrifier, priority=100)	
 		plugin.add_video_item({'mode': 'play_directory_movie', "display": source, "raw_url": raw_url, "imdb_id": imdb_id, "tmdb_id": tmdb_id, "year": year, "title": title}, {"title": source}, total_items=count, image=image, fanart='', menu=menu)
 	plugin.eod(VIEWS.BIGLIST)
 plugin.register('get_movie_sources', get_movie_sources)
@@ -2242,9 +2526,9 @@ def queue_to_transmogrifier():
 		year = plugin.args['year']
 		filename = "%s (%s)" %(title,year)
 		Scraper = CommonScraper(cache_results=ADDON.get_setting('enable_result_caching')=="true")
-		if plugin.mode == 'tv_transmogrify':
+		if plugin.mode == 'movie_transmogrify':
 			Scraper.threadpool_size = int(ADDON.get_setting('threadpool_size'))
-			resolved_url = Scraper.search_movie(title, year, imdb_id=imdb_id)
+			resolved_url = Scraper.search_movies(title, year, imdb_id=imdb_id)
 		else:
 			raw_url = plugin.args['url']
 			resolved_url = Scraper.resolve_url(raw_url)
@@ -2256,7 +2540,8 @@ def queue_to_transmogrifier():
 			"imdb_id": imdb_id,
 			"title": title,
 			"save_dir": "",
-			"addon": ADDON_ID
+			"addon": ADDON_ID,
+			"host": plugin.get_arg('hostname', '')
 		}
 	else:
 		media='tvshow'
@@ -2269,11 +2554,11 @@ def queue_to_transmogrifier():
 			from dudehere.routines.trakt import TraktAPI
 			trakt = TraktAPI()
 			imdb_id = trakt.query_id('tmdb', tmdb_id)
-		filename = "%s %sx%s" % (title, season, episode)
+		filename = "%s.S%sE%s" % (title, str(season).zfill(2), str(episode).zfill(2))
 		Scraper = CommonScraper(cache_results=ADDON.get_setting('enable_result_caching')=="true")
 		if plugin.mode == 'tv_transmogrify':
 			Scraper.threadpool_size = int(ADDON.get_setting('threadpool_size'))
-			resolved_url = Scraper.search_tvshow(title, season, episode, year, imdb_id)
+			resolved_url = Scraper.search_tvshows(title, season, episode, year, imdb_id)
 		else:
 			raw_url = plugin.args['url']
 			resolved_url = Scraper.resolve_url(raw_url)
@@ -2291,7 +2576,9 @@ def queue_to_transmogrifier():
 					title
 					season
 					episode
+					ADDON_URL = "plugin://plugin.video.theroyalwe/"
 					save_dir
+					host
 		*'''
 		video = {
 			"type": media,
@@ -2303,7 +2590,8 @@ def queue_to_transmogrifier():
 			"season": season,
 			"episode": episode,
 			"save_dir": "",
-			"addon": ADDON_ID
+			"addon": ADDON_ID,
+			"host": plugin.get_arg('hostname', '')
 		}
 	if not resolved_url: return
 	TM = TransmogrifierAPI()
