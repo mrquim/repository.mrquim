@@ -12,3 +12,6 @@ v5.7.3 (30/06/2016)
 - Inserção de imagem de fanart do addon.
 - Facultar imagem fundo para kodi.
   link: http://liveitkodi.com/fundo_kodi.png
+------------------------------------------------------------------------
+v5.8.2 (01/07/2016)
+- Atualização para os Canais Free.

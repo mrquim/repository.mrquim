@@ -28,21 +28,21 @@ from resources.lib.modules import proxy
 
 class source:
     def __init__(self):
-        self.domains = ['movie25.ph', 'movie25.hk']
-        self.base_link = 'http://movie25.ph'
-        #self.search_link = 'http://movie25.ph/ad_search.php?q=%s&year_from=%s&year_to=%s&section=2&ad_search=Search'
-        self.search_link = 'http://movie25.ph/search.php?q=%s'
+        self.domains = ['movie25.ph', 'movie25.hk', 'tinklepad.is']
+        self.base_link = 'http://tinklepad.is'
+        #self.search_link = 'http://tinklepad.is/ad_search.php?q=%s&year_from=%s&year_to=%s&section=2&ad_search=Search'
+        self.search_link = 'http://tinklepad.is/search.php?q=%s'
 
 
     def request(self, url, check):
         try:
-            result = client.source(url)
+            result = client.request(url)
             if check in str(result): return result.decode('iso-8859-1').encode('utf-8')
 
-            result = client.source(proxy.get() + urllib.quote_plus(url))
+            result = client.request(proxy.get() + urllib.quote_plus(url))
             if check in str(result): return result.decode('iso-8859-1').encode('utf-8')
 
-            result = client.source(proxy.get() + urllib.quote_plus(url))
+            result = client.request(proxy.get() + urllib.quote_plus(url))
             if check in str(result): return result.decode('iso-8859-1').encode('utf-8')
         except:
             return
@@ -123,8 +123,9 @@ class source:
                     except: pass
                     try: url = urlparse.parse_qs(urlparse.urlparse(url).query)['q'][0]
                     except: pass
-                    url = urlparse.parse_qs(urlparse.urlparse(url).query)['url'][0]
+                    url = urlparse.urlparse(url).query
                     url = base64.b64decode(url)
+                    url = re.findall('((?:http|https)://.+?/.+?)(?:&|$)', url)[0]
                     url = client.replaceHTMLCodes(url)
                     url = url.encode('utf-8')
 

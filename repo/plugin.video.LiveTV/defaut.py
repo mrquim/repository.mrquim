@@ -17,7 +17,6 @@
 ##############BIBLIOTECAS A IMPORTAR E DEFINICOES####################
 import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon,xbmc,os,json,glob,threading,gzip,xbmcvfs,cookielib,pprint,datetime,thread,time
 import xml.etree.ElementTree as ET
-#from BeautifulSoup import BeautifulStoneSoup, BeautifulSoup, BeautifulSOAP
 from datetime import date
 from bs4 import BeautifulSoup
 from resources.lib import Downloader #Enen92 class
@@ -52,9 +51,6 @@ __ALERTA__ = xbmcgui.Dialog().ok
 __COOKIE_FILE__ = os.path.join(xbmc.translatePath('special://userdata/addon_data/plugin.video.LiveTV/').decode('utf-8'), 'cookie.liveittv')
 __HEADERS__ = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:43.0) Gecko/20100101 Firefox/43.0', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'}
 debug = __ADDON__.getSetting('debug')
-#xml = BeautifulSOAP(open(__ADDON_FOLDER__+'/addon.xml','r'), convertEntities=BeautifulStoneSoup.XML_ENTITIES)
-#_VERSAO_ = str(xml.addon['version'])
-#_NOMEADDON_ = str(xml.addon['name'])
 check_login = {}
 __PASTA_DADOS__ = Addon(__ADDON_ID__).get_profile().decode("utf-8")
 __PASTA_FILMES__ = xbmc.translatePath(__ADDON__.getSetting('bibliotecaFilmes'))
@@ -76,11 +72,8 @@ def menu():
 		check_login = login()
 
 		database = Database.isExists()
-		#__ALERTA__('Live!t TV', database)
-		
 		if check_login['user']['nome'] != '':
 			if check_login['sucesso']['resultado'] == 'yes':
-				#xbmc.executebuiltin('Notification(%s, %s, %i, %s)'%('Live!t TV - Sessão: '+check_login['user']['nome']+', Versão do addon: '+_VERSAO_, '8000, _ICON_))
 				menus = {
 					'nome': '',
 					'logo': '',
@@ -241,13 +234,13 @@ def login():
 					elif(e.tag == 'logo2'):
 						informacoes['info']['logo2'] = e.text
 					elif(e.tag == 'link2'):
-						informacoes['info']['link2'] = ''
+						informacoes['info']['link2'] = e.text
 					elif(e.tag == 'log'):
 						informacoes['info']['log'] = e.text
 					elif(e.tag == 'user'):
-						informacoes['info']['user'] = ''
+						informacoes['info']['user'] = e.text
 					elif(e.tag == 'password'):
-						informacoes['info']['password'] = ''
+						informacoes['info']['password'] = e.text
 			elif(child.tag == 'menus'):
 				menu = {
 						'nome': '',
@@ -385,7 +378,7 @@ def listar_grupos(nome_nov,url,estilo,tipo,tipo_user,servidor_user,sservee,suser
 				paramss = estil.split('\n')
 				if tipo_user == 'Administrador' or tipo_user == 'Pagante' or tipo_user == 'PatrocinadorPagante':
 					if nome_nov == 'TVs-Free':
-						addDir(nomee,urlll,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'','','','')
+						addDir(nomee,urlll,None,2,'TesteServer',imag,tipo,tipo_user,servidor_user,'',sservee,suseree,spassee)
 					elif servidor_user == 'Servidor1':
 						addDir(nomee,urlllserv1,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'','','','')
 					elif servidor_user == 'Servidor2':
@@ -394,11 +387,11 @@ def listar_grupos(nome_nov,url,estilo,tipo,tipo_user,servidor_user,sservee,suser
 						addDir(nomee,urlllserv3,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'','','','')
 				elif tipo_user == 'Patrocinador':
 					if nome_nov == 'TVs-Free':
-						addDir(nomee,urlll,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'','','','')
+						addDir(nomee,urlll,None,2,'TesteServer',imag,tipo,tipo_user,servidor_user,'','','','')
 				else:
 					if tipo_user == 'Teste':
 						if servidor_user == "Teste":
-							addDir(nomee,urlll,None,2,paramss[0],imag,tipo,tipo_user,servidor_user,'','','','')
+							addDir(nomee,urlll,None,2,'TesteServer',imag,tipo,tipo_user,servidor_user,'',sservee,suseree,spassee)
 						else:
 							if servidor_user != '':
 								if servidor_user == 'Servidor1':
@@ -493,14 +486,23 @@ def listar_canais_url(nome,url,estilo,tipo,tipo_user,servidor_user,sservee,suser
 					else:
 						infoLabels = {"title": nomewp, "genre": tipo, "credits": nomewp}
 					
-					#print 'Nome Novo: '+nomewp
-					addLink(nomewp,rtmp,img,id_it,srt_f,descri,tipo,tipo_user,id_p,infoLabels,total)
+					if estilo == 'TesteServer':
+						urlteste = rtmp.split('TSDOWNLOADER')
+						tttot = len(urlteste)
+						if tttot == 1:
+							addLink(nomewp,rtmp,img,id_it,srt_f,descri,tipo,tipo_user,id_p,infoLabels,total)
+						else:
+							addLink(nomewp,'plugin://plugin.video.f4mTester/?url='+rtmp,img,id_it,srt_f,descri,tipo,tipo_user,id_p,infoLabels,total)
+					else:
+						addLink(nomewp,rtmp,img,id_it,srt_f,descri,tipo,tipo_user,id_p,infoLabels,total)
 			except:
 				pass
 		
-		vista_Canais()
-		#estiloSelect = returnestilo(estilo)
-		#xbmc.executebuiltin(estiloSelect)
+		if tipo == 'patrocinadores' or tipo == 'novidades' or tipo == 'Praia' or tipo == 'pesquisa' or tipo == 'estado' or tipo == 'ProgramasTV':
+			estiloSelect = returnestilo(estilo)
+			xbmc.executebuiltin(estiloSelect)
+		else:
+			vista_Canais()
 
 ###############################################################################################################
 #                                                   EPG                                                     #
@@ -600,15 +602,6 @@ def menuFilmes():
 	addDir2('', '', '', __FANART__, 0, poster=os.path.join(__ART_FOLDER__,'nada.png'))
 	addDir2('Filmes por Ano', __SITEFILMES__+'kodi_filmes.php', 119, __FANART__, 1, poster=os.path.join(__ART_FOLDER__, __SKIN__, 'ano.png'))
 	addDir2('Filmes por Genero', __SITEFILMES__+'kodi_filmes.php', 118, __FANART__, 1, poster=os.path.join(__ART_FOLDER__, __SKIN__, 'genero.png'))
-	#if Trakt.loggedIn():
-	#	dp = xbmcgui.DialogProgress()
-	#	dp.create('Live!t-TV Trakt')
-	#	dp.update(0, "A Carregar os Filmes vistos no Trakt")
-	#	filmesTraktVistos()
-
-	#	dp.close()
-
-	#	addDir('Trakt', __SITEFILMES__, 701, __FANART__, 0, poster=os.path.join(__ART_FOLDER__, __SKIN__, 'trakt.png'))
 
 	vista_menu()
 
@@ -618,15 +611,7 @@ def menuSeries():
 	addDir2('', '', '', __FANART__, 0, poster=os.path.join(__ART_FOLDER__,'nada.png'))
 	addDir2('Series por Ano', __SITEFILMES__+'kodi_series.php', 119, __FANART__, 1, poster=os.path.join(__ART_FOLDER__, __SKIN__, 'ano.png'))
 	addDir2('Series por Genero', __SITEFILMES__+'kodi_series.php', 118, __FANART__, 1, poster=os.path.join(__ART_FOLDER__, __SKIN__, 'genero.png'))
-	#if Trakt.loggedIn():
-	#	dp = xbmcgui.DialogProgress()
-	#	dp.create('Live!t-TV Trakt')
-	#	dp.update(50, "A Carregar as Series vistas no Trakt")
-	#	seriesTraktVistos()
 
-	#	dp.close()
-
-	#	addDir('Trakt', __SITEFILMES__, 701, __FANART__, 0, poster=os.path.join(__ART_FOLDER__, __SKIN__, 'trakt.png'))
 	vista_menu()
 
 def removerAcentos(txt, encoding='utf-8'):
@@ -1442,7 +1427,7 @@ def vista_Canais():
 	if opcao == '0': xbmc.executebuiltin("Container.SetViewMode(50)")
 	elif opcao == '1': xbmc.executebuiltin("Container.SetViewMode(51)")
 	elif opcao == '2': xbmc.executebuiltin("Container.SetViewMode(500)")
-	elif opcao == '3': xbmc.executebuiltin("Container.SetViewMode(501)")
+	elif opcao == '3': xbmc.executebuiltin("Container.SetViewMode(509)")
 	elif opcao == '4': xbmc.executebuiltin("Container.SetViewMode(508)")
 	elif opcao == '5': xbmc.executebuiltin("Container.SetViewMode(504)")
 	elif opcao == '6': xbmc.executebuiltin("Container.SetViewMode(503)")
@@ -1458,7 +1443,7 @@ def vista_menu():
 	if opcao == '0': xbmc.executebuiltin("Container.SetViewMode(50)")
 	elif opcao == '1': xbmc.executebuiltin("Container.SetViewMode(51")
 	elif opcao == '2': xbmc.executebuiltin("Container.SetViewMode(500)")
-	elif opcao == '3': xbmc.executebuiltin("Container.SetViewMode(501)")
+	elif opcao == '3': xbmc.executebuiltin("Container.SetViewMode(509)")
 	elif opcao == '4': xbmc.executebuiltin("Container.SetViewMode(508)")
 
 def vista_filmesSeries():
@@ -1466,7 +1451,7 @@ def vista_filmesSeries():
 	if opcao == '0': xbmc.executebuiltin("Container.SetViewMode(50)")
 	elif opcao == '1': xbmc.executebuiltin("Container.SetViewMode(51)")
 	elif opcao == '2': xbmc.executebuiltin("Container.SetViewMode(500)")
-	elif opcao == '3': xbmc.executebuiltin("Container.SetViewMode(501)")
+	elif opcao == '3': xbmc.executebuiltin("Container.SetViewMode(509)")
 	elif opcao == '4': xbmc.executebuiltin("Container.SetViewMode(508)")
 	elif opcao == '5': xbmc.executebuiltin("Container.SetViewMode(504)")
 	elif opcao == '6': xbmc.executebuiltin("Container.SetViewMode(503)")
@@ -1478,14 +1463,14 @@ def vista_temporadas():
 	if opcao == '0': xbmc.executebuiltin("Container.SetViewMode(50)")
 	elif opcao == '1': xbmc.executebuiltin("Container.SetViewMode(51)")
 	elif opcao == '2': xbmc.executebuiltin("Container.SetViewMode(500)")
-	elif opcao == '3': xbmc.executebuiltin("Container.SetViewMode(501)")
+	elif opcao == '3': xbmc.executebuiltin("Container.SetViewMode(509)")
 
 def vista_episodios():
 	opcao = __ADDON__.getSetting('episodiosView')
 	if opcao == '0': xbmc.executebuiltin("Container.SetViewMode(50)")
 	elif opcao == '1': xbmc.executebuiltin("Container.SetViewMode(51)")
 	elif opcao == '2': xbmc.executebuiltin("Container.SetViewMode(500)")
-	elif opcao == '3': xbmc.executebuiltin("Container.SetViewMode(501)")
+	elif opcao == '3': xbmc.executebuiltin("Container.SetViewMode(509)")
 	elif opcao == '4': xbmc.executebuiltin("Container.SetViewMode(504)")
 	elif opcao == '5': xbmc.executebuiltin("Container.SetViewMode(503)")
 	elif opcao == '6': xbmc.executebuiltin("Container.SetViewMode(515)")

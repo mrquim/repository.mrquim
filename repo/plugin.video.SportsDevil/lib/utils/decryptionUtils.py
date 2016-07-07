@@ -13,26 +13,16 @@ def encryptDES_ECB(data, key):
     return d
 
 def gAesDec(data, key):
-    import mycrypt
-    return mycrypt.decrypt(key,data)
+    from mycrypt import decrypt
+    return decrypt(key,data)
 
 def cjsAesDec(data, key):
-    import json,mycrypt
+    try: import json
+    except ImportError: import simplejson as json
+    from mycrypt import decrypt
     enc_data = json.loads(data.decode('base-64'))
     ciphertext = 'Salted__' + enc_data['s'].decode('hex') + enc_data['ct'].decode('base-64')
-    return json.loads(mycrypt.decrypt(key,ciphertext.encode('base-64')))
-
-def aesDec(data, key):
-    from base64 import b64decode
-    try:
-        from Crypto.Cipher import AES
-    except ImportError:
-        import pyaes as AES
-    iv = 16 * '\x00'
-    cipher = AES.new(b64decode(key), AES.MODE_CBC, IV=iv)
-    padded_plaintext = cipher.decrypt(b64decode(data))
-    padding_len = ord(padded_plaintext[-1])
-    return padded_plaintext[:-padding_len]
+    return json.loads(decrypt(key,ciphertext.encode('base-64')))
 
 def wdecode(data):
     from itertools import chain
@@ -149,7 +139,7 @@ def doDemystify(data):
                 data = data.replace(g, urllib.unquote(base64_data.decode('base-64')))
                 escape_again=True
     
-    r = re.compile('(eval\\(function\\(\w+,\w+,\w+,\w+.*?join\\(\'\'\\);*}\\(.*?\\))', flags=re.DOTALL)
+    r = re.compile('(eval\\(function\\((?!w)\w+,\w+,\w+,\w+.*?join\\(\'\'\\);*}\\(.*?\\))', flags=re.DOTALL)
     for g in r.findall(data):
         try:
             data = data.replace(g, wdecode(g))
@@ -192,15 +182,26 @@ def doDemystify(data):
         if gs:
             for g in gs:
                 data = data.replace(g, jsF.ew_dc(g))
-
-    # pbbfa0
+                
+     # pbbfa0
     if 'function pbbfa0(' in data:
         r = re.compile("pbbfa0\(''\).*?'(.+?)'.\+.unescape")
         gs = r.findall(data)
         if gs:
             for g in gs:
                 data = data.replace(g, jsF.pbbfa0(g))
-
+    
+    if 'eval(function(' in data:
+        data = re.sub(r"""function\(\w\w\w,\w\w\w,\w\w\w,\w\w\w""",'function(p,a,c,k)',data)
+        data = re.sub(r"""\(\w\w\w\+0\)%\w\w\w""",'e%a',data)
+        data = re.sub(r"""RegExp\(\w\w\w\(\w\w\w\)""",'RegExp(e(c)',data)
+        
+    if """.replace(""" in data:
+        r = re.compile(r""".replace\(["']([^"']+)["'],\s*["']([^"']*)["']\)""")
+        gs = r.findall(data)
+        if gs:
+            for g in gs:
+                data = data.replace(g[0],g[1])
 
     # util.de
     if 'Util.de' in data:

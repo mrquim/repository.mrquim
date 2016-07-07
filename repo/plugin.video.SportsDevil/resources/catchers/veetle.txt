@@ -4,5 +4,6 @@ item_info_build=Veetle - %s
 
 item_info_name=url
 item_info_from=@PARAM1@
+item_info_convert=unicode_escape
 @IF(@PLATFORM@!=xbox)@item_info_build=plugin://plugin.video.veetle/?channel=%s@ENDIF@
 @IF(@PLATFORM@==xbox)@item_info_build=plugin://video/veetle/?channel=%s@ENDIF@

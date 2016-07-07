@@ -6,6 +6,7 @@ import random
 import re
 import urllib
 import string
+import xbmc
 from string import lower
 
 from entities.CList import CList
@@ -293,7 +294,7 @@ class Parser(object):
 
 
     def __getSection(self, data, section):
-        p = re.compile(section, re.IGNORECASE + re.DOTALL + re.UNICODE)
+        p = re.compile(section, re.IGNORECASE + re.DOTALL + re.MULTILINE + re.UNICODE)
         m = p.search(data)
         if m:
             return m.group(0)
@@ -546,6 +547,9 @@ class Parser(object):
 
             elif command == 'convTimestamp':
                 src = cc.convTimestamp(params, src)
+                
+            elif command == 'convDateUtil':
+                src = cc.convDateUtil(params, src)
 
             elif command == 'select':
                 src = cc.select(params, src)
@@ -600,6 +604,9 @@ class Parser(object):
 
             elif command == 'decodeBase64':
                 src = cc.decodeBase64(src)
+            
+            elif command == 'encodeBase64':
+                src = cc.encodeBase64(src)
 
             elif command == 'decodeRawUnicode':
                 src = cc.decodeRawUnicode(src)
@@ -642,9 +649,6 @@ class Parser(object):
             elif command == 'cjsAesDec':
                 src = crypt.cjsAesDec(src,item.infos[params])
             
-            elif command == 'aesDec':
-                src = crypt.aesDec(src,item.infos[params])
-                
             elif command == 'getCookies':
                 src = cc.getCookies(params, src)
 
@@ -655,7 +659,7 @@ class Parser(object):
                 src = dt.getUnixTimestamp()
                 
             elif command == 'rowbalance':
-                src = rb.get()
+                src = rb.get(src)
 
             elif command == 'urlMerge':
                 src = cc.urlMerge(params, src)
@@ -686,6 +690,18 @@ class Parser(object):
 
             elif command == 'debug':
                 common.log('Debug from cfg file: ' + src)
+                
+            elif command == 'startLivestreamerProxy':
+                libPath = os.path.join(common.Paths.rootDir, 'lib')
+                serverPath = os.path.join(libPath, 'livestreamerXBMCLocalProxy.py')
+                try:
+                    import requests
+                    requests.get('http://127.0.0.1:19000/version')
+                    proxyIsRunning = True
+                except:
+                    proxyIsRunning = False
+                if not proxyIsRunning:
+                    xbmc.executebuiltin('RunScript(' + serverPath + ')')
                 
             elif command == 'divide':
                 paramArr = params.split(',')
