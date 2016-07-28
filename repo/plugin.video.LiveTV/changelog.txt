@@ -15,3 +15,11 @@ v5.7.3 (30/06/2016)
 ------------------------------------------------------------------------
 v5.8.2 (01/07/2016)
 - Atualização para os Canais Free.
+------------------------------------------------------------------------
+v5.8.6 (04/07/2016)
+- Atualização das Praias do addon e adicionamento de mais.
+------------------------------------------------------------------------
+v5.9.4 (22/07/2016)
+- Criação de pacotes de Desporto.
+- Resolução de alguns problemas de epg.
+- Resolução de alguns problemas de disposição.

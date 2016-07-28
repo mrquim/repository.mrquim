@@ -56,7 +56,7 @@
 
 <addon id="plugin.video.pancas"
        name="PancasTV"
-       version="1.1.7"
+       version="1.1.8"
        provider-name="Pancas">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -299,13 +299,15 @@ Addons Included
 	</extension>
 </addon>
 
-<addon id="plugin.video.specto" name="Specto - ... Fork"  version="2016.07.02.2" provider-name="mrknow" >
+<addon id="plugin.video.specto" name="Specto - ... Fork"  version="2016.07.09.2" provider-name="mrknow" >
 	<requires>
 		<import addon="xbmc.python" version="2.1.0" />
 		<import addon="script.module.requests" version="1.0.0" />
 		<import addon="script.module.metahandler" version="1.0.0" />
 		<import addon="plugin.video.youtube" optional="true" />
+		<import addon="script.mrknow.urlresolver" />
 		<import addon="script.specto.media" />
+
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
@@ -523,7 +525,7 @@ Addons Included
 	</extension>
 </addon>
 
-<addon id="plugin.video.LiveTV" name="Live!t TV" provider-name="Live!t TV" version="5.8.6">
+<addon id="plugin.video.LiveTV" name="Live!t TV" provider-name="Live!t TV" version="5.9.4">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
 	<import addon="script.module.urlresolver" version="1.0.0"/>
@@ -816,7 +818,7 @@ Addons Included
 
 <addon
   id="plugin.video.SportsDevil"
-  version="2016.06.20"
+  version="2016.06.21"
   name="SportsDevil"
   provider-name="SportsDevil">
   <requires>
@@ -1483,14 +1485,13 @@ Nota Importante: Aconselhado a ultima versao do youtube 5.2.* </description>
  </extension>
 </addon>
 
-<addon id="plugin.video.exodus" version="2.0.0" name="Exodus" provider-name="Exodus">
+<addon id="plugin.video.exodus" version="2.0.3" name="Exodus" provider-name="Exodus">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0" />
 		<import addon="repository.exodus" version="1.0.0" />
-		<import addon="script.exodus.artwork" version="1.0.2" />
-		<import addon="script.module.urlresolver" version="3.0.0"/>
+		<import addon="script.exodus.artwork" version="1.0.4" />
+		<import addon="script.module.urlresolver" version="3.0.0" />
 		<import addon="script.module.metahandler" version="1.0.0" />
-		<import addon="plugin.video.youtube" version="5.2.1" optional="true" />
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="exodus.py">
 		<provides>video</provides>
@@ -1609,7 +1610,7 @@ Nota Importante: Aconselhado a ultima versao do youtube 5.2.* </description>
     </extension>
 </addon>
 
-<addon id="plugin.video.TVsupertuga" name="[COLOR cyan]TV[/COLOR]-[COLOR red]SUPERTUGA[/COLOR]" version="0.0.4" provider-name="TVsupertuga">
+<addon id="plugin.video.TVsupertuga" name="[COLOR cyan]TV[/COLOR]-[COLOR red]SUPERTUGA[/COLOR]" version="0.0.5" provider-name="TVsupertuga">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.beautifulsoup" version="3.2.1"/>
@@ -1628,7 +1629,7 @@ Nota Importante: Aconselhado a ultima versao do youtube 5.2.* </description>
     <import addon="script.module.elementtree" version="1.2.8"/>
 	<import addon="script.module.metahandler" version="1.0.0" />
     <import addon="script.common.plugin.cache" version="2.5.2"/>
- 	<import addon="plugin.video.veetle" version="0.3.1" optional="false"/>
+ 	<import addon="plugin.video.veetle" version="0.3.1" optional="true"/>
 	<import addon="script.module.t0mm0.common" version="2.0.0"/>
 
 	
@@ -1825,6 +1826,21 @@ SEND E MAIL: tvsupertuga@gmail.com[/B][/COLOR]</description>
     <platform>all</platform>
 	<website>http://bit.ly/AMObox</website>
   </extension>
+</addon>
+
+<addon id="plugin.video.f4mTester" version="2.2.5" name="f4mTester" provider-name="Shani">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.video.F4mProxy" version="2.2.3"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>f4mTester</summary>
+        <description></description>
+        <platform>all</platform>
+    </extension>
 </addon>
 
 </addons>

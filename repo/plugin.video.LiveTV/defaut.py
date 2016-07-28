@@ -306,35 +306,41 @@ def Menu_inicial(men):
 	_tipouser = men['user']['tipo']
 	_servuser = men['user']['servidor']
 	_nomeuser = men['user']['nome']
-	#_nomeuser = 'Live!t-TV ('+men['user']['nome']+')'
 	for menu in men['menus']:
 		nome = menu['nome']
 		logo = menu['logo']
 		link = menu['link']
 		tipo = menu['tipo']
 		senha = menu['senha']
-		if tipo == 'Adulto' :
-			addDir(nome,link,senha,3,'Miniatura',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
-		elif tipo == 'patrocinadores' or tipo == 'novidades':
-			addDir(nome,link,None,1,'Lista',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
-		elif(tipo == 'Filme'):
-			addDir(nome,link,None,21,'Miniatura',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
-		elif(tipo == 'Serie'):
-			addDir(nome,link,None,20,'Miniatura',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
-		elif(tipo == 'estado'):
-			addDir(nome,link,None,10,'Lista',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
-		elif(tipo == 'pesquisa'):
-			if _tipouser != 'Teste':
-				addDir(nome,link,None,120,'Lista',logo,tipo,_tipouser,_servuser,'','','','')
+		if _tipouser == 'Desporto':
+			if nome == 'TVs - Desporto':
+				addDir(nome,link,None,2,'Miniatura',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
+			elif(tipo == 'estado'):
+				addDir(nome,link,None,10,'Lista',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
 		else:
-			if _tipouser == 'Administrador' or _tipouser == 'Patrocinador' or _tipouser == 'PatrocinadorPagante':
-				if nome == 'TVs':
-					addDir(nome,link,None,1,'Miniatura',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
-					addDir('TVs-Free',link,None,1,'Miniatura',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
+			if nome != 'TVs - Desporto':
+				if tipo == 'Adulto' :
+					addDir(nome,link,senha,3,'Miniatura',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
+				elif tipo == 'patrocinadores' or tipo == 'novidades':
+					addDir(nome,link,None,1,'Lista',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
+				elif(tipo == 'Filme'):
+					addDir(nome,link,None,21,'Miniatura',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
+				elif(tipo == 'Serie'):
+					addDir(nome,link,None,20,'Miniatura',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
+				elif(tipo == 'estado'):
+					addDir(nome,link,None,10,'Lista',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
+				elif(tipo == 'pesquisa'):
+					if _tipouser != 'Teste':
+						addDir(nome,link,None,120,'Lista',logo,tipo,_tipouser,_servuser,'','','','')
 				else:
-					addDir(nome,link,None,1,'Miniatura',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
-			else:
-				addDir(nome,link,None,1,'Miniatura',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
+					if _tipouser == 'Administrador' or _tipouser == 'Patrocinador' or _tipouser == 'PatrocinadorPagante':
+						if nome == 'TVs':
+							addDir(nome,link,None,1,'Miniatura',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
+							addDir('TVs-Free',link,None,1,'Miniatura',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
+						else:
+							addDir(nome,link,None,1,'Miniatura',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
+					else:
+						addDir(nome,link,None,1,'Miniatura',logo,tipo,_tipouser,_servuser,'',men['info']['log'],men['info']['user'],men['info']['password'])
 	
 	#xbmc.executebuiltin('Notification(%s, %s, %i, %s)'%(_nomeuser, Versão do addon: '+_VERSAO_, 8000, _ICON_))
 	thread.start_new_thread( obter_ficheiro_epg, () )
@@ -460,9 +466,9 @@ def listar_canais_url(nome,url,estilo,tipo,tipo_user,servidor_user,sservee,suser
 				id_p = params[5]
 				srt_f = ''
 				descri = ''
-				if grup == nome:
+				if tipo_user == 'Desporto':
 					twrv = ThreadWithReturnValue(target=getProgramacaoDiaria, args=(id_it, st,codigo))
-					
+						
 					twrv.start()
 					programa = twrv.join() 
 					
@@ -471,34 +477,48 @@ def listar_canais_url(nome,url,estilo,tipo,tipo_user,servidor_user,sservee,suser
 					else:
 						nomewp = nomee
 					
-					if	tipo == 'Filme' or tipo == 'Serie':
-						srt_f = params[6]
-						ano = params[7]
-						realizador = 'Director: '+params[8]
-						descri = params[9]
-						detalhes1 = grup
-						argumento = 'Live!t-TV'
-						plot = 'Enredo: '+descri
-						detalhes2 = ano
-						imdb = '4510398'
-						votes = '5 estrelas'
-						infoLabels = {'title':nomewp, 'plot':plot, 'writer': argumento, 'director':realizador, 'genre':detalhes1, 'year': detalhes2, 'aired':detalhes2, 'IMDBNumber':imdb, 'votes':votes, "credits": nomewp}
-					else:
-						infoLabels = {"title": nomewp, "genre": tipo, "credits": nomewp}
-					
-					if estilo == 'TesteServer':
-						urlteste = rtmp.split('TSDOWNLOADER')
-						tttot = len(urlteste)
-						if tttot == 1:
-							addLink(nomewp,rtmp,img,id_it,srt_f,descri,tipo,tipo_user,id_p,infoLabels,total)
+					infoLabels = {"title": nomewp, "genre": tipo, "credits": nomewp}
+					addLink(nomewp,rtmp,img,id_it,srt_f,descri,tipo,tipo_user,id_p,infoLabels,total)
+				else:
+					if grup == nome:
+						twrv = ThreadWithReturnValue(target=getProgramacaoDiaria, args=(id_it, st,codigo))
+						
+						twrv.start()
+						programa = twrv.join() 
+						
+						if programa != '':
+							nomewp = nomee + " | "+ programa
 						else:
-							addLink(nomewp,'plugin://plugin.video.f4mTester/?url='+rtmp,img,id_it,srt_f,descri,tipo,tipo_user,id_p,infoLabels,total)
-					else:
-						addLink(nomewp,rtmp,img,id_it,srt_f,descri,tipo,tipo_user,id_p,infoLabels,total)
+							nomewp = nomee
+						
+						if	tipo == 'Filme' or tipo == 'Serie':
+							srt_f = params[6]
+							ano = params[7]
+							realizador = 'Director: '+params[8]
+							descri = params[9]
+							detalhes1 = grup
+							argumento = 'Live!t-TV'
+							plot = 'Enredo: '+descri
+							detalhes2 = ano
+							imdb = '4510398'
+							votes = '5 estrelas'
+							infoLabels = {'title':nomewp, 'plot':plot, 'writer': argumento, 'director':realizador, 'genre':detalhes1, 'year': detalhes2, 'aired':detalhes2, 'IMDBNumber':imdb, 'votes':votes, "credits": nomewp}
+						else:
+							infoLabels = {"title": nomewp, "genre": tipo, "credits": nomewp}
+						
+						if estilo == 'TesteServer':
+							urlteste = rtmp.split('TSDOWNLOADER')
+							tttot = len(urlteste)
+							if tttot == 1:
+								addLink(nomewp,rtmp,img,id_it,srt_f,descri,tipo,tipo_user,id_p,infoLabels,total)
+							else:
+								addLink(nomewp,'plugin://plugin.video.f4mTester/?url='+rtmp,img,id_it,srt_f,descri,tipo,tipo_user,id_p,infoLabels,total)
+						else:
+							addLink(nomewp,rtmp,img,id_it,srt_f,descri,tipo,tipo_user,id_p,infoLabels,total)
 			except:
 				pass
 		
-		if tipo == 'patrocinadores' or tipo == 'novidades' or tipo == 'Praia' or tipo == 'pesquisa' or tipo == 'estado' or tipo == 'ProgramasTV':
+		if tipo == 'patrocinadores' or tipo == 'novidades' or tipo == 'Praia' or tipo == 'pesquisa' or tipo == 'estado' or tipo == 'ProgramasTV' or nome == 'Eventos Diários':
 			estiloSelect = returnestilo(estilo)
 			xbmc.executebuiltin(estiloSelect)
 		else:

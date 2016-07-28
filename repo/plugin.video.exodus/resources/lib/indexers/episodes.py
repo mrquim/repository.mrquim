@@ -396,6 +396,9 @@ class seasons:
 
         traktCredentials = trakt.getTraktCredentialsInfo()
 
+        try: isOld = False ; control.item().getArt('type')
+        except: isOld = True
+
         isEstuary = True if 'estuary' in control.skin else False
 
         try: indicators = playcount.getSeasonIndicators(items[0]['imdb'])
@@ -465,6 +468,9 @@ class seasons:
 
                 if traktCredentials == True:
                     cm.append((traktManagerMenu, 'RunPlugin(%s?action=traktManager&name=%s&tvdb=%s&content=tvshow)' % (sysaddon, sysname, tvdb)))
+
+                if isOld == True:
+                    cm.append((control.lang2(19033).encode('utf-8'), 'Action(Info)'))
 
 
                 item = control.item(label=label)
@@ -1045,6 +1051,9 @@ class episodes:
 
         traktCredentials = trakt.getTraktCredentialsInfo()
 
+        try: isOld = False ; control.item().getArt('type')
+        except: isOld = True
+
         isEstuary = True if 'estuary' in control.skin else False
 
         isPlayable = 'true' if not 'plugin' in control.infoLabel('Container.PluginName') else 'false'
@@ -1151,6 +1160,9 @@ class episodes:
 
                 if isFolder == False:
                     cm.append((playbackMenu, 'RunPlugin(%s?action=alterSources&url=%s&meta=%s)' % (sysaddon, sysurl, sysmeta)))
+
+                if isOld == True:
+                    cm.append((control.lang2(19033).encode('utf-8'), 'Action(Info)'))
 
 
                 item = control.item(label=label)

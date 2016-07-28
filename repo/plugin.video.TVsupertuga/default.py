@@ -60,11 +60,7 @@ if os.path.exists(favorites)==True:
     FAV = open(favorites).read()
 else: FAV = []
 
-SOURCES = [{"title": "TVsupertuga ", "url": "http://bit.ly/1USsghsjhgununjnjnvnnjsjnbvbnjsnjnmnnnbkfkjkjkjnncmnncnnvnbjuhhruituryueuyyrtgsgdgfggkjjggdskgkggkggueruaiiyr77777777773444444444gygyghghcjfhkkhfuif777kkkjuuuuufjjdggdhjjfhyhfhjfjjkkffjjjuutterwesgvvfsg77888888ufiduufduuuN8a", "fanart": "http://www.technobuffalo.com/wp-content/uploads/2016/02/tim-peake-photos-003.jpg", "genre": "IPTV TELEVISION", "date": "10.17.2015", "credits": "TVsupertuga", "thumbnail": "http://i86.servimg.com/u/f86/19/44/91/43/icon10.png"}]
-SOURCES = [{"title": "TVsupertuga ", "url": "http://1tv-super-tuga-add-estrutura.netne.net/TV%20SUPER%20TUGA%20ADD%20ESTRUTURA%201/Menu%20Principal.xml", "fanart": "http://www.technobuffalo.com/wp-content/uploads/2016/02/tim-peake-photos-003.jpg", "genre": "IPTV TELEVISION", "date": "10.17.2015", "credits": "TVsupertuga", "thumbnail": "http://i86.servimg.com/u/f86/19/44/91/43/icon10.png"}]
-SOURCES = [{"title": "TVsupertuga ", "url": "http://bit.ly/1USsghsjhgununjnjnvnnjsjnbvbnjsnjnmnnnbkfkjkjkjnncmnncnnvnbjuhhruituryueuyyrtgsgdgfggkjjggdskgkggkggueruaiiyr77777777773444444444gygyghghcjfhkkhfuif777kkkjuuuuufjjdggdhjjfhyhfhjfjjkkffjjjuutterwesgvvfsg77888888ufiduufduuuN8a", "fanart": "http://www.technobuffalo.com/wp-content/uploads/2016/02/tim-peake-photos-003.jpg", "genre": "IPTV TELEVISION", "date": "10.17.2015", "credits": "TVsupertuga", "thumbnail": "http://i86.servimg.com/u/f86/19/44/91/43/icon10.png"}]
-
-
+SOURCES = [{"title": "TVsupertuga ", "url": "http://bit.ly/29oDyOmjhhjshgsgbsfhbfkjbbgjskbgjbsgjjhgbdjvbd6653735r3hfhbf", "fanart": "http://www.technobuffalo.com/wp-content/uploads/2016/02/tim-peake-photos-003.jpg", "genre": "IPTV TELEVISION", "date": "10.17.2015", "credits": "TVsupertuga", "thumbnail": "http://i86.servimg.com/u/f86/19/44/91/43/icon10.png"}]
 
 # http://www.technobuffalo.com/wp-content/uploads/2016/02/tim-peake-photos-003.jpg
 # https://raw.githubusercontent.com/M3U/master/icon.png

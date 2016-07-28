@@ -196,6 +196,9 @@ class channels:
 
         addonFanart = control.addonFanart()
 
+        try: isOld = False ; control.item().getArt('type')
+        except: isOld = True
+
         isPlayable = 'true' if not 'plugin' in control.infoLabel('Container.PluginName') else 'false'
 
         playbackMenu = control.lang(32063).encode('utf-8') if control.setting('hosts.mode') == '2' else control.lang(32064).encode('utf-8')
@@ -241,6 +244,9 @@ class channels:
                 cm.append((refreshMenu, 'RunPlugin(%s?action=refresh)' % sysaddon))
 
                 cm.append((playbackMenu, 'RunPlugin(%s?action=alterSources&url=%s&meta=%s)' % (sysaddon, sysurl, sysmeta)))
+
+                if isOld == True:
+                    cm.append((control.lang2(19033).encode('utf-8'), 'Action(Info)'))
 
 
                 item = control.item(label=label)
