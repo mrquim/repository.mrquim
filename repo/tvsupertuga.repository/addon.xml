@@ -1,13 +1,13 @@
-﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="tvsupertuga.repository" name="[COLOR red]TVsupertuga[/COLOR].repository" version="0.0.3" provider-name="tvsupertuga">
-	<extension point="xbmc.addon.repository" name="tvsupertuga.repository">
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="tvsupertuga.repository" name="[COLOR cyan]TV[/COLOR]-[COLOR red]SUPERTUGA[/COLOR].[COLOR limegreen]REPOSITORY[/COLOR]" version="0.0.6" provider-name="TVsupertuga">
+	<extension point="xbmc.addon.repository" name="tvsupertuga Repository">
 		<info compressed="false">http://tvsupertuga.net16.net/zips/addons.xml</info>
 		<checksum>http://tvsupertuga.net16.net/zips/addons.xml.md5</checksum>
 		<datadir zip="true">http://tvsupertuga.net16.net/instal/</datadir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<summary>tvsupertuga repository</summary>
-		<description>NEW - SKYLEX Wizard/SKYLEX NOTIFICATIONS/TVsupertuga update v 0.0.4</description>
+		<description></description>
 		<disclaimer></disclaimer>
 		<platform>all</platform>
 	</extension>
