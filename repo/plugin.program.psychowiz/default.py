@@ -1919,7 +1919,6 @@ elif mode==4:
         deletecachefiles(url)
 		
 elif mode==90:
-		FRESHSTART2(params)
 		WIZARD(name,url,description)
 
 elif mode==6:        
