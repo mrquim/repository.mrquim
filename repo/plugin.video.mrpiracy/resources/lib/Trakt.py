@@ -65,7 +65,7 @@ def abrir_url(url, post=None, header=None, code=False, erro=False):
 def traktAuth():
     try:
         if not (__ADDON__.getSetting('utilizadorTrakt') == '' or __ADDON__.getSetting('tokenTrakt') == '' or __ADDON__.getSetting('refreshTrakt') == ''):
-            dialog = xbmcgui.Dialog().yesno('MrPiracy.club', u'Conta de Trakt já existe!', '', 'Deseja apagar?', u'Não', 'Sim')
+            dialog = xbmcgui.Dialog().yesno('MrPiracy.top', u'Conta de Trakt já existe!', '', 'Deseja apagar?', u'Não', 'Sim')
             if dialog:
                 __ADDON__.setSetting('utilizadorTrakt', '')
                 __ADDON__.setSetting('tokenTrakt', '')
@@ -73,7 +73,7 @@ def traktAuth():
             raise Exception()
 
         if __ADDON__.getSetting('utilizadorTrakt') == '' or __ADDON__.getSetting('tokenTrakt') == '' or __ADDON__.getSetting('refreshTrakt') == '':
-            dialog = xbmcgui.Dialog().yesno('MrPiracy.club', u'1. Entrar: [COLOR blue]http://trakt.tv/pin/8928[/COLOR]', '2. Se pedido, autorizar o acesso da conta.', '3. Colocar o PIN.', 'Inserir PIN', 'Cancelar')
+            dialog = xbmcgui.Dialog().yesno('MrPiracy.top', u'1. Entrar: [COLOR blue]http://trakt.tv/pin/8928[/COLOR]', '2. Se pedido, autorizar o acesso da conta.', '3. Colocar o PIN.', 'Inserir PIN', 'Cancelar')
 
             if dialog:
                 raise Exception()

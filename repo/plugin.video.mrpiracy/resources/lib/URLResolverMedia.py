@@ -16,11 +16,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import json, re, xbmc, urllib, xbmcgui, os, sys, pprint, urlparse, urllib2
+import json, re, xbmc, urllib, xbmcgui, os, sys, pprint, urlparse, urllib2, base64, math
 from t0mm0.common.net import Net
 from bs4 import BeautifulSoup
 import jsunpacker
 import AADecoder
+from png import Reader as PNGReader
 
 class GoogleVideo():
 	def __init__(self, url):
@@ -114,6 +115,111 @@ class OpenLoad():
        'Accept-Encoding': 'none',
        'Accept-Language': 'en-US,en;q=0.8',
        'Connection': 'keep-alive'}
+
+	def parserOPENLOADIO(self, baseUrl):
+	    print("parserOPENLOADIO baseUrl[%r]" % baseUrl)
+
+
+	    HTTP_HEADER = {
+	        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
+	        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+	        'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+	        'Accept-Encoding': 'none',
+	        'Accept-Language': 'en-US,en;q=0.8',
+	        'Referer': baseUrl}  # 'Connection': 'keep-alive'
+
+	    req = urllib2.Request(baseUrl, headers=HTTP_HEADER)
+	    response = urllib2.urlopen(req)
+	    data = response.read()
+	    response.close()
+
+	    # If you want to use the code for openload please at least put the info from were you take it:
+	    # for example: "Code take from plugin IPTVPlayer: "https://gitlab.com/iptvplayer-for-e2/iptvplayer-for-e2/"
+	    # It will be very nice if you send also email to me samsamsam@o2.pl and inform were this code will be used
+
+	    # get image data
+	    imageData = re.search('''<img[^>]*?id="linkimg"[^>]*?src="([^"]+?)"''', data, re.IGNORECASE).group(1)
+	    #common.log_utils.log_notice('openload resolve : 1.1 %s' % imageData)
+
+	    imageData = base64.b64decode(imageData.split('base64,')[-1])
+	    x, y, pixel, meta = PNGReader(bytes=imageData).read()
+	    #common.log_utils.log_notice('openload resolve : 1.2 %s' % pixel)
+
+	    imageData = None
+	    imageStr = ''
+	    try:
+	        for item in pixel:
+	            for p in item:
+	                imageStr += chr(p)
+	    except:
+	        pass
+
+	    # split image data
+	    imageTabs = []
+	    i = -1
+	    for idx in range(len(imageStr)):
+	        if imageStr[idx] == '\0':
+	            break
+	        if 0 == (idx % (12 * 20)):
+	            imageTabs.append([])
+	            i += 1
+	            j = -1
+	        if 0 == (idx % (20)):
+	            imageTabs[i].append([])
+	            j += 1
+	        imageTabs[i][j].append(imageStr[idx])
+
+	    # get signature data
+	    #sts, data = self.cm.getPage('https://openload.co/assets/js/obfuscator/numbers.js', {'header': HTTP_HEADER})
+	    req = urllib2.Request('https://openload.co/assets/js/obfuscator/n.js', headers=HTTP_HEADER)
+	    response = urllib2.urlopen(req)
+	    data = response.read()
+	    response.close()
+	    signStr = re.search('''['"]([^"^']+?)['"]''', data, re.IGNORECASE).group(1)
+
+	    # split signature data
+	    signTabs = []
+	    i = -1
+	    for idx in range(len(signStr)):
+	        if signStr[idx] == '\0':
+	            break
+	        if 0 == (idx % (11 * 26)):
+	            signTabs.append([])
+	            i += 1
+	            j = -1
+	        if 0 == (idx % (26)):
+	            signTabs[i].append([])
+	            j += 1
+	        signTabs[i][j].append(signStr[idx])
+
+	    # get link data
+	    linkData = {}
+	    for i in [2, 3, 5, 7]:
+	        linkData[i] = []
+	        tmp = ord('c')
+	        for j in range(len(signTabs[i])):
+	            for k in range(len(signTabs[i][j])):
+	                if tmp > 122:
+	                    tmp = ord('b')
+	                if signTabs[i][j][k] == chr(int(math.floor(tmp))):
+	                    if len(linkData[i]) > j:
+	                        continue
+	                    tmp += 2.5;
+	                    if k < len(imageTabs[i][j]):
+	                        linkData[i].append(imageTabs[i][j][k])
+	    res = []
+	    for idx in linkData:
+	        res.append(''.join(linkData[idx]).replace(',', ''))
+
+	    res = res[3] + '~' + res[1] + '~' + res[2] + '~' + res[0]
+	    videoUrl = 'https://openload.co/stream/{0}?mime=true'.format(res)
+	    dtext = videoUrl.replace('https', 'http')
+	    request = urllib2.Request(dtext, None, HTTP_HEADER)
+	    response = urllib2.urlopen(request)
+	    url = response.geturl()
+	    response.close()
+	    #url += '|' + urllib.urlencode({'Referer': url, 'User-Agent': common.IOS_USER_AGENT})
+	    return url
 
 	def getId(self):
 		#return self.url.split('/')[-1]
@@ -238,7 +344,7 @@ class OpenLoad():
 
 		#videoUrl = self.decodeOpenLoad(str(content.encode('utf-8')))
 
-		headers1 = {
+		"""headers1 = {
 		        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
 		       'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
 		       'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
@@ -253,11 +359,11 @@ class OpenLoad():
 		response.close()
 
 		aastring = re.compile("<script[^>]+>(ﾟωﾟﾉ[^<]+)<", re.DOTALL | re.IGNORECASE).findall(sHtmlContent)
-		hahadec = self.decodeOpenLoad(aastring[0])
+		hahadec = self.decodeOpenLoad(aastring[0]
 		haha = re.compile(r"welikekodi_ya_rly = Math.round([^;]+);", re.DOTALL | re.IGNORECASE).findall(hahadec)[0]
-		haha = eval("int" + haha)
+		haha = eval("int" + haha)"""
 
-		videoUrl = self.decodeOpenLoad(aastring[haha])
+		videoUrl = self.parserOPENLOADIO(self.url)
 
 
 		#print videoUrl
@@ -301,14 +407,14 @@ class OpenLoad():
 				if jsonResult['status'] == 200:
 					return jsonResult['result']['url'] + '?mime=true'  #really?? :facepalm:
 				else:
-					self.messageOk('MrPiracy.club', "FILE: "+jsonResult['msg'])
+					self.messageOk('MrPiracy.top', "FILE: "+jsonResult['msg'])
 
 			else:
 
 				self.messageOk('MrPiracy.xyz', "TICKET: "+jsonResult['msg'])
 				return False
 		except:
-			self.messageOk('MrPiracy.club', 'Ocorreu um erro a obter o link. Escolha outro servidor.')
+			self.messageOk('MrPiracy.top', 'Ocorreu um erro a obter o link. Escolha outro servidor.')
 
 	def getCaptcha(self, image):
 		try:
@@ -324,11 +430,11 @@ class OpenLoad():
 			if(letters.isConfirmed()):
 				result = letters.getText()
 				if result == '':
-					self.messageOk('MrPiracy.club', 'Tens de colocar o texto da imagem para aceder ao video.')
+					self.messageOk('MrPiracy.top', 'Tens de colocar o texto da imagem para aceder ao video.')
 				else:
 					return result
 			else:
-				self.messageOk('MrPiracy.club', 'Erro no Captcha')
+				self.messageOk('MrPiracy.top', 'Erro no Captcha')
 		finally:
 			dialog.close()
 
@@ -389,7 +495,7 @@ class Vidzi():
 		sourceCode = self.net.http_GET(self.getNewHost(), headers=self.headers).content
 
 		if '404 Not Found' in sourceCode:
-			self.messageOk('MrPiracy.club', 'Ficheiro nao encontrado ou removido. Escolha outro servidor.')
+			self.messageOk('MrPiracy.top', 'Ficheiro nao encontrado ou removido. Escolha outro servidor.')
 
 		match = re.search('file\s*:\s*"([^"]+)', sourceCode)
 		if match:
@@ -413,7 +519,7 @@ class Vidzi():
 				if stream:
 					return stream.group(1)
 
-		self.messageOk('MrPiracy.club', 'Video nao encontrado. Escolha outro servidor')
+		self.messageOk('MrPiracy.top', 'Video nao encontrado. Escolha outro servidor')
 
 
 	def getSubtitle(self):

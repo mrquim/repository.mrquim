@@ -1,3 +1,6 @@
+v0.2.9 (11/08/2016)
+- Alteração do dominio
+
 v0.2.8 (28/06/2016)
 - Correção do openload
 

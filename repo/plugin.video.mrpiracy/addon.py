@@ -44,7 +44,7 @@ __PASTA_FILMES__ = xbmc.translatePath(__ADDON__.getSetting('bibliotecaFilmes'))
 __PASTA_SERIES__ = xbmc.translatePath(__ADDON__.getSetting('bibliotecaSeries'))
 
 __SKIN__ = 'v1'
-__SITE__ = 'http://kodi.mrpiracy.club/'
+__SITE__ = 'http://mrpiracy.top/'
 
 __ALERTA__ = xbmcgui.Dialog().ok
 
@@ -70,7 +70,7 @@ def menu():
 
         if Trakt.loggedIn():
             dp = xbmcgui.DialogProgress()
-            dp.create('MrPiracy.club Trakt')
+            dp.create('MrPiracy.top Trakt')
             dp.update(0, "A Carregar os Filmes vistos no Trakt")
             filmesTraktVistos()
             dp.update(50, "A Carregar as Series vistas no Trakt")
@@ -112,7 +112,7 @@ def removerAcentos(txt, encoding='utf-8'):
 
 def login():
     if __ADDON__.getSetting("email") == '' or __ADDON__.getSetting('password') == '':
-        __ALERTA__('MrPiracy.club', 'Precisa de definir o seu email e password')
+        __ALERTA__('MrPiracy.top', 'Precisa de definir o seu email e password')
         return False
     else:
         try:
@@ -127,7 +127,7 @@ def login():
 
         except:
             resultado = False
-            __ALERTA__('MrPiracy.club', 'Não foi possível abrir a página. Por favor tente novamente')
+            __ALERTA__('MrPiracy.top', 'Não foi possível abrir a página. Por favor tente novamente')
             match = ''
             return resultado
 
@@ -136,16 +136,16 @@ def login():
 
             if match == []:
                 resultado = False
-                __ALERTA__('MrPiracy.club', 'Email e/ou Password incorretos')
+                __ALERTA__('MrPiracy.top', 'Email e/ou Password incorretos')
                 return resultado
             else:
                 resultado = True
-                xbmc.executebuiltin("XBMC.Notification(MrPiracy.club, Sessão iniciada: "+__ADDON__.getSetting("email") +", '10000', "+__ADDON_FOLDER__+"/icon.png)")
+                xbmc.executebuiltin("XBMC.Notification(MrPiracy.top, Sessão iniciada: "+__ADDON__.getSetting("email") +", '10000', "+__ADDON_FOLDER__+"/icon.png)")
                 return resultado
         else:
             net.save_cookies(__COOKIE_FILE__)
             resultado = True
-            xbmc.executebuiltin("XBMC.Notification(MrPiracy.club, Sessão iniciada: "+__ADDON__.getSetting("email") +", '10000', "+__ADDON_FOLDER__+"/icon.png)")
+            xbmc.executebuiltin("XBMC.Notification(MrPiracy.top, Sessão iniciada: "+__ADDON__.getSetting("email") +", '10000', "+__ADDON_FOLDER__+"/icon.png)")
             return resultado
 
 def getList(url, pagina):
@@ -410,7 +410,7 @@ def getStreamLegenda(siteBase, codigo_fonte):
             links.append(link)
             if not '.srt' in legenda:
                 legend = legenda+'.srt'
-            legendas.append('http://mrpiracy.club/subs/%s' % legenda)
+            legendas.append('http://mrpiracy.top/subs/%s' % legenda)
             i = i+1
 
     else:
@@ -420,7 +420,7 @@ def getStreamLegenda(siteBase, codigo_fonte):
             if 'legenda' in idS:
                 if not '.srt' in link:
                     link = link+'.srt'
-                legendaAux = 'http://mrpiracy.club/subs/%s' % link
+                legendaAux = 'http://mrpiracy.top/subs/%s' % link
                 continue
             if 'videomega' in idS:
                 continue
@@ -439,7 +439,7 @@ def getStreamLegenda(siteBase, codigo_fonte):
         elif 'uptostream.com' in links[servidor]:
             stream = URLResolverMedia.UpToStream(links[servidor]).getMediaUrl()
             legenda = legendas[0]
-        elif 'server.mrpiracy.club' in links[servidor]:
+        elif 'server.mrpiracy.top' in links[servidor]:
             stream = links[servidor]
             legenda = legendas[0]
         elif 'openload' in links[servidor]:
@@ -451,7 +451,7 @@ def getStreamLegenda(siteBase, codigo_fonte):
 
     else:
 
-        if 'server.mrpiracy.club' in links[0]:
+        if 'server.mrpiracy.top' in links[0]:
             stream = links[0]
             legenda = legendas[0]
         elif 'uptostream.com' in links[0]:
@@ -1272,7 +1272,7 @@ def removerVisto(url, temporada=None, episodio=None):
     except:
         pass
 
-    xbmc.executebuiltin("XBMC.Notification(MrPiracy.club,"+"Marcado como não visto"+","+"6000"+","+ os.path.join(__ADDON_FOLDER__,'icon.png')+")")
+    xbmc.executebuiltin("XBMC.Notification(MrPiracy.top,"+"Marcado como não visto"+","+"6000"+","+ os.path.join(__ADDON_FOLDER__,'icon.png')+")")
     xbmc.executebuiltin("XBMC.Container.Refresh")
 
 """
@@ -1293,9 +1293,9 @@ def removerVisto(url, temporada=None, episodio=None):
     try:
         os.remove(ficheiroVisto)
     except:
-        __ALERTA__('MrPiracy.club', 'Não foi possível marcar como não visto.')
+        __ALERTA__('MrPiracy.top', 'Não foi possível marcar como não visto.')
 
-    xbmc.executebuiltin("XBMC.Notification(MrPiracy.club,"+"Marcado como não visto"+","+"6000"+","+ os.path.join(__ADDON_FOLDER__,'icon.png')+")")
+    xbmc.executebuiltin("XBMC.Notification(MrPiracy.top,"+"Marcado como não visto"+","+"6000"+","+ os.path.join(__ADDON_FOLDER__,'icon.png')+")")
     xbmc.executebuiltin("XBMC.Container.Refresh")"""
 
 def marcarVistoSite(url, temporada=None, episodio=None):
@@ -1315,7 +1315,7 @@ def marcarVistoSite(url, temporada=None, episodio=None):
     if visto != '':
         marcar = net.http_GET(siteVisto, headers=__HEADERS__).content
 
-        xbmc.executebuiltin("XBMC.Notification(MrPiracy.club,"+"Marcado como visto (Site)"+","+"6000"+","+ os.path.join(__ADDON_FOLDER__,'icon.png')+")")
+        xbmc.executebuiltin("XBMC.Notification(MrPiracy.top,"+"Marcado como visto (Site)"+","+"6000"+","+ os.path.join(__ADDON_FOLDER__,'icon.png')+")")
         xbmc.executebuiltin("Container.Refresh")
 
 def marcarVisto(url, temporada=None, episodio=None):
@@ -1332,7 +1332,7 @@ def marcarVisto(url, temporada=None, episodio=None):
         if Trakt.loggedIn():
             Trakt.markwatchedFilmeTrakt(idIMDb)
 
-    xbmc.executebuiltin("XBMC.Notification(MrPiracy.club,"+"Marcado como visto"+","+"6000"+","+ os.path.join(__ADDON_FOLDER__,'icon.png')+")")
+    xbmc.executebuiltin("XBMC.Notification(MrPiracy.top,"+"Marcado como visto"+","+"6000"+","+ os.path.join(__ADDON_FOLDER__,'icon.png')+")")
     xbmc.executebuiltin("Container.Refresh")
 
 
@@ -1359,10 +1359,10 @@ def marcarVisto(url, temporada=None, episodio=None):
         f = open(ficheiroVisto, 'w')
         f.write('')
         f.close()
-        xbmc.executebuiltin("XBMC.Notification(MrPiracy.club,"+"Marcado como visto"+","+"6000"+","+ os.path.join(__ADDON_FOLDER__,'icon.png')+")")
+        xbmc.executebuiltin("XBMC.Notification(MrPiracy.top,"+"Marcado como visto"+","+"6000"+","+ os.path.join(__ADDON_FOLDER__,'icon.png')+")")
         xbmc.executebuiltin("Container.Refresh")
     else:
-        __ALERTA__('MrPiracy.club', 'Já foi marcado como visto anteriormente.')"""
+        __ALERTA__('MrPiracy.top', 'Já foi marcado como visto anteriormente.')"""
 
 
 
@@ -1374,6 +1374,13 @@ def addVideo(name,url,mode,iconimage,tipo,temporada,episodio,infoLabels,poster,s
         name = name.encode('utf-8')
     except:
         name = name
+
+    try:
+        serieNome = serieNome.encode('utf-8')
+    except:
+        serieNome = serieNome
+    else:
+        pass
 
     if tipo == 'filme':
         xbmcplugin.setContent(int(sys.argv[1]), 'Movies')
@@ -1468,6 +1475,7 @@ def player(name,url,iconimage,temporada,episodio,serieNome):
 
     infolabels = dict()
 
+
     if temporada == 0 and episodio == 0:
         pastaData = __PASTA_DADOS__
         idIMDb = re.compile('imdb=(tt[0-9]{7})').findall(url)[0]
@@ -1485,7 +1493,7 @@ def player(name,url,iconimage,temporada,episodio,serieNome):
     infolabels['Year'] = ano
 
     mensagemprogresso = xbmcgui.DialogProgress()
-    mensagemprogresso.create('MrPiracy.club', u'Abrir emissão','Por favor aguarde...')
+    mensagemprogresso.create('MrPiracy.top', u'Abrir emissão','Por favor aguarde...')
     mensagemprogresso.update(25, "", u'Obter video e legenda', "")
 
     #match = re.compile('<a id="(.+?)" class="btn(.+?)?" onclick=".+?"><img src="(.+?)"><\/a>').findall(codigo_fonte)
@@ -1512,7 +1520,7 @@ def player(name,url,iconimage,temporada,episodio,serieNome):
     #print "url: "+url+" idIMDb: "+idIMDb+" pastaData: "+pastaData+"\n temporada: "+str(temporada)+" episodio: "+str(episodio)+" \nnome: "+name+" ano:"+str(ano)+"\nstream: "+stream+" legenda: "+legenda
 
     if stream == False:
-        __ALERTA__('MrPiracy.club', 'O servidor escolhido não disponível, escolha outro ou tente novamente mais tarde.')
+        __ALERTA__('MrPiracy.top', 'O servidor escolhido não disponível, escolha outro ou tente novamente mais tarde.')
     else:
 
         player_mr = Player.Player(url=url, idFilme=idIMDb, pastaData=pastaData, temporada=temporada, episodio=episodio, nome=name, ano=ano, logo=os.path.join(__ADDON_FOLDER__,'icon.png'), serieNome=serieNome)

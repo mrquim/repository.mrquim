@@ -23,3 +23,12 @@ v5.9.4 (22/07/2016)
 - Criação de pacotes de Desporto.
 - Resolução de alguns problemas de epg.
 - Resolução de alguns problemas de disposição.
+------------------------------------------------------------------------
+v6.1.4 (05/08/2016)
+- Resolução de problemas de Pesquisa.
+- Inserção de novas séries com legendas.
+- Inserção de novos canais.
+------------------------------------------------------------------------
+v6.2.4 (15/08/2016)
+- Alterações feitas a nível de código para funcionamento da nova build.
+- Criação de nova build.

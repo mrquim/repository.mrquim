@@ -5,20 +5,17 @@
       <setting id="login_name" type="text" label="Utilizador" default=""/>
       <setting id="login_password" type="text" label="Senha" default="" option="hidden" enable="!eq(-1,false)"/>
 	  <setting id="login_adultos" type="text" label="Senha Adultos" default="" option="hidden"/>
-	  <setting id="email" type="text" default="liveitkodi@gmail.com" enable="false"/>
-      <setting id="password" type="text" default="livekodi" option="hidden" enable="false"/>
+	  <setting id="email" type="text" default="liveitkodi@gmail.com" enable="false" visible="false"/>
+      <setting id="password" type="text" default="livekodi" option="hidden" enable="false" visible="false"/>
    </category>
-   <category label="Filmes e Séries">
-        <setting id="trailer-filmes" type="bool" label="Procurar Trailers para Filmes" default="true"/>
-		<setting type="sep" />
-		<setting label="Pasta para download:" type="lsep" />
-    	<setting label="" type="folder" id="pastaDownloads" source="auto" option="writeable" default="Escolha a pasta para Download" enable="!eq(-2,false)"/>
-    </category>
 	<category label="Vistas">
-      <setting id="menuView" type="enum" label="Vista de Menu" values="Lista|Lista Grande|Miniatura|Miniatura (Titan Skin)" default="2"/>
+      <setting id="menuView" type="enum" label="Vista de Menu" values="Lista|Lista Grande|Miniatura|Miniatura (Titan Skin)" default="0"/>
 	  <setting id="canaisView" type="enum" label="Vista de Canais" values="Lista|Lista Grande|Miniatura|Miniatura (Titan Skin)" default="2"/>
       <setting id="filmesSeriesView" type="enum" label="Vista de Filmes e Séries" values="Lista|Lista Grande|Miniatura|Posters or Miniatura (Titan Skin)|Fanart|Media Info 1|Media Info 2|Media Info 3" default="5"/>
-      <setting id="temporadasView" type="enum" label="Vista de temporadas" values="Lista|Lista Grande|Miniatura|Miniatura (Titan Skin)" default="2"/>
-      <setting id="episodiosView" type="enum" label="Vista de episodios" values="Lista|Lista Grande|Miniatura|Miniatura (Titan Skin)|Media Info 1|Media Info 2|Media Info 3" default="2"/>
+      <setting id="temporadasView" type="enum" label="Vista de temporadas" values="Lista|Lista Grande|Miniatura|Miniatura (Titan Skin)" default="1"/>
+      <setting id="episodiosView" type="enum" label="Vista de episodios" values="Lista|Lista Grande|Miniatura|Miniatura (Titan Skin)|Media Info 1|Media Info 2|Media Info 3" default="1"/>
+    </category>
+	<category label="Filmes e Séries">
+        <setting id="trailer-filmes" type="bool" label="Procurar Trailers para Filmes" default="true"/>
     </category>
 </settings>

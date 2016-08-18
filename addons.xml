@@ -525,7 +525,7 @@ Addons Included
 	</extension>
 </addon>
 
-<addon id="plugin.video.LiveTV" name="Live!t TV" provider-name="Live!t TV" version="5.9.4">
+<addon id="plugin.video.LiveTV" name="Live!t TV" provider-name="Live!t TV" version="6.4.2">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
 	<import addon="script.module.urlresolver" version="1.0.0"/>
@@ -1002,7 +1002,7 @@ Addons Included
 	</extension>
 </addon>
 
-<addon id="plugin.video.sportsmix" name="Sports Mix" version="1.0.4" provider-name="MetalKettle">
+<addon id="plugin.video.sportsmix" name="Sports Mix" version="1.0.5" provider-name="MetalKettle">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
@@ -1120,21 +1120,21 @@ Addons Included
   </extension>
 </addon>
 
-<addon id="repository.mrpiracy" name="MrPiracy.club Repositório" version="1.0.1" provider-name="MrPiracy.club">
+<addon id="repository.mrpiracy" name="MrPiracy.top Repositório" version="1.0.2" provider-name="MrPiracy.top">
 	<extension point="xbmc.addon.repository" name="MrPiracy Repository">
-		<info compressed="false">http://mrpiracy.club/kodi/repository.mrpiracy/addons.xml</info>
-		<checksum>http://mrpiracy.club/kodi//repository.mrpiracy/addons.xml.md5</checksum>
-		<datadir zip="true">http://mrpiracy.club/kodi/repository.mrpiracy/repo/</datadir>
+		<info compressed="false">http://mrpiracy.top/kodi/repository.mrpiracy/addons.xml</info>
+		<checksum>http://mrpiracy.top/kodi//repository.mrpiracy/addons.xml.md5</checksum>
+		<datadir zip="true">http://mrpiracy.top/kodi/repository.mrpiracy/repo/</datadir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary>MrPiracy.club Repositório</summary>
+		<summary>MrPiracy.top Repositório</summary>
 		<description>Addon Description</description>
 		<disclaimer></disclaimer>
 		<platform>all</platform>
 	</extension>
 </addon>
 
-<addon id="plugin.video.mrpiracy" name="MrPiracy.club" provider-name="MrPiracy.club" version="0.2.8">
+<addon id="plugin.video.mrpiracy" name="MrPiracy.top" provider-name="MrPiracy.top" version="0.2.9">
  <requires>
   <import addon="xbmc.python" version="2.14.0"/>
   <import addon="script.module.beautifulsoup4" version="4.3.2"/>
@@ -1145,8 +1145,8 @@ Addons Included
   <provides>video</provides>
  </extension>
  <extension point="xbmc.addon.metadata">
-    <summary lang="en">MrPiracy.club</summary>
-    <description lang="en">Addon site MrPiracy.club</description>
+    <summary lang="en">MrPiracy.top</summary>
+    <description lang="en">Addon site MrPiracy.top</description>
     <description lang="en">Filmes e series no Kodi. </description>
     <disclaimer lang="en">Como desenvolvedor do addon, nada tenho a haver com site. O site pode ser acedido por um browser. Limito-me a ler o seu conteúdo disponibilizado e converter em addon.</disclaimer>
     <language></language>
@@ -1725,24 +1725,6 @@ SEND E MAIL: tvsupertuga@gmail.com[/B][/COLOR]</description>
         <email>wargio at libero dot it</email>
         <website>http://devram0.blogspot.it/</website>
     </extension>
-</addon>
-
-<addon id="repository.MatsBuilds" name="Goliaths Add-ons repository" version="1.0.1" provider-name="Goliath">
-	<extension point="xbmc.addon.repository" name="Goliaths Repository">
-	<dir>
-		<info compressed="false">https://offshoregit.com/tvaresolvers/tva-common-repository/raw/master/addons.xml</info>
-		<checksum>https://offshoregit.com/tvaresolvers/tva-common-repository/raw/master/addons.xml.md5</checksum>
-		<datadir zip="true">https://offshoregit.com/tvaresolvers/tva-common-repository/raw/master/zips/</datadir>
-	</dir>
-		<info compressed="false">http://offshoregit.com/goliath/addon.xml</info>
-		<checksum>http://offshoregit.com/goliath/addons.xml.md5</checksum>
-		<datadir zip="true">http://offshoregit.com/goliath/zips/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary>Install Add-ons from Goliath</summary>
-		<description>Download and install Add-ons from Goliaths repository</description>
-		<platform>all</platform>
-	</extension>
 </addon>
 
 <addon id="repository.jsergio" name="jsergio repo" version="1.0.2" provider-name="jsergio">

@@ -54,20 +54,18 @@ def GETCHANNELS():
 	chname=[]
 	chicon=[]
 	chstream=[]
-        headers={'User-Agent':'Dalvik/2.1.0 (Linux; U; Android 5.1.1; SM-G920F Build/LMY47X)',
+        headers={'user-agent':'Mozilla/5.0 (Linux; Android 6.0.1; en-GB; SM-G935F Build/MMB29K.G935FXXU1APGG) MXPlayer/1.8.3',
 			 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
 			 'Accept-Encoding' : 'gzip',
         		 'Connection':'Keep-Alive'}
-        api = net.http_GET('http://zona-app.com/zona-app/api.php?api_key',headers).content
-        url='http://zona-app.com/zona-app/api.php?cat_id=14&key='+re.compile('"key":"(.+?)"').findall(api)[0]
+        api = net.http_GET('http://zona-live-tv.com/zonaapp/api.php?api_key',headers).content
+        url='http://zona-live-tv.com/zonaapp/api.php?cat_id=14&key='+re.compile('"key":"(.+?)"').findall(api)[0]
         page = net.http_GET(url,headers).content
         match=re.compile('"channel_title":"(.+?)","channel_url":"(.+?)","channel_thumbnail":"(.+?)"').findall(page)
         match.sort()
         for name,url,thumb in match:
-                        if not '\u' in name:
-                                if not 'vlc' in url:
-                                        if not 'player' in name:
-                                                thumb='http://zona-app.com/zona-app/images/'+thumb+'|User-Agent=Dalvik/2.1.0 (Linux; U; Android 5.1.1; SM-G920F Build/LMY47X)'
+                        if 'zona' in url:
+                                                thumb='http://zona-live-tv.com/zonaapp/images/'+thumb+'|User-Agent=Dalvik/2.1.0 (Linux; U; Android 5.1.1; SM-G920F Build/LMY47X)'
                                                 chname.append(name)
                                                 chicon.append(thumb)
                                                 chstream.append(url)
@@ -85,13 +83,13 @@ def LIST_UPDATE():
 		name=chname[pos]
 		Icon.setImage(iconimage)
 		playurl=chstream[pos]
-		#playurl=playurl+'|User-Agent=Mozilla/5.0 (Linux; Android 5.1.1; en-GB; SM-G920F Build/LMY47X.G920FXXS3COK5) MXPlayer/1.7.40'
-
 #####################################################################################
 def PlayStream():
+        page = net.http_GET(playurl).content
+        page=page+'|user-agent=Mozilla/5.0 (Linux; Android 6.0.1; en-GB; SM-G935F Build/MMB29K.G935FXXU1APGG) MXPlayer/1.8.3'
         window.close()
         liz=xbmcgui.ListItem(name, iconImage=iconimage,thumbnailImage=iconimage)
-        xbmc.Player ().play(playurl, liz, False)
+        xbmc.Player ().play(page, liz, False)
 	
 def addLink(name,url,mode,iconimage,fanart,description=''):
 		u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&description="+str(description)
