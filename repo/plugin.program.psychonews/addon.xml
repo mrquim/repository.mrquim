@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="plugin.program.psychonews" version="3.0.0" name="[COLOR aqua]P[/COLOR][COLOR white]sycho News[/COLOR]" provider-name="bit.ly/[COLOR blue][B]AMO[/B][/COLOR][COLOR green]box[/COLOR]">
+  <requires>
+  	<import addon="xbmc.python" version="2.1.0"/>
+  	<import addon="script.module.addon.common" optional="true" />
+  </requires>
+  <extension point="xbmc.python.script" library="default.py">
+    <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.service" library="service.py" start="startup">
+  </extension>
+  <extension point="xbmc.addon.metadata">
+		<summary>Notícias da [COLOR aqua]P[/COLOR][COLOR white]sycho[/COLOR]</summary>
+		<description>[COLOR aqua]P[/COLOR][COLOR white]sycho Media Center[/COLOR]</description>
+		<disclaimer></disclaimer>
+  	<language>en</language>
+  	<platform>all</platform>
+  	<source></source>
+  	<email></email>
+  </extension>
+</addon>

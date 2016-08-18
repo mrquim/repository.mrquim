@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="psycho.mediacenter" name="[COLOR aqua]P[/COLOR][COLOR white]sycho Repo[/COLOR]" version="3.0.0" provider-name="bit.ly/[COLOR blue][B]AMO[/B][/COLOR][COLOR green]box[/COLOR]">
+  <requires>
+	<import addon="plugin.program.psychonews" />
+	<import addon="psycho.mediacenter" />
+  </requires>
+	<extension point="xbmc.addon.repository" name="Demonstration Add-on Repository">
+		<info compressed="false">https://raw.githubusercontent.com/PsychoMC/PsychoMC/master/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/PsychoMC/PsychoMC/master/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/PsychoMC/PsychoMC/master//repo/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Repositorio da [COLOR aqua]P[/COLOR][COLOR white]sycho[/COLOR]</summary>
+		<description>Aqui encontras todos os addons da [COLOR aqua]P[/COLOR][COLOR white]sycho[/COLOR] e também os mais importantes.</description>
+		<disclaimer></disclaimer>
+		<platform>all</platform>
+	</extension>
+</addon>

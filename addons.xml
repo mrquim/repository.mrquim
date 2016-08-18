@@ -1777,18 +1777,52 @@ SEND E MAIL: tvsupertuga@gmail.com[/B][/COLOR]</description>
   </extension>
  </addon>
  
- <addon id="plugin.program.psychowiz" name="[COLOR aqua]P[/COLOR][COLOR white]sycho Wizard[/COLOR]" version="1.0.0" provider-name="bit.ly/[COLOR blue][B]AMO[/B][/COLOR][COLOR green]box[/COLOR]">
+
+
+<addon id="plugin.video.f4mTester" version="2.2.5" name="f4mTester" provider-name="Shani">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.video.F4mProxy" version="2.2.3"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>f4mTester</summary>
+        <description></description>
+        <platform>all</platform>
+    </extension>
+</addon>
+
+<addon id="script.mrknow.urlresolver" name="Mrknow URLResolver" version="2016.07.09.2" provider-name="mrknow" >
+	<requires>
+		<import addon="xbmc.python" version="2.1.0" />
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.python.pluginsource" library="lib/default.py" />
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary lang="en">Resolve common video host URL's to be playable in XBMC/Kodi.</summary>
+		<description lang="en">Resolve common video host URL's to be playable in XBMC/Kodi, simplify addon development of video plugins requiring multi video hosts.</description>
+	</extension>
+</addon>
+
+<addon id="psycho.mediacenter" name="[COLOR aqua]P[/COLOR][COLOR white]sycho Repo[/COLOR]" version="3.0.0" provider-name="bit.ly/[COLOR blue][B]AMO[/B][/COLOR][COLOR green]box[/COLOR]">
   <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
+	<import addon="plugin.program.psychonews" />
+	<import addon="psycho.mediacenter" />
   </requires>
-  <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>executable</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">Wizard da [COLOR aqua]P[/COLOR][COLOR white]sycho[/COLOR]</summary>
-    <description lang="en">[COLOR yellow][B]*[/B][/COLOR]Para usufruir deste addon é necessário uma combinação username/password</description>
-    <platform>all</platform>
-  </extension>
+	<extension point="xbmc.addon.repository" name="Demonstration Add-on Repository">
+		<info compressed="false">https://raw.githubusercontent.com/PsychoMC/PsychoMC/master/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/PsychoMC/PsychoMC/master/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/PsychoMC/PsychoMC/master//repo/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Repositorio da [COLOR aqua]P[/COLOR][COLOR white]sycho[/COLOR]</summary>
+		<description>Aqui encontras todos os addons da [COLOR aqua]P[/COLOR][COLOR white]sycho[/COLOR] e também os mais importantes.</description>
+		<disclaimer></disclaimer>
+		<platform>all</platform>
+	</extension>
 </addon>
 
 <addon id="plugin.video.PsychoTV"
@@ -1828,32 +1862,51 @@ SEND E MAIL: tvsupertuga@gmail.com[/B][/COLOR]</description>
   </extension>
 </addon>
 
-<addon id="plugin.video.f4mTester" version="2.2.5" name="f4mTester" provider-name="Shani">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-        <import addon="script.video.F4mProxy" version="2.2.3"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <summary>f4mTester</summary>
-        <description></description>
-        <platform>all</platform>
-    </extension>
+<addon id="plugin.program.psychowiz" name="[COLOR aqua]P[/COLOR][COLOR white]sycho Wizard[/COLOR]" version="3.0.2" provider-name="bit.ly/[COLOR blue][B]AMO[/B][/COLOR][COLOR green]box[/COLOR]">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+	<import addon="script.module.addon.common" />
+	<import addon="plugin.program.psychonews" />
+	<import addon="psycho.mediacenter" />
+
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+		<summary>Wizard da [COLOR aqua]P[/COLOR][COLOR white]sycho[/COLOR]</summary>
+		<description>Remember who we are, and let’s start a [COLOR aqua]P[/COLOR][COLOR white]sycho[/COLOR]
+	
+		
+		
+		
+		
+		
+		[COLOR yellow][B]*[/B][/COLOR]Para usufruir deste addon é necessário uma combinação username/password</description>
+		<disclaimer></disclaimer>    
+	<platform>all</platform>
+  </extension>
 </addon>
 
-<addon id="script.mrknow.urlresolver" name="Mrknow URLResolver" version="2016.07.09.2" provider-name="mrknow" >
-	<requires>
-		<import addon="xbmc.python" version="2.1.0" />
-	</requires>
-	<extension point="xbmc.python.module" library="lib" />
-	<extension point="xbmc.python.pluginsource" library="lib/default.py" />
-	<extension point="xbmc.addon.metadata">
-		<platform>all</platform>
-		<summary lang="en">Resolve common video host URL's to be playable in XBMC/Kodi.</summary>
-		<description lang="en">Resolve common video host URL's to be playable in XBMC/Kodi, simplify addon development of video plugins requiring multi video hosts.</description>
-	</extension>
+<addon id="plugin.program.psychonews" version="3.0.0" name="[COLOR aqua]P[/COLOR][COLOR white]sycho News[/COLOR]" provider-name="bit.ly/[COLOR blue][B]AMO[/B][/COLOR][COLOR green]box[/COLOR]">
+  <requires>
+  	<import addon="xbmc.python" version="2.1.0"/>
+  	<import addon="script.module.addon.common" optional="true" />
+  </requires>
+  <extension point="xbmc.python.script" library="default.py">
+    <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.service" library="service.py" start="startup">
+  </extension>
+  <extension point="xbmc.addon.metadata">
+		<summary>Notícias da [COLOR aqua]P[/COLOR][COLOR white]sycho[/COLOR]</summary>
+		<description>[COLOR aqua]P[/COLOR][COLOR white]sycho Media Center[/COLOR]</description>
+		<disclaimer></disclaimer>
+  	<language>en</language>
+  	<platform>all</platform>
+  	<source></source>
+  	<email></email>
+  </extension>
 </addon>
 
 </addons>
