@@ -308,16 +308,36 @@ def login2():
 		return resultado
 
 def minhaContabuild():
-	check_login = login()
-	if check_login['datafim']['data'] == '':
+	if (not __ADDON__.getSetting('login_name') or not __ADDON__.getSetting('login_password')):
+		__ALERTA__('Live!t TV', 'Precisa de definir o seu Utilizador e Senha')
 		abrirDefinincoesMesmo()
 	else:
-		data_user = check_login['datafim']['data']
-		addDir(data_user, 'url', None, None, 'Lista', __SITEAddon__+"Imagens/estadomembro.png",'','','','',os.path.join(__ART_FOLDER__, __SKIN__, 'fundo_addon.png'))
+		check_login = login()
+		if check_login['datafim']['data'] == '':
+			abrirDefinincoesMesmo()
+		else:
+			data_user = check_login['datafim']['data']
+			addDir(data_user, 'url', None, None, 'Lista', __SITEAddon__+"Imagens/estadomembro.png",'','','','',os.path.join(__ART_FOLDER__, __SKIN__, 'fundo_addon.png'))
 
 def buildLiveit(tipologia):
-	check_login = login()
-	Menu_inicial(check_login,True,tipologia)
+	if (not __ADDON__.getSetting('login_name') or not __ADDON__.getSetting('login_password')):
+		__ALERTA__('Live!t TV', 'Precisa de definir o seu Utilizador e Senha')
+		abrirDefinincoesMesmo()
+	else:
+		check_login = login()	
+		if check_login['user']['nome'] != '':
+			if check_login['sucesso']['resultado'] == 'yes':
+				Menu_inicial(check_login,True,tipologia)
+			elif check_login['sucesso']['resultado'] == 'utilizador':
+				__ALERTA__('Live!t TV', 'Utilizador incorreto.')
+			elif check_login['sucesso']['resultado'] == 'senha':
+				__ALERTA__('Live!t TV', 'Senha incorreta.')
+			elif check_login['sucesso']['resultado'] == 'ativo':
+				__ALERTA__('Live!t TV', 'O estado do seu Utilizador encontra-se Inactivo. Para saber mais informações entre em contacto pelo email liveitkodi@gmail.com')
+			else:
+				__ALERTA__('Live!t TV', 'Não foi possível abrir a página. Por favor tente novamente.')
+		else:
+			__ALERTA__('Live!t TV', 'Não foi possível abrir a página. Por favor tente novamente.')
 
 ################################
 ###       Clear Cache        ###
@@ -534,28 +554,34 @@ def Menu_inicial(men,build,tipo):
 	_tipouser = men['user']['tipo']
 	_servuser = men['user']['servidor']
 	_nomeuser = men['user']['nome']
-	_senhaadultos = ''
+	_senhaadultos = __ADDON__.getSetting("login_adultos")
 	_fanart = ''
 	if build == True:
-		for menu in men['menus']:
-			tipott = menu['tipo']
-			senha = menu['senha']
-			if tipott == 'Adulto' :
-				_senhaadultos = menu['senha']
-		
 		thread.start_new_thread( obter_ficheiro_epg, () )
 		tipocan = ''
 		urlbuild = ''
 		nomebuild = ''
 		if tipo == 'Desporto' or tipo == 'Crianca' or tipo == 'Canal' or tipo == 'Documentario' or tipo == 'Musica' or tipo == 'Filme' or tipo == 'Noticia' or tipo == 'DE' or tipo == 'FR' or tipo == 'UK' or tipo == 'BR' or tipo == 'ES' or tipo == 'IT' or tipo == 'USA':
 			if _servuser == 'Servidor1':
-				urlbuild = __SITEAddon__+"Ficheiros/canaisaddonservidor1.txt"
+				if _tipouser == 'Desporto':
+					urlbuild = __SITEAddon__+"Ficheiros/desportoservidor1.txt"
+				else:
+					urlbuild = __SITEAddon__+"Ficheiros/canaisaddonservidor1.txt"
 			elif(_servuser == 'Servidor2'):
-				urlbuild = __SITEAddon__+"Ficheiros/canaisaddonservidor2.txt"
+				if _tipouser == 'Desporto':
+					urlbuild = __SITEAddon__+"Ficheiros/desportoservidor2.txt"
+				else:
+					urlbuild = __SITEAddon__+"Ficheiros/canaisaddonservidor2.txt"
 			elif(_servuser == 'Servidor3'):
-				urlbuild = __SITEAddon__+"Ficheiros/canaisaddonservidor3.txt"
+				if _tipouser == 'Desporto':
+					urlbuild = __SITEAddon__+"Ficheiros/desportoservidor3.txt"
+				else:
+					urlbuild = __SITEAddon__+"Ficheiros/canaisaddonservidor3.txt"
 			elif(_servuser == 'Servidor4'):
-				urlbuild = __SITEAddon__+"Ficheiros/canaisaddonservidor4.txt"
+				if _tipouser == 'Desporto':
+					urlbuild = __SITEAddon__+"Ficheiros/desportoservidor4.txt"
+				else:
+					urlbuild = __SITEAddon__+"Ficheiros/canaisaddonservidor4.txt"
 		
 		if tipo == 'Desporto':
 			tipocan = 'Normal'
@@ -618,7 +644,7 @@ def Menu_inicial(men,build,tipo):
 			nomebuild = 'Radios PT'
 			_fanart = __SITEAddon__+"Imagens/radio.png"
 			if _servuser == 'Servidor1':
-				urlbuild = __SITEAddon__+"Ficheiros/radiosaddonservidor1.txt"
+				urlbuild = __SITEAddon__+"Ficheiros/radiosaddonservidor1.txt"	
 			elif(_servuser == 'Servidor2'):
 				urlbuild = __SITEAddon__+"Ficheiros/radiosaddonservidor2.txt"
 			elif(_servuser == 'Servidor3'):
@@ -630,27 +656,47 @@ def Menu_inicial(men,build,tipo):
 			nomebuild = 'Adultos'
 			_fanart = __SITEAddon__+"Imagens/adultos1.png"
 			if _servuser == 'Servidor1':
-				urlbuild = __SITEAddon__+"Ficheiros/adultosaddonservidor1.txt"
+				if _tipouser == 'Desporto':
+					urlbuild = __SITEAddon__+"Ficheiros/adultosaddonservidor1desp.txt"
+				else:
+					urlbuild = __SITEAddon__+"Ficheiros/adultosaddonservidor1.txt"
 			elif(_servuser == 'Servidor2'):
-				urlbuild = __SITEAddon__+"Ficheiros/adultosaddonservidor2.txt"
+				if _tipouser == 'Desporto':
+					urlbuild = __SITEAddon__+"Ficheiros/adultosaddonservidor2desp.txt"
+				else:
+					urlbuild = __SITEAddon__+"Ficheiros/adultosaddonservidor2.txt"
 			elif(_servuser == 'Servidor3'):
-				urlbuild = __SITEAddon__+"Ficheiros/adultosaddonservidor3.txt"
+				if _tipouser == 'Desporto':
+					urlbuild = __SITEAddon__+"Ficheiros/adultosaddonservidor3desp.txt"
+				else:
+					urlbuild = __SITEAddon__+"Ficheiros/adultosaddonservidor3.txt"
 			elif(_servuser == 'Servidor4'):
-				urlbuild = __SITEAddon__+"Ficheiros/adultosaddonservidor4.txt"
+				if _tipouser == 'Desporto':
+					urlbuild = __SITEAddon__+"Ficheiros/adultosaddonservidor4desp.txt"
+				else:
+					urlbuild = __SITEAddon__+"Ficheiros/adultosaddonservidor4.txt"
 		
 		if(tipo == 'Adulto'):
-			if(__ADDON__.getSetting("login_adultos") == ''):
-				__ALERTA__('Live!t TV', 'Preencha o campo senha para adultos.')
-			elif(__ADDON__.getSetting("login_adultos") != _senhaadultos):
-				__ALERTA__('Live!t TV', 'Senha para adultos incorrecta. Verifique e tente de novo.')
-			else:
-				listar_canais_url(nomebuild,urlbuild,'Miniatura',tipocan,_tipouser,'',_fanart)
+			tecladous = xbmc.Keyboard('', 'Insira a sua senha Adultos.')
+			tecladous.doModal()
+			if tecladous.isConfirmed():
+				senhaddutl = tecladous.getText()
+				if(__ADDON__.getSetting("login_adultos") == ''):
+					__ALERTA__('Live!t TV', 'Preencha o campo senha para adultos.')
+				elif(senhaddutl != _senhaadultos):
+					__ALERTA__('Live!t TV', 'Senha para adultos incorrecta. Verifique e tente de novo.')
+				else:
+					__ALERTA__('Live!t TV', 'Após ver este conteúdo vá ao menu Definições e ao submenu Limpar Cache para não gravar a senha adultos inserida. Precaução para as crianças.')
+					listar_canais_url(nomebuild,urlbuild,'Miniatura',tipocan,_tipouser,'',_fanart,True)
 		else:
-			if urlbuild == '':
-				__ALERTA__('Live!t TV', 'Defina as suas Credênciais.')
-				abrirDefinincoesMesmo()
+			if (_tipouser == 'Desporto' and tipo == 'Radio'):
+				__ALERTA__('Live!t TV', 'Como tem o pack Desporto não tem associado as Rádios. Logo não tem qualquer rádio a ouvir. Se entender na próxima renovação peça o pack Total.')
 			else:
-				listar_canais_url(nomebuild,urlbuild,'Miniatura',tipocan,_tipouser,'',_fanart)
+				if urlbuild == '':
+					__ALERTA__('Live!t TV', 'Defina as suas Credênciais.')
+					abrirDefinincoesMesmo()
+				else:
+					listar_canais_url(nomebuild,urlbuild,'Miniatura',tipocan,_tipouser,'',_fanart)
 	else:
 		for menu in men['menus']:
 			nome = menu['nome']
@@ -780,7 +826,7 @@ def listar_grupos(nome_nov,url,estilo,tipo,tipo_user,servidor_user,fanart):
 ###############################################################################################################
 #                                                   Listar Canais                                             #
 ###############################################################################################################
-def listar_canais_url(nome,url,estilo,tipo,tipo_user,servidor_user,fanart):
+def listar_canais_url(nome,url,estilo,tipo,tipo_user,servidor_user,fanart,adultos=False):
 	if url != 'nada':
 		page_with_xml = urllib2.urlopen(url).readlines()
 		f = open(os.path.join(__FOLDER_EPG__, 'epg'), mode="r")
@@ -836,11 +882,11 @@ def listar_canais_url(nome,url,estilo,tipo,tipo_user,servidor_user,fanart):
 						urlteste = rtmp.split('TSDOWNLOADER')
 						tttot = len(urlteste)
 						if tttot == 1:
-							addLink(nomewp,rtmp,img,id_it,srt_f,descri,tipo,tipo_user,id_p,infoLabels,fanart,total)
+							addLink(nomewp,rtmp,img,id_it,srt_f,descri,tipo,tipo_user,id_p,infoLabels,fanart,adultos,total)
 						else:
-							addLink(nomewp,'plugin://plugin.video.f4mTester/?url='+rtmp,img,id_it,srt_f,descri,tipo,tipo_user,id_p,infoLabels,fanart,total)
+							addLink(nomewp,'plugin://plugin.video.f4mTester/?url='+rtmp,img,id_it,srt_f,descri,tipo,tipo_user,id_p,infoLabels,fanart,adultos,total)
 					else:
-						addLink(nomewp,rtmp,img,id_it,srt_f,descri,tipo,tipo_user,id_p,infoLabels,fanart,total)
+						addLink(nomewp,rtmp,img,id_it,srt_f,descri,tipo,tipo_user,id_p,infoLabels,fanart,adultos,total)
 			except:
 				pass
 		
@@ -1711,9 +1757,10 @@ def addFolder(name,url,mode,iconimage,folder):
 	ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=folder)
 	return ok
 
-def addLink(name,url,iconimage,idCanal,srtfilm,descricao,tipo,tipo_user,id_p,infoLabelssss,fanart,total=1):
+def addLink(name,url,iconimage,idCanal,srtfilm,descricao,tipo,tipo_user,id_p,infoLabelssss,fanart,adultos=False,total=1):
 	ok=True
 	cm=[]
+	
 	if tipo != 'Praia' and tipo != 'ProgramasTV' and tipo != 'Filme' and tipo != 'Serie':
 		cm.append(('Ver programação', 'XBMC.RunPlugin(%s?mode=31&name=%s&url=%s&iconimage=%s&idCanal=%s&idffCanal=%s)'%(sys.argv[0],urllib.quote_plus(name), urllib.quote_plus(url), urllib.quote_plus(iconimage), idCanal, id_p)))
 	
