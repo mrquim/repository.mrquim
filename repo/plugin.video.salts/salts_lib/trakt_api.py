@@ -23,11 +23,14 @@ import ssl
 import time
 import kodi
 import log_utils
+import utils
 import utils2
 from db_utils import DB_Connection
 from constants import TRAKT_SECTIONS
 from constants import TEMP_ERRORS
 from constants import SECTIONS
+
+COMPONENT = __name__
 
 class TraktError(Exception):
     pass
@@ -84,7 +87,7 @@ class Trakt_API():
         else:
             cache_limit = 1  # cache other user's list for one hour
 
-        url = '/users/%s/lists/%s/items' % (utils2.to_slug(username), slug)
+        url = '/users/%s/lists/%s/items' % (utils.to_slug(username), slug)
         params = {'extended': 'full,images'}
         list_data = self.__call_trakt(url, params=params, auth=auth, cache_limit=cache_limit, cached=cached)
         return [item[item['type']] for item in list_data if item['type'] == TRAKT_SECTIONS[section][:-1]]
@@ -98,7 +101,7 @@ class Trakt_API():
 
     def get_list_header(self, slug, username=None, auth=True):
         if not username: username = 'me'
-        url = '/users/%s/lists/%s' % (utils2.to_slug(username), slug)
+        url = '/users/%s/lists/%s' % (utils.to_slug(username), slug)
         return self.__call_trakt(url, auth=auth)
 
     def get_lists(self, username=None):
@@ -107,7 +110,7 @@ class Trakt_API():
             cache_limit = self.__get_cache_limit('lists', 'updated_at', True)
         else:
             cache_limit = 0
-        url = '/users/%s/lists' % (utils2.to_slug(username))
+        url = '/users/%s/lists' % (utils.to_slug(username))
         return self.__call_trakt(url, cache_limit=cache_limit)
 
     def get_liked_lists(self, page=None, cached=True):
@@ -141,23 +144,29 @@ class Trakt_API():
     def remove_from_watchlist(self, section, items):
         return self.__manage_watchlist('remove', section, items)
 
-    def get_trending(self, section, page=None):
+    def get_trending(self, section, page=None, filters=None):
+        if filters is None: filters = {}
         url = '/%s/trending' % (TRAKT_SECTIONS[section])
         params = {'extended': 'full,images', 'limit': self.list_size}
+        params.update(filters)
         if page: params['page'] = page
         response = self.__call_trakt(url, params=params)
         return [item[TRAKT_SECTIONS[section][:-1]] for item in response]
 
-    def get_anticipated(self, section, page=None):
+    def get_anticipated(self, section, page=None, filters=None):
+        if filters is None: filters = {}
         url = '/%s/anticipated' % (TRAKT_SECTIONS[section])
         params = {'extended': 'full,images', 'limit': self.list_size}
+        params.update(filters)
         if page: params['page'] = page
         response = self.__call_trakt(url, params=params)
         return [item[TRAKT_SECTIONS[section][:-1]] for item in response]
 
-    def get_popular(self, section, page=None):
+    def get_popular(self, section, page=None, filters=None):
+        if filters is None: filters = {}
         url = '/%s/popular' % (TRAKT_SECTIONS[section])
         params = {'extended': 'full,images', 'limit': self.list_size}
+        params.update(filters)
         if page: params['page'] = page
         return self.__call_trakt(url, params=params)
 
@@ -168,18 +177,20 @@ class Trakt_API():
         response = self.__call_trakt(url, params=params)
         return [item[TRAKT_SECTIONS[section][:-1]] for item in response]
 
-    def get_most_played(self, section, period, page=None):
-        return self.__get_most('played', section, period, page)
+    def get_most_played(self, section, period, page=None, filters=None):
+        return self.__get_most('played', section, period, page, filters)
     
-    def get_most_watched(self, section, period, page=None):
-        return self.__get_most('watched', section, period, page)
+    def get_most_watched(self, section, period, page=None, filters=None):
+        return self.__get_most('watched', section, period, page, filters)
     
-    def get_most_collected(self, section, period, page=None):
-        return self.__get_most('collected', section, period, page)
+    def get_most_collected(self, section, period, page=None, filters=None):
+        return self.__get_most('collected', section, period, page, filters)
     
-    def __get_most(self, category, section, period, page):
+    def __get_most(self, category, section, period, page, filters):
+        if filters is None: filters = {}
         url = '/%s/%s/%s' % (TRAKT_SECTIONS[section], category, period)
         params = {'extended': 'full,images', 'limit': self.list_size}
+        params.update(filters)
         if page: params['page'] = page
         response = self.__call_trakt(url, params=params)
         return [item[TRAKT_SECTIONS[section][:-1]] for item in response]
@@ -232,12 +243,12 @@ class Trakt_API():
     def get_episode_details(self, show_id, season, episode):
         url = '/shows/%s/seasons/%s/episodes/%s' % (show_id, season, episode)
         params = {'extended': 'full,images'}
-        return self.__call_trakt(url, params=params, cache_limit=8)
+        return self.__call_trakt(url, params=params, cache_limit=48)
 
     def get_movie_details(self, show_id):
         url = '/movies/%s' % (show_id)
         params = {'extended': 'full,images'}
-        return self.__call_trakt(url, params=params, cache_limit=8)
+        return self.__call_trakt(url, params=params, cache_limit=48)
 
     def get_people(self, section, show_id, full=False):
         url = '/%s/%s/people' % (TRAKT_SECTIONS[section], show_id)
@@ -248,10 +259,10 @@ class Trakt_API():
             return {}
 
     def search(self, section, query, page=None):
-        url = '/search'
-        params = {'type': TRAKT_SECTIONS[section][:-1], 'query': query, 'limit': self.list_size}
+        url = '/search/%s' % (TRAKT_SECTIONS[section][:-1])
+        params = {'query': query, 'limit': self.list_size}
         if page: params['page'] = page
-        # params.update({'extended': 'full,images'})
+        params.update({'extended': 'full,images'})
         response = self.__call_trakt(url, params=params)
         return [item[TRAKT_SECTIONS[section][:-1]] for item in response]
 
@@ -305,7 +316,7 @@ class Trakt_API():
         length = -1
         result = []
         while length != 0 or length == HIDDEN_SIZE:
-            hidden = self.__call_trakt(url, params=params, cached=cached)
+            hidden = self.__call_trakt(url, params=params, cache_limit=7 * 24, cached=cached)
             length = len(hidden)
             result += hidden
             params['page'] += 1
@@ -313,7 +324,7 @@ class Trakt_API():
     
     def get_user_profile(self, username=None, cached=True):
         if username is None: username = 'me'
-        url = '/users/%s' % (utils2.to_slug(username))
+        url = '/users/%s' % (utils.to_slug(username))
         return self.__call_trakt(url, cached=cached)
         
     def get_bookmarks(self, section=None, full=False):
@@ -332,7 +343,7 @@ class Trakt_API():
                 if bookmark['type'] == 'movie' and int(show_id) == bookmark['movie']['ids']['trakt']:
                     return bookmark['progress']
             else:
-                # log_utils.log('Resume: %s, %s, %s, %s' % (bookmark, show_id, season, episode), log_utils.LOGDEBUG)
+                # log_utils.log('Resume: %s, %s, %s, %s' % (bookmark, show_id, season, episode), log_utils.LOGDEBUG, COMPONENT)
                 if bookmark['type'] == 'episode' and int(show_id) == bookmark['show']['ids']['trakt'] and bookmark['episode']['season'] == int(season) and bookmark['episode']['number'] == int(episode):
                     return bookmark['progress']
 
@@ -371,8 +382,8 @@ class Trakt_API():
     def __get_cache_limit(self, media, activity, cached):
         if cached:
             activity = self.get_last_activity(media, activity)
-            cache_limit = (time.time() - utils2.iso_2_utc(activity))
-            log_utils.log('Now: %s Last: %s Last TS: %s Cache Limit: %.2fs (%.2fh)' % (time.time(), utils2.iso_2_utc(activity), activity, cache_limit, cache_limit / 60 / 60), log_utils.LOGDEBUG)
+            cache_limit = (time.time() - utils.iso_2_utc(activity))
+            log_utils.log('Now: %s Last: %s Last TS: %s Cache Limit: %.2fs (%.2fh)' % (time.time(), utils.iso_2_utc(activity), activity, cache_limit, cache_limit / 60 / 60), log_utils.LOGDEBUG, COMPONENT)
             cache_limit = cache_limit / 60 / 60
         else:
             cache_limit = 0
@@ -437,13 +448,13 @@ class Trakt_API():
         if cached_result and (self.offline or (time.time() - created) < (60 * 60 * cache_limit)):
             result = cached_result
             res_headers = dict(cached_headers)
-            log_utils.log('***Using cached result for: %s' % (url), log_utils.LOGDEBUG)
+            log_utils.log('***Using cached result for: %s' % (url), log_utils.LOGDEBUG, COMPONENT)
         else:
             auth_retry = False
             while True:
                 try:
                     if auth: headers.update({'Authorization': 'Bearer %s' % (self.token)})
-                    log_utils.log('***Trakt Call: %s, header: %s, data: %s cache_limit: %s cached: %s' % (url, headers, json_data, cache_limit, cached), log_utils.LOGDEBUG)
+                    log_utils.log('***Trakt Call: %s, header: %s, data: %s cache_limit: %s cached: %s' % (url, headers, json_data, cache_limit, cached), log_utils.LOGDEBUG, COMPONENT)
                     request = urllib2.Request(url, data=json_data, headers=headers)
                     if method is not None: request.get_method = lambda: method.upper()
                     response = urllib2.urlopen(request, timeout=self.timeout)
@@ -459,7 +470,7 @@ class Trakt_API():
                 except (ssl.SSLError, socket.timeout) as e:
                     if cached_result:
                         result = cached_result
-                        log_utils.log('Temporary Trakt Error (%s). Using Cached Page Instead.' % (str(e)), log_utils.LOGWARNING)
+                        log_utils.log('Temporary Trakt Error (%s). Using Cached Page Instead.' % (str(e)), log_utils.LOGWARNING, COMPONENT)
                     else:
                         raise TransientTraktError('Temporary Trakt Error: ' + str(e))
                 except urllib2.URLError as e:
@@ -467,7 +478,7 @@ class Trakt_API():
                         if e.code in TEMP_ERRORS:
                             if cached_result:
                                 result = cached_result
-                                log_utils.log('Temporary Trakt Error (%s). Using Cached Page Instead.' % (str(e)), log_utils.LOGWARNING)
+                                log_utils.log('Temporary Trakt Error (%s). Using Cached Page Instead.' % (str(e)), log_utils.LOGWARNING, COMPONENT)
                                 break
                             else:
                                 raise TransientTraktError('Temporary Trakt Error: ' + str(e))
@@ -489,13 +500,13 @@ class Trakt_API():
                                 kodi.set_setting('trakt_refresh_token', result['refresh_token'])
                                 auth_retry = True
                         elif e.code == 404:
-                            raise TraktNotFoundError('Object Not Found (%s)' % (e.code))
+                            raise TraktNotFoundError('Object Not Found (%s): %s' % (e.code, url))
                         else:
                             raise
                     elif isinstance(e.reason, socket.timeout) or isinstance(e.reason, ssl.SSLError):
                         if cached_result:
                             result = cached_result
-                            log_utils.log('Temporary Trakt Error (%s). Using Cached Page Instead' % (str(e)), log_utils.LOGWARNING)
+                            log_utils.log('Temporary Trakt Error (%s). Using Cached Page Instead' % (str(e)), log_utils.LOGWARNING, COMPONENT)
                             break
                         else:
                             raise TransientTraktError('Temporary Trakt Error: ' + str(e))
@@ -505,13 +516,13 @@ class Trakt_API():
                     raise
 
         try:
-            js_data = utils2.json_loads_as_str(result)
+            js_data = utils.json_loads_as_str(result)
             if 'x-sort-by' in res_headers and 'x-sort-how' in res_headers:
                 js_data = utils2.sort_list(res_headers['x-sort-by'], res_headers['x-sort-how'], js_data)
         except ValueError:
             js_data = ''
             if result:
-                log_utils.log('Invalid JSON Trakt API Response: %s - |%s|' % (url, js_data), log_utils.LOGERROR)
+                log_utils.log('Invalid JSON Trakt API Response: %s - |%s|' % (url, js_data), log_utils.LOGERROR, COMPONENT)
 
-        # log_utils.log('Trakt Response: %s' % (response), xbmc.LOGDEBUG)
+        # log_utils.log('Trakt Response: %s' % (response), xbmc.LOGDEBUG, COMPONENT)
         return js_data

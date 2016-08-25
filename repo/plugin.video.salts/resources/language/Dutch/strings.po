@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SALTS\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2016-02-22 00:23+0000\n"
+"PO-Revision-Date: 2016-07-10 21:47+0000\n"
 "Last-Translator: Mike Bike\n"
 "Language-Team: Dutch (http://www.transifex.com/tv-addons/salts/language/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -519,12 +519,12 @@ msgid "Next Week"
 msgstr "Volgende Week"
 
 msgctxt "#30125"
-msgid "Mark as Unwatched"
-msgstr "Markeren als Niet Bekeken"
+msgid "Mark as Unwatched (SALTS)"
+msgstr "Bekeken status Verwijderen (SALTS)"
 
 msgctxt "#30126"
-msgid "Mark as Watched"
-msgstr "Markeren als Bekeken"
+msgid "Mark as Watched (SALTS)"
+msgstr "Markeer als Bekeken (SALTS)"
 
 msgctxt "#30127"
 msgid "Rate on trakt.tv"
@@ -855,8 +855,8 @@ msgid "Requested Sources from: %s"
 msgstr "Ophalen Bronnen van: %s"
 
 msgctxt "#30220"
-msgid "Received %s Sources from: %s"
-msgstr "%s Bronnen Ontvangen Van: %s"
+msgid "Received Sources: (%s / %s) from %s"
+msgstr "Bronnen Ontvangen: (%s / %s) van %s"
 
 msgctxt "#30221"
 msgid "Applying Source Filters"
@@ -1053,6 +1053,82 @@ msgstr "Code verloopt over: %s seconden"
 msgctxt "#30269"
 msgid "Authorization was Rejected"
 msgstr "Machtigen is Niet Geslaagd"
+
+msgctxt "#30270"
+msgid "To watch this video scan the QR Code below or visit [COLOR blue]"
+msgstr "Om deze video te bekijken scan de onderstaande QR code of ga naar [COLOR blue]"
+
+msgctxt "#30271"
+msgid "[/COLOR] from any device on the same network as this device."
+msgstr "[/COLOR] op een apparaat dat verbonden is in het zelfde netwerk als dit apparaat."
+
+msgctxt "#30272"
+msgid "Watch It Again"
+msgstr "Nogmaals Bekijken"
+
+msgctxt "#30273"
+msgid "Pick a list to use for Watch It Again"
+msgstr "Kies een lijst om tegbruiken voor Nogmaals Bekijken"
+
+msgctxt "#30274"
+msgid "Use Least Watched Method"
+msgstr "Gebruik Minst Bekeken Methode"
+
+msgctxt "#30275"
+msgid "Use Most Watched Method"
+msgstr "Gebruik Meest Bekeken Methode"
+
+msgctxt "#30276"
+msgid "Use Last Watched Method"
+msgstr "Gebruik Laatst Bekeken Methode"
+
+msgctxt "#30277"
+msgid "Set as Watch It Again List"
+msgstr "Instellen als Nogmaals Bekijken Lijst"
+
+msgctxt "#30278"
+msgid "Playback only allowed from Library & SALTS"
+msgstr "Afspelen alleen geldig van Bibliotheek & SALTS"
+
+msgctxt "#30279"
+msgid "Maximum Allowed Size (GB) (0 = No Limit)"
+msgstr "Maximaal toegestaande formaat (GB) (0 = Geen limiet)"
+
+msgctxt "#30280"
+msgid "Show Episode Airtime in My Next Episodes"
+msgstr "Toon Aflevering zendtijd in Mijn Volgende Afleveringen"
+
+msgctxt "#30281"
+msgid "Include Transodes"
+msgstr "Transodes Invoegen"
+
+msgctxt "#30282"
+msgid "Next Episode"
+msgstr "Volgende Afleveringen"
+
+msgctxt "#30283"
+msgid "Remaining: %s of %s"
+msgstr "Resterend: %s van %s"
+
+msgctxt "#30284"
+msgid "Remaining: %s"
+msgstr "Resterend: %s"
+
+msgctxt "#30285"
+msgid "Genres"
+msgstr "Genres"
+
+msgctxt "#30286"
+msgid "Retrieving Collection"
+msgstr "Ontvang Collectie"
+
+msgctxt "#30287"
+msgid "Adding Items to Directory"
+msgstr "Items Toevoegen aan Map"
+
+msgctxt "#30288"
+msgid "Working..."
+msgstr "Bezig..."
 
 msgctxt "#30500"
 msgid "Addon Theme"
@@ -1741,4 +1817,128 @@ msgstr "Scraper Laatst Geüpdatet "
 msgctxt "#30674"
 msgid "Trakt API Offline Mode"
 msgstr "Trakt API Offline modus"
+
+msgctxt "#30675"
+msgid "Torba IP Authorization"
+msgstr "Torba IP Autorisatie"
+
+msgctxt "#30676"
+msgid "Machine Speed"
+msgstr "CPU Snelheid"
+
+msgctxt "#30677"
+msgid "Automatic"
+msgstr "Automatisch"
+
+msgctxt "#30678"
+msgid "Very Slow"
+msgstr "Erg Langzaam"
+
+msgctxt "#30679"
+msgid "Slow"
+msgstr "Langzaam"
+
+msgctxt "#30680"
+msgid "Medium"
+msgstr "Gemiddeld"
+
+msgctxt "#30681"
+msgid "Fast"
+msgstr "Snel"
+
+msgctxt "#30682"
+msgid "Very Fast"
+msgstr "Erg Snel"
+
+msgctxt "#30683"
+msgid "Show Watch It Again"
+msgstr "Toon Nogmaals Bekijken"
+
+msgctxt "#30684"
+msgid "Show air time in MNE"
+msgstr "Toon uitzendtijd in MVA"
+
+msgctxt "#30686"
+msgid "Show Next Episode Notification"
+msgstr "Toon Volgende Aflevering Melding"
+
+msgctxt "#30687"
+msgid "    Next Episode Delay (secs)"
+msgstr "Volgende Aflevering Vertraging (sec)"
+
+msgctxt "#30688"
+msgid "    Show Next Episode on Unwatched"
+msgstr "Toon Volgende Aflevering bij Onbekeken"
+
+msgctxt "#30689"
+msgid "    Show air time in Next Episode"
+msgstr "Toon uitzendtijd in Volgende Aflevering"
+
+msgctxt "#30690"
+msgid "Show CF Site Protection Captchas"
+msgstr "Toon CF Site Beveiligde Captchas"
+
+msgctxt "#30691"
+msgid "    Next Episode Duration (secs)"
+msgstr "Volgende Afleveringen tijdsduur (sec)"
+
+msgctxt "#30692"
+msgid "Show Genres"
+msgstr "Toon Genres"
+
+msgctxt "#30693"
+msgid "Movie Genre List"
+msgstr "Film Genre Lijst"
+
+msgctxt "#30694"
+msgid "TV Genre List"
+msgstr "Serie Genre Lijst"
+
+msgctxt "#30695"
+msgid "Trending"
+msgstr "Uitgelicht"
+
+msgctxt "#30696"
+msgid "Popular"
+msgstr "Populair"
+
+msgctxt "#30697"
+msgid "Anticipated"
+msgstr "Verwacht"
+
+msgctxt "#30698"
+msgid "Most Watched (Week)"
+msgstr "Meest Bekeken (Week)"
+
+msgctxt "#30699"
+msgid "Most Watched (Month)"
+msgstr "Meest Bekeken (Maand)"
+
+msgctxt "#30700"
+msgid "Most Watched (All)"
+msgstr "Meest Bekeken (Totaal)"
+
+msgctxt "#30701"
+msgid "Most Played (Week)"
+msgstr "Meest Afgespeeld (Week)"
+
+msgctxt "#30702"
+msgid "Most Played (Month)"
+msgstr "Meest Afgespeeld (Maand)"
+
+msgctxt "#30703"
+msgid "Most Played (All)"
+msgstr "Meest Afgespeeld (Totaal)"
+
+msgctxt "#30704"
+msgid "Most Collected (Week)"
+msgstr "Meest Toegevoegd (Week)"
+
+msgctxt "#30705"
+msgid "Most Collected (Month)"
+msgstr "Meest Toegevoegd (Maand)"
+
+msgctxt "#30706"
+msgid "Most Collected (All)"
+msgstr "Meest Toegevoegd (Totaal)"
 

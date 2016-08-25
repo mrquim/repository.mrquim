@@ -3,13 +3,15 @@
 # Addon Provider: TV Addons
 # Translators:
 # Ante Ruić <ante.ruic@st.htnet.hr>, 2015-2016
-# Natko <natko_maniac@hotmail.com>, 2015
+# Anton G, 2016
+# natko1412 <natko_maniac@hotmail.com>, 2016
+# natko1412 <natko_maniac@hotmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: SALTS\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2016-02-20 09:51+0000\n"
-"Last-Translator: tknorris\n"
+"PO-Revision-Date: 2016-07-27 07:12+0000\n"
+"Last-Translator: Anton G\n"
 "Language-Team: Croatian (http://www.transifex.com/tv-addons/salts/language/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -518,12 +520,12 @@ msgid "Next Week"
 msgstr "Sljedeći tjedan"
 
 msgctxt "#30125"
-msgid "Mark as Unwatched"
-msgstr "Označi kao nepogledan"
+msgid "Mark as Unwatched (SALTS)"
+msgstr "Označi kao nepogledano (SALTS)"
 
 msgctxt "#30126"
-msgid "Mark as Watched"
-msgstr "Označi kao pogledan"
+msgid "Mark as Watched (SALTS)"
+msgstr "Označi kao pogledano (SALTS)"
 
 msgctxt "#30127"
 msgid "Rate on trakt.tv"
@@ -853,10 +855,6 @@ msgctxt "#30219"
 msgid "Requested Sources from: %s"
 msgstr "Traženi Izvori iz: %s"
 
-msgctxt "#30220"
-msgid "Received %s Sources from: %s"
-msgstr "Primljeni %s izvori iz: %s"
-
 msgctxt "#30221"
 msgid "Applying Source Filters"
 msgstr "Primjena Filtera Izvora"
@@ -984,6 +982,138 @@ msgstr "([COLOR red]***Svi podaci DB bit će izgubljeni.***[/COLOR])"
 msgctxt "#30252"
 msgid "DB Reset Failed: %s"
 msgstr "DB Reset nije uspio: %s"
+
+msgctxt "#30253"
+msgid "No Streamable Url Found"
+msgstr "Nije pronađen url "
+
+msgctxt "#30254"
+msgid "Discovering Next Episodes"
+msgstr "Otkrivanje sljedećih epizoda"
+
+msgctxt "#30255"
+msgid "Retrieving Watched History"
+msgstr "Preuzimanje povijesti gledanja"
+
+msgctxt "#30256"
+msgid "Retrieving Watchlist"
+msgstr "Preuzimanje Watchliste"
+
+msgctxt "#30257"
+msgid "Retrieving Hidden Progress List"
+msgstr "Preuzimanje skrivene liste napretka"
+
+msgctxt "#30258"
+msgid "Requesting Progress for: %s"
+msgstr "Zatražujem napredak za: %s"
+
+msgctxt "#30259"
+msgid "Received Progress for: %s"
+msgstr "Dobivan napredak za: %s"
+
+msgctxt "#30260"
+msgid "Reset Related Urls"
+msgstr "Resetiraj povezane linkove"
+
+msgctxt "#30261"
+msgid "Related Urls Cleared: %s"
+msgstr "Povezani linkovi očišćeni: %s"
+
+msgctxt "#30262"
+msgid "Anticipated %s"
+msgstr "Očekivano %s"
+
+msgctxt "#30263"
+msgid "Set as Sources View"
+msgstr "Postavi kao pregled izvora"
+
+msgctxt "#30264"
+msgid "Set Related Season Url (Search)"
+msgstr "Postavi povezani link sezone (Pretraga)"
+
+msgctxt "#30265"
+msgid "Trakt API Offline Mode Enabled"
+msgstr "Trakt izvanmrežni način rada omogućen"
+
+msgctxt "#30266"
+msgid "On ANY device, visit: %s"
+msgstr "Na BILO KOJEM uređaju, posjetite: %s"
+
+msgctxt "#30267"
+msgid "When prompted, enter code: %s"
+msgstr "Kada Vas upita, upišite kod: %s"
+
+msgctxt "#30268"
+msgid "Code expires in: %s seconds"
+msgstr "Kod istječe za %s sekundi"
+
+msgctxt "#30269"
+msgid "Authorization was Rejected"
+msgstr "Autorizacija je odbijena"
+
+msgctxt "#30270"
+msgid "To watch this video scan the QR Code below or visit [COLOR blue]"
+msgstr "Da pogledate ovaj video, skenirajte QR kod ispod ili posjetite [COLOR blue]"
+
+msgctxt "#30271"
+msgid "[/COLOR] from any device on the same network as this device."
+msgstr "[/COLOR] sa bilo kojeg uređaja na istoj mreži kao i ovaj uređaj."
+
+msgctxt "#30272"
+msgid "Watch It Again"
+msgstr "Pogledaj opet"
+
+msgctxt "#30273"
+msgid "Pick a list to use for Watch It Again"
+msgstr "Izaberi listu za korištenje uz \"Pogledaj opet\""
+
+msgctxt "#30274"
+msgid "Use Least Watched Method"
+msgstr "Koristi najmanje gledano metodu"
+
+msgctxt "#30275"
+msgid "Use Most Watched Method"
+msgstr "Koristi najviše gledano metodu"
+
+msgctxt "#30276"
+msgid "Use Last Watched Method"
+msgstr "Koristi posljednje gledano metodu"
+
+msgctxt "#30277"
+msgid "Set as Watch It Again List"
+msgstr "Postavi kao listu za \"Pogledaj opet\""
+
+msgctxt "#30278"
+msgid "Playback only allowed from Library & SALTS"
+msgstr "Reprodukcija dozvoljena samo iz Biblioteke & SALTS-a"
+
+msgctxt "#30279"
+msgid "Maximum Allowed Size (GB) (0 = No Limit)"
+msgstr "Najveća dopuštena veličina (GB) (0 = Nema limita)"
+
+msgctxt "#30280"
+msgid "Show Episode Airtime in My Next Episodes"
+msgstr "Prikaži vrijeme prikazivanja epizode u \"Moje sljedeće epizode\""
+
+msgctxt "#30281"
+msgid "Include Transodes"
+msgstr "Uključi Transodes"
+
+msgctxt "#30282"
+msgid "Next Episode"
+msgstr "Sljedeća epizoda"
+
+msgctxt "#30283"
+msgid "Remaining: %s of %s"
+msgstr "Preostalo: %s od %s"
+
+msgctxt "#30284"
+msgid "Remaining: %s"
+msgstr "Preostalo: %s"
+
+msgctxt "#30285"
+msgid "Genres"
+msgstr "Žanrovi"
 
 msgctxt "#30500"
 msgid "Addon Theme"
@@ -1145,6 +1275,194 @@ msgctxt "#30539"
 msgid "Show Search"
 msgstr "Pokaži Pretraživanje"
 
+msgctxt "#30540"
+msgid "Default Views"
+msgstr "Zadani pregledi"
+
+msgctxt "#30541"
+msgid "Default Movies View (0 = None)"
+msgstr "Zadani pregled - Filmovi (0 = Ništa)"
+
+msgctxt "#30542"
+msgid "Default TV Shows View (0 = None)"
+msgstr "Zadani pregled - TV Serije (0 = Ništa)"
+
+msgctxt "#30543"
+msgid "Default Seasons View (0 = None)"
+msgstr "Zadani pregled - Sezone (0 = Ništa)"
+
+msgctxt "#30544"
+msgid "Default Episodes View (0 = None)"
+msgstr "Zadani pregled - Epizode (0 = Ništa)"
+
+msgctxt "#30545"
+msgid "General"
+msgstr "Općenito"
+
+msgctxt "#30546"
+msgid "User Interface"
+msgstr "Korisničko sučelje"
+
+msgctxt "#30547"
+msgid "How do I authorize SALTS to access my trakt.tv account?"
+msgstr "Kako da odobrim SALTS-u pristup mom trakt.tv računu?"
+
+msgctxt "#30548"
+msgid "Use HTTPS"
+msgstr "Koristi HTTPS"
+
+msgctxt "#30549"
+msgid "Trakt Timeout (seconds) (0=No Limit)"
+msgstr "Trakt Timeout (sekunde) (0=Bez limita)"
+
+msgctxt "#30550"
+msgid "Trakt Page Size"
+msgstr "Veličina Trakt stranice"
+
+msgctxt "#30551"
+msgid "Pre-Test All Direct Sources"
+msgstr "Pred-ispitaj sve direktne izvore"
+
+msgctxt "#30552"
+msgid "Use Trakt Bookmarks"
+msgstr "Koristi Trakt oznake"
+
+msgctxt "#30555"
+msgid "Include People"
+msgstr "Uključi ljude"
+
+msgctxt "#30556"
+msgid "Minimum Image Size"
+msgstr "Minimalna veličina slike"
+
+msgctxt "#30557"
+msgid "Library Integration"
+msgstr "Integracija s bibliotekom"
+
+msgctxt "#30558"
+msgid "TV Show Folder"
+msgstr "Mapa TV Serija"
+
+msgctxt "#30559"
+msgid "Movie Folder"
+msgstr "Mapa Filmova"
+
+msgctxt "#30560"
+msgid "Automatically Update Subscriptions"
+msgstr "Automatski osvježi pretplate"
+
+msgctxt "#30561"
+msgid "     Update Interval (hours)"
+msgstr "Interval osvježavanja (sati)"
+
+msgctxt "#30562"
+msgid "     During StartUp?"
+msgstr "Tijekom pokretanja?"
+
+msgctxt "#30563"
+msgid "     During Playback?"
+msgstr "Tijekom reprodukcije?"
+
+msgctxt "#30564"
+msgid "Require Site Page for Movies?"
+msgstr "Zahtjevaj svoju stranicu  za filmove?"
+
+msgctxt "#30565"
+msgid "Include specials in library?"
+msgstr "Uključi specijalne epizode u biblioteku?"
+
+msgctxt "#30566"
+msgid "Include episodes with unknown air dates"
+msgstr "Uključi epizode s nepoznatim datumima prikazivanja?"
+
+msgctxt "#30567"
+msgid "Update Library Afterward?"
+msgstr "Osvježi biblioteku nakon tog?"
+
+msgctxt "#30568"
+msgid "Show Notifications?"
+msgstr "Prikaži obavijesti?"
+
+msgctxt "#30569"
+msgid "Include Movies?"
+msgstr "Uvrsti filmove?"
+
+msgctxt "#30570"
+msgid "Prune Ended Shows?"
+msgstr "Pojednostavi završene serije?"
+
+msgctxt "#30571"
+msgid "Source Management"
+msgstr "Upravljanje izvorima"
+
+msgctxt "#30572"
+msgid "Auto-Play Sources"
+msgstr "Automatska reprodukcija izvora"
+
+msgctxt "#30573"
+msgid "    Source Selection Method"
+msgstr "Metoda odabira izvora"
+
+msgctxt "#30574"
+msgid "Show Download Option"
+msgstr "Prikaži opciju preuzimanja"
+
+msgctxt "#30575"
+msgid "    Show Download Progress"
+msgstr "Prikaži napredak preuzimanja"
+
+msgctxt "#30576"
+msgid "    TV Show Download Folder"
+msgstr "Direktorij preuzimanja TV serija"
+
+msgctxt "#30577"
+msgid "    Movie Download Folder"
+msgstr "Direktorij preuzimanja filmova"
+
+msgctxt "#30578"
+msgid "Scraper Timeout (seconds) (0=No Limit)"
+msgstr "Scraper Timeout (sekunde) (0=Bez limita)"
+
+msgctxt "#30579"
+msgid "Maximum Source Results (0=No Limit)"
+msgstr "Maksimalni broj rezultata izvora (0=Bez limita)"
+
+msgctxt "#30580"
+msgid "Filter Out Unusable Sources"
+msgstr "Filtriraj neupotrebljive izvore"
+
+msgctxt "#30581"
+msgid "Source Exclusion List"
+msgstr "Lista ekskluzije izvora"
+
+msgctxt "#30582"
+msgid "Maximum Allowed TV Show Quality"
+msgstr "Najveća dopuštena kvaliteta TV Serija"
+
+msgctxt "#30583"
+msgid "Maximum Allowed Movie Quality"
+msgstr "Najveća dopuštena kvaliteta filmova"
+
+msgctxt "#30584"
+msgid "Match episode air date when season & episode fails"
+msgstr "Uskladi datum emitiranja kad sezona i epizoda ne uspiju"
+
+msgctxt "#30585"
+msgid "Match episode title when season & episode fails"
+msgstr "Uskladi naslov epizode kad sezona i epizoda ne uspiju"
+
+msgctxt "#30586"
+msgid "Automatically disable ineffective scrapers"
+msgstr "Automatski onemogući neefikasne stranice"
+
+msgctxt "#30605"
+msgid "Source"
+msgstr "Izvor"
+
+msgctxt "#30608"
+msgid "Rating"
+msgstr "Ocijena"
+
 msgctxt "#30612"
 msgid "Base Url"
 msgstr "Bazni Url"
@@ -1153,11 +1471,87 @@ msgctxt "#30613"
 msgid "Include in Page Existence checks?"
 msgstr "Uključiti u provjeru postojanja stranice"
 
+msgctxt "#30615"
+msgid "Enable Subtitles"
+msgstr "Omogući podnapise"
+
+msgctxt "#30619"
+msgid "Require HD"
+msgstr "Zahtjevanje HD"
+
+msgctxt "#30624"
+msgid "    Address"
+msgstr "Adresa"
+
+msgctxt "#30625"
+msgid "    Port"
+msgstr "Port"
+
+msgctxt "#30627"
+msgid "    Password"
+msgstr "Lozinka"
+
+msgctxt "#30634"
+msgid "Subtitles"
+msgstr "Titlovi"
+
+msgctxt "#30635"
+msgid "Database"
+msgstr "Baza podataka"
+
+msgctxt "#30636"
+msgid "Most Recent"
+msgstr "Nedavno"
+
+msgctxt "#30641"
+msgid "Show Mosts"
+msgstr "Pokaži naj"
+
+msgctxt "#30643"
+msgid "Recently Added"
+msgstr "Nedavno dodano"
+
 msgctxt "#30646"
 msgid "Include Watchlist in My Next Episodes"
 msgstr "Uključi Listu gledanja u Moje sljedeće Epizode"
 
+msgctxt "#30651"
+msgid "All"
+msgstr "Sve"
+
+msgctxt "#30667"
+msgid "Continue"
+msgstr "Nastavi"
+
 msgctxt "#30668"
 msgid "Cancel"
 msgstr "Odustani"
+
+msgctxt "#30692"
+msgid "Show Genres"
+msgstr "Pokaže žanrove"
+
+msgctxt "#30695"
+msgid "Trending"
+msgstr "U trendu"
+
+msgctxt "#30696"
+msgid "Popular"
+msgstr "Popularno"
+
+msgctxt "#30698"
+msgid "Most Watched (Week)"
+msgstr "Najgledanije (tjedno)"
+
+msgctxt "#30699"
+msgid "Most Watched (Month)"
+msgstr "Najgledanije (mjesečno)"
+
+msgctxt "#30700"
+msgid "Most Watched (All)"
+msgstr "Najgledanije svih vremena"
+
+msgctxt "#30703"
+msgid "Most Played (All)"
+msgstr "Najčešće reproduciranih svih vremena"
 

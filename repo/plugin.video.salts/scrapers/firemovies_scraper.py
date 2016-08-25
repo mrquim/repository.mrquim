@@ -18,21 +18,19 @@
 import re
 import urllib
 import urlparse
-
-from salts_lib import dom_parser
-from salts_lib import kodi
-from salts_lib import log_utils
+import kodi
+import log_utils
+import dom_parser
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import QUALITIES
 from salts_lib.constants import VIDEO_TYPES
 import scraper
 
-
 BASE_URL = 'http://firemovieshd.com'
 Q_MAP = {'TS': QUALITIES.LOW, 'CAM': QUALITIES.LOW, 'HDTS': QUALITIES.LOW, 'HD 720P': QUALITIES.HD720}
 
-class FireMovies_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -46,13 +44,6 @@ class FireMovies_Scraper(scraper.Scraper):
     @classmethod
     def get_name(cls):
         return 'FireMoviesHD'
-
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        label = '[%s] %s' % (item['quality'], item['host'])
-        return label
 
     def get_sources(self, video):
         source_url = self.get_url(video)
@@ -81,9 +72,6 @@ class FireMovies_Scraper(scraper.Scraper):
                 hoster = {'multi-part': False, 'host': host, 'class': self, 'quality': sources[source], 'views': None, 'rating': None, 'url': source, 'direct': True}
                 hosters.append(hoster)
         return hosters
-
-    def get_url(self, video):
-        return self._default_get_url(video)
 
     def search(self, video_type, title, year, season=''):
         search_url = urlparse.urljoin(self.base_url, '/?s=%s' % (urllib.quote_plus(title)))

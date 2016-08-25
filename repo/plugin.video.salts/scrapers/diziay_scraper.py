@@ -17,23 +17,21 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 import re
-import urllib
 import urlparse
-
-from salts_lib import dom_parser
-from salts_lib import kodi
-from salts_lib import log_utils
+import kodi
+import log_utils
+import dom_parser
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import VIDEO_TYPES
 import scraper
 
-
 BASE_URL = 'http://diziay.com'
 SEASON_URL = '/posts/filmgonder.php?action=sezongets'
+AJAX_URL = 'http://dizipas.org/player/ajax.php?dizi=%s'
 XHR = {'X-Requested-With': 'XMLHttpRequest'}
 
-class Diziay_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -48,18 +46,10 @@ class Diziay_Scraper(scraper.Scraper):
     def get_name(cls):
         return 'Diziay'
 
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        label = '[%s] %s' % (item['quality'], item['host'])
-        if 'subs' in item and item['subs']:
-            label += ' (Turkish subtitles)'
-        return label
-
     def get_sources(self, video):
         source_url = self.get_url(video)
         hosters = []
+        sources = []
         if source_url and source_url != FORCE_NO_MATCH:
             page_url = urlparse.urljoin(self.base_url, source_url)
             html = self._http_get(page_url, cache_limit=1)
@@ -68,51 +58,43 @@ class Diziay_Scraper(scraper.Scraper):
                 iframe_url = dom_parser.parse_dom(fragment[0], 'iframe', ret='src')
                 if iframe_url:
                     html = self._http_get(iframe_url[0], cache_limit=.5)
-
-                    # if captions exist, then they aren't hardcoded
-                    if re.search('kind\s*:\s*"captions"', html):
-                        subs = False
-                    else:
-                        subs = True
-                    
-                    sources = []
-                    for name, stream_url in self.__get_stream_cookies2().items():
-                        if re.match('source_\d+p?', name):
-                            sources.append(urllib.unquote(stream_url))
-
-                    for stream_url in dom_parser.parse_dom(html, 'source', {'type': 'video/mp4'}, ret='src'):
-                        sources.append(stream_url)
-                        
-                    sources += self.__get_hex_sources(html)
-                    
+                    sources.append(self.__get_embedded_sources(html))
+                    sources.append(self.__get_linked_sources(html))
                     for source in sources:
-                            if self._get_direct_hostname(source) == 'gvideo':
-                                quality = scraper_utils.gv_get_quality(source)
-                                hoster = {'multi-part': False, 'host': self._get_direct_hostname(source), 'class': self, 'quality': quality, 'views': None, 'rating': None, 'url': source, 'direct': True, 'subs': subs}
+                        for stream_url in source['sources']:
+                            host = self._get_direct_hostname(stream_url)
+                            if host == 'gvideo':
+                                quality = scraper_utils.gv_get_quality(stream_url)
+                                hoster = {'multi-part': False, 'host': host, 'class': self, 'quality': quality, 'views': None, 'rating': None, 'url': stream_url, 'direct': True}
+                                hoster['subs'] = source.get('subs', True)
                                 hosters.append(hoster)
     
         return hosters
 
-    def __get_hex_sources(self, html):
+    def __get_embedded_sources(self, html):
         sources = []
-        match = re.search("document\.write\('(.*?)'\)", html)
+        # if captions exist, then they aren't hardcoded
+        subs = '' if re.search('''"?kind"?\s*:\s*"?captions"?''', html) else 'Turkish subtitles'
+        for stream_url in dom_parser.parse_dom(html, 'source', {'type': 'video/mp4'}, ret='src'):
+            sources.append(stream_url)
+        return {'sources': sources, 'subs': subs}
+        
+    def __get_linked_sources(self, html):
+        sources = []
+        subs = 'Turkish subtitles'
+        match = re.search('fvid\s*=\s*"([^"]+)', html)
         if match:
-            for match in re.finditer("<source\s+src=\\\\'(.*?)\\\\'", match.group(1)):
-                    source = match.group(1).replace('\\x', '')
-                    sources.append(source.decode('hex'))
-                    
-        return sources
+            ajax_url = AJAX_URL % (match.group(1))
+            html = self._http_get(ajax_url, headers=XHR, cache_limit=.5)
+            js_result = scraper_utils.parse_json(html, ajax_url)
+            # subs are hardcoded if none exist
+            subs = '' if 'altyazi' in js_result and js_result['altyazi'] else 'Turkish subtitles'
+            for source in js_result.get('success', []):
+                if 'src' in source:
+                    sources.append(source['src'])
+                        
+        return {'sources': sources, 'subs': subs}
     
-    def __get_stream_cookies2(self):
-        cj = self._set_cookies(self.base_url, {})
-        cookies = {}
-        for cookie in cj:
-            cookies[cookie.name] = cookie.value
-        return cookies
-
-    def get_url(self, video):
-        return self._default_get_url(video)
-
     def _get_episode_url(self, show_url, video):
         url = urlparse.urljoin(self.base_url, show_url)
         html = self._http_get(url, cache_limit=24)

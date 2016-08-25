@@ -17,15 +17,14 @@
 """
 import re
 import urlparse
-from salts_lib import kodi
-from salts_lib import log_utils
+import kodi
+import log_utils
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import VIDEO_TYPES
-from salts_lib.kodi import i18n
+from salts_lib.utils2 import i18n
 from salts_lib.constants import QUALITIES
 import scraper
-
 
 VIDEO_EXT = ['MKV', 'AVI', 'MP4']
 MIN_MEG = 100
@@ -33,7 +32,7 @@ LIST_URL = '/api/transfer/list'
 FOLDER_URL = '/api/folder/list'
 BROWSE_URL = '/api/torrent/browse?hash=%s'
 
-class PremiumizeV2_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = ''
     base_name = 'Premiumize.me'
 
@@ -57,17 +56,6 @@ class PremiumizeV2_Scraper(scraper.Scraper):
     @classmethod
     def get_name(cls):
         return 'Premiumize.V2'
-
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        label = '[%s] %s' % (item['quality'], item['host'])
-        if 'size' in item:
-            label += ' (%s)' % (item['size'])
-        if 'extra' in item:
-            label += ' [%s]' % (item['extra'])
-        return label
 
     def get_sources(self, video):
         hosters = []
@@ -123,15 +111,15 @@ class PremiumizeV2_Scraper(scraper.Scraper):
             return scraper_utils.height_get_quality(item['height'])
         elif 'name' in item:
             if video.video_type == VIDEO_TYPES.MOVIE:
-                _title, _year, height, _extra = scraper_utils.parse_movie_link(item['name'])
+                meta = scraper_utils.parse_movie_link(item['name'])
             else:
-                _title, _season, _episode, height, _extra = scraper_utils.parse_episode_link(item['name'])
-            return scraper_utils.height_get_quality(height)
+                meta = scraper_utils.parse_episode_link(item['name'])
+            return scraper_utils.height_get_quality(meta['height'])
         else:
             return QUALITIES.HIGH
         
     def get_url(self, video):
-        url = self._default_get_url(video)
+        url = super(self.__class__, self).get_url(video)
         if url is None and video.video_type == VIDEO_TYPES.EPISODE:
             return self.__find_episodes(video)
         return url

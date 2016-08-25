@@ -17,9 +17,9 @@
 """
 import re
 import urlparse
-from salts_lib import log_utils
-from salts_lib import dom_parser
-from salts_lib import kodi
+import log_utils
+import kodi
+import dom_parser
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import QUALITIES
@@ -30,7 +30,7 @@ import scraper
 BASE_URL = 'http://netflix-putlocker.com'
 QUALITY_MAP = {'DVD': QUALITIES.HIGH, 'TS': QUALITIES.MEDIUM, 'CAM': QUALITIES.LOW}
 
-class MovieHut_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -45,15 +45,8 @@ class MovieHut_Scraper(scraper.Scraper):
     def get_name(cls):
         return 'MovieHut'
 
-    def resolve_link(self, link):
-        return link
-
     def format_source_label(self, item):
-        label = '[%s] %s' % (item['quality'], item['host'])
-        if 'label' in item:
-            label += ' (%s)' % (item['label'])
-        if 'views' in item and item['views']:
-            label += ' (%s views)' % item['views']
+        label = super(self.__class__, self).format_source_label(item)
         if 'part_label' in item:
             label += ' (%s)' % (item['part_label'])
         return label
@@ -77,7 +70,7 @@ class MovieHut_Scraper(scraper.Scraper):
                 if host is not None:
                     quality = scraper_utils.get_quality(video, host, QUALITY_MAP.get(q_str, QUALITIES.HIGH))
                     hoster = {'multi-part': multipart, 'host': host, 'class': self, 'quality': quality, 'views': views, 'rating': None, 'url': stream_url, 'direct': False}
-                    hoster['label'] = label
+                    hoster['extra'] = label
                     hosters.append(hoster)
                     for part in parts:
                         stream_url, part_label = part
@@ -87,9 +80,6 @@ class MovieHut_Scraper(scraper.Scraper):
                         hosters.append(part_hoster)
             
         return hosters
-
-    def get_url(self, video):
-        return self._default_get_url(video)
 
     def search(self, video_type, title, year, season=''):
         results = []

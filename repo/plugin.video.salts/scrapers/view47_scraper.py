@@ -16,25 +16,22 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 import re
-import time
 import urllib
 import urlparse
-
-from salts_lib import dom_parser
-from salts_lib import kodi
+import kodi
+import log_utils
+import dom_parser
 from salts_lib import scraper_utils
-from salts_lib import log_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import QUALITIES
 from salts_lib.constants import VIDEO_TYPES
 import scraper
 
-
 BASE_URL = 'http://view47.com'
 GVIDEO_NAMES = ['picasa']
 HOSTS = {'vidag': 'vid.ag', 'videott': 'video.tt'}
 
-class View47_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -57,9 +54,6 @@ class View47_Scraper(scraper.Scraper):
             for source in self.__get_links(link):
                 return source
         
-    def format_source_label(self, item):
-        return '[%s] %s' % (item['quality'], item['host'])
-
     def get_sources(self, video):
         source_url = self.get_url(video)
         hosters = []
@@ -104,9 +98,6 @@ class View47_Scraper(scraper.Scraper):
                     
         return sources
     
-    def get_url(self, video):
-        return self._default_get_url(video)
-    
     def _get_episode_url(self, season_url, video):
         episode_pattern = 'href="([^"]+)[^>]*title="Watch\s+Episode\s+%s"' % (video.episode)
         return self._default_get_episode_url(season_url, video, episode_pattern)
@@ -123,7 +114,7 @@ class View47_Scraper(scraper.Scraper):
                 match_url = match_url[0]
                 match_title = match_title[0]
                 is_season = re.search('S(?:eason\s+)?(\d+)$', match_title, re.I)
-                if not is_season and video_type == VIDEO_TYPES.MOVIE or is_season and VIDEO_TYPES.SEASON:
+                if (not is_season and video_type == VIDEO_TYPES.MOVIE) or (is_season and video_type == VIDEO_TYPES.SEASON):
                     if video_type == VIDEO_TYPES.MOVIE:
                         if year_frag:
                             match_year = year_frag[0]

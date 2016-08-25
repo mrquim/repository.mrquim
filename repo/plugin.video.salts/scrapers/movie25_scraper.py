@@ -19,8 +19,9 @@ import base64
 import re
 import urllib
 import urlparse
-from salts_lib import dom_parser
-from salts_lib import kodi
+import kodi
+import log_utils
+import dom_parser
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import QUALITIES
@@ -28,10 +29,10 @@ from salts_lib.constants import VIDEO_TYPES
 import scraper
 
 
-QUALITY_MAP = {'DVD': QUALITIES.HIGH, 'CAM': QUALITIES.LOW}
-BASE_URL = 'http://movie25.hk'
+QUALITY_MAP = {'DVD': QUALITIES.HIGH, 'TS': QUALITIES.MEDIUM, 'CAM': QUALITIES.LOW}
+BASE_URL = 'http://tinklepad.is'
 
-class Movie25_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -62,9 +63,6 @@ class Movie25_Scraper(scraper.Scraper):
         else:
                 return link
 
-    def format_source_label(self, item):
-        return '[%s] %s' % (item['quality'], item['host'])
-
     def get_sources(self, video):
         source_url = self.get_url(video)
         hosters = []
@@ -77,29 +75,48 @@ class Movie25_Scraper(scraper.Scraper):
             if match:
                 quality = QUALITY_MAP.get(match.group(1).strip().upper())
 
-            for match in re.finditer('id="link_name">\s*([^<]+).*?href="([^"]+)', html, re.DOTALL):
-                host, url = match.groups()
-                match = re.search('url=([^&]+)', url)
-                if match:
-                    url = base64.b64decode(match.group(1))
-                    host = urlparse.urlparse(url).hostname
-                    
-                hoster = {'multi-part': False, 'host': host, 'class': self, 'url': url, 'quality': scraper_utils.get_quality(video, host, quality), 'rating': None, 'views': None, 'direct': False}
-                hosters.append(hoster)
+            seen_links = {}
+            for item in dom_parser.parse_dom(html, 'li', {'id': 'playing_button'}):
+                stream_url = dom_parser.parse_dom(item, 'a', ret='href')
+                if stream_url:
+                    stream_url = stream_url[0]
+                    match = re.search('url=([^&"]+)', stream_url)
+                    if match:
+                        stream_url = base64.b64decode(match.group(1))
+                    else:
+                        match = re.search('stream\.php\?([^"]+)', stream_url)
+                        if match:
+                            stream_url = base64.b64decode(match.group(1))
+                            i = stream_url.rfind('&&')
+                            if i > -1:
+                                stream_url = stream_url[i + 2:]
+                        
+                    if stream_url in seen_links: continue
+                    seen_links[stream_url] = True
+                    host = urlparse.urlparse(stream_url).hostname
+                    hoster = {'multi-part': False, 'host': host, 'class': self, 'url': stream_url, 'quality': scraper_utils.get_quality(video, host, quality), 'rating': None, 'views': None, 'direct': False}
+                    hosters.append(hoster)
         return hosters
 
-    def get_url(self, video):
-        return self._default_get_url(video)
-
     def search(self, video_type, title, year, season=''):
-        search_url = urlparse.urljoin(self.base_url, '/search.php?key=')
-        search_url += urllib.quote_plus('%s %s' % (title, year))
-        search_url += '&submit='
-        html = self._http_get(search_url, cache_limit=.25)
-        pattern = 'class="movie_about">.*?href="([^"]+).*?>\s+(.*?)\s*\(?(\d{4})?\)?\s+</a></h1>'
         results = []
-        for match in re.finditer(pattern, html, re.DOTALL):
-            url, title, year = match.groups('')
-            result = {'url': scraper_utils.pathify_url(url), 'title': scraper_utils.cleanse_title(title), 'year': year}
-            results.append(result)
+        search_url = urlparse.urljoin(self.base_url, '/search.php?q=')
+        search_url += urllib.quote_plus(title)
+        html = self._http_get(search_url, cache_limit=4)
+        for item in dom_parser.parse_dom(html, 'div', {'class': 'movie_about'}):
+            match_url = dom_parser.parse_dom(item, 'a', ret='href')
+            match_title_year = dom_parser.parse_dom(item, 'a')
+            if match_url and match_title_year:
+                match_url = match_url[0]
+                match_title_year = match_title_year[0]
+                match = re.search('(.*?)\s+\((\d{4})\)', match_title_year)
+                if match:
+                    match_title, match_year = match.groups()
+                else:
+                    match_title = match_title_year
+                    match_year = ''
+                
+                if not year or not match_year or year == match_year:
+                    result = {'url': scraper_utils.pathify_url(match_url), 'title': scraper_utils.cleanse_title(match_title), 'year': match_year}
+                    results.append(result)
         return results

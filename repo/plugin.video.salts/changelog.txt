@@ -1,3 +1,388 @@
+[B]Version 2.0.85[/B]
+- Improve pool manager
+- Improve IceFilms scraper
+- Improve MovieNight scraper
+
+[B]Version 2.0.84[/B]
+- Add Spacemov
+- Fix pubfilm
+- Fix Watch5S
+- Fix YesMovies
+- Improve ReleaseBB
+
+[B]Version 2.0.83[/B]
+- Add MovieFlix scraper
+- Add Ventures scraper
+- Add HeyDL scraper
+- Fix 2DDL scraper
+- Prefer poster over fanart for thumbs
+- Improve Key handling in most scrapers
+
+[B]Version 2.0.82[/B]
+- Improve collection open performance on slower hardware
+- Allow date format to be user overridden
+- More code optimizations
+- Fix KiwiHD scraper
+
+[B]Version 2.0.81[/B]
+- Fix Xmovies8.V2 scraper
+- Fix Stage66 scraper
+- Improve Dizibox scraper
+- Improve Dizimag scraper
+- Improve Filmovizjia scraper
+- Improve scene-rls scraper
+- Improve SeriesWatch scraper
+- Improve Furk scraper
+- Centralize and Improve Episode & Movie Matcher
+    - Improves all Blog style scrapers and EasyNews, Farda, Furk, OneClickTVShows, Premiumize, SceneDown, SeriesWatch
+- Improve image fallback handling
+- Various code improvements/simplifications/centralizations
+
+[B]Version 2.0.80[/B]
+- Add scene-rls Scraper
+- Add SceneDown Scraper
+- Fix YesMovies
+- Add file size filter for EasyNews
+- Fix Subscription Update not running
+
+[B]Version 2.0.79[/B]
+- Add Crazy4TV scraper
+- Add SnagFilms scraper
+- Fix iWatchonline
+- Fix ReleaseBB
+- Fix xmovies8
+- Fix PutMV
+- Fix MovieSub
+- Fix Rainierland
+- Fix Niter.tv
+- Remove Bobby scraper
+- Update Translations
+
+[B]Version 2.0.77[/B]
+- Add MovieHubs scraper
+- Fix MVL scraper
+- Fix dayt scraper
+- Fix MoviesPlanet scraper
+- Fix xmovies8.v2 scraper
+- Fix ReleaseBB scraper
+- Fix MoviesHD scraper
+- Fix MovieGo Search
+- Fix MovieSub
+- Improve Furk Scraper
+- Improve Fardadownload scraper
+- Improve SeriesWatch scraper
+- Remove Moviebox scraper
+- Remove CloudMovie scraper
+- Remove SolarMovie scraper
+- Remove Uflix scraper
+- Improve CF Captcha
+- Improve SRU logic
+- Add support for reusable threads and max threads
+
+[B]Version 2.0.75[/B]
+- fix sezon scraper
+- Add prune cache to scheduled tasks
+- Improve User Agent generation code
+- Fix add to list
+- Start on Worker Pool function to avoid occasional resource errors starting a thread
+- Migrate MNE, Get Sources, Set Related Url, and WIA to use Worker Pool
+
+[B]Version 2.0.74[/B]
+- Fix set_view not working
+- Add function to prune url cache older than 30 days
+- Fix rlsbb
+- Temporary hack to fix occasionally thread create error
+
+[B]Version 2.0.73[/B]
+- Fix yesmovies
+- Fix Furk.net
+- Fix yshows
+- Improve HDFlix
+- Remove HDMovie14
+- Increase caching where possibe
+- Move common methods to shared module
+
+[B]Version 2.0.72[/B]
+- Fix WIA ordering
+- Only show MOW on WIA if already watched
+- Fix Bobby scraper 
+
+[B]Version 2.0.71[/B]
+- Fix YesMovies scraper
+- Fix bugs in bobby scraper
+- Add Mark as Watched to WIA always
+- Parallelize WIA
+
+[B]Version 2.0.70[/B]
+- Add hdmoviefree scraper
+- Add tvrush scraper
+- Add Bobby scraper
+- Fix cloudmovie
+- Fix moviesub
+- Fix viooz
+- Fix 0 cache_limits
+- Update translations
+- Clean up scraper code
+- Improve PD code
+- Require at least helix
+
+[B]Version 2.0.69[/B]
+- Fix pftv
+- Fix yshow
+- Fix MovieZone
+- Fix Sezon
+- Fix YesMovies
+- Fix MovieWatcher
+- Fix dizilab
+- Fix dizimag
+- Fix diziay
+- Fix tvonline.tw
+- Fix MoviesHD
+- Improve MovieStorm
+
+[B]Version 2.0.67[/B]
+- Improve xmovies8
+- Fix vivo.to scraper
+- Remove 123Movies
+- Change progress message again
+
+[B]Version 2.0.66[/B]
+- Add MovieGo Scraper
+- Fix HDFlix Scraper
+- Fix TuneMovie
+- Fix Filmikz
+- Fix Mira
+- Fix CloudMovie
+- Improve Putlocker
+- Remove ClickPlay
+- Remove Ganool
+
+[B]Version 2.0.65[/B]
+- Improve service Trakt API handling
+- Add Genre menu item
+- Fix xmovies8.v2 scraper
+
+[B]Version 2.0.64[/B]
+- Improve HDFlix Scraper
+- Disable monitor to fix crash on slower systems.
+
+[B]Version 2.0.63[/B]
+- Fix HDFlix
+- Add authentication to HDFlix
+- Fix 123Movies
+- Improve MovieWatcher
+
+[B]Version 2.0.61[/B]
+- Add HDFlix scraper
+- Switch ororo scraper to use their API
+- Show scrapers not yet returned in custom progress dialogs
+- Make "cancel" show results (if any exist) rather than just cancelling
+- Add max results setting for EasyNews
+- Make Results waiting 75% of progress rather than 50%
+- Increase farda cache limits
+- Improve CF Logic
+- Fix some non-playable/non-folder items for Krypton
+- Add working dialog to some long running tasks
+
+[B]Version 2.0.60[/B]
+- Get rid of dialog param from strm files
+- Randomize liz_urls to avoid internal kodi watched marks
+
+[B]Version 2.0.59[/B]
+- Add Directory workaround for Krypton
+- Add dayt scraper back
+- Add MovieZone scraper
+
+[B]Version 2.0.58[/B]
+- Add Movie-Box scraper
+- Avoid crash in service.py
+- Fix MVL
+
+[B]Version 2.0.57[/B]
+- Fix couchtuner
+- Fix MovieWatcher
+- Fix season fanart
+- Fix Movie/Episode detection
+
+[B]Version 2.0.56[/B]
+- Fix Movie25
+- Fix Fardadownload
+- Fix iWatchOnline
+
+[B]Version 2.0.55[/B]
+- Add CinemaMKV
+- Improve yesmovies
+- Add support for CF Captcha (Enable in settings)
+- Add setting for Next Episode duration
+- Use contextmenu for resume dialog on krypton
+- Remove ninemovies
+- Bug Fixes
+
+[B]Version 2.0.53[/B]
+- Added Next Episode Notification
+- Split General Tab in settings
+- Removed clickplay (site offline)
+- Removed VidNow4K (CF Captcha)
+
+[B]Version 2.0.52[/B]
+- Improve dizilab
+- Remove ShowBox
+- Improve 123Movies 
+
+[B]Version 2.0.51[/B]
+- Fix vu45
+- Fix losmovies
+- Improve torba (New more reliable API!)
+- Add yesmovies scraper
+- Remove dayt :(
+- Change force_folder to default to false
+
+[B]Version 2.0.50[/B]
+- Add vidnow scraper
+- Add showbox scraper
+- Fix m4ufree
+- Fix tvonline
+- Fix OnlineDizi scraper
+- Fix SantaSeries
+- Fix Torba
+- Test IsFolder=True for Krypton workaround
+
+[B]Version 2.0.45[/B]
+- Fix typo in PremiumizeV2
+- Add option in Premiumize scraper to exclude transcodes
+
+[B]Version 2.0.44[/B]
+- Add option to show Air Time on MNE
+- Fix Diziay scraper
+- Code improvements
+
+[B]Version 2.0.43[/B]
+- Fix Dizipas scraper
+- Fix MovieXK scraper
+- Fix StreamLord scraper
+- Fix PelisPedia movie search
+- Fix Afdah scraper
+- Fix Movie25 Scraper
+- Fix MovieNight scraper
+- Fix Icefilms resolve
+- Fix stream-tv.co scraper
+- Remove WatchHD scraper
+
+[B]Version 2.0.42[/B]
+- Fix MovieWatched TV search
+- Fix Torba.se for embedded audio streams
+- Only set content for files views (Krypton fix)
+
+[B]Version 2.0.41[/B]
+- Add RLSeries scraper
+- Fix xmovies8.v2
+- Fix Watch5s Episode detection
+- Fix KiwiHD Episode detection
+- Improve 123Movies scraper
+- Improve vidics scraper
+- Add optional size limit for furk
+- Only force silent trakt sync when playing from library
+- Only allow playback from library or SALTS
+- Changes to prep for Krypton
+    - Change content types on some directories to force desirable views (WideList/IconWall)
+    - Fix skin issues with Torba auth window and Auto-Conf window for Estuary
+    - Set mediatype for tvshows, movies, seasons and episodes
+    - Remove "Show Information" Context menu item (Duplicate of core menu item)
+    - Completely disable custom progress dialogs from library (always crashes krypton) 
+
+[B]Version 2.0.39[/B]
+- Add vu45 scraper
+- Improve Watch5s
+- Fix torba
+- Fix MovieWatcher
+- Remove dl-pars scraper
+- Improve user agent algorithm
+- Improve title cleanse
+
+[B]Version 2.0.38[/B]
+- Add kiwihd
+- Add PirateJunkies
+- Add Watch5s
+- Improve 123Movies
+- Fix PelisPedia
+- Fix M4uFree
+- Fix WatchFree
+- Fix MovieSub
+- Remove tv-release.net
+
+[B]Version 2.0.37[/B]
+- Fix torba
+- Fix Mira
+- Improve MoviesPlanet
+- Fix dizilab
+
+[B]Version 2.0.36[/B]
+- Improve MovieWatcher
+- Fix DDLValley
+- Fix 2DDL
+- Fix Flixanity
+- Remove TVWTVS
+
+[B]Version 2.0.35[/B]
+- Add Fmovie
+- Fix Flixanity
+- Fix TVWTS
+- Fix PelisPedia
+- Fix MVL
+- Add fix to stop plugin:// error in log
+- Reduce load in some scrapers if not configured
+
+[B]Version 2.0.34[/B]
+- Add DDLSeries
+- Improve flixanity
+- Improve vivo.to
+- Fix TVWTS
+- Fix MWM
+- Minor Code Fixes
+
+[B]Version 2.0.33[/B]
+- Require debrid accounts for some scrapers
+- Add more Rewatch function
+
+[B]Version 2.0.32[/B]
+- Add HEVCBluRay
+- Add CloudMovie
+- Add Watch It Again
+- Improve Flixanity
+- Improve IceFilms
+
+[B]Version 2.0.31[/B]
+- Add filmovizjia
+- Improve WatchHD
+- Fix vivo.to
+- Fix 9Movies
+- Fix DDLValley
+- Fix Uflix
+- Remove MerDB
+- Remove MovieHDMax
+- Remove DiziFilm
+- Add manual semaphore value setting
+
+[B]Version 2.0.30[/B]
+- Add Stage66 Scraper
+- Remove Zumvo Scraper
+- Fix download dir check & header parsing
+- Improve caching in several scrapers
+- Optimize dom_parser
+
+[B]Version 2.0.29[/B]
+- Add SeriesWatch scraper
+- Fix StreamLord
+- Fix 9Movies
+- Fix PubFilm
+- Improve DDLValley
+- Improve PelisPedia
+- Improve WatchHD scraper
+- Depend on SMU 3.0
+- Update Translations
+- Add semaphore on DB writes
+- Code cleanup
+
 [B]Version 2.0.28[/B]
 - Add NaCl Theme (from Jokster)
 - Fix m4ufree scraper

@@ -18,25 +18,20 @@
 import re
 import urllib
 import urlparse
-
-from salts_lib import kodi
+import random
+import kodi
+import log_utils
 from salts_lib import scraper_utils
-from salts_lib import log_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import VIDEO_TYPES
+from salts_lib.constants import XHR
 import scraper
 
-
-BASE_URL = 'https://afdah.org'
-INFO_URL = BASE_URL + '/video_info/iframe'
-XHR = {'X-Requested-With': 'XMLHttpRequest'}
-
-class AfdahOrg_Scraper(scraper.Scraper):
-    base_url = BASE_URL
-
+class Scraper(scraper.Scraper):
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
         self.timeout = timeout
         self.base_url = kodi.get_setting('%s-base_url' % (self.get_name()))
+        self.info_url = self.base_url + '/video_info/iframe'
 
     @classmethod
     def provides(cls):
@@ -45,12 +40,6 @@ class AfdahOrg_Scraper(scraper.Scraper):
     @classmethod
     def get_name(cls):
         return 'afdah.org'
-
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        return '[%s] %s' % (item['quality'], item['host'])
 
     def get_sources(self, video):
         source_url = self.get_url(video)
@@ -62,10 +51,10 @@ class AfdahOrg_Scraper(scraper.Scraper):
             if match:
                 video_id = match.group(1)
                 data = {'v': video_id}
-                headers = XHR
-                headers['Referer'] = page_url
-                html = self._http_get(INFO_URL, data=data, headers=headers, cache_limit=.5)
-                sources = scraper_utils.parse_json(html, INFO_URL)
+                headers = {'Referer': page_url}
+                headers.update(XHR)
+                html = self._http_get(self.info_url, data=data, headers=headers, cache_limit=.5)
+                sources = scraper_utils.parse_json(html, self.info_url)
                 for source in sources:
                     match = re.search('url=(.*)', sources[source])
                     if match:
@@ -80,9 +69,6 @@ class AfdahOrg_Scraper(scraper.Scraper):
                         hosters.append(hoster)
         return hosters
 
-    def get_url(self, video):
-        return self._default_get_url(video)
-
     def search(self, video_type, title, year, season=''):
         search_url = urlparse.urljoin(self.base_url, '/results?q=')
         search_url += urllib.quote_plus(title)
@@ -95,3 +81,18 @@ class AfdahOrg_Scraper(scraper.Scraper):
                 result = {'title': scraper_utils.cleanse_title(match_title), 'year': match_year, 'url': scraper_utils.pathify_url(url)}
                 results.append(result)
         return results
+
+    @classmethod
+    def get_settings(cls):
+        settings = super(cls, cls).get_settings()
+        settings.append('         <setting id="%s-default_url" type="text" visible="false"/>' % (cls.get_name()))
+        return settings
+
+# if no default url has been set, then pick one and set it. If one has been set, use it
+default_url = kodi.get_setting('%s-default_url' % (Scraper.get_name()))
+if not default_url:
+    BASE_URL = random.choice(['https://afdah.org', 'http://watch32hd.co'])
+    Scraper.base_url = BASE_URL
+    kodi.set_setting('%s-default_url' % (Scraper.get_name()), BASE_URL)
+else:
+    Scraper.base_url = default_url

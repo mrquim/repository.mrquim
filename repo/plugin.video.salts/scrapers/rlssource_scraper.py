@@ -18,17 +18,15 @@
 import re
 import urllib
 import urlparse
-
-from salts_lib import kodi
+import kodi
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import VIDEO_TYPES
 import scraper
 
+BASE_URL = 'http://allrls.net'
 
-BASE_URL = 'http://rlsblog.net'
-
-class RLSSource_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -43,18 +41,12 @@ class RLSSource_Scraper(scraper.Scraper):
     def get_name(cls):
         return 'RLSSource.net'
 
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        return '[%s] %s' % (item['quality'], item['host'])
-
     def get_sources(self, video):
         source_url = self.get_url(video)
         hosters = []
         if source_url and source_url != FORCE_NO_MATCH:
             url = urlparse.urljoin(self.base_url, source_url)
-            html = self._http_get(url, cache_limit=.5)
+            html = self._http_get(url, require_debrid=True, cache_limit=.5)
             
             q_str = ''
             match = re.search('class="entry-title">([^<]+)', html)
@@ -88,7 +80,7 @@ class RLSSource_Scraper(scraper.Scraper):
 
     def search(self, video_type, title, year, season=''):
         search_url = urlparse.urljoin(self.base_url, '/?s=%s&go=Search' % (urllib.quote_plus(title)))
-        html = self._http_get(search_url, cache_limit=1)
+        html = self._http_get(search_url, require_debrid=True, cache_limit=1)
         pattern = 'href="(?P<url>[^"]+)[^>]+rel="bookmark">(?P<post_title>[^<]+).*?class="entry-date">(?P<date>\d+/\d+/\d+)'
         date_format = '%m/%d/%Y'
         return self._blog_proc_results(html, pattern, date_format, video_type, title, year)

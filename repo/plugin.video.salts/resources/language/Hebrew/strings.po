@@ -2,16 +2,18 @@
 # Addon id: plugin.video.salts
 # Addon Provider: TV Addons
 # Translators:
-# lidor malich <lidormalich@gmail.com>, 2015
+# Itzik Bereby <itzik.bereby@gmail.com>, 2016
+# ‫לידור מליח‬‎ <lidormalich@gmail.com>, 2015
 # Michael strat <Mstrat37@gmail.com>, 2015
+# SagaMi <amazonfirekodiil@gmail.com>, 2016
 # Vella <vellama@gmail.com>, 2015
 # Yaron Shahrabani <sh.yaron@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: SALTS\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2016-02-20 09:51+0000\n"
-"Last-Translator: tknorris\n"
+"PO-Revision-Date: 2016-07-28 05:02+0000\n"
+"Last-Translator: SagaMi <amazonfirekodiil@gmail.com>\n"
 "Language-Team: Hebrew (http://www.transifex.com/tv-addons/salts/language/he/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -516,12 +518,12 @@ msgid "Next Week"
 msgstr "שבוע הבא"
 
 msgctxt "#30125"
-msgid "Mark as Unwatched"
-msgstr "סימון כלא נצפה"
+msgid "Mark as Unwatched (SALTS)"
+msgstr "סמן כלא נצפה (SALTS)"
 
 msgctxt "#30126"
-msgid "Mark as Watched"
-msgstr "סימון כנצפה"
+msgid "Mark as Watched (SALTS)"
+msgstr "סמן כנצפה (SALTS)"
 
 msgctxt "#30127"
 msgid "Rate on trakt.tv"
@@ -751,6 +753,14 @@ msgctxt "#30195"
 msgid "'%s' added to library"
 msgstr "'%s' נוסף לספרייה"
 
+msgctxt "#30196"
+msgid "Add to Section Menu"
+msgstr "הוסף לתפריט"
+
+msgctxt "#30197"
+msgid "Remove from Section Menu"
+msgstr "הסר מהתפריט"
+
 msgctxt "#30198"
 msgid "Liked Lists"
 msgstr "רשימות אהובים"
@@ -799,6 +809,10 @@ msgctxt "#30209"
 msgid "%s NOT added to library (%s)"
 msgstr "%s לא נוסף לספרייה (%s)"
 
+msgctxt "#30210"
+msgid "Local Exists"
+msgstr "מקומי נמצא"
+
 msgctxt "#30211"
 msgid "Scraper Download Url"
 msgstr "כתובת הורדה באוסף הנתונים"
@@ -823,6 +837,10 @@ msgctxt "#30216"
 msgid "Bookmark Deleted"
 msgstr "הסימניה נמחקה"
 
+msgctxt "#30217"
+msgid "Force No Match"
+msgstr "מאולץ לא נמצא"
+
 msgctxt "#30218"
 msgid "Getting Sources"
 msgstr "המקורות מתקבלים"
@@ -832,8 +850,8 @@ msgid "Requested Sources from: %s"
 msgstr "הוגשה בקשה לקבלת מקורות אל: %s"
 
 msgctxt "#30220"
-msgid "Received %s Sources from: %s"
-msgstr "התקבלו %s מקורות מאת: %s"
+msgid "Received Sources: (%s / %s) from %s"
+msgstr "התקבלו מקורות : (%s / %s) מ %s"
 
 msgctxt "#30221"
 msgid "Applying Source Filters"
@@ -962,6 +980,10 @@ msgstr "([COLOR red]***כל נתוני מסד הנתונים יאבדו.***[/COL
 msgctxt "#30252"
 msgid "DB Reset Failed: %s"
 msgstr "איפוס מסד הנתונים נכשל: %s"
+
+msgctxt "#30254"
+msgid "Discovering Next Episodes"
+msgstr "מגלה פרקים באים"
 
 msgctxt "#30500"
 msgid "Addon Theme"
@@ -1526,4 +1548,32 @@ msgstr "לבטל"
 msgctxt "#30669"
 msgid "Select this item to Install the SALTS Themepak"
 msgstr "נא לבחור בפריט זה כדי להתקין את חבילת העיצוב של SALTS"
+
+msgctxt "#30677"
+msgid "Automatic"
+msgstr "אוטומטי"
+
+msgctxt "#30678"
+msgid "Very Slow"
+msgstr "איטי מאוד"
+
+msgctxt "#30679"
+msgid "Slow"
+msgstr "איטי"
+
+msgctxt "#30680"
+msgid "Medium"
+msgstr "בינוני"
+
+msgctxt "#30681"
+msgid "Fast"
+msgstr "מהיר"
+
+msgctxt "#30682"
+msgid "Very Fast"
+msgstr "מהיר מאוד"
+
+msgctxt "#30696"
+msgid "Popular"
+msgstr "פופולארי"
 

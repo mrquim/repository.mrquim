@@ -18,24 +18,23 @@
 import re
 import urllib
 import urlparse
-
-from salts_lib import dom_parser
-from salts_lib import kodi
-from salts_lib import log_utils
+import kodi
+import log_utils
+import dom_parser
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import QUALITIES
 from salts_lib.constants import VIDEO_TYPES
+from salts_lib.constants import XHR
 import scraper
 
 
 BASE_URL = 'http://putmv.com'
 GK_URL = '/ip.temp/swf/ipplayer/ipplayer.php?u=%s&w=100%%&h=500'
 GVIDEO_NAMES = ['english sub', 'picasa', 'putlocker']
-XHR = {'X-Requested-With': 'XMLHttpRequest'}
 HOSTS = {'vidag': 'vid.ag', 'videott': 'video.tt'}
 
-class PutMV_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
     
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -56,9 +55,6 @@ class PutMV_Scraper(scraper.Scraper):
             if sources: return sources.items()[0][0]
         else:
             return link
-
-    def format_source_label(self, item):
-        return '[%s] %s' % (item['quality'], item['host'])
 
     def get_sources(self, video):
         source_url = self.get_url(video)
@@ -94,8 +90,8 @@ class PutMV_Scraper(scraper.Scraper):
         if match:
             gk_url = GK_URL % (match.group(1))
             gk_url = urlparse.urljoin(self.base_url, gk_url)
-            headers = XHR
-            headers['Referer'] = url
+            headers = {'Referer': url}
+            headers.update(XHR)
             html = self._http_get(gk_url, headers=headers, cache_limit=.5)
             try: html = html.decode('utf-8-sig')
             except: pass
@@ -116,9 +112,6 @@ class PutMV_Scraper(scraper.Scraper):
                     
         return sources
     
-    def get_url(self, video):
-        return self._default_get_url(video)
-
     def _get_episode_url(self, season_url, video):
         episode_pattern = 'href="([^"]+)[^>]*title="Watch\s+Episode\s+%s"' % (video.episode)
         return self._default_get_episode_url(season_url, video, episode_pattern)
@@ -134,7 +127,7 @@ class PutMV_Scraper(scraper.Scraper):
                 if match:
                     url, match_title = match.groups()
                     is_season = re.search('\s+-\s+[Ss](\d+)$', match_title)
-                    if not is_season and video_type == VIDEO_TYPES.MOVIE or is_season and VIDEO_TYPES.SEASON:
+                    if (not is_season and video_type == VIDEO_TYPES.MOVIE) or (is_season and video_type == VIDEO_TYPES.SEASON):
                         match_year = ''
                         if video_type == VIDEO_TYPES.MOVIE:
                             for info_frag in dom_parser.parse_dom(item, 'p', {'class': 'info'}):

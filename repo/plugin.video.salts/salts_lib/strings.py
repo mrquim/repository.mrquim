@@ -278,5 +278,22 @@ STRINGS = {
     'user_reject_auth': 30269,
     'use_https': 30548,
     'ip_auth_line1': 30270,
-    'ip_auth_line2': 30271
+    'ip_auth_line2': 30271,
+    'my_rewatches': 30272,
+    'pick_rewatch_list': 30273,
+    'least_watched_method': 30274,
+    'most_watched_method': 30275,
+    'last_watched_method': 30276,
+    'set_rewatch_list': 30277,
+    'playback_limited': 30278,
+    'size_limit': 30279,
+    'include_transcodes': 30281,
+    'next_episode': 30282,
+    'remaining_over': 30283,
+    'remaining_under': 30284,
+    'genres': 30285,
+    'retr_collection': 30286,
+    'adding_items': 30287,
+    'working': 30288
+    
 }

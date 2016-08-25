@@ -2,13 +2,14 @@
 # Addon id: plugin.video.salts
 # Addon Provider: TV Addons
 # Translators:
-# Eider Mar <chr_elogwq@rcpt.at>, 2016
+# eidermar, 2016
+# eidermar, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: SALTS\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2016-02-28 09:42+0000\n"
-"Last-Translator: Eider Mar <chr_elogwq@rcpt.at>\n"
+"PO-Revision-Date: 2016-07-19 15:25+0000\n"
+"Last-Translator: eidermar\n"
 "Language-Team: German (http://www.transifex.com/tv-addons/salts/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -517,12 +518,12 @@ msgid "Next Week"
 msgstr "Nächste Woche"
 
 msgctxt "#30125"
-msgid "Mark as Unwatched"
-msgstr "Als ungesehen markieren"
+msgid "Mark as Unwatched (SALTS)"
+msgstr "Als ungesehen markieren (SALTS)"
 
 msgctxt "#30126"
-msgid "Mark as Watched"
-msgstr "Als gesehen markieren"
+msgid "Mark as Watched (SALTS)"
+msgstr "Als gesehen markieren (SALTS)"
 
 msgctxt "#30127"
 msgid "Rate on trakt.tv"
@@ -786,15 +787,15 @@ msgstr "Am häufigsten gespielt - Immer"
 
 msgctxt "#30203"
 msgid "Most Watched This Week"
-msgstr "Am häufigsten geschaut - Diese Woche"
+msgstr "Am häufigsten gesehen - Diese Woche"
 
 msgctxt "#30204"
 msgid "Most Watched This Month"
-msgstr "Am häufigsten geschaut - Diesen Monat"
+msgstr "Am häufigsten gesehen - Diesen Monat"
 
 msgctxt "#30205"
 msgid "Most Watched All Time"
-msgstr "Am häufigsten geschaut - Immer"
+msgstr "Am häufigsten gesehen - Immer"
 
 msgctxt "#30206"
 msgid "Most Collected This Week"
@@ -853,8 +854,8 @@ msgid "Requested Sources from: %s"
 msgstr "Angeforderte Quellen von: %s"
 
 msgctxt "#30220"
-msgid "Received %s Sources from: %s"
-msgstr "%s Quellen empfangen von: %s "
+msgid "Received Sources: (%s / %s) from %s"
+msgstr "Quellen empfangen: (%s /%s) von %s "
 
 msgctxt "#30221"
 msgid "Applying Source Filters"
@@ -1051,6 +1052,82 @@ msgstr "Code läuft ab in: %s Sekunden"
 msgctxt "#30269"
 msgid "Authorization was Rejected"
 msgstr "Berechtigung wurde abgelehnt"
+
+msgctxt "#30270"
+msgid "To watch this video scan the QR Code below or visit [COLOR blue]"
+msgstr "Um dieses Video anzusehen, QR code scannen oder [COLOR blue]"
+
+msgctxt "#30271"
+msgid "[/COLOR] from any device on the same network as this device."
+msgstr "[/COLOR] von irgendeinem Gerät im gleichen Netzwerk besuchen."
+
+msgctxt "#30272"
+msgid "Watch It Again"
+msgstr "Erneut ansehen"
+
+msgctxt "#30273"
+msgid "Pick a list to use for Watch It Again"
+msgstr "Eine Liste für \"Erneut Ansehen\" auswählen"
+
+msgctxt "#30274"
+msgid "Use Least Watched Method"
+msgstr "Verwende Methode: Am wenigsten gesehen"
+
+msgctxt "#30275"
+msgid "Use Most Watched Method"
+msgstr "Verwende Methode: Am häufigsten gesehen"
+
+msgctxt "#30276"
+msgid "Use Last Watched Method"
+msgstr "Verwende Methode: Als letztes gesehen"
+
+msgctxt "#30277"
+msgid "Set as Watch It Again List"
+msgstr "Als Liste für \"Erneut Ansehen\" speichern"
+
+msgctxt "#30278"
+msgid "Playback only allowed from Library & SALTS"
+msgstr "Wiedergabe nur von der Bibliothek und SALTS erlaubt"
+
+msgctxt "#30279"
+msgid "Maximum Allowed Size (GB) (0 = No Limit)"
+msgstr "Maximale Grösse (GB) (0 = Kein Limit)"
+
+msgctxt "#30280"
+msgid "Show Episode Airtime in My Next Episodes"
+msgstr "Zeige Episoden Ausstrahlungszeit in: Meine nächsten Episoden"
+
+msgctxt "#30281"
+msgid "Include Transodes"
+msgstr "Transodes miteinbeziehen"
+
+msgctxt "#30282"
+msgid "Next Episode"
+msgstr "Nächste Episode"
+
+msgctxt "#30283"
+msgid "Remaining: %s of %s"
+msgstr "Verbleibend: %s of %s"
+
+msgctxt "#30284"
+msgid "Remaining: %s"
+msgstr "Verbleibend: %s"
+
+msgctxt "#30285"
+msgid "Genres"
+msgstr "Genres"
+
+msgctxt "#30286"
+msgid "Retrieving Collection"
+msgstr "Empfange Sammlung"
+
+msgctxt "#30287"
+msgid "Adding Items to Directory"
+msgstr "Einträge zum Verzeichnis hinzufügen"
+
+msgctxt "#30288"
+msgid "Working..."
+msgstr "Arbeite..."
 
 msgctxt "#30500"
 msgid "Addon Theme"
@@ -1739,4 +1816,128 @@ msgstr "Letzte Index Seiten Aktualisierung"
 msgctxt "#30674"
 msgid "Trakt API Offline Mode"
 msgstr "Trakt API Offline Modus"
+
+msgctxt "#30675"
+msgid "Torba IP Authorization"
+msgstr "Torba IP Berechtigung"
+
+msgctxt "#30676"
+msgid "Machine Speed"
+msgstr "Maschinen Geschwindigkeit"
+
+msgctxt "#30677"
+msgid "Automatic"
+msgstr "Automatisch"
+
+msgctxt "#30678"
+msgid "Very Slow"
+msgstr "Sehr langsam"
+
+msgctxt "#30679"
+msgid "Slow"
+msgstr "Langsam"
+
+msgctxt "#30680"
+msgid "Medium"
+msgstr "Mittel"
+
+msgctxt "#30681"
+msgid "Fast"
+msgstr "Schnell"
+
+msgctxt "#30682"
+msgid "Very Fast"
+msgstr "Sehr schnell"
+
+msgctxt "#30683"
+msgid "Show Watch It Again"
+msgstr "Zeige \"Erneut Ansehen\""
+
+msgctxt "#30684"
+msgid "Show air time in MNE"
+msgstr "Ausstrahlungszeit in MNE anzeigen"
+
+msgctxt "#30686"
+msgid "Show Next Episode Notification"
+msgstr "Zeige Benachrichtigungen für \"Nächste Episoden\""
+
+msgctxt "#30687"
+msgid "    Next Episode Delay (secs)"
+msgstr "Verzögerung für \"Nächste Episoden\" (secs)"
+
+msgctxt "#30688"
+msgid "    Show Next Episode on Unwatched"
+msgstr "Zeige \"Nächste Episoden\" in Ungesehen"
+
+msgctxt "#30689"
+msgid "    Show air time in Next Episode"
+msgstr "Zeige  Ausstrahlungszeit in \"Nächsten Episoden\""
+
+msgctxt "#30690"
+msgid "Show CF Site Protection Captchas"
+msgstr "Zeige CF Seiten Schutz Captchas"
+
+msgctxt "#30691"
+msgid "    Next Episode Duration (secs)"
+msgstr "\"Nächste Episode\" Dauer (sek)"
+
+msgctxt "#30692"
+msgid "Show Genres"
+msgstr "Zeige Genres"
+
+msgctxt "#30693"
+msgid "Movie Genre List"
+msgstr "Film Genres Liste"
+
+msgctxt "#30694"
+msgid "TV Genre List"
+msgstr "TV-Serien Genres Liste"
+
+msgctxt "#30695"
+msgid "Trending"
+msgstr "Im Trend"
+
+msgctxt "#30696"
+msgid "Popular"
+msgstr "Populär"
+
+msgctxt "#30697"
+msgid "Anticipated"
+msgstr "Antizipierte"
+
+msgctxt "#30698"
+msgid "Most Watched (Week)"
+msgstr "Am häufigsten gesehen (Woche)"
+
+msgctxt "#30699"
+msgid "Most Watched (Month)"
+msgstr "Am häufigsten gesehen (Monat)"
+
+msgctxt "#30700"
+msgid "Most Watched (All)"
+msgstr "Am häufigsten gesehen (Immer)"
+
+msgctxt "#30701"
+msgid "Most Played (Week)"
+msgstr "Am häufigsten gespielt (Woche)"
+
+msgctxt "#30702"
+msgid "Most Played (Month)"
+msgstr "Am häufigsten gespielt (Monat)"
+
+msgctxt "#30703"
+msgid "Most Played (All)"
+msgstr "Am häufigsten gespielt (Immer)"
+
+msgctxt "#30704"
+msgid "Most Collected (Week)"
+msgstr "Am häufigsten gesammelt (Woche)"
+
+msgctxt "#30705"
+msgid "Most Collected (Month)"
+msgstr "Am häufigsten gesammelt (Monat)"
+
+msgctxt "#30706"
+msgid "Most Collected (All)"
+msgstr "Am häufigsten gesammelt (Immer)"
 

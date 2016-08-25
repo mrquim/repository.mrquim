@@ -299,7 +299,7 @@ Addons Included
 	</extension>
 </addon>
 
-<addon id="plugin.video.specto" name="Specto - ... Fork"  version="2016.07.09.2" provider-name="mrknow" >
+<addon id="plugin.video.specto" name="Specto - ... Fork"  version="2016.08.23.3" provider-name="mrknow" >
 	<requires>
 		<import addon="xbmc.python" version="2.1.0" />
 		<import addon="script.module.requests" version="1.0.0" />
@@ -508,7 +508,7 @@ Addons Included
 	</extension>
 </addon>
 
-<addon id="plugin.video.LiveTV" name="Live!t TV" provider-name="Live!t TV" version="6.4.4">
+<addon id="plugin.video.LiveTV" name="Live!t TV" provider-name="Live!t TV" version="6.4.8">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
 	<import addon="script.module.urlresolver" version="1.0.0"/>
@@ -899,7 +899,7 @@ Addons Included
 	</extension>
 </addon>
 
-<addon id="plugin.video.livemix" name="Live Mix" version="1.0.6" provider-name="MetalKettle">
+<addon id="plugin.video.livemix" name="Live Mix" version="1.0.8" provider-name="MetalKettle">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.addon.common" version="2.0.0" />
@@ -941,11 +941,12 @@ Addons Included
   </extension>
 </addon>
 
-<addon id="plugin.video.salts" version="2.0.28" name="Stream All The Sources" provider-name="tknorris">
+<addon id="plugin.video.salts" version="2.0.85" name="Stream All The Sources" provider-name="tknorris">
     <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-        <import addon="script.module.urlresolver" version="2.2.0"/>
+        <import addon="xbmc.python" version="2.19.0"/>
+        <import addon="script.module.urlresolver" version="3.0.0"/>
         <import addon="script.module.myconnpy" version="1.1.6" />
+        <import addon="script.module.tknorris.shared" version="0.0.2"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>

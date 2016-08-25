@@ -19,14 +19,14 @@ import re
 import urllib
 import urlparse
 import xbmcgui
-from salts_lib import kodi
-from salts_lib import log_utils
+import kodi
+import log_utils
+import dom_parser
 from salts_lib import scraper_utils
-from salts_lib import dom_parser
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import VIDEO_TYPES
 from salts_lib.constants import QUALITIES
-from salts_lib.kodi import i18n
+from salts_lib.utils2 import i18n
 import scraper
 
 BASE_URL = 'premiumize.me'
@@ -45,7 +45,7 @@ MAGNET_LINK = 'magnet:?xt=urn:btih:%s'
 VIDEO_EXT = ['MKV', 'AVI', 'MP4']
 QUALITY_MAP = {'1080p': QUALITIES.HD1080, '720p': QUALITIES.HD720, '3D': QUALITIES.HD1080}
 
-class Premiumize_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
     movie_base_url = BASE_UR2
     tv_base_url = BASE_URL3
@@ -64,6 +64,7 @@ class Premiumize_Scraper(scraper.Scraper):
         self.tv_base_url = kodi.get_setting('%s-base_url3' % (self.get_name()))
         self.username = kodi.get_setting('%s-username' % (self.get_name()))
         self.password = kodi.get_setting('%s-password' % (self.get_name()))
+        self.include_trans = kodi.get_setting('%s-include_trans' % (self.get_name())) == 'true'
 
     @classmethod
     def provides(cls):
@@ -118,7 +119,7 @@ class Premiumize_Scraper(scraper.Scraper):
                     label = '(%s) %s' % (scraper_utils.format_size(item['size'], 'B'), item['name'])
                     video = {'label': label, 'url': item['url']}
                     videos.append(video)
-                    if 'transcoded' in item and item['transcoded']:
+                    if self.include_trans and 'transcoded' in item and item['transcoded']:
                         transcode = item['transcoded']
                         if 'size' in transcode:
                             label = '(%s) (Transcode) %s' % (scraper_utils.format_size(transcode['size'], 'B'), item['name'])
@@ -127,16 +128,6 @@ class Premiumize_Scraper(scraper.Scraper):
                         video = {'label': label, 'url': transcode['url']}
                         videos.append(video)
         return videos
-
-    def format_source_label(self, item):
-        label = '[%s] %s' % (item['quality'], item['host'])
-        if '3D' in item and item['3D']:
-            label += ' (3D)'
-        if 'size' in item:
-            label += ' (%s)' % (item['size'])
-        if 'extra' in item:
-            label += ' [%s]' % (item['extra'])
-        return label
 
     def get_sources(self, video):
         source_url = self.get_url(video)
@@ -209,9 +200,6 @@ class Premiumize_Scraper(scraper.Scraper):
                 new_data['hashes'] = dict((hash_id.lower(), hash_data['hashes'][hash_id]) for hash_id in hash_data['hashes'])
         return new_data
     
-    def get_url(self, video):
-        return self._default_get_url(video)
-
     def _get_episode_url(self, show_url, video):
         result = self.__find_episode(show_url, video)
         if result:
@@ -294,6 +282,7 @@ class Premiumize_Scraper(scraper.Scraper):
         settings.append('         <setting id="%s-password" type="text" label="     %s" option="hidden" default="" visible="eq(-6,true)"/>' % (name, i18n('password')))
         settings.append('         <setting id="%s-base_url2" type="text" label="     %s %s" default="%s" visible="eq(-7,true)"/>' % (name, i18n('movies'), i18n('base_url'), cls.movie_base_url))
         settings.append('         <setting id="%s-base_url3" type="text" label="     %s %s" default="%s" visible="eq(-8,true)"/>' % (name, i18n('tv_shows'), i18n('base_url'), cls.tv_base_url))
+        settings.append('         <setting id="%s-include_trans" type="bool" label="     %s" default="true" visible="eq(-9,true)"/>' % (name, i18n('include_transcodes')))
         return settings
 
     def _json_get(self, url, data=None, allow_redirect=True, cache_limit=8):
@@ -311,3 +300,11 @@ class Premiumize_Scraper(scraper.Scraper):
             js_result = {}
             
         return js_result
+
+    def _http_get(self, url, data=None, headers=None, allow_redirect=True, cache_limit=8):
+        # return all uncached blank pages if no user or pass
+        if not self.username or not self.password:
+            return ''
+
+        return super(self.__class__, self)._http_get(url, data=data, headers=headers, allow_redirect=allow_redirect, cache_limit=cache_limit)
+        

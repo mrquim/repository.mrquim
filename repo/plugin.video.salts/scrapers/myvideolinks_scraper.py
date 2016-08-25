@@ -18,20 +18,19 @@
 import re
 import urllib
 import urlparse
-
-from salts_lib import kodi
-from salts_lib import log_utils
+import kodi
+import log_utils
+import dom_parser
 from salts_lib import scraper_utils
-from salts_lib import dom_parser
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import VIDEO_TYPES
-from salts_lib.kodi import i18n
+from salts_lib.utils2 import i18n
 import scraper
 
 
-BASE_URL = 'http://myvideolinks.xyz'
+BASE_URL = 'http://beta.myvideolinks.xyz'
 
-class MyVidLinks_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -45,15 +44,6 @@ class MyVidLinks_Scraper(scraper.Scraper):
     @classmethod
     def get_name(cls):
         return 'MyVideoLinks.eu'
-
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        label = '[%s] %s' % (item['quality'], item['host'])
-        if 'views' in item and item['views']:
-            label += ' (%s Views)' % (item['views'])
-        return label
 
     def get_sources(self, video):
         source_url = self.get_url(video)
@@ -89,7 +79,7 @@ class MyVidLinks_Scraper(scraper.Scraper):
         return self.__get_links(video, views, fragment, q_str)
 
     def __get_episode_links(self, video, views, html):
-        pattern = '<h4>(.*?)</h4>(.*?)</ul>'
+        pattern = '<h1>(.*?)</h1>(.*?)</ul>'
         hosters = []
         for match in re.finditer(pattern, html, re.DOTALL):
             q_str, fragment = match.groups()
@@ -123,6 +113,6 @@ class MyVidLinks_Scraper(scraper.Scraper):
         search_url = urlparse.urljoin(self.base_url, '/?s=')
         search_url += urllib.quote_plus(title)
         html = self._http_get(search_url, cache_limit=1)
-        pattern = '<h\d+>.*?<a\s+href="(?P<url>[^"]*/(?P<date>\d{4}/\d{2}/\d{2})/[^"]*)"\s+rel="bookmark"\s+title="(?:Permanent Link to )?(?P<post_title>[^"]+)'
-        date_format = '%Y/%m/%d'
+        pattern = 'class="post-title">\s*<h\d+>\s*<a\s+href="(?P<url>[^"]*)"[^>]+title="(?:Permanent Link to )?(?P<post_title>[^"]+).*?class="post-date"><img[^>]+>(?:&nbsp;)*(?P<date>[^@]+)'
+        date_format = '%b %d, %Y'
         return self._blog_proc_results(html, pattern, date_format, video_type, title, year)

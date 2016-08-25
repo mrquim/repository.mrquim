@@ -19,19 +19,18 @@ import re
 import urllib
 import urllib2
 import urlparse
-
-from salts_lib import kodi
-from salts_lib import log_utils
+import kodi
+import log_utils
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import QUALITIES
 from salts_lib.constants import VIDEO_TYPES
-from salts_lib.kodi import i18n
+from salts_lib.utils2 import i18n
 import scraper
 
 BASE_URL = 'http://superchillin.com'
 
-class NoobRoom_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -65,10 +64,6 @@ class NoobRoom_Scraper(scraper.Scraper):
             response = urllib2.urlopen(request)
             return response.geturl()
 
-    def format_source_label(self, item):
-        label = '[%s] %s (%s/100)' % (item['quality'], item['host'], item['rating'])
-        return label
-
     def get_sources(self, video):
         source_url = self.get_url(video)
         hosters = []
@@ -98,9 +93,6 @@ class NoobRoom_Scraper(scraper.Scraper):
                     hoster = {'multi-part': False, 'host': host, 'class': self, 'url': url, 'quality': paid_quality, 'views': None, 'rating': 100 - int(load), 'direct': True}
                     hosters.append(hoster)
         return hosters
-
-    def get_url(self, video):
-        return self._default_get_url(video)
 
     def _get_episode_url(self, show_url, video):
         episode_pattern = "%sx%02d\s*-\s*.*?href='([^']+)" % (video.season, int(video.episode))
@@ -145,11 +137,11 @@ class NoobRoom_Scraper(scraper.Scraper):
         if not self.username or not self.password:
             return ''
 
-        html = self._cached_http_get(url, self.base_url, self.timeout, data=data, headers=headers, method=method, cache_limit=cache_limit)
+        html = super(self.__class__, self)._http_get(url, data=data, headers=headers, method=method, cache_limit=cache_limit)
         if 'href="logout.php"' not in html:
             log_utils.log('Logging in for url (%s)' % (url), log_utils.LOGDEBUG)
             self.__login(html)
-            html = self._cached_http_get(url, self.base_url, self.timeout, data=data, headers=headers, method=method, cache_limit=0)
+            html = super(self.__class__, self)._http_get(url, data=data, headers=headers, method=method, cache_limit=0)
 
         return html
 
@@ -160,6 +152,6 @@ class NoobRoom_Scraper(scraper.Scraper):
         if match:
             data.update(self._do_recaptcha(match.group(1)))
             
-        html = self._cached_http_get(url, self.base_url, self.timeout, data=data, allow_redirect=False, cache_limit=0)
+        html = super(self.__class__, self)._http_get(url, data=data, allow_redirect=False, cache_limit=0)
         if 'index.php' not in html:
             raise Exception('noobroom login failed')

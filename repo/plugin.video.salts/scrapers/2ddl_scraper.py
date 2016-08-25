@@ -19,21 +19,21 @@ import datetime
 import re
 import urllib
 import urlparse
-from salts_lib import log_utils
-from salts_lib import dom_parser
-from salts_lib import kodi
+import kodi
+import log_utils
+import dom_parser
+from salts_lib.utils2 import i18n
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import SHORT_MONS
 from salts_lib.constants import VIDEO_TYPES
-from salts_lib.kodi import i18n
 import scraper
 
-BASE_URL = 'http://twoddl.org'
+BASE_URL = 'http://2ddl.online'
 CATEGORIES = {VIDEO_TYPES.MOVIE: '/category/movies/', VIDEO_TYPES.TVSHOW: '/category/tv-shows/'}
 EXCLUDE_LINKS = ['adf.ly', '2ddl.link']
 
-class TwoDDL_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -48,18 +48,12 @@ class TwoDDL_Scraper(scraper.Scraper):
     def get_name(cls):
         return '2DDL'
 
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        return '[%s] %s' % (item['quality'], item['host'])
-
     def get_sources(self, video):
         source_url = self.get_url(video)
         hosters = []
         if source_url and source_url != FORCE_NO_MATCH:
             url = urlparse.urljoin(self.base_url, source_url)
-            html = self._http_get(url, cache_limit=.5)
+            html = self._http_get(url, require_debrid=True, cache_limit=.5)
             if video.video_type == VIDEO_TYPES.MOVIE:
                 pattern = '<singlelink>(.*?)(?=<hr\s*/>|download>|thanks_button_div)'
             else:
@@ -85,9 +79,6 @@ class TwoDDL_Scraper(scraper.Scraper):
                 
         return hosters
 
-    def get_url(self, video):
-        return self._default_get_url(video)
-
     @classmethod
     def get_settings(cls):
         settings = super(cls, cls).get_settings()
@@ -97,34 +88,31 @@ class TwoDDL_Scraper(scraper.Scraper):
         return settings
 
     def _get_episode_url(self, show_url, video):
-        sxe = '(\.|_| )S%02dE%02d(\.|_| )' % (int(video.season), int(video.episode))
         force_title = scraper_utils.force_title(video)
         title_fallback = kodi.get_setting('title-fallback') == 'true'
         norm_title = scraper_utils.normalize_title(video.ep_title)
-        try: airdate_pattern = video.ep_airdate.strftime('(\.|_| )%Y(\.|_| )%m(\.|_| )%d(\.|_| )')
-        except: airdate_pattern = ''
-        
         page_url = [show_url]
         too_old = False
         while page_url and not too_old:
             url = urlparse.urljoin(self.base_url, page_url[0])
-            html = self._http_get(url, cache_limit=1)
-            headings = re.findall('<h2>\s*<a\s+href="([^"]+)[^>]+>(.*?)</a>', html)
+            html = self._http_get(url, require_debrid=True, cache_limit=1)
             posts = dom_parser.parse_dom(html, 'div', {'id': 'post-\d+'})
-            for heading, post in zip(headings, posts):
+            for post in posts:
                 if self.__too_old(post):
                     too_old = True
                     break
                 if CATEGORIES[VIDEO_TYPES.TVSHOW] in post and show_url in post:
-                    url, title = heading
-                    if not force_title:
-                        if re.search(sxe, title) or (airdate_pattern and re.search(airdate_pattern, title)):
-                            return scraper_utils.pathify_url(url)
-                    else:
-                        if title_fallback and norm_title:
-                            match = re.search('</strong>(.*?)</p>', post)
-                            if match and norm_title == scraper_utils.normalize_title(match.group(1)):
+                    match = re.search('<a\s+href="([^"]+)[^>]+>(.*?)</a>', post)
+                    if match:
+                        url, title = match.groups()
+                        if not force_title:
+                            if scraper_utils.release_check(video, title, require_title=False):
                                 return scraper_utils.pathify_url(url)
+                        else:
+                            if title_fallback and norm_title:
+                                match = re.search('</strong>(.*?)</p>', post)
+                                if match and norm_title == scraper_utils.normalize_title(match.group(1)):
+                                    return scraper_utils.pathify_url(url)
                 
             page_url = dom_parser.parse_dom(html, 'a', {'class': 'nextpostslink'}, ret='href')
     
@@ -132,7 +120,7 @@ class TwoDDL_Scraper(scraper.Scraper):
         results = []
         search_url = urlparse.urljoin(self.base_url, '/search/')
         search_url += urllib.quote_plus(title)
-        html = self._http_get(search_url, cache_limit=1)
+        html = self._http_get(search_url, require_debrid=True, cache_limit=1)
         if video_type == VIDEO_TYPES.TVSHOW:
             seen_urls = {}
             for post in dom_parser.parse_dom(html, 'div', {'id': 'post-\d+'}):

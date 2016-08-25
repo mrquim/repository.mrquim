@@ -138,13 +138,15 @@ class SRT_Scraper():
         else:
             filename = 'addic7ed_subtitle.srt'
         filename = re.sub('[^\x00-\x7F]', '', filename)
+        filename = re.sub('[<>:"/\\|?*]', '_', filename)
+        filename = re.sub('_+', '_', filename)
 
         final_path = os.path.join(kodi.get_setting('subtitle-folder'), filename)
         final_path = kodi.translate_path(final_path)
         if not xbmcvfs.exists(os.path.dirname(final_path)):
             try:
                 try: xbmcvfs.mkdirs(os.path.dirname(final_path))
-                except: os.mkdir(os.path.dirname(final_path))
+                except: os.makedirs(os.path.dirname(final_path))
             except:
                 log_utils.log('Failed to create directory %s' % os.path.dirname(final_path), log_utils.LOGERROR)
                 raise

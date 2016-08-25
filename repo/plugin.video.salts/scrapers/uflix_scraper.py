@@ -19,10 +19,9 @@ import re
 import string
 import urllib
 import urlparse
-
-from salts_lib import dom_parser
-from salts_lib import kodi
-from salts_lib import log_utils
+import kodi
+import log_utils
+import dom_parser
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import QUALITIES
@@ -32,9 +31,9 @@ import scraper
 
 QUALITY_MAP = {'HD': QUALITIES.HIGH, 'LOW': QUALITIES.LOW}
 QUALITY_ICONS = {'fullhdbr.png': QUALITIES.HIGH, 'Blu-Ray.gif': QUALITIES.HIGH}
-BASE_URL = 'http://uflix.org'
+BASE_URL = 'http://uflix.ws'
 
-class UFlix_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -49,12 +48,9 @@ class UFlix_Scraper(scraper.Scraper):
     def get_name(cls):
         return 'UFlix.org'
 
-    def resolve_link(self, link):
-        return link
-
     def format_source_label(self, item):
-        label = '[%s] %s (%s Up, %s Down)' % (item['quality'], item['host'], item['up'], item['down'])
-        if item['rating'] is not None: label += ' (%s/100)' % (item['rating'])
+        label = super(self.__class__, self).format_source_label(item)
+        label += ' (%s Up, %s Down)' % (item['up'], item['down'])
         return label
 
     def get_sources(self, video):
@@ -96,9 +92,6 @@ class UFlix_Scraper(scraper.Scraper):
                 sources.append(source)
 
         return sources
-
-    def get_url(self, video):
-        return self._default_get_url(video)
 
     def search(self, video_type, title, year, season=''):
         search_url = urlparse.urljoin(self.base_url, '/index.php?menu=search&query=')

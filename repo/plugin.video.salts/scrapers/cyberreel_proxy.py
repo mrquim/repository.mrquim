@@ -15,12 +15,12 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-from salts_lib import log_utils
+import log_utils
 import proxy
 
-class CyberReel_Proxy(proxy.Proxy):
+class Proxy(proxy.Proxy):
     try:
-        from cyberreel_scraper import CyberReel_Scraper as real_scraper
+        from cyberreel_scraper import Scraper as real_scraper
     except Exception as e:
         real_scraper = None
         log_utils.log('import failed: %s' % (e), log_utils.LOGDEBUG)

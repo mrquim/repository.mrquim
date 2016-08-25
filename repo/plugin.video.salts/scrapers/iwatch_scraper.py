@@ -18,10 +18,10 @@
 import re
 import time
 import urlparse
-from salts_lib import dom_parser
-from salts_lib import kodi
+import kodi
+import log_utils
+import dom_parser
 from salts_lib import scraper_utils
-from salts_lib import log_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import QUALITIES
 from salts_lib.constants import VIDEO_TYPES
@@ -29,9 +29,9 @@ import scraper
 
 
 QUALITY_MAP = {'HD': QUALITIES.HIGH, 'HDTV': QUALITIES.HIGH, 'DVD': QUALITIES.HIGH, '3D': QUALITIES.HIGH, 'CAM': QUALITIES.LOW}
-BASE_URL = 'https://www.iwatchonline.ph'
+BASE_URL = 'http://www.iwatchonline.cr'
 
-class IWatchOnline_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -55,13 +55,6 @@ class IWatchOnline_Scraper(scraper.Scraper):
             match = re.search('<iframe name="frame" class="frame" src="([^"]+)', html)
             if match:
                 return match.group(1)
-
-    def format_source_label(self, item):
-        if item['rating'] is not None:
-            label = '[%s] %s (%s/100)' % (item['quality'], item['host'], item['rating'])
-        else:
-            label = '[%s] %s' % (item['quality'], item['host'])
-        return label
 
     def get_sources(self, video):
         source_url = self.get_url(video)
@@ -126,19 +119,16 @@ class IWatchOnline_Scraper(scraper.Scraper):
             # print '%s, %s, %s, %s' % (num, unit, mult, age)
         return age
 
-    def get_url(self, video):
-        return self._default_get_url(video)
-
     def search(self, video_type, title, year, season=''):
-        search_url = urlparse.urljoin(self.base_url, '/advance-search')
-        if video_type == VIDEO_TYPES.MOVIE:
-            data = {'searchin': '1'}
-        else:
-            data = {'searchin': '2'}
-        data.update({'searchquery': title})
-        html = self._http_get(search_url, data=data, cache_limit=.25)
-
         results = []
+        search_url = urlparse.urljoin(self.base_url, '/search')
+        if video_type == VIDEO_TYPES.MOVIE:
+            data = {'searchin': 'm'}
+        else:
+            data = {'searchin': 't'}
+        data.update({'searchquery': title})
+        html = self._http_get(search_url, data=data, cache_limit=8)
+
         pattern = r'href="([^"]+)">(.*?)\s+\((\d{4})\)'
         for match in re.finditer(pattern, html):
             url, title, match_year = match.groups('')

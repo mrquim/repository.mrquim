@@ -19,20 +19,18 @@ import re
 import urlparse
 import urllib
 import base64
-
-from salts_lib import dom_parser
-from salts_lib import kodi
-from salts_lib import log_utils
+import kodi
+import log_utils
+import dom_parser
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import VIDEO_TYPES
 from salts_lib.constants import QUALITIES
 import scraper
 
-
 BASE_URL = 'http://www.santaseries.com'
 
-class SantaSeries_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -47,15 +45,6 @@ class SantaSeries_Scraper(scraper.Scraper):
     def get_name(cls):
         return 'SantaSeries'
 
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        if 'label' in item:
-            return '[%s] %s (%s)' % (item['quality'], item['host'], item['label'])
-        else:
-            return '[%s] %s' % (item['quality'], item['host'])
-
     def get_sources(self, video):
         source_url = self.get_url(video)
         hosters = []
@@ -63,20 +52,23 @@ class SantaSeries_Scraper(scraper.Scraper):
             page_url = urlparse.urljoin(self.base_url, source_url)
             html = self._http_get(page_url, cache_limit=.25)
             for link in dom_parser.parse_dom(html, 'li', {'class': 'elemento'}):
+                stream_url = ''
                 match = re.search('href="[^"]*/load-episode/#([^"]+)', link)
                 if match:
                     stream_url = base64.decodestring(match.group(1))
-                    if stream_url.startswith('http'):
-                        label = dom_parser.parse_dom(link, 'span', {'class': 'd'})
-                        host = urlparse.urlparse(stream_url).hostname
-                        quality = scraper_utils.get_quality(video, host, QUALITIES.HIGH)
-                        hoster = {'multi-part': False, 'host': host, 'class': self, 'quality': quality, 'views': None, 'rating': None, 'url': stream_url, 'direct': False}
-                        if label: hoster['label'] = label[0]
-                        hosters.append(hoster)
+                else:
+                    match = re.search('href="([^"]+)', link)
+                    if match:
+                        stream_url = match.group(1)
+                        
+                if stream_url.startswith('http'):
+                    label = dom_parser.parse_dom(link, 'span', {'class': 'd'})
+                    host = urlparse.urlparse(stream_url).hostname
+                    quality = scraper_utils.get_quality(video, host, QUALITIES.HIGH)
+                    hoster = {'multi-part': False, 'host': host, 'class': self, 'quality': quality, 'views': None, 'rating': None, 'url': stream_url, 'direct': False}
+                    if label: hoster['extra'] = label[0]
+                    hosters.append(hoster)
         return hosters
-
-    def get_url(self, video):
-        return self._default_get_url(video)
 
     def _get_episode_url(self, show_url, video):
         episode_pattern = 'href="([^"]*-season-%s-episode-%s(?!\d)[^"]*)' % (video.season, video.episode)

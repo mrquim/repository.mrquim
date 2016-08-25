@@ -18,20 +18,19 @@
 import re
 import urlparse
 import urllib
-from salts_lib import dom_parser
-from salts_lib import kodi
-from salts_lib import log_utils
+import kodi
+import log_utils
+import dom_parser
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import VIDEO_TYPES
 from salts_lib.constants import QUALITIES
 import scraper
 
-
 XHR = {'X-Requested-With': 'XMLHttpRequest'}
 BASE_URL = 'http://www.watchepisodes.com'
 
-class WatchEpisodes_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -45,17 +44,6 @@ class WatchEpisodes_Scraper(scraper.Scraper):
     @classmethod
     def get_name(cls):
         return 'WatchEpisodes'
-
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        label = '[%s] %s' % (item['quality'], item['host'])
-        if item['views'] is not None:
-            label += ' (%s views)' % (item['views'])
-        if item['rating'] is not None:
-            label += ' (%s/100)' % (item['rating'])
-        return label
 
     def get_sources(self, video):
         source_url = self.get_url(video)
@@ -79,16 +67,13 @@ class WatchEpisodes_Scraper(scraper.Scraper):
                     rating = score * 10 if score else None
                 
                 if stream_url:
-                    stream_url = stream_url[0]
+                    stream_url = stream_url[0].strip()
                     host = urlparse.urlparse(stream_url).hostname
                     quality = scraper_utils.get_quality(video, host, QUALITIES.HIGH)
                     hoster = {'multi-part': False, 'host': host, 'class': self, 'quality': quality, 'views': views, 'rating': rating, 'url': stream_url, 'direct': False}
                     hosters.append(hoster)
 
         return hosters
-
-    def get_url(self, video):
-        return self._default_get_url(video)
 
     def _get_episode_url(self, show_url, video):
         url = urlparse.urljoin(self.base_url, show_url)

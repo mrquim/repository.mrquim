@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SALTS\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2016-02-20 09:51+0000\n"
+"PO-Revision-Date: 2016-07-09 06:39+0000\n"
 "Last-Translator: tknorris\n"
 "Language-Team: English (United States) (http://www.transifex.com/tv-addons/salts/language/en_US/)\n"
 "MIME-Version: 1.0\n"
@@ -517,12 +517,12 @@ msgid "Next Week"
 msgstr "Next Week"
 
 msgctxt "#30125"
-msgid "Mark as Unwatched"
-msgstr "Mark as Unwatched"
+msgid "Mark as Unwatched (SALTS)"
+msgstr "Mark as Unwatched (SALTS)"
 
 msgctxt "#30126"
-msgid "Mark as Watched"
-msgstr "Mark as Watched"
+msgid "Mark as Watched (SALTS)"
+msgstr "Mark as Watched (SALTS)"
 
 msgctxt "#30127"
 msgid "Rate on trakt.tv"
@@ -853,8 +853,8 @@ msgid "Requested Sources from: %s"
 msgstr "Requested Sources from: %s"
 
 msgctxt "#30220"
-msgid "Received %s Sources from: %s"
-msgstr "Received %s Sources from: %s"
+msgid "Received Sources: (%s / %s) from %s"
+msgstr "Received Sources: (%s / %s) from %s"
 
 msgctxt "#30221"
 msgid "Applying Source Filters"
@@ -983,6 +983,150 @@ msgstr "([COLOR red]***All DB data will be lost.***[/COLOR])"
 msgctxt "#30252"
 msgid "DB Reset Failed: %s"
 msgstr "DB Reset Failed: %s"
+
+msgctxt "#30253"
+msgid "No Streamable Url Found"
+msgstr "No Streamable Url Found"
+
+msgctxt "#30254"
+msgid "Discovering Next Episodes"
+msgstr "Discovering Next Episodes"
+
+msgctxt "#30255"
+msgid "Retrieving Watched History"
+msgstr "Retrieving Watched History"
+
+msgctxt "#30256"
+msgid "Retrieving Watchlist"
+msgstr "Retrieving Watchlist"
+
+msgctxt "#30257"
+msgid "Retrieving Hidden Progress List"
+msgstr "Retrieving Hidden Progress List"
+
+msgctxt "#30258"
+msgid "Requesting Progress for: %s"
+msgstr "Requesting Progress for: %s"
+
+msgctxt "#30259"
+msgid "Received Progress for: %s"
+msgstr "Received Progress for: %s"
+
+msgctxt "#30260"
+msgid "Reset Related Urls"
+msgstr "Reset Related Urls"
+
+msgctxt "#30261"
+msgid "Related Urls Cleared: %s"
+msgstr "Related Urls Cleared: %s"
+
+msgctxt "#30262"
+msgid "Anticipated %s"
+msgstr "Anticipated %s"
+
+msgctxt "#30263"
+msgid "Set as Sources View"
+msgstr "Set as Sources View"
+
+msgctxt "#30264"
+msgid "Set Related Season Url (Search)"
+msgstr "Set Related Season Url (Search)"
+
+msgctxt "#30265"
+msgid "Trakt API Offline Mode Enabled"
+msgstr "Trakt API Offline Mode Enabled"
+
+msgctxt "#30266"
+msgid "On ANY device, visit: %s"
+msgstr "On ANY device, visit: %s"
+
+msgctxt "#30267"
+msgid "When prompted, enter code: %s"
+msgstr "When prompted, enter code: %s"
+
+msgctxt "#30268"
+msgid "Code expires in: %s seconds"
+msgstr "Code expires in: %s seconds"
+
+msgctxt "#30269"
+msgid "Authorization was Rejected"
+msgstr "Authorization was Rejected"
+
+msgctxt "#30270"
+msgid "To watch this video scan the QR Code below or visit [COLOR blue]"
+msgstr "To watch this video scan the QR Code below or visit [COLOR blue]"
+
+msgctxt "#30271"
+msgid "[/COLOR] from any device on the same network as this device."
+msgstr "[/COLOR] from any device on the same network as this device."
+
+msgctxt "#30272"
+msgid "Watch It Again"
+msgstr "Watch It Again"
+
+msgctxt "#30273"
+msgid "Pick a list to use for Watch It Again"
+msgstr "Pick a list to use for Watch It Again"
+
+msgctxt "#30274"
+msgid "Use Least Watched Method"
+msgstr "Use Least Watched Method"
+
+msgctxt "#30275"
+msgid "Use Most Watched Method"
+msgstr "Use Most Watched Method"
+
+msgctxt "#30276"
+msgid "Use Last Watched Method"
+msgstr "Use Last Watched Method"
+
+msgctxt "#30277"
+msgid "Set as Watch It Again List"
+msgstr "Set as Watch It Again List"
+
+msgctxt "#30278"
+msgid "Playback only allowed from Library & SALTS"
+msgstr "Playback only allowed from Library & SALTS"
+
+msgctxt "#30279"
+msgid "Maximum Allowed Size (GB) (0 = No Limit)"
+msgstr "Maximum Allowed Size (GB) (0 = No Limit)"
+
+msgctxt "#30280"
+msgid "Show Episode Airtime in My Next Episodes"
+msgstr "Show Episode Airtime in My Next Episodes"
+
+msgctxt "#30281"
+msgid "Include Transodes"
+msgstr "Include Transodes"
+
+msgctxt "#30282"
+msgid "Next Episode"
+msgstr "Next Episode"
+
+msgctxt "#30283"
+msgid "Remaining: %s of %s"
+msgstr "Remaining: %s of %s"
+
+msgctxt "#30284"
+msgid "Remaining: %s"
+msgstr "Remaining: %s"
+
+msgctxt "#30285"
+msgid "Genres"
+msgstr "Genres"
+
+msgctxt "#30286"
+msgid "Retrieving Collection"
+msgstr "Retrieving Collection"
+
+msgctxt "#30287"
+msgid "Adding Items to Directory"
+msgstr "Adding Items to Directory"
+
+msgctxt "#30288"
+msgid "Working..."
+msgstr "Working..."
 
 msgctxt "#30500"
 msgid "Addon Theme"
@@ -1647,4 +1791,152 @@ msgstr "Continue"
 msgctxt "#30668"
 msgid "Cancel"
 msgstr "Cancel"
+
+msgctxt "#30669"
+msgid "Select this item to Install the SALTS Themepak"
+msgstr "Select this item to Install the SALTS Themepak"
+
+msgctxt "#30670"
+msgid "Show Settings"
+msgstr "Show Settings"
+
+msgctxt "#30671"
+msgid "Show Anticipated"
+msgstr "Show Anticipated"
+
+msgctxt "#30672"
+msgid "Default Sources View (0 = None)"
+msgstr "Default Sources View (0 = None)"
+
+msgctxt "#30673"
+msgid "Scraper Last Update"
+msgstr "Scraper Last Update"
+
+msgctxt "#30674"
+msgid "Trakt API Offline Mode"
+msgstr "Trakt API Offline Mode"
+
+msgctxt "#30675"
+msgid "Torba IP Authorization"
+msgstr "Torba IP Authorization"
+
+msgctxt "#30676"
+msgid "Machine Speed"
+msgstr "Machine Speed"
+
+msgctxt "#30677"
+msgid "Automatic"
+msgstr "Automatic"
+
+msgctxt "#30678"
+msgid "Very Slow"
+msgstr "Very Slow"
+
+msgctxt "#30679"
+msgid "Slow"
+msgstr "Slow"
+
+msgctxt "#30680"
+msgid "Medium"
+msgstr "Medium"
+
+msgctxt "#30681"
+msgid "Fast"
+msgstr "Fast"
+
+msgctxt "#30682"
+msgid "Very Fast"
+msgstr "Very Fast"
+
+msgctxt "#30683"
+msgid "Show Watch It Again"
+msgstr "Show Watch It Again"
+
+msgctxt "#30684"
+msgid "Show air time in MNE"
+msgstr "Show air time in MNE"
+
+msgctxt "#30686"
+msgid "Show Next Episode Notification"
+msgstr "Show Next Episode Notification"
+
+msgctxt "#30687"
+msgid "    Next Episode Delay (secs)"
+msgstr "    Next Episode Delay (secs)"
+
+msgctxt "#30688"
+msgid "    Show Next Episode on Unwatched"
+msgstr "    Show Next Episode on Unwatched"
+
+msgctxt "#30689"
+msgid "    Show air time in Next Episode"
+msgstr "    Show air time in Next Episode"
+
+msgctxt "#30690"
+msgid "Show CF Site Protection Captchas"
+msgstr "Show CF Site Protection Captchas"
+
+msgctxt "#30691"
+msgid "    Next Episode Duration (secs)"
+msgstr "    Next Episode Duration (secs)"
+
+msgctxt "#30692"
+msgid "Show Genres"
+msgstr "Show Genres"
+
+msgctxt "#30693"
+msgid "Movie Genre List"
+msgstr "Movie Genre List"
+
+msgctxt "#30694"
+msgid "TV Genre List"
+msgstr "TV Genre List"
+
+msgctxt "#30695"
+msgid "Trending"
+msgstr "Trending"
+
+msgctxt "#30696"
+msgid "Popular"
+msgstr "Popular"
+
+msgctxt "#30697"
+msgid "Anticipated"
+msgstr "Anticipated"
+
+msgctxt "#30698"
+msgid "Most Watched (Week)"
+msgstr "Most Watched (Week)"
+
+msgctxt "#30699"
+msgid "Most Watched (Month)"
+msgstr "Most Watched (Month)"
+
+msgctxt "#30700"
+msgid "Most Watched (All)"
+msgstr "Most Watched (All)"
+
+msgctxt "#30701"
+msgid "Most Played (Week)"
+msgstr "Most Played (Week)"
+
+msgctxt "#30702"
+msgid "Most Played (Month)"
+msgstr "Most Played (Month)"
+
+msgctxt "#30703"
+msgid "Most Played (All)"
+msgstr "Most Played (All)"
+
+msgctxt "#30704"
+msgid "Most Collected (Week)"
+msgstr "Most Collected (Week)"
+
+msgctxt "#30705"
+msgid "Most Collected (Month)"
+msgstr "Most Collected (Month)"
+
+msgctxt "#30706"
+msgid "Most Collected (All)"
+msgstr "Most Collected (All)"
 

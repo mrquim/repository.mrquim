@@ -19,19 +19,21 @@
 import re
 import urlparse
 import urllib
-from salts_lib import dom_parser
-from salts_lib import kodi
-from salts_lib import log_utils
+import kodi
+import log_utils
+import dom_parser
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import VIDEO_TYPES
 from salts_lib.constants import QUALITIES
+from salts_lib.constants import XHR
 import scraper
 
 
 BASE_URL = 'http://www.dizibox.com'
+KING_URL = 'http://play.dizibox.net/king/king.php?p=GetVideoSources'
 
-class Dizibox_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -46,46 +48,63 @@ class Dizibox_Scraper(scraper.Scraper):
     def get_name(cls):
         return 'Dizibox'
 
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        label = '[%s] %s' % (item['quality'], item['host'])
-        return label
-
     def get_sources(self, video):
         source_url = self.get_url(video)
         hosters = []
         if source_url and source_url != FORCE_NO_MATCH:
             page_url = urlparse.urljoin(self.base_url, source_url)
             html = self._http_get(page_url, cache_limit=.25)
+            hosters = self.__extract_links(html)
             fragment = dom_parser.parse_dom(html, 'div', {'class': 'video-toolbar'})
             if fragment:
-                match = re.search('''href="([^"]+)[^>]*>Altyaz''', fragment[0])
-                if match:
-                    option_url = urlparse.urljoin(self.base_url, match.group(1))
-                    html = self._http_get(option_url, cache_limit=.25)
-                else:
-                    trans = dom_parser.parse_dom(html, 'span', {'class': 'woca-current-page'})
-                    if trans and trans[0].startswith('Altyaz'):
-                        pass
-                    else:
-                        return hosters
-                    
-                fragment = dom_parser.parse_dom(html, 'span', {'class': 'object-wrapper'})
-                if fragment:
-                    iframe_url = dom_parser.parse_dom(fragment[0], 'iframe', ret='src')
-                    if iframe_url:
-                        html = self._http_get(iframe_url[0], cache_limit=.25)
-
-                        hosters += self.__get_page_links(html)
-                        flashvars = dom_parser.parse_dom(html, 'param', {'name': 'flashvars'}, ret='value')
-                        if flashvars:
-                            hosters += self.__get_ok(flashvars[0])
+                for match in re.finditer('''href="([^"]+)[^>]*>(?:DBX|King|Odnok)''', fragment[0], re.I):
+                    html = self._http_get(match.group(1), cache_limit=.25)
+                    hosters += self.__extract_links(html)
     
         return hosters
 
-    def __get_page_links(self, html):
+    def __extract_links(self, html):
+        hosters = []
+        fragment = dom_parser.parse_dom(html, 'span', {'class': 'object-wrapper'})
+        if fragment:
+            iframe_url = dom_parser.parse_dom(fragment[0], 'iframe', ret='src')
+            if iframe_url:
+                iframe_url = iframe_url[0]
+                if 'king.php' in iframe_url:
+                    hosters += self.__get_king_links(iframe_url)
+                else:
+                    html = self._http_get(iframe_url, cache_limit=.25)
+                    hosters += self.__get_embed_links(html)
+                    flashvars = dom_parser.parse_dom(html, 'param', {'name': 'flashvars'}, ret='value')
+                    if flashvars:
+                        hosters += self.__get_ok(flashvars[0])
+        return hosters
+        
+    def __get_king_links(self, iframe_url):
+        hosters = []
+        match = re.search('v=(.*)', iframe_url)
+        if match:
+            data = {'ID': match.group(1)}
+            headers = {'Referer': iframe_url}
+            headers.update(XHR)
+            html = self._http_get(KING_URL, data=data, headers=headers, cache_limit=0)
+            js_data = scraper_utils.parse_json(html, KING_URL)
+            try:
+                for source in js_data['VideoSources']:
+                    stream_url = source['file'] + '|User-Agent=%s' % (scraper_utils.get_ua())
+                    host = self._get_direct_hostname(source['file'])
+                    if host == 'gvideo':
+                        quality = scraper_utils.gv_get_quality(source['file'])
+                    else:
+                        quality = scraper_utils.height_get_quality(source.get('label', ''))
+                    hoster = {'multi-part': False, 'host': host, 'class': self, 'quality': quality, 'views': None, 'rating': None, 'url': stream_url, 'direct': True, 'subs': 'Turkish Subtitles'}
+                    hosters.append(hoster)
+            except:
+                pass
+            
+        return hosters
+    
+    def __get_embed_links(self, html):
         hosters = []
         seen_urls = {}
         for match in re.finditer('"?file"?\s*:\s*"([^"]+)"\s*,\s*"?label"?\s*:\s*"(\d+)p?[^"]*"', html):
@@ -98,7 +117,7 @@ class Dizibox_Scraper(scraper.Scraper):
                     quality = scraper_utils.gv_get_quality(stream_url)
                 else:
                     quality = scraper_utils.height_get_quality(height)
-                hoster = {'multi-part': False, 'host': self._get_direct_hostname(stream_url), 'class': self, 'quality': quality, 'views': None, 'rating': None, 'url': stream_url, 'direct': True}
+                hoster = {'multi-part': False, 'host': self._get_direct_hostname(stream_url), 'class': self, 'quality': quality, 'views': None, 'rating': None, 'url': stream_url, 'direct': True, 'subs': 'Turkish Subtitles'}
                 hosters.append(hoster)
         return hosters
         
@@ -109,16 +128,13 @@ class Dizibox_Scraper(scraper.Scraper):
             ok_url = urllib.unquote(match.group(1))
             html = self._http_get(ok_url, cache_limit=1)
             js_data = scraper_utils.parse_json(html, ok_url)
-            if 'movie' in js_data and 'url' in js_data['movie']:
-                stream_url = js_data['movie']['url']
+            stream_url = js_data.get('movie', {}).get('url')
+            if stream_url is not None:
                 host = urlparse.urlparse(stream_url).hostname
-                hoster = {'multi-part': False, 'host': host, 'class': self, 'quality': QUALITIES.HD720, 'views': None, 'rating': None, 'url': stream_url, 'direct': False}
+                hoster = {'multi-part': False, 'host': host, 'class': self, 'quality': QUALITIES.HD720, 'views': None, 'rating': None, 'url': stream_url, 'direct': False, 'subs': 'Turkish Subtitles'}
                 hosters.append(hoster)
         return hosters
     
-    def get_url(self, video):
-        return self._default_get_url(video)
-
     def _get_episode_url(self, show_url, video):
         show_url = urlparse.urljoin(self.base_url, show_url)
         html = self._http_get(show_url, cache_limit=24)

@@ -20,39 +20,33 @@ import re
 import urllib
 import urlparse
 import xbmcvfs
-# import xbmcgui
-# import xbmc
-import json
-# import time
-from salts_lib import dom_parser
-from salts_lib import kodi
-from salts_lib import log_utils
+import kodi
+import log_utils
+import utils
+import dom_parser
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
-from salts_lib.constants import QUALITIES
 from salts_lib.constants import VIDEO_TYPES
 from salts_lib import gui_utils
 import scraper
 
-
 XHR = {'X-Requested-With': 'XMLHttpRequest'}
 BASE_URL = 'http://torba.se'
 BASE_URL2 = 'http://streamtorrent.tv'
-SEARCH_URL = '/search?title=%s&order=recent&_pjax=#films-pjax-container'
+SEARCH_URL = '/%s/autocomplete?order=relevance&title=%s'
+SEARCH_TYPES = {VIDEO_TYPES.MOVIE: 'movies', VIDEO_TYPES.TVSHOW: 'series'}
 TOR_URL = BASE_URL2 + '/api/torrent/%s.json'
-PL_URL = BASE_URL2 + '/api/torrent/%s/%s.m3u8'
-INTERVALS = 5
-EXPIRE_DURATION = 5 * 60
-KODI_UA = 'Lavf/56.40.101'
+PL_URL = BASE_URL2 + '/api/torrent/%s/%s.m3u8?json=true'
 M3U8_PATH = os.path.join(kodi.translate_path(kodi.get_profile()), 'torbase.m3u8')
 M3U8_TEMPLATE = [
     '#EXTM3U',
-    '#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="{audio_group}",DEFAULT=YES,AUTOSELECT=YES,NAME="Stream 1",URI="{audio_stream}"',
+    '#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",DEFAULT=YES,AUTOSELECT=YES,NAME="Stream 1",URI="{audio_stream}"',
     '',
-    '#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH={bandwidth},NAME="{stream_name}",AUDIO="{audio_group}"',
+    '#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=0,NAME="{stream_name}",AUDIO="audio"',
     '{video_stream}']
+                  
 
-class TorbaSe_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -62,7 +56,7 @@ class TorbaSe_Scraper(scraper.Scraper):
 
     @classmethod
     def provides(cls):
-        return frozenset([VIDEO_TYPES.MOVIE])
+        return frozenset([VIDEO_TYPES.MOVIE, VIDEO_TYPES.TVSHOW, VIDEO_TYPES.EPISODE])
 
     @classmethod
     def get_name(cls):
@@ -73,14 +67,21 @@ class TorbaSe_Scraper(scraper.Scraper):
             xbmcvfs.delete(M3U8_PATH)
             query = urlparse.parse_qs(link)
             query = dict([(key, query[key][0]) if query[key] else (key, '') for key in query])
-            if 'video_stream' in query:
-                if self.__authorize_ip(query['video_stream']):
-                    f = xbmcvfs.File(M3U8_PATH, 'w')
-                    for line in M3U8_TEMPLATE:
-                        line = line.format(**query)
-                        f.write(line + '\n')
-                    f.close()
-                    return M3U8_PATH
+            if 'vid_id' in query and 'stream_id' in query and 'height' in query:
+                auth_url = PL_URL % (query['vid_id'], query['stream_id'])
+                result = self.__authorize_ip(auth_url)
+                if result:
+                    key = '%sp' % (query['height'])
+                    if key in result:
+                        if 'audio' in result:
+                            streams = {'audio_stream': result['audio'], 'stream_name': key, 'video_stream': result[key]}
+                            f = xbmcvfs.File(M3U8_PATH, 'w')
+                            for line in M3U8_TEMPLATE:
+                                line = line.format(**streams)
+                                f.write(line + '\n')
+                            return M3U8_PATH
+                        else:
+                            return result[key]
         except Exception as e:
             log_utils.log('Failure during torba resolver: %s' % (e), log_utils.LOGWARNING)
 
@@ -100,102 +101,70 @@ class TorbaSe_Scraper(scraper.Scraper):
         if not self.auth_url:
             return True, None
         
-        headers = {'User-Agent': KODI_UA}
-        html = self._http_get(self.auth_url, headers=headers, cache_limit=0)
-        try:
-            js_data = json.loads(html)
-            return False, js_data
-        except:
-            return True, html
+        js_data = utils.json_loads_as_str(self._http_get(self.auth_url, cache_limit=0))
+        if 'url' in js_data:
+            authorized = False
+        else:
+            authorized = True
+        return authorized, js_data
     
-    def format_source_label(self, item):
-        label = '[%s] %s' % (item['quality'], item['host'])
-        return label
-
     def get_sources(self, video):
         source_url = self.get_url(video)
         hosters = []
         if source_url and source_url != FORCE_NO_MATCH:
             url = urlparse.urljoin(self.base_url, source_url)
-            html = self._http_get(url, cache_limit=0)
-            vid_link = dom_parser.parse_dom(html, 'a', {'class': 'video-play'}, 'href')
+            html = self._http_get(url, cache_limit=.5)
+            vid_link = dom_parser.parse_dom(html, 'a', {'class': '[^"]*video-play[^"]*'}, 'href')
             if vid_link:
                 i = vid_link[0].rfind('/')
                 if i > -1:
                     vid_id = vid_link[0][i + 1:]
-                    stream_id = self.__get_stream_id(vid_id)
-                    if stream_id:
-                        pl_url = PL_URL % (vid_id, stream_id)
-                        playlist = self._http_get(pl_url, cache_limit=0)
-                        sources = self.__get_streams_from_m3u8(playlist.split('\n'), BASE_URL2, vid_id, stream_id)
-                        for source in sources:
-                            hoster = {'multi-part': False, 'host': self._get_direct_hostname(source), 'class': self, 'quality': sources[source], 'views': None, 'rating': None, 'url': source, 'direct': True}
-                            hosters.append(hoster)
+                    sources = self.__get_streams(vid_id)
+                    for height in sources:
+                        stream_url = urllib.urlencode({'height': height, 'stream_id': sources[height], 'vid_id': vid_id})
+                        quality = scraper_utils.height_get_quality(height)
+                        hoster = {'multi-part': False, 'host': self._get_direct_hostname(stream_url), 'class': self, 'quality': quality, 'views': None, 'rating': None, 'url': stream_url, 'direct': True}
+                        hosters.append(hoster)
                 
         return hosters
 
-    def __get_stream_id(self, vid_id):
+    def __get_streams(self, vid_id):
+        sources = {}
         tor_url = TOR_URL % (vid_id)
         html = self._http_get(tor_url, cache_limit=.5)
         js_data = scraper_utils.parse_json(html, tor_url)
         if 'files' in js_data:
             for file_info in js_data['files']:
                 if 'streams' in file_info and file_info['streams']:
-                    return file_info['_id']
-    
-    def __get_streams_from_m3u8(self, playlist, st_url, vid_id, stream_id):
-        sources = {}
-        quality = QUALITIES.HIGH
-        audio_group = ''
-        audio_stream = ''
-        stream_name = 'Unknown'
-        bandwidth = 0
-        for line in playlist:
-            if line.startswith('#EXT-X-MEDIA'):
-                match = re.search('GROUP-ID="([^"]+).*?URI="([^"]+)', line)
-                if match:
-                    audio_group, audio_stream = match.groups()
-            if line.startswith('#EXT-X-STREAM-INF'):
-                match = re.search('BANDWIDTH=(\d+).*?NAME="(\d+p)', line)
-                if match:
-                    bandwidth, stream_name = match.groups()
-                    quality = scraper_utils.height_get_quality(stream_name)
-            elif line.endswith('m3u8'):
-                stream_url = urlparse.urljoin(st_url, line)
-                query = {'audio_group': audio_group, 'audio_stream': audio_stream, 'stream_name': stream_name, 'bandwidth': bandwidth, 'video_stream': stream_url,
-                         'vid_id': vid_id, 'stream_id': stream_id}
-                stream_url = urllib.urlencode(query)
-                sources[stream_url] = quality
-                
+                    for stream in file_info['streams']:
+                        sources[stream['height']] = file_info['_id']
         return sources
-        
-    def get_url(self, video):
-        return self._default_get_url(video)
-
+    
+    def _get_episode_url(self, show_url, video):
+        url = urlparse.urljoin(self.base_url, show_url)
+        html = self._http_get(url, cache_limit=24)
+        fragment = dom_parser.parse_dom(html, 'ul', {'class': 'season-list'})
+        if fragment:
+            match = re.search('href="([^"]+)[^>]+>\s*season\s+%s\s*<' % (video.season), fragment[0], re.I)
+            if match:
+                season_url = match.group(1)
+                episode_pattern = 'href="([^"]*%s/%s/%s)"' % (show_url, video.season, video.episode)
+                title_pattern = 'href="(?P<url>[^"]+)"[^>]*>\s*<div class="series-item-title">(?P<title>[^<]+)'
+                return self._default_get_episode_url(season_url, video, episode_pattern, title_pattern)
+    
     def search(self, video_type, title, year, season=''):
         results = []
         search_url = urlparse.urljoin(self.base_url, SEARCH_URL)
-        search_url = search_url % (urllib.quote_plus(title))
+        search_url = search_url % (SEARCH_TYPES[video_type], urllib.quote_plus(title))
         html = self._http_get(search_url, headers=XHR, cache_limit=1)
-        for film in dom_parser.parse_dom(html, 'li', {'class': 'films-item'}):
-            match_url = dom_parser.parse_dom(film, 'a', ret='href')
-            match_title = dom_parser.parse_dom(film, 'div', {'class': 'films-item-title'})
-            match_year = dom_parser.parse_dom(film, 'div', {'class': 'films-item-year'})
-            if match_url and match_title:
-                match_url = match_url[0]
-                match_title = match_title[0]
-                match_title = re.sub('</?span>', '', match_title)
-                if match_year:
-                    match = re.search('(\d+)', match_year[0])
-                    if match:
-                        match_year = match.group(1)
-                    else:
-                        match_year = ''
-                else:
-                    match_year = ''
-                    
+        js_data = scraper_utils.parse_json(html, search_url)
+        for item in js_data:
+            if 'title' in item and 'link' in item:
+                match_title = item['title']
+                match_url = item['link']
+                match_year = str(item.get('year', ''))
                 if not year or not match_year or year == match_year:
-                    result = {'title': scraper_utils.cleanse_title(match_title), 'year': match_year, 'url': match_url}
+                    result = {'title': scraper_utils.cleanse_title(match_title), 'year': match_year, 'url': scraper_utils.pathify_url(match_url)}
                     results.append(result)
 
         return results

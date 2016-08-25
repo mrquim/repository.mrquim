@@ -18,6 +18,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
+# TODO: get Hosts Dict from urlresolver
+
 
 import re,urllib,urlparse,base64
 
@@ -160,18 +162,19 @@ class source:
                     url = url.encode('utf-8')
 
                     host = re.findall('([\w]+[.][\w]+)$', urlparse.urlparse(url.strip().lower()).netloc)[0]
-                    print("%@@$^@ host",host)
-
-                    if not host in hostDict: raise Exception()
+                    host = host.rsplit('.', 1)[0]
+                    print("%@@$^@ host",host, not host in hostDict)
+                    if not host in hostDict:
+                        if not host in hosthdDict: raise Exception()
                     host = client.replaceHTMLCodes(host)
                     host = host.encode('utf-8')
 
                     quality = client.parseDOM(i, 'div', attrs = {'class': 'quality'})
                     if any(x in ['[CAM]', '[TS]'] for x in quality): quality = 'CAM'
                     else:  quality = 'SD'
-                    quality = quality.encode('utf-8')
-
+                    #quality = quality.encode('utf-8')
                     sources.append({'source': host, 'quality': quality, 'provider': 'Watchfree', 'url': url})
+
                 except:
                     pass
 

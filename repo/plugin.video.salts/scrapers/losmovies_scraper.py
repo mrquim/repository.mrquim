@@ -18,17 +18,16 @@
 import re
 import urllib
 import urlparse
-
-from salts_lib import kodi
+import kodi
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import VIDEO_TYPES
 import scraper
 
 
-BASE_URL = 'http://losmovies.es'
+BASE_URL = 'http://losmovies.io'
 
-class LosMovies_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -42,12 +41,6 @@ class LosMovies_Scraper(scraper.Scraper):
     @classmethod
     def get_name(cls):
         return 'LosMovies'
-
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        return '[%s] %s' % (item['quality'], item['host'])
 
     def get_sources(self, video):
         source_url = self.get_url(video)
@@ -73,9 +66,6 @@ class LosMovies_Scraper(scraper.Scraper):
                     hoster['quality'] = scraper_utils.get_quality(video, host, hoster['quality'])
                     hosters.append(hoster)
         return hosters
-
-    def get_url(self, video):
-        return self._default_get_url(video)
 
     def search(self, video_type, title, year, season=''):
         search_url = urlparse.urljoin(self.base_url, '/search?type=movies&q=')

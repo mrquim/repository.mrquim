@@ -17,10 +17,9 @@
 """
 import re
 import urlparse
-
-from salts_lib import dom_parser
-from salts_lib import kodi
-from salts_lib import log_utils
+import kodi
+import log_utils
+import dom_parser
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import VIDEO_TYPES
@@ -30,7 +29,7 @@ import scraper
 BASE_URL = 'http://oneclicktvshows.com'
 FORMATS = ['x265', 'x264', 'webrip', 'webdl']
 
-class OCTV_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -45,16 +44,6 @@ class OCTV_Scraper(scraper.Scraper):
     def get_name(cls):
         return 'OneClickTVShows'
 
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        if 'format' in item:
-            label = '[%s] (%s) %s' % (item['quality'], item['format'], item['host'])
-        else:
-            label = '[%s] %s' % (item['quality'], item['host'])
-        return label
-
     def get_sources(self, video):
         source_url = self.get_url(video)
         hosters = []
@@ -67,20 +56,18 @@ class OCTV_Scraper(scraper.Scraper):
                 title = re.sub('<span[^>]*>|</span>', '', title)
                 title = title.strip()
                 if title[-2:].upper() in ('MB', 'GB'):
-                    _title, season, episode, height, extra = scraper_utils.parse_episode_link(title)
-                    if int(season) == int(video.season) and int(episode) == int(video.episode):
+                    meta = scraper_utils.parse_episode_link(title)
+                    if int(meta['season']) == int(video.season) and int(meta['episode']) == int(video.episode):
                         host = urlparse.urlparse(stream_url).hostname
-                        hoster = {'multi-part': False, 'host': host, 'class': self, 'quality': scraper_utils.height_get_quality(height), 'views': None, 'rating': None, 'url': stream_url, 'direct': False}
+                        quality = scraper_utils.height_get_quality(meta['height'])
+                        hoster = {'multi-part': False, 'host': host, 'class': self, 'quality': quality, 'views': None, 'rating': None, 'url': stream_url, 'direct': False}
                         for vid_format in FORMATS:
-                            if vid_format in extra.lower():
+                            if vid_format in meta['extra'].lower():
                                 hoster['format'] = vid_format
                                 break
                         hosters.append(hoster)
     
         return hosters
-
-    def get_url(self, video):
-        return self._default_get_url(video)
 
     def _get_episode_url(self, show_url, video):
         return show_url

@@ -18,17 +18,16 @@
 import re
 import urlparse
 
-from salts_lib import kodi
+import kodi
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import QUALITIES
 from salts_lib.constants import VIDEO_TYPES
 import scraper
 
-
 BASE_URL = 'http://www.ch131.me'
 
-class CH131_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -42,13 +41,6 @@ class CH131_Scraper(scraper.Scraper):
     @classmethod
     def get_name(cls):
         return 'ch131'
-
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        label = '[%s] %s' % (item['quality'], item['host'])
-        return label
 
     def get_sources(self, video):
         source_url = self.get_url(video)
@@ -64,9 +56,6 @@ class CH131_Scraper(scraper.Scraper):
                 hosters.append(hoster)
 
         return hosters
-
-    def get_url(self, video):
-        return self._default_get_url(video)
 
     def _get_episode_url(self, show_url, video):
         episode_pattern = 'href="([^"]+[sS](?:eason-)?0?%s-?[eE](?:pisode-)?0?%s-[^"]+)' % (video.season, video.episode)

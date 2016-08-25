@@ -19,19 +19,17 @@
 import re
 import urlparse
 import copy
-
-from salts_lib import kodi
+import kodi
+import log_utils
 from salts_lib import scraper_utils
-from salts_lib import log_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import VIDEO_TYPES
 import scraper
 
-
 BASE_URL = 'http://stream-tv2.ag'
 DEF_EP_URL = 'http://stream-tv-series.net'
 
-class StreamTV_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -45,13 +43,6 @@ class StreamTV_Scraper(scraper.Scraper):
     @classmethod
     def get_name(cls):
         return 'stream-tv.co'
-
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        label = '[%s] %s' % (item['quality'], item['host'])
-        return label
 
     def get_sources(self, video):
         source_url = self.get_url(video)
@@ -72,7 +63,7 @@ class StreamTV_Scraper(scraper.Scraper):
     def __get_base_ep_url(self, video):
         temp_video = copy.copy(video)
         temp_video.video_type = VIDEO_TYPES.TVSHOW
-        url = urlparse.urljoin(self.base_url, self.get_url(video))
+        url = urlparse.urljoin(self.base_url, self.get_url(temp_video))
         html = self._http_get(url, cache_limit=8)
         match = re.search('href="([^"]+[sS]\d+-?[eE]\d+[^"]+)', html)
         if match:
@@ -80,9 +71,6 @@ class StreamTV_Scraper(scraper.Scraper):
         else:
             return DEF_EP_URL
         
-    def get_url(self, video):
-        return self._default_get_url(video)
-
     def _get_episode_url(self, show_url, video):
         episode_pattern = 'href="([^"]+s%d-?e%d[^"]+)' % (int(video.season), int(video.episode))
         title_pattern = 'href="(?P<url>[^"]+)"\s+rel="nofollow.*</a>(?P<title>[^<]+)'

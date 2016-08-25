@@ -18,24 +18,21 @@
 import re
 import urllib
 import urlparse
-
-import xbmcaddon
-
+import kodi
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import QUALITIES
 from salts_lib.constants import VIDEO_TYPES
 import scraper
 
-
 BASE_URL = 'http://putlocker.is'
 
-class Putlocker_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
         self.timeout = timeout
-        self.base_url = xbmcaddon.Addon().getSetting('%s-base_url' % (self.get_name()))
+        self.base_url = kodi.get_setting('%s-base_url' % (self.get_name()))
 
     @classmethod
     def provides(cls):
@@ -44,13 +41,6 @@ class Putlocker_Scraper(scraper.Scraper):
     @classmethod
     def get_name(cls):
         return 'Putlocker'
-
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        label = '[%s] (%s) %s' % (item['quality'], item['version'], item['host'])
-        return label
 
     def get_sources(self, video):
         source_url = self.get_url(video)
@@ -67,9 +57,6 @@ class Putlocker_Scraper(scraper.Scraper):
                 hosters.append(hoster)
 
         return hosters
-
-    def get_url(self, video):
-        return self._default_get_url(video)
 
     def search(self, video_type, title, year, season=''):
         search_url = urlparse.urljoin(self.base_url, '/search/advanced_search.php?q=%s' % (urllib.quote_plus(title)))
@@ -95,9 +82,10 @@ class Putlocker_Scraper(scraper.Scraper):
                     else:
                         match_title = title_year
                         match_year = ''
-                    
-                    result = {'url': scraper_utils.pathify_url(url), 'title': scraper_utils.cleanse_title(match_title), 'year': match_year}
-                    results.append(result)
+
+                    if not year or not match_year or year == match_year:
+                        result = {'url': scraper_utils.pathify_url(url), 'title': scraper_utils.cleanse_title(match_title), 'year': match_year}
+                        results.append(result)
         results = dict((result['url'], result) for result in results).values()
         return results
 

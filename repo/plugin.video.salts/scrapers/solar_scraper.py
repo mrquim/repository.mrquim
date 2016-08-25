@@ -18,19 +18,17 @@
 import re
 import urllib
 import urlparse
-
-from salts_lib import kodi
+import kodi
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import QUALITIES
 from salts_lib.constants import VIDEO_TYPES
 import scraper
 
-
 QUALITY_MAP = {'HD': QUALITIES.HIGH, 'DVD': QUALITIES.HIGH, 'TV': QUALITIES.HIGH, 'LQ DVD': QUALITIES.MEDIUM, 'CAM': QUALITIES.LOW}
 BASE_URL = 'https://www.solarmovie.ph'
 
-class Solar_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -51,10 +49,6 @@ class Solar_Scraper(scraper.Scraper):
         match = re.search('iframe[^>]+src="([^"]+)', html, re.I)
         if match:
             return match.group(1)
-
-    def format_source_label(self, item):
-        label = '[%s] %s' % (item['quality'], item['host'])
-        return label
 
     def get_sources(self, video):
         source_url = self.get_url(video)
@@ -80,9 +74,6 @@ class Solar_Scraper(scraper.Scraper):
                     hosters.append(hoster)
 
         return hosters
-
-    def get_url(self, video):
-        return self._default_get_url(video)
 
     def search(self, video_type, title, year, season=''):
         if video_type == VIDEO_TYPES.MOVIE:

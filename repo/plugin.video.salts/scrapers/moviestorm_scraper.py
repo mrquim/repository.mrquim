@@ -19,9 +19,8 @@ import re
 import time
 import urllib
 import urlparse
-
-from salts_lib import dom_parser
-from salts_lib import kodi
+import kodi
+import dom_parser
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import QUALITIES
@@ -32,7 +31,7 @@ import scraper
 BASE_URL = 'http://moviestorm.eu'
 QUALITY_MAP = {'HD': QUALITIES.HIGH, 'CAM': QUALITIES.LOW, 'BRRIP': QUALITIES.HIGH, 'UNKNOWN': QUALITIES.MEDIUM, 'DVDRIP': QUALITIES.HIGH}
 
-class MovieStorm_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -57,16 +56,12 @@ class MovieStorm_Scraper(scraper.Scraper):
         else:
             return link
 
-    def format_source_label(self, item):
-        label = '[%s] %s (%s views)' % (item['quality'], item['host'], item['views'])
-        return label
-
     def get_sources(self, video):
         source_url = self.get_url(video)
         hosters = []
         if source_url and source_url != FORCE_NO_MATCH:
             url = urlparse.urljoin(self.base_url, source_url)
-            html = self._http_get(url, cache_limit=.5)
+            html = self._http_get(url, cache_limit=2)
             pattern = 'class="source_td">\s*<img[^>]+>\s*(.*?)\s*-\s*\((\d+) views\).*?class="quality_td">\s*(.*?)\s*<.*?href="([^"]+)'
             for match in re.finditer(pattern, html, re.DOTALL):
                 host, views, quality_str, stream_url = match.groups()
@@ -74,9 +69,6 @@ class MovieStorm_Scraper(scraper.Scraper):
                 hoster = {'multi-part': False, 'host': host, 'class': self, 'url': stream_url, 'quality': scraper_utils.get_quality(video, host, QUALITY_MAP.get(quality_str.upper())), 'views': views, 'rating': None, 'direct': False}
                 hosters.append(hoster)
         return hosters
-
-    def get_url(self, video):
-        return self._default_get_url(video)
 
     def _get_episode_url(self, show_url, video):
         episode_pattern = 'href="([^"]+season-%d/episode-%d/[^"]+)' % (int(video.season), int(video.episode))
@@ -88,7 +80,7 @@ class MovieStorm_Scraper(scraper.Scraper):
         results = []
         if video_type == VIDEO_TYPES.TVSHOW:
             url = urlparse.urljoin(self.base_url, '/series/all/')
-            html = self._http_get(url, cache_limit=8)
+            html = self._http_get(url, cache_limit=48)
     
             links = dom_parser.parse_dom(html, 'a', {'class': 'underilne'}, 'href')
             titles = dom_parser.parse_dom(html, 'a', {'class': 'underilne'})

@@ -17,20 +17,19 @@
 """
 import re
 import urlparse
-
-from salts_lib import dom_parser
-from salts_lib import kodi
+import log_utils
+import kodi
+import dom_parser
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import QUALITIES
 from salts_lib.constants import VIDEO_TYPES
 import scraper
 
-
 BASE_URL = 'http://www.couchtuner.ch'
-BASE_URL2 = 'http://www.couchtuner.city'
+BASE_URL2 = 'http://couchtuner.city'
 
-class CouchTunerV1_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -44,13 +43,6 @@ class CouchTunerV1_Scraper(scraper.Scraper):
     @classmethod
     def get_name(cls):
         return 'CouchTunerV1'
-
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        label = '[%s] %s' % (item['quality'], item['host'])
-        return label
 
     def get_sources(self, video):
         source_url = self.get_url(video)
@@ -85,9 +77,6 @@ class CouchTunerV1_Scraper(scraper.Scraper):
 
         return hosters
 
-    def get_url(self, video):
-        return self._default_get_url(video)
-
     def _get_episode_url(self, show_url, video):
         episode_pattern = 'href="([^"]+[sS](?:eason-)?%s-[eE](?:pisode-)?%s-[^"]+)' % (video.season, video.episode)
         title_pattern = 'href="(?P<url>[^"]+season-\d+-episode-\d+-[^"]+).*?8211;\s*(?P<title>[^<]+)'
@@ -98,12 +87,11 @@ class CouchTunerV1_Scraper(scraper.Scraper):
         html = self._http_get(show_list_url, cache_limit=8)
         results = []
         norm_title = scraper_utils.normalize_title(title)
-        items = dom_parser.parse_dom(html, 'li')
-        for item in items:
+        for item in dom_parser.parse_dom(html, 'li'):
             match = re.search('href="([^"]+)">(.*?)</a>', item)
             if match:
                 url, match_title = match.groups()
-                match_title = match_title.replace('<strong>', '').replace('</strong>', '')
+                match_title = re.sub('</?strong[^>]*>', '', match_title)
                 if norm_title in scraper_utils.normalize_title(match_title):
                     result = {'url': scraper_utils.pathify_url(url), 'title': scraper_utils.cleanse_title(match_title), 'year': ''}
                     results.append(result)

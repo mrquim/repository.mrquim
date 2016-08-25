@@ -90,14 +90,13 @@
 			<control type="button" id="200">
 				<description>Cancel Button</description>
 				<posx>90</posx>
-				<posy>350</posy>
+				<posy>325</posy>
 				<width>220</width>
-				<height>40</height>
+				<height>90</height>
 				<align>center</align>
 				<aligny>center</aligny>
 				<label>$ADDON[plugin.video.salts 30668]</label>
 				<font>font12_title</font>
-				<textoffsetx>10</textoffsetx>
 			</control>
 		</control>
 	</controls>

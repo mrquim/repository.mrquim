@@ -18,10 +18,9 @@
 import re
 import urllib
 import urlparse
-
-from salts_lib import dom_parser
-from salts_lib import kodi
-from salts_lib import log_utils
+import kodi
+import log_utils
+import dom_parser
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import QUALITIES
@@ -29,9 +28,9 @@ from salts_lib.constants import VIDEO_TYPES
 import scraper
 
 
-BASE_URL = 'http://www.moviexk.net'
+BASE_URL = 'http://moviexk.org'
 
-class MoxieXK_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -45,12 +44,6 @@ class MoxieXK_Scraper(scraper.Scraper):
     @classmethod
     def get_name(cls):
         return 'MovieXK'
-
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        return '[%s] %s' % (item['quality'], item['host'])
 
     def get_sources(self, video):
         source_url = self.get_url(video)
@@ -76,7 +69,7 @@ class MoxieXK_Scraper(scraper.Scraper):
             for match in re.finditer('''<source[^>]+src=['"]([^'"]+)([^>]+)''', html):
                 stream_url, extra = match.groups()
                 if 'video.php' in stream_url:
-                    redir_url = self._http_get(stream_url, allow_redirect=False, method='HEAD', cache_limit=.25)
+                    redir_url = self._http_get(stream_url, allow_redirect=False, method='HEAD', cache_limit=0)
                     if redir_url.startswith('http'): stream_url = redir_url
                 
                 host = self._get_direct_hostname(stream_url)
@@ -90,7 +83,7 @@ class MoxieXK_Scraper(scraper.Scraper):
                     else:
                         quality = QUALITIES.HIGH
                 
-                stream_url += '|User-Agent=%s' % (scraper_utils.get_ua())
+                stream_url += '|User-Agent=%s&Referer=%s' % (scraper_utils.get_ua(), urllib.quote(url))
                 source = {'multi-part': False, 'url': stream_url, 'host': host, 'class': self, 'quality': quality, 'views': None, 'rating': None, 'direct': True}
                 sources.append(source)
 
@@ -104,7 +97,7 @@ class MoxieXK_Scraper(scraper.Scraper):
             if q in episodes:
                 return episodes[q]
             
-        if len(episodes) > 0:
+        if episodes:
             return episodes.items()[0][1]
         
     def __get_episodes(self, html):
@@ -113,9 +106,6 @@ class MoxieXK_Scraper(scraper.Scraper):
         urls = dom_parser.parse_dom(html, 'a', {'data-type': 'watch'}, ret='href')
         return dict(zip(labels, urls))
         
-    def get_url(self, video):
-        return self._default_get_url(video)
-
     def search(self, video_type, title, year, season=''):
         results = []
         search_url = urlparse.urljoin(self.base_url, '/search/')
@@ -159,5 +149,5 @@ class MoxieXK_Scraper(scraper.Scraper):
         if fragment:
             show_url = dom_parser.parse_dom(fragment[0], 'a', ret='href')
             if show_url:
-                episode_pattern = '<a[^>]+href="([^"]+)[^>]+>[Ee][Pp]\s*[Ss]0*%s-E?p?0*%s\s*<' % (video.season, video.episode)
+                episode_pattern = '<a[^>]+href="([^"]+)[^>]+>[Ee][Pp]\s*(?:[Ss]0*%s-)?E?p?0*%s\s*<' % (video.season, video.episode)
                 return self._default_get_episode_url(show_url[0], video, episode_pattern)

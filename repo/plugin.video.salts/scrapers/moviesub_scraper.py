@@ -18,23 +18,24 @@
 import re
 import urllib
 import urlparse
-from salts_lib import dom_parser
-from salts_lib import kodi
-from salts_lib import log_utils
+import kodi
+import log_utils
+import dom_parser
 from salts_lib import scraper_utils
-from salts_lib.kodi import i18n
+from salts_lib.utils2 import i18n
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import QUALITIES
 from salts_lib.constants import VIDEO_TYPES
 import scraper
 
-BASE_URL = 'http://www.moviesub.net'
-BASE_URL2 = 'http://www.moviesub.tv'
+BASE_URL = 'http://moviesub.net'
+BASE_URL2 = 'http://moviesub.tv'
 LINK_URL = '/ip.temp/swf/plugins/ipplugins.php'
 LINK_URL2 = '/Htplugins/Loader.php'
+LINK_URL3 = '/ip.temp/swf/ipplayer/ipplayer.php?u=%s&w=100%%&h=450'
 XHR = {'X-Requested-With': 'XMLHttpRequest'}
 
-class MovieSub_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
     tv_base_url = BASE_URL2
 
@@ -50,13 +51,6 @@ class MovieSub_Scraper(scraper.Scraper):
     @classmethod
     def get_name(cls):
         return 'MovieSub'
-
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        label = '[%s] %s' % (item['quality'], item['host'])
-        return label
 
     def get_sources(self, video):
         source_url = self.get_url(video)
@@ -103,42 +97,37 @@ class MovieSub_Scraper(scraper.Scraper):
         
     def __get_gk_links(self, html, page_url, video_type, episode):
         sources = {}
-        phimid = dom_parser.parse_dom(html, 'input', {'name': 'phimid'}, ret='value')
-        if phimid and video_type == VIDEO_TYPES.EPISODE:
-            url = urlparse.urljoin(self.tv_base_url, '/ajax.php')
-            data = {'ipos_server': 1, 'phimid': phimid[0], 'keyurl': episode}
-            headers = XHR
-            headers['Referer'] = page_url
-            html = self._http_get(url, data=data, headers=headers, cache_limit=.5)
-            
         for link in dom_parser.parse_dom(html, 'div', {'class': '[^"]*server_line[^"]*'}):
             film_id = dom_parser.parse_dom(link, 'a', ret='data-film')
             name_id = dom_parser.parse_dom(link, 'a', ret='data-name')
             server_id = dom_parser.parse_dom(link, 'a', ret='data-server')
             if film_id and name_id and server_id:
                 data = {'ipplugins': 1, 'ip_film': film_id[0], 'ip_server': server_id[0], 'ip_name': name_id[0]}
-                headers = XHR
-                headers['Referer'] = page_url
+                headers = {'Referer': page_url}
+                headers.update(XHR)
                 url = urlparse.urljoin(self.__get_base_url(video_type), LINK_URL)
                 html = self._http_get(url, data=data, headers=headers, cache_limit=.25)
                 js_data = scraper_utils.parse_json(html, url)
-                if 's' in js_data:
-                    if isinstance(js_data['s'], basestring):
-                        sources[js_data['s']] = QUALITIES.HIGH
-                    else:
-                        for link in js_data['s']:
-                            stream_url = link['file']
-                            if self._get_direct_hostname(stream_url) == 'gvideo':
-                                quality = scraper_utils.gv_get_quality(stream_url)
-                            elif 'label' in link:
-                                quality = scraper_utils.height_get_quality(link['label'])
-                            else:
-                                quality = QUALITIES.HIGH
-                            sources[stream_url] = quality
+                if 's' in js_data and isinstance(js_data['s'], basestring):
+                    url = urlparse.urljoin(self.__get_base_url(video_type), LINK_URL3)
+                    url = url % (js_data['s'])
+                    html = self._http_get(url, headers=headers, cache_limit=.25)
+                    js_data = scraper_utils.parse_json(html, url)
+                    if 'data' in js_data and js_data['data']:
+                        if isinstance(js_data['data'], basestring):
+                            sources[js_data['data']] = QUALITIES.HIGH
+                        else:
+                            for link in js_data['data']:
+                                stream_url = link['files']
+                                if self._get_direct_hostname(stream_url) == 'gvideo':
+                                    quality = scraper_utils.gv_get_quality(stream_url)
+                                elif 'quality' in link:
+                                    quality = scraper_utils.height_get_quality(link['quality'])
+                                else:
+                                    quality = QUALITIES.HIGH
+                                sources[stream_url] = quality
+                    
         return sources
-
-    def get_url(self, video):
-        return self._default_get_url(video)
 
     def _get_episode_url(self, season_url, video):
         season_url = urlparse.urljoin(self.__get_base_url(video.video_type), season_url)
@@ -153,7 +142,7 @@ class MovieSub_Scraper(scraper.Scraper):
         if fragment:
             for item in dom_parser.parse_dom(fragment[0], 'li'):
                 is_season = dom_parser.parse_dom(item, 'div', {'class': 'status'})
-                if not is_season and video_type == VIDEO_TYPES.MOVIE or is_season and VIDEO_TYPES.SEASON:
+                if (not is_season and video_type == VIDEO_TYPES.MOVIE) or (is_season and video_type == VIDEO_TYPES.SEASON):
                     match_url = dom_parser.parse_dom(item, 'a', ret='href')
                     match_title = dom_parser.parse_dom(item, 'a', ret='title')
                     if match_url and match_title:

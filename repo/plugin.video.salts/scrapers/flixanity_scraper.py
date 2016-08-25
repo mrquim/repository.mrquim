@@ -22,23 +22,23 @@ import urllib
 import urlparse
 import string
 import random
-from salts_lib import dom_parser
-from salts_lib import kodi
-from salts_lib import log_utils
+import kodi
+import log_utils
+import dom_parser
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import QUALITIES
 from salts_lib.constants import VIDEO_TYPES
-from salts_lib.kodi import i18n
+from salts_lib.utils2 import i18n
 import scraper
 
 
 BASE_URL = 'http://www.flixanity.is'
 EMBED_URL = '/ajax/embeds.php'
-SEARCH_URL = '/api/v1/cautare/mar'
+SEARCH_URL = '/api/v1/cautare/apr'
 XHR = {'X-Requested-With': 'XMLHttpRequest'}
 
-class Flixanity_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
     __token = None
     __t = None
@@ -57,12 +57,6 @@ class Flixanity_Scraper(scraper.Scraper):
     def get_name(cls):
         return 'Flixanity'
 
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        return '[%s] %s' % (item['quality'], item['host'])
-
     def get_sources(self, video):
         source_url = self.get_url(video)
         sources = []
@@ -73,7 +67,7 @@ class Flixanity_Scraper(scraper.Scraper):
                 action = 'getMovieEmb'
             else:
                 action = 'getEpisodeEmb'
-            match = re.search('elid="([^"]+)', html)
+            match = re.search('elid\s*=\s*"([^"]+)', html)
             if self.__token is None:
                 self.__get_token()
                 
@@ -83,7 +77,7 @@ class Flixanity_Scraper(scraper.Scraper):
                 ajax_url = urlparse.urljoin(self.base_url, EMBED_URL)
                 headers = XHR
                 headers['Authorization'] = 'Bearer %s' % (self.__get_bearer())
-                html = self._http_get(ajax_url, data=data, headers=headers, cache_limit=0)
+                html = self._http_get(ajax_url, data=data, headers=headers, cache_limit=.5)
                 html = html.replace('\\"', '"').replace('\\/', '/')
                  
                 pattern = '<IFRAME\s+SRC="([^"]+)'
@@ -104,28 +98,28 @@ class Flixanity_Scraper(scraper.Scraper):
 
         return sources
 
-    def get_url(self, video):
-        return self._default_get_url(video)
-
     def search(self, video_type, title, year, season=''):
-        self.__get_token()
         results = []
-        search_url = urlparse.urljoin(self.base_url, self.__get_search_url())
-        timestamp = int(time.time() * 1000)
-        s = self.__get_s()
-        query = {'q': title, 'limit': '100', 'timestamp': timestamp, 'verifiedCheck': self.__token, 'set': s, 'rt': self.__get_rt(self.__token + s)}
-        html = self._http_get(search_url, data=query, headers=XHR, cache_limit=1)
-        if video_type in [VIDEO_TYPES.TVSHOW, VIDEO_TYPES.EPISODE]:
-            media_type = 'TV SHOW'
-        else:
-            media_type = 'MOVIE'
-
-        for item in scraper_utils.parse_json(html, search_url):
-            if item['meta'].upper().startswith(media_type):
-                match_year = str(item['year']) if 'year' in item and item['year'] else ''
-                if not year or not match_year or year == match_year:
-                    result = {'title': scraper_utils.cleanse_title(item['title']), 'url': scraper_utils.pathify_url(item['permalink']), 'year': match_year}
-                    results.append(result)
+        self.__get_token()
+        if self.__token is not None:
+            search_url = urlparse.urljoin(self.base_url, self.__get_search_url())
+            timestamp = int(time.time() * 1000)
+            s = self.__get_s()
+            query = {'q': title, 'limit': '100', 'timestamp': timestamp, 'verifiedCheck': self.__token, 'set': s, 'rt': self.__get_rt(self.__token + s)}
+            headers = XHR
+            headers['Referer'] = self.base_url
+            html = self._http_get(search_url, data=query, headers=headers, cache_limit=1)
+            if video_type in [VIDEO_TYPES.TVSHOW, VIDEO_TYPES.EPISODE]:
+                media_type = 'TV SHOW'
+            else:
+                media_type = 'MOVIE'
+    
+            for item in scraper_utils.parse_json(html, search_url):
+                if item['meta'].upper().startswith(media_type):
+                    match_year = str(item['year']) if 'year' in item and item['year'] else ''
+                    if not year or not match_year or year == match_year:
+                        result = {'title': scraper_utils.cleanse_title(item['title']), 'url': scraper_utils.pathify_url(item['permalink']), 'year': match_year}
+                        results.append(result)
 
         return results
 
@@ -148,44 +142,20 @@ class Flixanity_Scraper(scraper.Scraper):
         if not self.username or not self.password:
             return ''
 
-        html = self._cached_http_get(url, self.base_url, self.timeout, data=data, headers=headers, method=method, cache_limit=cache_limit)
+        html = super(self.__class__, self)._http_get(url, data=data, headers=headers, method=method, cache_limit=cache_limit)
         if '<span>Log In</span>' in html:
             log_utils.log('Logging in for url (%s)' % (url), log_utils.LOGDEBUG)
             self.__login()
-            html = self._cached_http_get(url, self.base_url, self.timeout, data=data, headers=headers, method=method, cache_limit=0)
+            html = super(self.__class__, self)._http_get(url, data=data, headers=headers, method=method, cache_limit=0)
 
         self.__get_token(html)
         return html
 
-    def __get_token(self, html=''):
-        if self.__token is None:
-            if not html:
-                html = self._cached_http_get(self.base_url, self.base_url, self.timeout, cache_limit=8)
-                
-            match = re.search("var\s+tok\s*=\s*'([^']+)", html)
-            if match:
-                self.__token = match.group(1)
-            else:
-                log_utils.log('Unable to locate Flixanity token', log_utils.LOGWARNING)
-    
-    def __get_t(self, html=''):
-        if not self.__t:
-            if not html:
-                html = self._cached_http_get(self.base_url, self.base_url, self.timeout, cache_limit=0)
-                
-            match = re.search('<input type="hidden" name="t" value="([^"]+)', html)
-            if match:
-                self.__t = match.group(1)
-            else:
-                log_utils.log('Unable to locate Flixanity t value', log_utils.LOGWARNING)
-                self.__t = ''
-
     def __login(self):
         url = urlparse.urljoin(self.base_url, '/ajax/login.php')
         self.__get_token()
-        self.__get_t()
-        data = {'username': self.username, 'password': self.password, 'action': 'login', 'token': self.__token, 't': self.__t}
-        html = self._cached_http_get(url, self.base_url, self.timeout, data=data, headers=XHR, cache_limit=0)
+        data = {'username': self.username, 'password': self.password, 'action': 'login', 'token': self.__token, 't': ''}
+        html = super(self.__class__, self)._http_get(url, data=data, headers=XHR, cache_limit=0)
         if html != '0': raise Exception('flixanity login failed')
 
     def __get_bearer(self):
@@ -196,17 +166,28 @@ class Flixanity_Scraper(scraper.Scraper):
     
     def __get_search_url(self):
         search_url = SEARCH_URL
-        html = self._cached_http_get(self.base_url, self.base_url, self.timeout, cache_limit=24)
+        html = super(self.__class__, self)._http_get(self.base_url, cache_limit=24)
         for match in re.finditer('<script[^>]+src="([^"]+)', html):
             script = match.group(1)
             if 'flixanity' in script:
-                html = self._cached_http_get(script, self.base_url, self.timeout, cache_limit=24)
-                match = re.search('autocomplete\([^"]*"([^"]+)', html)
+                html = super(self.__class__, self)._http_get(script, cache_limit=24)
+                match = re.search('=\s*"([^"]*/cautare/[^"]*)', html)
                 if match:
                     search_url = match.group(1)
                     search_url = search_url.replace('\\', '')
                     break
         return search_url
+    
+    def __get_token(self, html=''):
+        if self.username and self.password and self.__token is None:
+            if not html:
+                html = super(self.__class__, self)._http_get(self.base_url, cache_limit=8)
+                
+            match = re.search("var\s+tok\s*=\s*'([^']+)", html)
+            if match:
+                self.__token = match.group(1)
+            else:
+                log_utils.log('Unable to locate Flixanity token', log_utils.LOGWARNING)
     
     def __get_s(self):
         return ''.join([random.choice(string.ascii_letters) for _ in xrange(25)])

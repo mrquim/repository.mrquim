@@ -18,22 +18,21 @@
 import re
 import urllib
 import urlparse
-
-from salts_lib import kodi
-from salts_lib import log_utils
+import kodi
+import log_utils
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import QUALITIES
 from salts_lib.constants import VIDEO_TYPES
-from salts_lib.kodi import i18n
+from salts_lib.utils2 import i18n
 import scraper
-
 
 BASE_URL = 'http://niter.co'
 PHP_URL = BASE_URL + '/player/pk/pk/plugins/player_p2.php'
+DIR_URL = BASE_URL + '/player/getVideo.php?v=%s'
 MAX_TRIES = 3
 
-class Niter_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -50,12 +49,6 @@ class Niter_Scraper(scraper.Scraper):
     def get_name(cls):
         return 'niter.tv'
 
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        return '[%s] %s' % (item['quality'], item['host'])
-
     def get_sources(self, video):
         source_url = self.get_url(video)
         hosters = []
@@ -63,11 +56,22 @@ class Niter_Scraper(scraper.Scraper):
             url = urlparse.urljoin(self.base_url, source_url)
             html = self._http_get(url, cache_limit=.5)
 
-            match = re.search('((?:pic|emb|vb)=[^<]+)', html)
+            match = re.search('((?:pic|emb|vb|dir|emb2)=[^<]+)', html)
             if match:
                 embeds = match.group(1)
                 for stream_url in embeds.split('&'):
-                    if stream_url.startswith('vb='):
+                    if stream_url.startswith('dir='):
+                        vid_url = DIR_URL % (urllib.quote(stream_url[3:]))
+                        headers = {'Referer': url}
+                        html = self._http_get(vid_url, headers=headers, auth=False, allow_redirect=False, cache_limit=.5)
+                        if html.startswith('http'):
+                            stream_url = html + '|User-Agent=%s&Referer=%s' % (scraper_utils.get_ua(), urllib.quote(url))
+                            host = self._get_direct_hostname(stream_url)
+                            direct = True
+                            quality = QUALITIES.HD720
+                        else:
+                            continue
+                    elif stream_url.startswith('vb='):
                         stream_url = 'http://www.vidbux.com/%s' % (stream_url[3:])
                         host = 'vidbux.com'
                         direct = False
@@ -85,8 +89,8 @@ class Niter_Scraper(scraper.Scraper):
                                 break
                         else:
                             continue
-                    elif stream_url.startswith('emb='):
-                        stream_url = stream_url.replace('emb=', '')
+                    elif stream_url.startswith(('emb=', 'emb2=')):
+                        stream_url = re.sub('emb\d*=', '', stream_url)
                         host = urlparse.urlparse(stream_url).hostname
                         direct = False
                         quality = scraper_utils.get_quality(video, host, QUALITIES.HD720)
@@ -96,9 +100,6 @@ class Niter_Scraper(scraper.Scraper):
                     hoster = {'multi-part': False, 'host': host, 'class': self, 'quality': quality, 'views': None, 'rating': None, 'url': stream_url, 'direct': direct}
                     hosters.append(hoster)
         return hosters
-
-    def get_url(self, video):
-        return self._default_get_url(video)
 
     def search(self, video_type, title, year, season=''):
         search_url = urlparse.urljoin(self.base_url, '/search?q=')
@@ -120,22 +121,22 @@ class Niter_Scraper(scraper.Scraper):
         settings.append('         <setting id="%s-password" type="text" label="     %s" option="hidden" default="" visible="eq(-5,true)"/>' % (name, i18n('password')))
         return settings
 
-    def _http_get(self, url, data=None, auth=True, cache_limit=8):
+    def _http_get(self, url, data=None, headers=None, auth=True, allow_redirect=True, cache_limit=8):
         # return all uncached blank pages if no user or pass
         if not self.username or not self.password:
             return ''
 
-        html = self._cached_http_get(url, self.base_url, self.timeout, data=data, cache_limit=cache_limit)
+        html = super(self.__class__, self)._http_get(url, data=data, headers=headers, allow_redirect=allow_redirect, cache_limit=cache_limit)
         if auth and not re.search('href="[^"]+/logout"', html):
             log_utils.log('Logging in for url (%s)' % (url), log_utils.LOGDEBUG)
             self.__login()
-            html = self._cached_http_get(url, self.base_url, self.timeout, data=data, cache_limit=0)
+            html = super(self.__class__, self)._http_get(url, data=data, headers=headers, allow_redirect=allow_redirect, cache_limit=0)
 
         return html
 
     def __login(self):
         url = urlparse.urljoin(self.base_url, '/sessions')
         data = {'username': self.username, 'password': self.password, 'remember': 1}
-        html = self._cached_http_get(url, self.base_url, self.timeout, data=data, allow_redirect=False, cache_limit=0)
+        html = super(self.__class__, self)._http_get(url, data=data, allow_redirect=False, cache_limit=0)
         if html != self.base_url:
             raise Exception('niter.tv login failed')

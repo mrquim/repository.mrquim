@@ -17,21 +17,18 @@
 """
 import re
 import urlparse
-
 import xbmc
-
-from salts_lib import kodi
-from salts_lib import log_utils
+import kodi
+import log_utils
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import SORT_KEYS
 from salts_lib.constants import VIDEO_TYPES
 import scraper
 
-
 BASE_URL = ''
 
-class Local_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
         self.base_url = kodi.get_setting('%s-base_url' % (self.get_name()))
         self.def_quality = int(kodi.get_setting('%s-def-quality' % (self.get_name())))
@@ -43,12 +40,6 @@ class Local_Scraper(scraper.Scraper):
     @classmethod
     def get_name(cls):
         return 'Local'
-
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        return '[%s] %s (%s views)' % (item['quality'], item['host'], item['views'])
 
     def get_sources(self, video):
         source_url = self.get_url(video)
@@ -75,9 +66,6 @@ class Local_Scraper(scraper.Scraper):
                     host['quality'] = scraper_utils.width_get_quality(stream_details['video'][0]['width'])
                 hosters.append(host)
         return hosters
-
-    def get_url(self, video):
-        return self._default_get_url(video)
 
     def _get_episode_url(self, show_url, video):
         params = urlparse.parse_qs(show_url)
@@ -149,11 +137,10 @@ class Local_Scraper(scraper.Scraper):
         meta = xbmc.executeJSONRPC(cmd)
         meta = scraper_utils.parse_json(meta)
         log_utils.log('Search Meta: %s' % (meta), log_utils.LOGDEBUG)
-        if 'result' in meta and result_key in meta['result']:
-            for item in meta['result'][result_key]:
-                if video_type == VIDEO_TYPES.MOVIE and item['file'].endswith('.strm'):
-                    continue
+        for item in meta.get('result', {}).get(result_key, {}):
+            if video_type == VIDEO_TYPES.MOVIE and item['file'].endswith('.strm'):
+                continue
 
-                result = {'title': item['title'], 'year': item['year'], 'url': 'video_type=%s&id=%s' % (video_type, item[id_key])}
-                results.append(result)
+            result = {'title': item['title'], 'year': item['year'], 'url': 'video_type=%s&id=%s' % (video_type, item[id_key])}
+            results.append(result)
         return results

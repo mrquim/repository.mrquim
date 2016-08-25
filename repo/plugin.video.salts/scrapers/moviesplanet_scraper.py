@@ -19,14 +19,15 @@ import base64
 import re
 import time
 import urlparse
-
-from salts_lib import kodi
-from salts_lib import log_utils
+import kodi
+import log_utils
+import dom_parser
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import QUALITIES
+from salts_lib.constants import Q_ORDER
 from salts_lib.constants import VIDEO_TYPES
-from salts_lib.kodi import i18n
+from salts_lib.utils2 import i18n
 import scraper
 
 
@@ -35,7 +36,7 @@ GK_KEY = base64.urlsafe_b64decode('MllVcmlZQmhTM2swYU9BY0lmTzQ=')
 QUALITY_MAP = {'HD': QUALITIES.HD720}
 XHR = {'X-Requested-With': 'XMLHttpRequest'}
 
-class MoviesPlanet_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -51,12 +52,6 @@ class MoviesPlanet_Scraper(scraper.Scraper):
     @classmethod
     def get_name(cls):
         return 'MoviesPlanet'
-
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        return '[%s] %s' % (item['quality'], item['host'])
 
     def get_sources(self, video):
         source_url = self.get_url(video)
@@ -78,7 +73,7 @@ class MoviesPlanet_Scraper(scraper.Scraper):
                             for stream_url in self._parse_google(picasa_url):
                                 sources[stream_url] = {'quality': scraper_utils.gv_get_quality(stream_url), 'direct': True}
                     else:
-                        html = self._http_get(iframe_url, cache_limit=0)
+                        html = self._http_get(iframe_url, cache_limit=.25)
                         temp_sources = self._parse_sources_list(html)
                         for source in temp_sources:
                             if 'download.php' in source:
@@ -87,18 +82,23 @@ class MoviesPlanet_Scraper(scraper.Scraper):
                                     temp_sources[redir_html] = temp_sources[source]
                                     del temp_sources[source]
                         sources.update(temp_sources)
+                        for source in dom_parser.parse_dom(html, 'source', {'type': 'video/mp4'}, ret='src'):
+                            sources[source] = {'quality': QUALITIES.HD720, 'direct': True}
                                 
         for source in sources:
             host = self._get_direct_hostname(source)
             stream_url = source + '|User-Agent=%s' % (scraper_utils.get_ua())
-            quality = QUALITY_MAP.get(sources[source]['quality'], QUALITIES.HIGH)
+            if host == 'gvideo':
+                quality = scraper_utils.gv_get_quality(source)
+            else:
+                quality = sources[source]['quality']
+                if quality not in Q_ORDER:
+                    quality = QUALITY_MAP.get(sources[source]['quality'], QUALITIES.HIGH)
+                    
             hoster = {'multi-part': False, 'url': stream_url, 'host': host, 'class': self, 'quality': quality, 'views': None, 'rating': None, 'direct': True}
             hosters.append(hoster)
 
         return hosters
-
-    def get_url(self, video):
-        return self._default_get_url(video)
 
     def search(self, video_type, title, year, season=''):
         results = []
@@ -120,7 +120,7 @@ class MoviesPlanet_Scraper(scraper.Scraper):
         return results
 
     def _get_episode_url(self, show_url, video):
-        episode_pattern = 'href="([^"]+/season/%s/episode/%s/?)"' % (video.season, video.episode)
+        episode_pattern = 'href="([^"]+/season/0*%s/episode/0*%s/?)"' % (video.season, video.episode)
         return self._default_get_episode_url(show_url, video, episode_pattern)
 
     @classmethod
@@ -136,16 +136,16 @@ class MoviesPlanet_Scraper(scraper.Scraper):
         if not self.username or not self.password:
             return ''
 
-        html = self._cached_http_get(url, self.base_url, self.timeout, data=data, headers=headers, allow_redirect=allow_redirect, method=method, cache_limit=cache_limit)
+        html = super(self.__class__, self)._http_get(url, data=data, headers=headers, allow_redirect=allow_redirect, method=method, cache_limit=cache_limit)
         if re.search('Please Register or Login', html, re.I):
             log_utils.log('Logging in for url (%s)' % (url), log_utils.LOGDEBUG)
             self.__login()
-            html = self._cached_http_get(url, self.base_url, self.timeout, data=data, headers=headers, allow_redirect=allow_redirect, method=method, cache_limit=0)
+            html = super(self.__class__, self)._http_get(url, data=data, headers=headers, allow_redirect=allow_redirect, method=method, cache_limit=0)
         return html
 
     def __login(self):
         url = urlparse.urljoin(self.base_url, '/login')
         data = {'username': self.username, 'password': self.password, 'action': 'login'}
-        html = self._cached_http_get(url, self.base_url, self.timeout, data=data, headers=XHR, cache_limit=0)
+        html = super(self.__class__, self)._http_get(url, data=data, headers=XHR, cache_limit=0)
         if 'incorrect login' in html.lower():
             raise Exception('moviesplanet login failed')

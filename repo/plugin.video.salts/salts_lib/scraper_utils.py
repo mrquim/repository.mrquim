@@ -23,11 +23,15 @@ import time
 import urllib
 import urlparse
 import json
-import htmlentitydefs
-from salts_lib import kodi
+import os.path
+import kodi
+import log_utils
 from salts_lib import pyaes
-from salts_lib import log_utils
+from salts_lib import utils2
 from salts_lib.constants import *
+
+cleanse_title = utils2.cleanse_title
+to_datetime = utils2.to_datetime
 
 def disable_sub_check(settings):
     for i in reversed(xrange(len(settings))):
@@ -82,6 +86,8 @@ def normalize_title(title):
     title = cleanse_title(title)
     new_title = title.upper()
     new_title = re.sub('[^A-Za-z0-9]', '', new_title)
+    if isinstance(new_title, unicode):
+        new_title = new_title.encode('utf-8')
     # log_utils.log('In title: |%s| Out title: |%s|' % (title,new_title), log_utils.LOGDEBUG)
     return new_title
 
@@ -214,57 +220,92 @@ def gk_decrypt(name, key, cipher_link):
     return plain_text
 
 def parse_episode_link(link):
-    link = urllib.unquote(link)
-    file_name = link.split('/')[-1]
-    match = re.match('(.*?)[._ ]S(\d+)[._ ]?E(\d+)(?:E\d+)*.*?(?:[._ ](\d+)p[._ ])(.*)', file_name, re.I)
-    if match:
-        return match.groups()
-    else:
-        match = re.match('(.*?)[._ ]S(\d+)[._ ]?E(\d+)(?:E\d+)*(.*)', file_name, re.I)
-        if match:
-            return match.groups()[:-1] + ('480', ) + (match.groups()[-1],)  # assume no height = 480
-        else:
-            match = re.search('[._ ](\d{3,})p[._ ]', file_name)
-            if match:
-                return ('', '-1', '-1', match.group(1), '')
-            else:
-                return ('', '-1', '-1', '480', '')
+    episode = {'title': '', 'season': '-1', 'episode': '-1', 'airdate': '', 'height': '480', 'extra': '', 'dubbed': False}
+    ep_patterns = [
+        # episode with sxe or airdate and height
+        '(?P<title>.*?){delim}S(?P<season>\d+){delim}*E(?P<episode>\d+)(?:E\d+)*.*?{delim}(?P<height>\d+)p{delim}?(?P<extra>.*)',
+        '(?P<title>.*?){delim}(?P<season>\d+)x(?P<episode>\d+)(?:-\d+)*.*?{delim}(?P<height>\d+)p{delim}?(?P<extra>.*)',
+        '(?P<title>.*?){delim}SEASON{delim}*(?P<season>\d+){delim}*EPISODE{delim}*(?P<episode>\d+).*?{delim}(?P<height>\d+)p{delim}?(?P<extra>.*)',
+        '(?P<title>.*?){delim}\[S(?P<season>\d+)\]{delim}*\[E(?P<episode>\d+)(?:E\d+)*\].*?{delim}(?P<height>\d+)p{delim}?(?P<extra>.*)',
+        '(?P<title>.*?){delim}S(?P<season>\d+){delim}*EP(?P<episode>\d+)(?:EP\d+)*.*?{delim}(?P<height>\d+)p{delim}?(?P<extra>.*)',
+        '(?P<title>.*?){delim}(?P<airdate>\d{{4}}{delim}\d{{1,2}}{delim}\d{{1,2}}).*?{delim}(?P<height>\d+)p{delim}?(?P<extra>.*)',
+
+        # episode with sxe or airdate not height
+        '(?P<title>.*?){delim}S(?P<season>\d+){delim}*E(?P<episode>\d+)(?:E\d+)*{delim}?(?P<extra>.*)',
+        '(?P<title>.*?){delim}(?P<season>\d+)x(?P<episode>\d+)(?:-\d+)*{delim}?(?P<extra>.*)',
+        '(?P<title>.*?){delim}SEASON{delim}*(?P<season>\d+){delim}*EPISODE{delim}*(?P<episode>\d+){delim}?(?P<extra>.*)',
+        '(?P<title>.*?){delim}\[S(?P<season>\d+)\]{delim}*\[E(?P<episode>\d+)(?:E\d+)*\]{delim}?(?P<extra>.*)',
+        '(?P<title>.*?){delim}S(?P<season>\d+){delim}*EP(?P<episode>\d+)(?:E\d+)*{delim}?(?P<extra>.*)',
+        '(?P<title>.*?){delim}(?P<airdate>\d{{4}}{delim}\d{{1,2}}{delim}\d{{1,2}}){delim}?(?P<extra>.*)',
+        
+        '(?P<title>.*?){delim}(?P<height>\d{{3,}})p{delim}?(?P<extra>.*)',  # episode with height only
+        '(?P<title>.*)'  # title only
+    ]
+ 
+    return parse_link(link, episode, ep_patterns)
 
 def parse_movie_link(link):
-    file_name = link.split('/')[-1]
-    match = re.match('(.*?)(?:[._ ](\d{4})(?:[._ ].*?)*)?[._ ](\d+)p[._ ](.*)', file_name)
-    if match:
-        return match.groups()
-    else:
-        match = re.match('(.*?)(?:[._ ](\d{4})(?:[._ ].*?)*)(.*)', file_name)
-        if match:
-            title, year, extra = match.groups()
-            return (title, year, '480', extra)
-        else:
-            return ('', '', '480', '')  # make 480p when unknown
+    movie = {'title': '', 'year': '', 'height': '480', 'extra': '', 'dubbed': False}
+    movie_patterns = [
+        '(?P<title>.*?){delim}(?P<year>\d{{4}}){delim}.*?(?P<height>\d+)p{delim}(?P<extra>.*)',  # title, year, and quality present
+        '(?P<title>.*?){delim}(?P<year>\d{{4}}){delim}(?P<extra>.*)',  # title and year only
+        '(?P<title>.*?){delim}(?P<height>\d+)p{delim}(?P<extra>.*)',  # title and quality only
+        '(?P<title>.*)(?P<extra>\.[A-Z\d]{{3}}$)',  # title with extension
+        '(?P<title>.*)'  # title only
+    ]
+    return parse_link(link, movie, movie_patterns)
 
-def title_check(video, title):
-    title = normalize_title(title)
-    if video.video_type == VIDEO_TYPES.MOVIE:
-        return normalize_title(video.title) in title and (not video.year or video.year in title)
+def parse_link(link, item, patterns):
+    delim = '[._ -]'
+    link = urllib.unquote(link)
+    file_name = link.split('/')[-1]
+    for pattern in patterns:
+        pattern = pattern.format(delim=delim)
+        match = re.search(pattern, file_name, re.I)
+        if match:
+            match = dict((k, v) for k, v in match.groupdict().iteritems() if v is not None)
+            item.update(match)
+            break
     else:
-        sxe = 'S%02dE%02d' % (int(video.season), int(video.episode))
-        se = '%d%02d' % (int(video.season), int(video.episode))
-        try:
-            air_date = video.ep_airdate.strftime('%Y%m%d')
-        except:
-            air_date = ''
-            
-        if sxe in title:
-            show_title = title.split(sxe)[0]
-        elif air_date and air_date in title:
-            show_title = title.split(air_date)[0]
-        elif se in title:
-            show_title = title.split(se)[0]
-        else:
-            show_title = title
-        # log_utils.log('%s - %s - %s - %s - %s' % (scraper_utils.normalize_title(video.title), show_title, title, sxe, air_date), log_utils.LOGDEBUG)
-        return normalize_title(video.title) in show_title and (sxe in title or se in title or air_date in title)
+        log_utils.log('No Regex Match: |%s|%s|' % (item, link), log_utils.LOGDEBUG)
+
+    extra = item['extra'].upper()
+    if 'X265' in extra or 'HEVC' in extra:
+        item['format'] = 'x265'
+    
+    item['dubbed'] = True if 'DUBBED' in extra else False
+    
+    if 'airdate' in item and item['airdate']:
+        pattern = '{delim}+'.format(delim=delim)
+        item['airdate'] = re.sub(pattern, '-', item['airdate'])
+        item['airdate'] = utils2.to_datetime(item['airdate'], "%Y-%m-%d").date()
+        
+    return item
+    
+def release_check(video, title, require_title=True):
+    if video.video_type == VIDEO_TYPES.MOVIE:
+        meta = parse_movie_link(title)
+    else:
+        meta = parse_episode_link(title)
+    
+    norm_title = normalize_title(video.title)
+    match_norm_title = normalize_title(meta['title'])
+    title_match = not require_title or (norm_title and (match_norm_title in norm_title or norm_title in match_norm_title))
+    try: year_match = not video.year or not meta['year'] or video.year == meta['year']
+    except: year_match = True
+    try: sxe_match = int(video.season) == int(meta['season']) and int(video.episode) == int(meta['episode'])
+    except: sxe_match = False
+    try: airdate_match = video.ep_airdate == meta['airdate']
+    except: airdate_match = False
+    
+    matches = title_match and year_match
+    if video.video_type == VIDEO_TYPES.EPISODE:
+        matches = matches and (sxe_match or airdate_match)
+        
+    if not matches:
+        log_utils.log('*%s*%s*%s* - |%s|%s|%s| - |%s|%s|%s| - |%s|%s|' % (video, title, meta, norm_title, match_norm_title, title_match,
+                                                                          video.year, meta.get('year'), year_match, sxe_match, airdate_match), log_utils.LOGDEBUG)
+    return matches
 
 def pathify_url(url):
     url = url.replace('\/', '/')
@@ -285,6 +326,12 @@ def pathify_url(url):
 def parse_json(html, url=''):
     if html:
         try:
+            if not isinstance(html, unicode):
+                if html.startswith('\xef\xbb\xbf'):
+                    html = html[3:]
+                elif html.startswith('\xfe\xff'):
+                    html = html[2:]
+                
             js_data = json.loads(html)
             if js_data is None:
                 return {}
@@ -304,23 +351,44 @@ def format_size(num, suffix='B'):
         num /= 1024.0
     return "%.1f%s%s" % (num, 'Y', suffix)
 
-def cleanse_title(text):
-    def fixup(m):
-        text = m.group(0)
-        if text[:2] == "&#":
-            # character reference
-            try:
-                if text[:3] == "&#x":
-                    return unichr(int(text[3:-1], 16))
-                else:
-                    return unichr(int(text[2:-1]))
-            except ValueError:
-                pass
-        else:
-            # named entity
-            try:
-                text = unichr(htmlentitydefs.name2codepoint[text[1:-1]])
-            except KeyError:
-                pass
-        return text
-    return re.sub("&#?\w+;", fixup, text.strip())
+def to_bytes(num, unit):
+    unit = unit.upper()
+    if unit.endswith('B'): unit = unit[:-1]
+    units = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z']
+    try: mult = pow(1024, units.index(unit))
+    except: mult = sys.maxint
+    return int(float(num) * mult)
+    
+def update_scraper(file_name, scraper_url, scraper_key):
+    py_path = os.path.join(kodi.get_path(), 'scrapers', file_name)
+    exists = os.path.exists(py_path)
+    if not exists or (time.time() - os.path.getmtime(py_path)) > (8 * 60 * 60):
+        new_py = utils2.get_and_decrypt(scraper_url, scraper_key)
+        if new_py:
+            if exists:
+                with open(py_path, 'r') as f:
+                    old_py = f.read()
+            else:
+                old_py = ''
+            
+            log_utils.log('%s path: %s, new_py: %s, match: %s' % (__file__, py_path, bool(new_py), new_py == old_py), log_utils.LOGDEBUG)
+            if old_py != new_py:
+                with open(py_path, 'w') as f:
+                    f.write(new_py)
+
+def urljoin(base_url, url):
+    if not base_url.endswith('/'):
+        base_url += '/'
+    if url.startswith('/'):
+        url = url[1:]
+    return urlparse.urljoin(base_url, url)
+
+def parse_params(params):
+    result = {}
+    params = params[1:-1]
+    for element in params.split(','):
+        key, value = element.split(':')
+        key = re.sub('''['"]''', '', key.strip())
+        value = re.sub('''['"]''', '', value.strip())
+        result[key] = value
+    return result

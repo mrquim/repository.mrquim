@@ -18,9 +18,9 @@
 import re
 import urllib
 import urlparse
-
-from salts_lib import kodi
-from salts_lib import log_utils
+import kodi
+import log_utils
+import dom_parser
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import QUALITIES
@@ -32,7 +32,7 @@ BASE_URL = 'http://viooz.ac'
 GK_URL = '/p9/plugins/gkpluginsphp.php'
 XHR = {'X-Requested-With': 'XMLHttpRequest'}
 
-class VioozAc_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -47,46 +47,49 @@ class VioozAc_Scraper(scraper.Scraper):
     def get_name(cls):
         return 'viooz.ac'
 
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        return '[%s] %s' % (item['quality'], item['host'])
-
     def get_sources(self, video):
         source_url = self.get_url(video)
         hosters = []
         if source_url and source_url != FORCE_NO_MATCH:
             url = urlparse.urljoin(self.base_url, source_url)
-            html = self._http_get(url, cache_limit=.5)
+            page_html = self._http_get(url, cache_limit=.5)
 
-            if re.search('<span[^>]+>\s*Low Quality\s*</span>', html):
+            if re.search('<span[^>]+>\s*Low Quality\s*</span>', page_html):
                 quality = QUALITIES.LOW
             else:
                 quality = QUALITIES.HIGH
             
-            for match in re.finditer('gkpluginsphp.*?link\s*:\s*"([^"]+)', html):
+            for match in re.finditer('gkpluginsphp.*?link\s*:\s*"([^"]+)', page_html):
                 data = {'link': match.group(1)}
                 headers = XHR
                 headers['Referer'] = url
                 gk_url = urlparse.urljoin(self.base_url, GK_URL)
                 html = self._http_get(gk_url, data=data, headers=headers, cache_limit=.25)
                 js_result = scraper_utils.parse_json(html, gk_url)
-                if 'link' in js_result and 'func' not in js_result:
+                if 'link' in js_result:
                     if isinstance(js_result['link'], list):
                         sources = dict((link['link'], scraper_utils.height_get_quality(link['label'])) for link in js_result['link'])
-                    else:
+                        direct = True
+                    elif js_result['link'].startswith('http'):
                         sources = {js_result['link']: quality}
+                        direct = False
                     
                     for source in sources:
-                        host = self._get_direct_hostname(source)
-                        hoster = {'multi-part': False, 'url': source, 'class': self, 'quality': sources[source], 'host': host, 'rating': None, 'views': None, 'direct': True}
+                        if direct:
+                            host = self._get_direct_hostname(source)
+                        else:
+                            host = urlparse.urlparse(source).hostname
+                        hoster = {'multi-part': False, 'url': source, 'class': self, 'quality': sources[source], 'host': host, 'rating': None, 'views': None, 'direct': direct}
                         hosters.append(hoster)
+            
+            for fragment in dom_parser.parse_dom(page_html, 'div', {'class': 'tabContent'}):
+                iframe_url = dom_parser.parse_dom(fragment, 'iframe', ret='src')
+                if iframe_url:
+                    host = urlparse.urlparse(iframe_url[0]).hostname
+                    hoster = {'multi-part': False, 'url': iframe_url[0], 'class': self, 'quality': quality, 'host': host, 'rating': None, 'views': None, 'direct': False}
+                    hosters.append(hoster)
 
         return hosters
-
-    def get_url(self, video):
-        return self._default_get_url(video)
 
     def search(self, video_type, title, year, season=''):
         search_url = urlparse.urljoin(self.base_url, '/search?q=')

@@ -18,8 +18,7 @@
 import re
 import urllib
 import urlparse
-
-from salts_lib import kodi
+import kodi
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import QUALITIES
@@ -29,7 +28,7 @@ import scraper
 
 BASE_URL = 'http://filmikz.ch'
 
-class Filmikz_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -44,12 +43,6 @@ class Filmikz_Scraper(scraper.Scraper):
     def get_name(cls):
         return 'filmikz.ch'
 
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        return '[%s] %s' % (item['quality'], item['host'])
-
     def get_sources(self, video):
         source_url = self.get_url(video)
         hosters = []
@@ -57,7 +50,7 @@ class Filmikz_Scraper(scraper.Scraper):
             url = urlparse.urljoin(self.base_url, source_url)
             html = self._http_get(url, cache_limit=.5)
 
-            pattern = "/watch\.php\?q=([^']+)"
+            pattern = "/w\.php\?q=([^']+)"
             seen_hosts = {}
             for match in re.finditer(pattern, html, re.DOTALL):
                 url = match.group(1)
@@ -72,9 +65,6 @@ class Filmikz_Scraper(scraper.Scraper):
                 hoster['quality'] = scraper_utils.get_quality(video, hoster['host'], quality)
                 hosters.append(hoster)
         return hosters
-
-    def get_url(self, video):
-        return self._default_get_url(video)
 
     def search(self, video_type, title, year, season=''):
         search_url = urlparse.urljoin(self.base_url, '/index.php?search=%s&image.x=0&image.y=0')

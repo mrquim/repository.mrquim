@@ -17,10 +17,9 @@
 """
 import re
 import urlparse
-
-from salts_lib import dom_parser
-from salts_lib import kodi
-from salts_lib import log_utils
+import kodi
+import log_utils
+import dom_parser
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import VIDEO_TYPES
@@ -31,7 +30,7 @@ BASE_URL = 'http://www.dizigold.net'
 AJAX_URL = '/sistem/ajax.php'
 XHR = {'X-Requested-With': 'XMLHttpRequest'}
 
-class Dizigold_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -46,13 +45,6 @@ class Dizigold_Scraper(scraper.Scraper):
     @classmethod
     def get_name(cls):
         return 'Dizigold'
-
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        label = '[%s] %s' % (item['quality'], item['host'])
-        return label
 
     def get_sources(self, video):
         source_url = self.get_url(video)
@@ -113,9 +105,6 @@ class Dizigold_Scraper(scraper.Scraper):
                     hosters.append(hoster)
     
         return hosters
-
-    def get_url(self, video):
-        return self._default_get_url(video)
 
     def _get_episode_url(self, show_url, video):
         episode_pattern = 'href="([^"]+/%s-sezon/%s-[^"]*bolum[^"]*)' % (video.season, video.episode)

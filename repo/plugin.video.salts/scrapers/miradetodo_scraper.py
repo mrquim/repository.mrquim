@@ -19,9 +19,9 @@ import re
 import urllib
 import urlparse
 import base64
-from salts_lib import log_utils
-from salts_lib import dom_parser
-from salts_lib import kodi
+import log_utils
+import kodi
+import dom_parser
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import VIDEO_TYPES
@@ -33,7 +33,7 @@ BASE_URL = 'http://miradetodo.net'
 GK_KEY1 = base64.urlsafe_b64decode('QjZVTUMxUms3VFJBVU56V3hraHI=')
 GK_KEY2 = base64.urlsafe_b64decode('aUJocnZjOGdGZENaQWh3V2huUm0=')
 
-class MiraDetodo_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -49,13 +49,6 @@ class MiraDetodo_Scraper(scraper.Scraper):
     def get_name(cls):
         return 'MiraDeTodo'
 
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        label = '[%s] %s' % (item['quality'], item['host'])
-        return label
-
     def get_sources(self, video):
         source_url = self.get_url(video)
         hosters = []
@@ -66,10 +59,20 @@ class MiraDetodo_Scraper(scraper.Scraper):
                 iframe_url = dom_parser.parse_dom(fragment, 'iframe', ret='src')
                 if iframe_url:
                     iframe_url = iframe_url[0]
+                    if not iframe_url.startswith('http'):
+                        iframe_url = dom_parser.parse_dom(fragment, 'iframe', ret='data-lazy-src')
+                        iframe_url = iframe_url[0]
+                        
                     sources = {}
                     if 'miradetodo' in iframe_url:
                         direct = True
                         html = self._http_get(iframe_url, cache_limit=.5)
+                        fragment = dom_parser.parse_dom(html, 'nav', {'class': 'nav'})
+                        if fragment:
+                            stream_url = dom_parser.parse_dom(fragment, 'a', ret='href')
+                            if stream_url:
+                                html = self._http_get(stream_url[0], cache_limit=.5)
+                                
                         sources.update(self.__get_gk_links(html))
                         sources.update(self.__get_gk_links2(html))
                         sources.update(self.__get_amazon_links(html))
@@ -128,21 +131,17 @@ class MiraDetodo_Scraper(scraper.Scraper):
             headers = {'Referer': iframe_url}
             html = self._http_get(self.gk_url, data=data, headers=headers, cache_limit=.5)
             js_data = scraper_utils.parse_json(html, self.gk_url)
-            if 'link' in js_data:
-                for link in js_data['link']:
-                    stream_url = link['link']
-                    if self._get_direct_hostname(stream_url) == 'gvideo':
-                        quality = scraper_utils.gv_get_quality(stream_url)
-                    elif 'label' in link:
-                        quality = scraper_utils.height_get_quality(link['label'])
-                    else:
-                        quality = QUALITIES.HIGH
-                    sources[stream_url] = quality
+            for link in js_data.get('link', []):
+                stream_url = link['link']
+                if self._get_direct_hostname(stream_url) == 'gvideo':
+                    quality = scraper_utils.gv_get_quality(stream_url)
+                elif 'label' in link:
+                    quality = scraper_utils.height_get_quality(link['label'])
+                else:
+                    quality = QUALITIES.HIGH
+                sources[stream_url] = quality
         return sources
         
-    def get_url(self, video):
-        return self._default_get_url(video)
-
     def search(self, video_type, title, year, season=''):
         search_url = urlparse.urljoin(self.base_url, '/?s=')
         search_url += urllib.quote_plus(title)

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    urlresolver XBMC Addon
+    SALTS XBMC Addon
     Copyright (C) 2016 tknorris
     Derived from Shani's LPro Code (https://github.com/Shani-08/ShaniXBMCWork2/blob/master/plugin.video.live.streamspro/unCaptcha.py)
 
@@ -27,6 +27,8 @@ import xbmcgui
 import log_utils
 import kodi
 import scraper_utils
+
+COMPONENT = __name__
 
 class cInputWindow(xbmcgui.WindowDialog):
     def __init__(self, *args, **kwargs):
@@ -58,13 +60,17 @@ class cInputWindow(xbmcgui.WindowDialog):
         img = xbmcgui.ControlImage(imgX, imgY, imgw, imgh, kwargs.get('captcha'))
         self.addControl(img)
         self.iteration = kwargs.get('iteration')
-        self.strActionInfo = xbmcgui.ControlLabel(imgX, imgY + imgh, imgw, 20, 'Captcha Round: %s [I](2 Rounds is typical)[/I]' % (str(self.iteration)), 'font40')
+        name = kwargs.get('name')
+        name = 'for: [I]%s[/I]' % (name) if name is not None else ''
+        self.strActionInfo = xbmcgui.ControlLabel(imgX, imgY + imgh, imgw, 20, 'Captcha Round: %s %s' % (self.iteration, name), 'font40')
         self.addControl(self.strActionInfo)
         self.cancelbutton = xbmcgui.ControlButton(middle - 110, button_y, 100, button_h, 'Cancel', alignment=2)
         self.okbutton = xbmcgui.ControlButton(middle + 10, button_y, 100, button_h, 'OK', alignment=2)
         self.addControl(self.okbutton)
         self.addControl(self.cancelbutton)
 
+        button_fo = os.path.join(kodi.get_path(), 'resources', 'skins', 'Default', 'media', 'button-fo.png')
+        button_nofo = os.path.join(kodi.get_path(), 'resources', 'skins', 'Default', 'media', 'button-nofo.png')
         for i in xrange(9):
             row = i / 3
             col = i % 3
@@ -73,7 +79,7 @@ class cInputWindow(xbmcgui.WindowDialog):
             self.chk[i] = xbmcgui.ControlImage(x_pos, y_pos, pw, ph, check_image)
             self.addControl(self.chk[i])
             self.chk[i].setVisible(False)
-            self.chkbutton[i] = xbmcgui.ControlButton(x_pos, y_pos, pw, ph, str(i + 1), font='font1')
+            self.chkbutton[i] = xbmcgui.ControlButton(x_pos, y_pos, pw, ph, str(i + 1), font='font1', focusTexture=button_fo, noFocusTexture=button_nofo)
             self.addControl(self.chkbutton[i])
 
         for i in xrange(9):
@@ -130,7 +136,7 @@ class cInputWindow(xbmcgui.WindowDialog):
             self.close()
 
 class UnCaptchaReCaptcha:
-    def processCaptcha(self, key, lang):
+    def processCaptcha(self, key, lang, name=None):
         headers = {'Referer': 'https://www.google.com/recaptcha/api2/demo', 'Accept-Language': lang}
         html = get_url('http://www.google.com/recaptcha/api/fallback?k=%s' % (key), headers=headers)
         token = ''
@@ -144,9 +150,9 @@ class UnCaptchaReCaptcha:
             if not message:
                 token = re.findall('"this\.select\(\)">(.*?)</textarea>', html)[0]
                 if token:
-                    log_utils.log('Captcha Success: %s' % (token), log_utils.LOGDEBUG)
+                    log_utils.log('Captcha Success: %s' % (token), log_utils.LOGDEBUG, COMPONENT)
                 else:
-                    log_utils.log('Captcha Failed', log_utils.LOGDEBUG)
+                    log_utils.log('Captcha Failed', log_utils.LOGDEBUG, COMPONENT)
                 break
             else:
                 message = message[0]
@@ -155,7 +161,7 @@ class UnCaptchaReCaptcha:
             cval = re.findall('name="c"\s+value="([^"]+)', html)[0]
             captcha_imgurl = 'https://www.google.com%s' % (payload.replace('&amp;', '&'))
             message = re.sub('</?strong>', '', message)
-            oSolver = cInputWindow(captcha=captcha_imgurl, msg=message, iteration=iteration)
+            oSolver = cInputWindow(captcha=captcha_imgurl, msg=message, iteration=iteration, name=name)
             captcha_response = oSolver.get()
             if not captcha_response:
                 break
@@ -170,13 +176,21 @@ def get_url(url, data=None, timeout=20, headers=None):
     post_data = urllib.urlencode(data, doseq=True)
     if 'User-Agent' not in headers:
         headers['User-Agent'] = scraper_utils.get_ua()
-    log_utils.log('URL: |%s| Data: |%s| Headers: |%s|' % (url, post_data, headers), log_utils.LOGDEBUG)
+    log_utils.log('URL: |%s| Data: |%s| Headers: |%s|' % (url, post_data, headers), log_utils.LOGDEBUG, COMPONENT)
 
-    req = urllib2.Request(url)
-    for key in headers:
-        req.add_header(key, headers[key])
+    try:
+        req = urllib2.Request(url)
+        for key in headers:
+            req.add_header(key, headers[key])
+    
+        response = urllib2.urlopen(req, data=post_data, timeout=timeout)
+        result = response.read()
+        response.close()
+    except urllib2.HTTPError as e:
+        log_utils.log('ReCaptcha.V2 HTTP Error: %s on url: %s' % (e.code, url), log_utils.LOGWARNING, COMPONENT)
+        result = ''
+    except urllib2.URLError as e:
+        log_utils.log('ReCaptcha.V2 URLError Error: %s on url: %s' % (e, url), log_utils.LOGWARNING, COMPONENT)
+        result = ''
 
-    response = urllib2.urlopen(req, data=post_data, timeout=timeout)
-    result = response.read()
-    response.close()
     return result

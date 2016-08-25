@@ -515,11 +515,11 @@ msgid "Next Week"
 msgstr ""
 
 msgctxt "#30125"
-msgid "Mark as Unwatched"
+msgid "Mark as Unwatched (SALTS)"
 msgstr ""
 
 msgctxt "#30126"
-msgid "Mark as Watched"
+msgid "Mark as Watched (SALTS)"
 msgstr ""
 
 msgctxt "#30127"
@@ -851,7 +851,7 @@ msgid "Requested Sources from: %s"
 msgstr ""
 
 msgctxt "#30220"
-msgid "Received %s Sources from: %s"
+msgid "Received Sources: (%s / %s) from %s"
 msgstr ""
 
 msgctxt "#30221"
@@ -1056,6 +1056,74 @@ msgstr ""
 
 msgctxt "#30271"
 msgid "[/COLOR] from any device on the same network as this device."
+msgstr ""
+
+msgctxt "#30272"
+msgid "Watch It Again"
+msgstr ""
+
+msgctxt "#30273"
+msgid "Pick a list to use for Watch It Again"
+msgstr ""
+
+msgctxt "#30274"
+msgid "Use Least Watched Method"
+msgstr ""
+
+msgctxt "#30275"
+msgid "Use Most Watched Method"
+msgstr ""
+
+msgctxt "#30276"
+msgid "Use Last Watched Method"
+msgstr ""
+
+msgctxt "#30277"
+msgid "Set as Watch It Again List"
+msgstr ""
+
+msgctxt "#30278"
+msgid "Playback only allowed from Library & SALTS"
+msgstr ""
+
+msgctxt "#30279"
+msgid "Maximum Allowed Size (GB) (0 = No Limit)"
+msgstr ""
+
+msgctxt "#30280"
+msgid "Show Episode Airtime in My Next Episodes"
+msgstr ""
+
+msgctxt "#30281"
+msgid "Include Transodes"
+msgstr ""
+
+msgctxt "#30282"
+msgid "Next Episode"
+msgstr ""
+
+msgctxt "#30283"
+msgid "Remaining: %s of %s"
+msgstr ""
+
+msgctxt "#30284"
+msgid "Remaining: %s"
+msgstr ""
+
+msgctxt "#30285"
+msgid "Genres"
+msgstr ""
+
+msgctxt "#30286"
+msgid "Retrieving Collection"
+msgstr ""
+
+msgctxt "#30287"
+msgid "Adding Items to Directory"
+msgstr ""
+
+msgctxt "#30288"
+msgid "Working..."
 msgstr ""
 
 msgctxt "#30500"
@@ -1772,3 +1840,130 @@ msgstr ""
 msgctxt "#30675"
 msgid "Torba IP Authorization"
 msgstr ""
+
+msgctxt "#30676"
+msgid "Machine Speed"
+msgstr ""
+
+msgctxt "#30677"
+msgid "Automatic"
+msgstr ""
+
+msgctxt "#30678"
+msgid "Very Slow"
+msgstr ""
+
+msgctxt "#30679"
+msgid "Slow"
+msgstr ""
+
+msgctxt "#30680"
+msgid "Medium"
+msgstr ""
+
+msgctxt "#30681"
+msgid "Fast"
+msgstr ""
+
+msgctxt "#30682"
+msgid "Very Fast"
+msgstr ""
+
+msgctxt "#30683"
+msgid "Show Watch It Again"
+msgstr ""
+
+msgctxt "#30684"
+msgid "Show air time in MNE"
+msgstr ""
+
+# 30685 removed
+
+msgctxt "#30686"
+msgid "Show Next Episode Notification"
+msgstr ""
+
+msgctxt "#30687"
+msgid "    Next Episode Delay (secs)"
+msgstr ""
+
+msgctxt "#30688"
+msgid "    Show Next Episode on Unwatched"
+msgstr ""
+
+msgctxt "#30689"
+msgid "    Show air time in Next Episode"
+msgstr ""
+
+msgctxt "#30690"
+msgid "Show CF Site Protection Captchas"
+msgstr ""
+
+msgctxt "#30691"
+msgid "    Next Episode Duration (secs)"
+msgstr ""
+
+msgctxt "#30692"
+msgid "Show Genres"
+msgstr ""
+
+msgctxt "#30693"
+msgid "Movie Genre List"
+msgstr ""
+
+msgctxt "#30694"
+msgid "TV Genre List"
+msgstr ""
+
+msgctxt "#30695"
+msgid "Trending"
+msgstr ""
+
+msgctxt "#30696"
+msgid "Popular"
+msgstr ""
+
+msgctxt "#30697"
+msgid "Anticipated"
+msgstr ""
+
+msgctxt "#30698"
+msgid "Most Watched (Week)"
+msgstr ""
+
+msgctxt "#30699"
+msgid "Most Watched (Month)"
+msgstr ""
+
+msgctxt "#30700"
+msgid "Most Watched (All)"
+msgstr ""
+
+msgctxt "#30701"
+msgid "Most Played (Week)"
+msgstr ""
+
+msgctxt "#30702"
+msgid "Most Played (Month)"
+msgstr ""
+
+msgctxt "#30703"
+msgid "Most Played (All)"
+msgstr ""
+
+msgctxt "#30704"
+msgid "Most Collected (Week)"
+msgstr ""
+
+msgctxt "#30705"
+msgid "Most Collected (Month)"
+msgstr ""
+
+msgctxt "#30706"
+msgid "Most Collected (All)"
+msgstr ""
+
+msgctxt "#30707"
+msgid "Date Format"
+msgstr ""
+

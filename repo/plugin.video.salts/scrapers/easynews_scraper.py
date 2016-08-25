@@ -18,13 +18,12 @@
 import re
 import urllib
 import urlparse
-
-from salts_lib import kodi
-from salts_lib import log_utils
+import kodi
+import log_utils
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import VIDEO_TYPES
-from salts_lib.kodi import i18n
+from salts_lib.utils2 import i18n
 import scraper
 
 
@@ -32,10 +31,10 @@ BASE_URL = 'http://members.easynews.com'
 SORT = 's1=relevance&s1d=-&s2=dsize&s2d=-&s3=dtime&s3d=-'
 VID_FILTER = 'fex=mkv%%2C+mp4%%2C+avi'
 # RANGE_FILTERS = 'd1=&d1t=&d2=&d2t=&b1=&b1t=&b2=&b2t=&px1=&px1t=&px2=&px2t=&fps1=&fps1t=&fps2=&fps2t=&bps1=&bps1t=&bps2=&bps2t=&hz1=&hz1t=&hz2=&hz2t=&rn1=&rn1t=1&rn2=&rn2t='
-SEARCH_URL = '/2.0/search/solr-search/advanced?st=adv&safeO=0&sb=1&%s&%s&fty[]=VIDEO&spamf=1&u=1&gx=1&pby=100&pno=1&sS=3' % (VID_FILTER, SORT)
+SEARCH_URL = '/2.0/search/solr-search/advanced?st=adv&safeO=0&sb=1&%s&%s&fty[]=VIDEO&spamf=1&u=1&gx=1&pby=%s&pno=1&sS=3'
 SEARCH_URL += '&gps=%s&sbj=%s'
 
-class EasyNews_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -43,6 +42,9 @@ class EasyNews_Scraper(scraper.Scraper):
         self.base_url = kodi.get_setting('%s-base_url' % (self.get_name()))
         self.username = kodi.get_setting('%s-username' % (self.get_name()))
         self.password = kodi.get_setting('%s-password' % (self.get_name()))
+        self.max_results = int(kodi.get_setting('%s-result_limit' % (self.get_name())))
+        self.max_gb = kodi.get_setting('%s-size_limit' % (self.get_name()))
+        self.max_bytes = int(self.max_gb) * 1024 * 1024 * 1024
         self.cookie = {'chickenlicker': '%s%%3A%s' % (self.username, self.password)}
 
     @classmethod
@@ -52,20 +54,6 @@ class EasyNews_Scraper(scraper.Scraper):
     @classmethod
     def get_name(cls):
         return 'EasyNews'
-
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        if 'format' in item:
-            label = '[%s] (%s) %s' % (item['quality'], item['format'], item['host'])
-        else:
-            label = '[%s] %s' % (item['quality'], item['host'])
-        if 'size' in item:
-            label += ' (%s)' % (item['size'])
-        if 'extra' in item:
-            label += ' [%s]' % (item['extra'])
-        return label
 
     def get_sources(self, video):
         hosters = []
@@ -98,43 +86,50 @@ class EasyNews_Scraper(scraper.Scraper):
         search_url = self.__translate_search(url)
         html = self._http_get(search_url, cache_limit=.5)
         js_result = scraper_utils.parse_json(html, search_url)
-        if 'data' in js_result:
-            for item in js_result['data']:
-                post_hash, size, post_title, ext, duration = item['0'], item['4'], item['10'], item['11'], item['14']
-                checks = [False] * 6
-                if not scraper_utils.title_check(video, post_title): checks[0] = True
-                if 'alangs' in item and item['alangs'] and 'eng' not in item['alangs']: checks[1] = True
-                if re.match('^\d+s', duration) or re.match('^[0-5]m', duration): checks[2] = True
-                if 'passwd' in item and item['passwd']: checks[3] = True
-                if 'virus' in item and item['virus']: checks[4] = True
-                if 'type' in item and item['type'].upper() != 'VIDEO': checks[5] = True
-                if any(checks):
-                    log_utils.log('EasyNews Post excluded: %s - |%s|' % (checks, item), log_utils.LOGDEBUG)
-                    continue
+        for item in js_result.get('data', []):
+            post_hash, size, post_title, ext, duration = item['0'], item['4'], item['10'], item['11'], item['14']
+            checks = [False] * 6
+            if not scraper_utils.release_check(video, post_title): checks[0] = True
+            if 'alangs' in item and item['alangs'] and 'eng' not in item['alangs']: checks[1] = True
+            if re.match('^\d+s', duration) or re.match('^[0-5]m', duration): checks[2] = True
+            if 'passwd' in item and item['passwd']: checks[3] = True
+            if 'virus' in item and item['virus']: checks[4] = True
+            if 'type' in item and item['type'].upper() != 'VIDEO': checks[5] = True
+            if any(checks):
+                log_utils.log('EasyNews Post excluded: %s - |%s|' % (checks, item), log_utils.LOGDEBUG)
+                continue
+            
+            stream_url = urllib.quote('%s%s/%s%s' % (post_hash, ext, post_title, ext))
+            stream_url = 'http://members.easynews.com/dl/%s' % (stream_url)
+            stream_url = stream_url + '|Cookie=%s' % (self._get_stream_cookies())
+            host = self._get_direct_hostname(stream_url)
+            quality = None
+            if 'width' in item:
+                try: width = int(item['width'])
+                except: width = 0
+                if width:
+                    quality = scraper_utils.width_get_quality(width)
+            
+            if quality is None:
+                if video.video_type == VIDEO_TYPES.MOVIE:
+                    meta = scraper_utils.parse_movie_link(post_title)
+                else:
+                    meta = scraper_utils.parse_episode_link(post_title)
+                quality = scraper_utils.height_get_quality(meta['height'])
                 
-                stream_url = urllib.quote('%s%s/%s%s' % (post_hash, ext, post_title, ext))
-                stream_url = 'http://members.easynews.com/dl/%s' % (stream_url)
-                stream_url = stream_url + '|Cookie=%s' % (self._get_stream_cookies())
-                host = self._get_direct_hostname(stream_url)
-                quality = None
-                if 'width' in item:
-                    try: width = int(item['width'])
-                    except: width = 0
-                    if width:
-                        quality = scraper_utils.width_get_quality(width)
-                
-                if quality is None:
-                    if video.video_type == VIDEO_TYPES.MOVIE:
-                        _title, _year, height, _extra = scraper_utils.parse_movie_link(post_title)
-                    else:
-                        _title, _season, _episode, height, _extra = scraper_utils.parse_episode_link(post_title)
-                    quality = scraper_utils.height_get_quality(height)
-                    
-                hoster = {'multi-part': False, 'class': self, 'views': None, 'url': stream_url, 'rating': None, 'host': host, 'quality': quality, 'direct': True}
-                if any(i for i in ['X265', 'HEVC'] if i in post_title.upper()): hoster['format'] = 'x265'
-                if size: hoster['size'] = size
-                if post_title: hoster['extra'] = post_title
-                hosters.append(hoster)
+            if self.max_bytes:
+                match = re.search('([\d.]+)\s+(.*)', size)
+                if match:
+                    size_bytes = scraper_utils.to_bytes(*match.groups())
+                    if size_bytes > self.max_bytes:
+                        log_utils.log('Result skipped, Too big: |%s| - %s (%s) > %s (%s GB)' % (post_title, size_bytes, size, self.max_bytes, self.max_gb))
+                        continue
+
+            hoster = {'multi-part': False, 'class': self, 'views': None, 'url': stream_url, 'rating': None, 'host': host, 'quality': quality, 'direct': True}
+            if any(i for i in ['X265', 'HEVC'] if i in post_title.upper()): hoster['format'] = 'x265'
+            if size: hoster['size'] = size
+            if post_title: hoster['extra'] = post_title
+            hosters.append(hoster)
         return hosters
     
     def get_url(self, video):
@@ -163,15 +158,17 @@ class EasyNews_Scraper(scraper.Scraper):
         name = cls.get_name()
         settings.append('         <setting id="%s-username" type="text" label="     %s" default="" visible="eq(-4,true)"/>' % (name, i18n('username')))
         settings.append('         <setting id="%s-password" type="text" label="     %s" option="hidden" default="" visible="eq(-5,true)"/>' % (name, i18n('password')))
+        settings.append('         <setting id="%s-result_limit" label="     %s" type="slider" default="10" range="10,100" option="int" visible="eq(-6,true)"/>' % (name, i18n('result_limit')))
+        settings.append('         <setting id="%s-size_limit" label="     %s" type="slider" default="0" range="0,50" option="int" visible="eq(-7,true)"/>' % (name, i18n('size_limit')))
         return settings
 
     def _http_get(self, url, cache_limit=8):
         if not self.username or not self.password:
             return ''
         
-        return self._cached_http_get(url, self.base_url, self.timeout, cookies=self.cookie, cache_limit=cache_limit)
+        return super(self.__class__, self)._http_get(url, cookies=self.cookie, cache_limit=cache_limit)
 
     def __translate_search(self, url):
         query = urllib.quote_plus(urlparse.parse_qs(urlparse.urlparse(url).query)['query'][0])
-        url = urlparse.urljoin(self.base_url, SEARCH_URL % (query, query))
+        url = urlparse.urljoin(self.base_url, SEARCH_URL % (VID_FILTER, SORT, self.max_results, query, query))
         return url

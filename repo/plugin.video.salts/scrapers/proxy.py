@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 import abc
-from salts_lib import log_utils
+import log_utils
 import scraper
 
 class Proxy(scraper.Scraper):
@@ -72,7 +72,7 @@ class Proxy(scraper.Scraper):
     
     def search(self, video_type, title, year, season=''):
         if self.__scraper is not None:
-            return self.__scraper.search(video_type, title, year)
+            return self.__scraper.search(video_type, title, year, season)
         else:
             return []
     

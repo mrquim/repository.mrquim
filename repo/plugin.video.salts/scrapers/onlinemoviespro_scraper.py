@@ -17,8 +17,7 @@
 """
 import re
 import urlparse
-from salts_lib import dom_parser
-from salts_lib import kodi
+import kodi
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import VIDEO_TYPES
@@ -27,7 +26,7 @@ import scraper
 
 BASE_URL = 'http://www.onlinemovies-pro.com'
 
-class OnlineMoviesPro_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -41,17 +40,6 @@ class OnlineMoviesPro_Scraper(scraper.Scraper):
     @classmethod
     def get_name(cls):
         return 'OnlineMoviesPro'
-
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        label = '[%s] %s' % (item['quality'], item['host'])
-        if item['views'] is not None:
-            label += ' (%s Views)' % (item['views'])
-        if item['rating'] is not None:
-            label += ' (%s/100)' % (item['rating'])
-        return label
 
     def get_sources(self, video):
         source_url = self.get_url(video)
@@ -79,9 +67,6 @@ class OnlineMoviesPro_Scraper(scraper.Scraper):
 
                 hosters.append(hoster)
         return hosters
-
-    def get_url(self, video):
-        return self._default_get_url(video)
 
     def search(self, video_type, title, year, season=''):
         results = []

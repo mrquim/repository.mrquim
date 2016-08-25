@@ -18,19 +18,17 @@
 import re
 import urllib
 import urlparse
-
-from salts_lib import dom_parser
-from salts_lib import kodi
+import kodi
+import dom_parser
 from salts_lib import scraper_utils
 from salts_lib.constants import FORCE_NO_MATCH
 from salts_lib.constants import VIDEO_TYPES
 import scraper
 
-
 BASE_URL = 'http://rainierland.com'
 PAGE_LIMIT = 5
 
-class Rainierland_Scraper(scraper.Scraper):
+class Scraper(scraper.Scraper):
     base_url = BASE_URL
 
     def __init__(self, timeout=scraper.DEFAULT_TIMEOUT):
@@ -45,13 +43,6 @@ class Rainierland_Scraper(scraper.Scraper):
     def get_name(cls):
         return 'Rainierland'
 
-    def resolve_link(self, link):
-        return link
-
-    def format_source_label(self, item):
-        label = '[%s] %s' % (item['quality'], item['host'])
-        return label
-
     def get_sources(self, video):
         source_url = self.get_url(video)
         hosters = []
@@ -63,7 +54,8 @@ class Rainierland_Scraper(scraper.Scraper):
                 js_src = dom_parser.parse_dom(fragment[0], 'script', ret='src')
                 if js_src:
                     js_url = urlparse.urljoin(self.base_url, js_src[0])
-                    html = self._http_get(js_url, cache_limit=.5)
+                    headers = {'Referer': url}
+                    html = self._http_get(js_url, headers=headers, cache_limit=.5)
                 else:
                     html = fragment[0]
                     
@@ -73,16 +65,13 @@ class Rainierland_Scraper(scraper.Scraper):
                     if host == 'gvideo':
                         quality = scraper_utils.gv_get_quality(stream_url)
                     else:
-                        _, _, height, _ = scraper_utils.parse_movie_link(stream_url)
-                        quality = scraper_utils.height_get_quality(height)
+                        meta = scraper_utils.parse_movie_link(stream_url)
+                        quality = scraper_utils.height_get_quality(meta['height'])
                         stream_url += '|User-Agent=%s' % (scraper_utils.get_ua())
                         
                     hoster = {'multi-part': False, 'host': host, 'class': self, 'quality': quality, 'views': None, 'rating': None, 'url': stream_url, 'direct': True}
                     hosters.append(hoster)
         return hosters
-
-    def get_url(self, video):
-        return self._default_get_url(video)
 
     def _get_episode_url(self, show_url, video):
         for page_num in xrange(1, PAGE_LIMIT + 1):
