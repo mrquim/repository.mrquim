@@ -1,5 +1,7 @@
-2016.08.23.2
+2016.08.23.4
     fix - muchmovies, putlocker, movieshd
+    fix - iwatchonline
+
 
 2016.08.14.1:
     download fix - if download folder is not set, display settings

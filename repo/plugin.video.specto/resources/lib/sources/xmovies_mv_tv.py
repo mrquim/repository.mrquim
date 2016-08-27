@@ -159,10 +159,10 @@ class source:
 
 
                     if 'openload.' in url:
-                        links += [{'source': 'openload.co', 'url': url, 'quality': 'HD'}]
+                        links += [{'source': 'openload', 'url': url, 'quality': 'HD'}]
 
                     elif 'videomega.' in url:
-                        links += [{'source': 'videomega.tv', 'url': url, 'quality': 'HD'}]
+                        links += [{'source': 'videomega', 'url': url, 'quality': 'HD'}]
 
                     else:
                         try: links.append({'source': 'gvideo', 'url': url, 'quality': client.googletag(url)[0]['quality']})

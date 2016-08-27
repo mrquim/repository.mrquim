@@ -168,9 +168,9 @@ class source:
 
             links = []
             links += [{'source': 'gvideo', 'url': self.direct_link % i[1]} for i in r if 2 <= int(i[0]) <= 11]
-            links += [{'source': 'openload.co', 'url': self.embed_link % i[1]} for i in r if i[0] == '14']
-            links += [{'source': 'videomega.tv', 'url': self.embed_link % i[1]} for i in r if i[0] == '13']
-            links += [{'source': 'videowood.tv', 'url': self.embed_link % i[1]} for i in r if i[0] == '12']
+            links += [{'source': 'openload', 'url': self.embed_link % i[1]} for i in r if i[0] == '14']
+            links += [{'source': 'videomega', 'url': self.embed_link % i[1]} for i in r if i[0] == '13']
+            links += [{'source': 'videowood', 'url': self.embed_link % i[1]} for i in r if i[0] == '12']
 
             for i in links: sources.append({'source': i['source'], 'quality': quality, 'provider': 'Muchmovies', 'url': i['url'] + head_link})
 

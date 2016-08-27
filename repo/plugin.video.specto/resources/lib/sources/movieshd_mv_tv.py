@@ -155,8 +155,8 @@ class source:
                 try: links += [{'source': 'gvideo', 'quality': client.googletag(i)[0]['quality'], 'url': i}]
                 except: pass
 
-            links += [{'source': 'openload.co', 'quality': 'SD', 'url': i} for i in r if 'openload.co' in i]
-            links += [{'source': 'videomega.tv', 'quality': 'SD', 'url': i} for i in r if 'videomega.tv' in i]
+            links += [{'source': 'openload', 'quality': 'SD', 'url': i} for i in r if 'openload.co' in i]
+            links += [{'source': 'videomega', 'quality': 'SD', 'url': i} for i in r if 'videomega.tv' in i]
             for i in links: sources.append({'source': i['source'], 'quality': i['quality'], 'provider': 'MoviesHD', 'url': i['url']})
 
             return sources

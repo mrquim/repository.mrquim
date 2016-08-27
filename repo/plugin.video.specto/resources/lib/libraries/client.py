@@ -50,13 +50,11 @@ def request(url, close=True, redirect=True, error=False, proxy=None, post=None, 
             opener = urllib2.build_opener(*handlers)
             opener = urllib2.install_opener(opener)
 
-
         if output == 'cookie2' or output == 'cookie' or output == 'extended' or not close == True:
             cookies = cookielib.LWPCookieJar()
             handlers += [urllib2.HTTPHandler(), urllib2.HTTPSHandler(), urllib2.HTTPCookieProcessor(cookies)]
             opener = urllib2.build_opener(*handlers)
             opener = urllib2.install_opener(opener)
-
 
         try:
             if sys.version_info < (2, 7, 9): raise Exception()
@@ -68,7 +66,6 @@ def request(url, close=True, redirect=True, error=False, proxy=None, post=None, 
             opener = urllib2.install_opener(opener)
         except:
             pass
-
 
         try: headers.update(headers)
         except: headers = {}
@@ -92,9 +89,7 @@ def request(url, close=True, redirect=True, error=False, proxy=None, post=None, 
         elif not cookie == None:
             headers['Cookie'] = cookie
 
-
         if redirect == False:
-
             class NoRedirection(urllib2.HTTPErrorProcessor):
                 def http_response(self, request, response): return response
 
@@ -104,15 +99,12 @@ def request(url, close=True, redirect=True, error=False, proxy=None, post=None, 
             try: del headers['Referer']
             except: pass
 
-
         request = urllib2.Request(url, data=post, headers=headers)
-
 
         try:
             response = urllib2.urlopen(request, timeout=int(timeout))
         except urllib2.HTTPError as response:
             #control.log("AAAA- CODE %s|%s " % (url, response.code))
-
             if response.code == 503:
                 if 'cf-browser-verification' in response.read(5242880):
                     netloc = '%s://%s' % (urlparse.urlparse(url).scheme, urlparse.urlparse(url).netloc)
@@ -137,7 +129,6 @@ def request(url, close=True, redirect=True, error=False, proxy=None, post=None, 
             elif error == False:
                 print ("Response code",response.code, response.msg,url)
                 return
-
 
         if output == 'cookie':
             try: result = '; '.join(['%s=%s' % (i.name, i.value) for i in cookies])
