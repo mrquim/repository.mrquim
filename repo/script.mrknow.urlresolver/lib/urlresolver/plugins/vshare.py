@@ -16,6 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+#todo: get quality check
+
 import re
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
@@ -34,11 +36,16 @@ class VshareResolver(UrlResolver):
         if link.find('404 - Error') >= 0:
             raise ResolverError('The requested video was not found.')
 
-        video_link = str(re.compile("url[: ]*'(.+?)'").findall(link)[0])
+        #video_link = str(re.compile("url[: ]*'(.+?)'").findall(link))
+        video_link = re.compile('"url":"(.*?)",.* ?"label":"(.*?)"', re.DOTALL).findall(link)
+        print ("V",video_link,len(video_link))
         if len(video_link) > 0:
-            return video_link
+            print("tutaj",video_link[0][0].replace('\\',''))
+            return str(video_link[0][0]).replace('\\','')
         else:
             raise ResolverError('No playable video found.')
 
     def get_url(self, host, media_id):
-        return 'http://vshare.io/v/%s/width-620/height-280/' % media_id
+        #return 'http://vshare.io/v/%s/width-620/height-280/' % media_id
+        #print media_id
+        return 'http://vshare.io/v/%s/width-650/height-430' % media_id

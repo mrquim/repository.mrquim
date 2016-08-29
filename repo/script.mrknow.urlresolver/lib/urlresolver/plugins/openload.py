@@ -44,14 +44,16 @@ class OpenLoadResolver(UrlResolver):
         try:
             myurl = 'http://openload.co/embed/%s' % media_id
             HTTP_HEADER = {
-                'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
+                'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:48.0) Gecko/20100101 Firefox/48.0',
                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
                 'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
                 'Accept-Encoding': 'none',
                 'Accept-Language': 'en-US,en;q=0.8',
                 'Referer': myurl}  # 'Connection': 'keep-alive'
-
-            html = self.net.http_GET(myurl, headers=HTTP_HEADER).content
+            resp = self.net.http_GET(myurl, headers=HTTP_HEADER)
+            html = resp.content
+            #cfcookie = html._response.info()['set-cookie']
+            #cfcookie = resp._response.headers
             if any(x in html for x in ['We are sorry', 'File not found']):
                 raise Exception('The file was removed')
 
@@ -72,17 +74,26 @@ class OpenLoadResolver(UrlResolver):
                 if j >= 33 and j <= 126:
                     j = ((j + 14) % 94) + 33
                 video_url_chars += chr(j)
+            print video_url_chars;
+            myvidurl = ''.join(video_url_chars)
+            print "--", myvidurl
+            myvidurl  = myvidurl [0:-1] +chr(ord(myvidurl [-1])+2)
+            print "--",myvidurl
 
-            video_url = 'https://openload.co/stream/%s?mime=true'
-            video_url = video_url % (''.join(video_url_chars))
+            #var x = $("#hiddenurl").text();
+	        #var s=[];for(var i=0;i<x.length;i++){var j=x.charCodeAt(i);if((j>=33)&&(j<=126)){s[i]=String.fromCharCode(33+((j+14)%94));}else{s[i]=String.fromCharCode(j);}}
+	        #var tmp=s.join("");
+	        #var str = tmp.substring(0, tmp.length - 1) + String.fromCharCode(tmp.slice(-1).charCodeAt(0) + 2);
+	        #$("#streamurl").text(str);
 
-            print video_url
+            video_url = 'https://openload.co/stream/%s?mime=true' % myvidurl
             common.log_utils.log_notice('A openload resolve parse: %s' % video_url)
             return video_url
 
 
         except Exception as e:
             common.log_utils.log_notice('Exception during openload resolve parse: %s' % e)
+            print("Error",e)
             raise
 
 
