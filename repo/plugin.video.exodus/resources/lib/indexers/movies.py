@@ -19,12 +19,6 @@
 '''
 
 
-import os,sys,re,json,urllib,urlparse,base64,datetime
-
-params = dict(urlparse.parse_qsl(sys.argv[2].replace('?','')))
-
-action = params.get('action')
-
 from resources.lib.modules import trakt
 from resources.lib.modules import cleangenre
 from resources.lib.modules import control
@@ -34,6 +28,14 @@ from resources.lib.modules import metacache
 from resources.lib.modules import playcount
 from resources.lib.modules import workers
 from resources.lib.modules import views
+
+import os,sys,re,json,urllib,urlparse,base64,datetime
+
+params = dict(urlparse.parse_qsl(sys.argv[2].replace('?','')))
+
+action = params.get('action')
+
+control.moderator()
 
 
 class movies:
@@ -143,44 +145,34 @@ class movies:
             self.get(self.featured_link)
 
 
-    def search(self, query=None):
+    def search(self):
         try:
             control.idle()
 
-            sysloc = [urlparse.urlparse(sys.argv[0]).netloc, 'plugin.program.super.favourites' ]
+            t = control.lang(32010).encode('utf-8')
+            k = control.keyboard('', t) ; k.doModal()
+            q = k.getText() if k.isConfirmed() else None
 
-            sysplg = True if control.infoLabel('Container.PluginName') in sysloc else False
+            if (q == None or q == ''): return
 
-            if query == None:
-                t = control.lang(32010).encode('utf-8')
-                k = control.keyboard('', t) ; k.doModal()
-                query = k.getText() if k.isConfirmed() else None
-
-            if (query == None or query == '' or sysplg == False): return
-
-            url = self.search_link + urllib.quote_plus(query)
+            url = self.search_link + urllib.quote_plus(q)
             url = '%s?action=movies&url=%s' % (sys.argv[0], urllib.quote_plus(url))
             control.execute('Container.Update(%s)' % url)
         except:
             return
 
 
-    def person(self, query=None):
+    def person(self):
         try:
             control.idle()
 
-            sysloc = [urlparse.urlparse(sys.argv[0]).netloc, 'plugin.program.super.favourites' ]
+            t = control.lang(32010).encode('utf-8')
+            k = control.keyboard('', t) ; k.doModal()
+            q = k.getText() if k.isConfirmed() else None
 
-            sysplg = True if control.infoLabel('Container.PluginName') in sysloc else False
+            if (q == None or q == ''): return
 
-            if query == None:
-                t = control.lang(32010).encode('utf-8')
-                k = control.keyboard('', t) ; k.doModal()
-                query = k.getText() if k.isConfirmed() else None
-
-            if (query == None or query == '' or sysplg == False): return
-
-            url = self.persons_link + urllib.quote_plus(query)
+            url = self.persons_link + urllib.quote_plus(q)
             url = '%s?action=moviePersons&url=%s' % (sys.argv[0], urllib.quote_plus(url))
             control.execute('Container.Update(%s)' % url)
         except:
@@ -188,12 +180,28 @@ class movies:
 
 
     def genres(self):
-        genres = [('Action', 'action'), ('Adventure', 'adventure'), ('Animation', 'animation'),
-        ('Biography', 'biography'), ('Comedy', 'comedy'), ('Crime', 'crime'), ('Drama', 'drama'),
-        ('Family', 'family'), ('Fantasy', 'fantasy'), ('History', 'history'), ('Horror', 'horror'),
-        ('Music ', 'music'), ('Musical', 'musical'), ('Mystery', 'mystery'), ('Romance', 'romance'),
-        ('Science Fiction', 'sci_fi'), ('Sport', 'sport'), ('Thriller', 'thriller'), ('War', 'war'),
-        ('Western', 'western')]
+        genres = [
+        ('Action', 'action'),
+        ('Adventure', 'adventure'),
+        ('Animation', 'animation'),
+        ('Biography', 'biography'),
+        ('Comedy', 'comedy'),
+        ('Crime', 'crime'),
+        ('Drama', 'drama'),
+        ('Family', 'family'),
+        ('Fantasy', 'fantasy'),
+        ('History', 'history'),
+        ('Horror', 'horror'),
+        ('Music ', 'music'),
+        ('Musical', 'musical'),
+        ('Mystery', 'mystery'),
+        ('Romance', 'romance'),
+        ('Science Fiction', 'sci_fi'),
+        ('Sport', 'sport'),
+        ('Thriller', 'thriller'),
+        ('War', 'war'),
+        ('Western', 'western')
+        ]
 
         for i in genres: self.list.append({'name': cleangenre.lang(i[0], self.lang), 'url': self.genre_link % i[1], 'image': 'genres.png', 'action': 'movies'})
         self.addDirectory(self.list)
@@ -201,11 +209,36 @@ class movies:
 
 
     def languages(self):
-        languages = [('Arabic', 'ar'), ('Bulgarian', 'bg'), ('Chinese', 'zh'), ('Croatian', 'hr'), ('Dutch', 'nl'),
-        ('English', 'en'), ('Finnish', 'fi'), ('French', 'fr'), ('German', 'de'), ('Greek', 'el'), ('Hebrew', 'he'),
-        ('Hindi ', 'hi'), ('Hungarian', 'hu'), ('Icelandic', 'is'), ('Italian', 'it'), ('Japanese', 'ja'), ('Korean', 'ko'),
-        ('Norwegian', 'no'), ('Persian', 'fa'), ('Polish', 'pl'), ('Portuguese', 'pt'), ('Punjabi', 'pa'), ('Romanian', 'ro'),
-        ('Russian', 'ru'), ('Spanish', 'es'), ('Swedish', 'sv'), ('Turkish', 'tr'), ('Ukrainian', 'uk')]
+        languages = [
+        ('Arabic', 'ar'),
+        ('Bulgarian', 'bg'),
+        ('Chinese', 'zh'),
+        ('Croatian', 'hr'),
+        ('Dutch', 'nl'),
+        ('English', 'en'),
+        ('Finnish', 'fi'),
+        ('French', 'fr'),
+        ('German', 'de'),
+        ('Greek', 'el'),
+        ('Hebrew', 'he'),
+        ('Hindi ', 'hi'),
+        ('Hungarian', 'hu'),
+        ('Icelandic', 'is'),
+        ('Italian', 'it'),
+        ('Japanese', 'ja'),
+        ('Korean', 'ko'),
+        ('Norwegian', 'no'),
+        ('Persian', 'fa'),
+        ('Polish', 'pl'),
+        ('Portuguese', 'pt'),
+        ('Punjabi', 'pa'),
+        ('Romanian', 'ro'),
+        ('Russian', 'ru'),
+        ('Spanish', 'es'),
+        ('Swedish', 'sv'),
+        ('Turkish', 'tr'),
+        ('Ukrainian', 'uk')
+        ]
 
         for i in languages: self.list.append({'name': str(i[0]), 'url': self.language_link % i[1], 'image': 'languages.png', 'action': 'movies'})
         self.addDirectory(self.list)
@@ -428,7 +461,7 @@ class movies:
                 url = url.replace('date[%s]' % i, (self.datetime - datetime.timedelta(days = int(i))).strftime('%Y-%m-%d'))
 
             def imdb_watchlist_id(url):
-                return re.findall('/export[?]list_id=(ls\d*)', client.request(url))[0]
+                return client.parseDOM(client.request(url).decode('iso-8859-1').encode('utf-8'), 'meta', ret='content', attrs = {'property': 'pageId'})[0]
 
             if url == self.imdbwatchlist_link:
                 url = cache.get(imdb_watchlist_id, 8640, url)
@@ -835,8 +868,8 @@ class movies:
 
                 meta = dict((k,v) for k, v in i.iteritems() if not v == '0')
                 meta.update({'mediatype': 'movie'})
-                #meta.update({'trailer': '%s?action=trailer&name=%s' % (sysaddon, sysname)})
-                meta.update({'trailer': 'plugin://script.extendedinfo/?info=playtrailer&&id=%s' % imdb})
+                meta.update({'trailer': '%s?action=trailer&name=%s' % (sysaddon, sysname)})
+                #meta.update({'trailer': 'plugin://script.extendedinfo/?info=playtrailer&&id=%s' % imdb})
                 if i['duration'] == '0': meta.update({'duration': '120'})
                 try: meta.update({'duration': str(int(meta['duration']) * 60)})
                 except: pass

@@ -197,7 +197,7 @@ msgid "[B]EXODUS[/B] : Downloads"
 msgstr ""
 
 msgctxt "#32049"
-msgid "[B]EXODUS[/B]: Viewtypes"
+msgid "[B]EXODUS[/B] : Viewtypes"
 msgstr ""
 
 msgctxt "#32050"

@@ -1,3 +1,27 @@
+[B]2.0.7[/B]
+- Updated indexers
+- Updated providers
+- Code cosmetics
+
+[B]2.0.6[/B]
+- Updated providers
+- Code cosmetics
+
+[B]2.0.5[/B]
+- Updated providers
+- Fixed issue with custom lists
+- Added Serbian (Cyrillic) translation
+- Added Hungarian translation
+
+[B]2.0.4[/B]
+- Updated providers
+- Fixed issue with networks
+- Added Croatian translation
+- Added Dutch translation
+- Added Hebrew translation
+- Added Slovenian translation
+- Code cosmetics
+
 [B]2.0.3[/B]
 - Fixed issue with movie listings
 - Fixed issue with tv show listings

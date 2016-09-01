@@ -29,8 +29,8 @@ from resources.lib.modules import directstream
 
 class source:
     def __init__(self):
-        self.domains = ['dizibox1.com']
-        self.base_link = 'http://www.dizibox1.com'
+        self.domains = ['dizibox1.com', 'dizibox.com']
+        self.base_link = 'http://www.dizibox.com'
         self.search_link = '/categoryy'
 
 

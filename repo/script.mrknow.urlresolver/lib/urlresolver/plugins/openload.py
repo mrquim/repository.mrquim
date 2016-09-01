@@ -28,8 +28,7 @@ from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 from lib.png import Reader as PNGReader
 from HTMLParser import HTMLParser
-#OL_SOURCE = 'https://offshoregit.com/tvaresolvers/ol_gmu.py'
-#OL_PATH = os.path.join(common.plugins_path, 'ol_gmu.py')
+from lib.aa_decoder import AADecoder
 
 class OpenLoadResolver(UrlResolver):
     name = "openload"
@@ -52,8 +51,8 @@ class OpenLoadResolver(UrlResolver):
                 'Referer': myurl}  # 'Connection': 'keep-alive'
             resp = self.net.http_GET(myurl, headers=HTTP_HEADER)
             html = resp.content
-            #cfcookie = html._response.info()['set-cookie']
-            #cfcookie = resp._response.headers
+            try: html = html.encode('utf-8')
+            except: pass
             if any(x in html for x in ['We are sorry', 'File not found']):
                 raise Exception('The file was removed')
 
@@ -61,34 +60,54 @@ class OpenLoadResolver(UrlResolver):
 
             if not m:
                 raise Exception("Video link encrypted data is not available.")
+            decodes = [AADecoder(match.group(1)).decode() for match in re.finditer('<script[^>]+>(ﾟωﾟﾉ=[^<]+)<', html, re.DOTALL)]
+            if not decodes:
+                #raise ResolverError('No Encoded Section Found. Deleted?')
+                print html
+                print("---")
+                print re.search("<script[^>]+>(ﾟωﾟﾉ[^<]+)<", html).group(0)
+                print("---")
+
+                print("No Encoded Section Found. Deleted?")
+                exit()
+
+            magic_number = 0
+            for decode in decodes:
+                match = re.search('charCodeAt\(\d+\)\s*\+\s*(\d+)\)', decode, re.DOTALL | re.I)
+                if match:
+                    magic_number = match.group(1)
+                    break
 
             enc_data = m.group(1).strip()
             enc_data = HTMLParser().unescape(enc_data)
 
-            # print enc_data
+            #common.log_utils.log_notice('A openload magic_number: %s' % magic_number)
+            print("Magi",magic_number)
 
-            video_url_chars = []
+            res = []
 
             for c in enc_data:
                 j = ord(c)
                 if j >= 33 and j <= 126:
                     j = ((j + 14) % 94) + 33
-                video_url_chars += chr(j)
-            print video_url_chars;
-            myvidurl = ''.join(video_url_chars)
-            print "--", myvidurl
-            myvidurl  = myvidurl [0:-1] +chr(ord(myvidurl [-1])+2)
-            print "--",myvidurl
+                res += chr(j)
 
-            #var x = $("#hiddenurl").text();
-	        #var s=[];for(var i=0;i<x.length;i++){var j=x.charCodeAt(i);if((j>=33)&&(j<=126)){s[i]=String.fromCharCode(33+((j+14)%94));}else{s[i]=String.fromCharCode(j);}}
-	        #var tmp=s.join("");
-	        #var str = tmp.substring(0, tmp.length - 1) + String.fromCharCode(tmp.slice(-1).charCodeAt(0) + 2);
-	        #$("#streamurl").text(str);
+            mynum = magic_number
+            res = res[:-1] + [chr(ord(res[-1])+int(mynum))]
 
-            video_url = 'https://openload.co/stream/%s?mime=true' % myvidurl
-            common.log_utils.log_notice('A openload resolve parse: %s' % video_url)
-            return video_url
+            print "",res
+            videoUrl = 'https://openload.co/stream/{0}?mime=true'.format(''.join(res))
+            common.log_utils.log_notice('A openload resolve parse: %s' % videoUrl)
+
+            dtext = videoUrl.replace('https', 'http')
+            headers = {'User-Agent': HTTP_HEADER['User-Agent']}
+            req = urllib2.Request(dtext, None, headers)
+            res = urllib2.urlopen(req)
+            videourl = res.geturl()
+            res.close()
+            print videourl
+            return videourl
+            #video_url = 'https://openload.co/stream/%s?mime=true' % myvidurl
 
 
         except Exception as e:
