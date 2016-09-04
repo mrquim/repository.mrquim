@@ -207,7 +207,7 @@ http://www.hometheater.co.il</description>
 </extension>
 </addon>
 
-<addon id="repository.pancas" name="Pancas repository" version="1.0.4" provider-name="Pancas">
+<addon id="repository.pancas" name="Pancas repository" version="1.0.6" provider-name="Pancas">
 	<extension point="xbmc.addon.repository" name="Pancas Add-on Repository">
 		<info compressed="false">http://raw.github.com/Sup3Roque/Pancas/master/addons.xml</info>
 		<checksum>http://raw.github.com/Sup3Roque/Pancas/master/addons.xml.md5</checksum>
@@ -325,15 +325,15 @@ Addons Included
 	</extension>
 </addon>
 
-<addon id="discave.repo" name="Discave Repositorio" version="0.0.3" provider-name="Discave">
+<addon id="discave.repo" name="DiscaveHB Repositorio" version="0.0.5" provider-name="Discave">
 	<extension point="xbmc.addon.repository" name="Discave Repositorio">
 		<info compressed="false">http://raw.github.com/discave/discave.repo/master/addons.xml</info>
 		<checksum>http://raw.github.com/discave/discave.repo/master/addons.xml.md5</checksum>
 		<datadir zip="true">http://raw.github.com/discave/discave.repo/master/repo/</datadir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary>Discave Repo</summary>
-		<description>Discave Repositorio</description>
+		<summary>DiscaveHB Repo</summary>
+		<description>DiscaveHB Repositorio</description>
 		<disclaimer></disclaimer>
 		<platform>all</platform>
 	</extension>
@@ -508,7 +508,7 @@ Addons Included
 	</extension>
 </addon>
 
-<addon id="plugin.video.LiveTV" name="Live!t TV" provider-name="Live!t TV" version="6.4.8">
+<addon id="plugin.video.LiveTV" name="Live!t TV" provider-name="Live!t TV" version="6.5.1">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
 	<import addon="script.module.urlresolver" version="1.0.0"/>
@@ -776,9 +776,9 @@ Addons Included
 
 <addon
   id="plugin.video.SportsDevil"
-  version="2016.06.21"
+  version="2016.08.22"
   name="SportsDevil"
-  provider-name="SportsDevil">
+  provider-name="MaxMustermann, Al101, Hubbab3, Sattekop">
   <requires>
    <import addon="xbmc.python" version="2.14.0"/>
    <import addon="script.module.simplejson" />
@@ -792,6 +792,9 @@ Addons Included
     library="default.py">
    <provides>video</provides>
   </extension>
+  <extension 
+      point="xbmc.python.script"
+      library="lib/livestreamerXBMCLocalProxy.py" />
   <extension point="xbmc.addon.metadata">
     <summary>Play videos of different sports streaming sites</summary>
     <description>Play videos of different sports streaming sites</description>
@@ -899,7 +902,7 @@ Addons Included
 	</extension>
 </addon>
 
-<addon id="plugin.video.livemix" name="Live Mix" version="1.0.8" provider-name="MetalKettle">
+<addon id="plugin.video.livemix" name="Live Mix" version="1.0.9" provider-name="MetalKettle">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.addon.common" version="2.0.0" />
@@ -1079,7 +1082,7 @@ Addons Included
 	</extension>
 </addon>
 
-<addon id="plugin.video.mrpiracy" name="MrPiracy.top" provider-name="MrPiracy.top" version="0.2.9">
+<addon id="plugin.video.mrpiracy" name="MrPiracy.top" provider-name="MrPiracy.top" version="0.3.0">
  <requires>
   <import addon="xbmc.python" version="2.14.0"/>
   <import addon="script.module.beautifulsoup4" version="4.3.2"/>
@@ -1444,7 +1447,7 @@ Nota Importante: Aconselhado a ultima versao do youtube 5.2.*</description>
  </extension>
 </addon>
 
-<addon id="plugin.video.exodus" version="2.0.7" name="Exodus" provider-name="Exodus">
+<addon id="plugin.video.exodus" version="2.0.8" name="Exodus" provider-name="Exodus">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0" />
 		<import addon="repository.exodus" version="1.0.0" />
@@ -1460,7 +1463,7 @@ Nota Importante: Aconselhado a ultima versao do youtube 5.2.*</description>
 		<description lang="en">Please visit www.tvaddons.ag for Exodus support and assistance! Kindly note that Exodus is not an official part of the media player you are running, and therefore not to be mentioned within official support channels, this addon has nothing to do with the media player itself, nor it’s intended use, it is simply a third party plugin which has been added to your system.</description>
 		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content provider.</disclaimer>
 		<platform>all</platform>
-		<news>- Updated indexers[CR]- Updated providers[CR]- Code cosmetics</news>
+		<news>Updated providers</news>
 	</extension>
 </addon>
 
@@ -1713,14 +1716,10 @@ SEND E MAIL: tvsupertuga@gmail.com[/B][/COLOR]</description>
 
 
 <addon id="psycho.mediacenter" name="[COLOR aqua]P[/COLOR][COLOR white]sycho Repo[/COLOR]" version="3.0.0" provider-name="bit.ly/[COLOR blue][B]AMO[/B][/COLOR][COLOR green]box[/COLOR]">
-  <requires>
-	<import addon="plugin.program.psychonews" />
-	<import addon="psycho.mediacenter" />
-  </requires>
 	<extension point="xbmc.addon.repository" name="Demonstration Add-on Repository">
 		<info compressed="false">https://raw.githubusercontent.com/PsychoMC/PsychoMC/master/addons.xml</info>
 		<checksum>https://raw.githubusercontent.com/PsychoMC/PsychoMC/master/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/PsychoMC/PsychoMC/master//repo/</datadir>
+		<datadir zip="true">https://raw.githubusercontent.com/PsychoMC/PsychoMC/master/repo/</datadir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<summary>Repositorio da [COLOR aqua]P[/COLOR][COLOR white]sycho[/COLOR]</summary>
@@ -1732,8 +1731,8 @@ SEND E MAIL: tvsupertuga@gmail.com[/B][/COLOR]</description>
 
 <addon id="plugin.video.PsychoTV"
        name="[COLOR aqua]P[/COLOR][COLOR white]sychoTV[/COLOR]"
-       version="3.0.5"
-       provider-name="Coelhon e AMObox">
+       version="4.0.0"
+       provider-name="AMObox e Coelhon">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
 	<import addon="script.module.t0mm0.common" version="2.0.0"/>
@@ -1749,7 +1748,7 @@ SEND E MAIL: tvsupertuga@gmail.com[/B][/COLOR]</description>
     <import addon="script.module.simplejson" /> 
     <import addon="script.common.plugin.cache" version="2.5.2"/>
     <import addon="script.module.metahandler" version="2.5.1"/>
-	<import addon="plugin.video.specto" />
+
 
   </requires>
   <extension point="xbmc.python.pluginsource" library="default.py">
@@ -1912,7 +1911,7 @@ SEND E MAIL: tvsupertuga@gmail.com[/B][/COLOR]</description>
 
 <addon id="plugin.video.inspiration"
        name="Inspiration Live TV"
-       version="1.0"
+       version="1.2"
        provider-name="inspiration">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>

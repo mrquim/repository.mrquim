@@ -145,23 +145,19 @@ def START():
 def PLAY_STREAM():
         UAToken = GetToken('http://uktvnow.net/app2/v3/get_user_agent', Username)
         headers={'User-Agent':'USER-AGENT-UKTVNOW-APP-V2','app-token':UAToken}
-        postdata={'User-Agent':'USER-AGENT-UKTVNOW-APP-V2','app-token':UAToken}
+        postdata={'User-Agent':'USER-AGENT-UKTVNOW-APP-V2','app-token':UAToken,'version':'5.7'}
         UAPage = net.http_POST('http://uktvnow.net/app2/v3/get_user_agent',postdata, headers).content
 	UAString=re.compile('"msg":{".+?":"(.+?)"}}').findall(UAPage)[0]
-	magic="1579547dfghuh,09458721242affde,45h4jggf5f6g,f5fg65jj46,eedcfa0489174392".split(',')
-        decryptor = pyaes.new(magic[1], pyaes.MODE_CBC, IV=magic[4])
-        UA=decryptor.decrypt(UAString.decode("hex")).split('\0')[0]
-        
+	#UA=magicness(UAString)
+        UA=UAString
 	playlist_token = GetToken('http://uktvnow.net/app2/v3/get_valid_link', Username+channelid)
-	postdata = {'useragent':UA,'username':Username,'channel_id':channelid}
-	headers={'User-Agent':UA,'app-token':playlist_token}
+	postdata = {'useragent':UA,'username':Username,'channel_id':channelid,'version':'5.7'}	
+	headers={'User-Agent':'USER-AGENT-UKTVNOW-APP-V2','app-token':playlist_token}
 	channels = net.http_POST('http://uktvnow.net/app2/v3/get_valid_link',postdata, headers).content
 	match=re.compile('"channel_name":"(.+?)","img":".+?","http_stream":"(.+?)","rtmp_stream":"(.+?)"').findall(channels)
 	for name,stream1,stream2 in match:
-            magic="1579547dfghuh,09458721242affde,45h4jggf5f6g,f5fg65jj46,eedcfa0489174392".split(',')
-            decryptor = pyaes.new(magic[1], pyaes.MODE_CBC, IV=magic[4])
-            stream1= decryptor.decrypt(stream1.decode("hex")).split('\0')[0]+"|User-Agent=EMVideoView 2.5.6 (25600) / Android 6.0.1 / SM-G935F"
-            stream2= decryptor.decrypt(stream2.decode("hex")).split('\0')[0]+' timeout=10'
+            stream1= magicness(stream1)+"|User-Agent=EMVideoView 2.5.6 (25600) / Android 6.0.1 / SM-G935F"
+            stream2= magicness(stream2)+' timeout=10'
             liz=xbmcgui.ListItem(name, iconImage=iconimage,thumbnailImage=iconimage)
             window.close()
             xbmc.Player ().play(stream1, liz, False)
@@ -259,6 +255,12 @@ def GetChannels(sec):
 			chstream2.append(stream2)
 			List.addItem(name)
 
+def magicness(url):
+        magic="1579547dfghuh,difj389rjf83ff90,45h4jggf5f6g,f5fg65jj46,gr04jhsf47890$93".split(',')
+        decryptor = pyaes.new(magic[1], pyaes.MODE_CBC, IV=magic[4])
+        url= decryptor.decrypt(url.decode("hex")).split('\0')[0]
+        return url
+
 def CreateUser():
 	import random
 	import string
@@ -338,5 +340,5 @@ START()
 window.doModal()
 del window
 if mode==1:START()
-addLink('[COLOR gold]Launch Gui[/COLOR]','url',1,icon,fanart,description='')
+#addLink('[COLOR gold]Launch Gui[/COLOR]','url',1,icon,fanart,description='')
 xbmcplugin.endOfDirectory(int(sys.argv[1]))

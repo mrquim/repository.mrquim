@@ -1,3 +1,7 @@
+v0.3.0 (03/09/2016)
+- Correcao dos Servidores de video
+- Implementacao da funcionalidade de Download, Não esquecer de definir pasta nas definicoes.
+
 v0.2.9 (11/08/2016)
 - Alteração do dominio
 

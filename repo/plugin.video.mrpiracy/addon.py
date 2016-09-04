@@ -111,6 +111,7 @@ def removerAcentos(txt, encoding='utf-8'):
     return normalize('NFKD', txt.decode(encoding)).encode('ASCII','ignore')
 
 def login():
+    ap()
     if __ADDON__.getSetting("email") == '' or __ADDON__.getSetting('password') == '':
         __ALERTA__('MrPiracy.top', 'Precisa de definir o seu email e password')
         return False
@@ -149,6 +150,7 @@ def login():
             return resultado
 
 def getList(url, pagina):
+    ap()
     tipo = ''
     categoria = ''
 
@@ -273,6 +275,7 @@ def getList(url, pagina):
 
 
 def getSeasons(url):
+    ap()
     net = Net()
     codigo_fonte = net.http_GET(url, headers=__HEADERS__).content
 
@@ -290,7 +293,7 @@ def getSeasons(url):
     vista_temporadas()
 
 def getEpisodes(url):
-
+    ap()
     net = Net()
     net.set_cookies(__COOKIE_FILE__)
     """if "kodi_anime" in url:
@@ -387,13 +390,13 @@ def getEpisodes(url):
     vista_episodios()
 
 def getStreamLegenda(siteBase, codigo_fonte):
-
+    ap()
     stream = ''
     legenda = ''
 
     net = Net()
 
-
+    ext_g = ''
 
     servidor = ''
     titulos = []
@@ -401,6 +404,7 @@ def getStreamLegenda(siteBase, codigo_fonte):
     legendas = []
     stuff = []
     i = 1
+    legendaAux = ''
     if siteBase == 'serie.php':
         match = re.compile('<div\s+id="welele"\s+link="(.+?)"\s+legenda="(.+?)">').findall(codigo_fonte)
         match += re.compile('<div\s+id="welele2"\s+link="(.+?)"\s+legenda="(.+?)">').findall(codigo_fonte)
@@ -415,14 +419,13 @@ def getStreamLegenda(siteBase, codigo_fonte):
 
     else:
         match = re.compile('<div\s+id="(.+?)"\s+link="(.+?)">').findall(codigo_fonte)
-        legendaAux = ''
         for idS, link in match:
             if 'legenda' in idS:
                 if not '.srt' in link:
                     link = link+'.srt'
                 legendaAux = 'http://mrpiracy.top/subs/%s' % link
                 continue
-            if 'videomega' in idS:
+            if 'videomega' in idS and 'videomega' in link:
                 continue
 
             titulos.append('Servidor #%s' % i)
@@ -438,28 +441,46 @@ def getStreamLegenda(siteBase, codigo_fonte):
             legenda = vidzi.getSubtitle()
         elif 'uptostream.com' in links[servidor]:
             stream = URLResolverMedia.UpToStream(links[servidor]).getMediaUrl()
-            legenda = legendas[0]
+            if legendaAux != '':
+                legenda = legendaAux
+            else:
+                legenda = legendas[0]
         elif 'server.mrpiracy.top' in links[servidor]:
             stream = links[servidor]
-            legenda = legendas[0]
+            if legendaAux != '':
+                legenda = legendaAux
+            else:
+                legenda = legendas[0]
         elif 'openload' in links[servidor]:
             stream = URLResolverMedia.OpenLoad(links[servidor]).getMediaUrl()
             legenda = URLResolverMedia.OpenLoad(links[servidor]).getSubtitle()
         elif 'drive.google.com/' in links[servidor]:
-            stream = URLResolverMedia.GoogleVideo(links[servidor]).getMediaUrl()
-            legenda = legendas[0]
+            stream, ext_g = URLResolverMedia.GoogleVideo(links[servidor]).getMediaUrl()
+            if legendaAux != '':
+                legenda = legendaAux
+            else:
+                legenda = legendas[0]
 
     else:
 
         if 'server.mrpiracy.top' in links[0]:
             stream = links[0]
-            legenda = legendas[0]
+            if legendaAux != '':
+                legenda = legendaAux
+            else:
+                legenda = legendas[0]
         elif 'uptostream.com' in links[0]:
             stream = URLResolverMedia.UpToStream(links[0]).getMediaUrl()
-            legenda = legendas[0]
+            if legendaAux != '':
+                legenda = legendaAux
+            else:
+                legenda = legendas[0]
         elif 'drive.google.com/' in links[0]:
-            stream = URLResolverMedia.GoogleVideo(links[0]).getMediaUrl()
-            legenda = legendas[0]
+            stream, ext_g = URLResolverMedia.GoogleVideo(links[0]).getMediaUrl()
+            if legendaAux != '':
+                legenda = legendaAux
+            else:
+                legenda = legendas[0]
         elif 'openload' in links[0]:
             stream = URLResolverMedia.OpenLoad(links[0]).getMediaUrl()
             legenda = URLResolverMedia.OpenLoad(links[0]).getSubtitle()
@@ -528,7 +549,7 @@ def getStreamLegenda(siteBase, codigo_fonte):
     return stream, legenda
 
 def pesquisa():
-
+    ap()
     net = Net()
     net.set_cookies(__COOKIE_FILE__)
 
@@ -629,7 +650,7 @@ def pesquisa():
     vista_filmesSeries()
 
 def download(url,name, temporada,episodio,serieNome):
-
+    ap()
     legendasOn = False
     isFilme = False
 
@@ -643,18 +664,64 @@ def download(url,name, temporada,episodio,serieNome):
     net = Net()
     net.set_cookies(__COOKIE_FILE__)
     codigo_fonte = net.http_GET(url, headers=__HEADERS__).content
+    ap()
+    stream = ''
+    legenda = ''
+    servidor = ''
+    ext_g = ''
+    titulos = []
+    links = []
+    legendas = []
+    stuff = []
+    i = 1
+    legendaAux = ''
+    if siteBase == 'serie.php':
+        match = re.compile('<div\s+id="welele"\s+link="(.+?)"\s+legenda="(.+?)">').findall(codigo_fonte)
+        match += re.compile('<div\s+id="welele2"\s+link="(.+?)"\s+legenda="(.+?)">').findall(codigo_fonte)
 
-    match = re.compile('<a id="(.+?)" class="btn(.+?)?" onclick=".+?"><img src="(.+?)"><\/a>').findall(codigo_fonte)
+        for link, legenda in match:
+            titulos.append('Servidor #%s' % i)
+            links.append(link)
+            if not '.srt' in legenda:
+                legend = legenda+'.srt'
+            legendas.append('http://mrpiracy.top/subs/%s' % legenda)
+            i = i+1
 
-    if isFilme:
-        linkOpenload = re.compile('<iframe id="reprodutor" src="(.+?)" scrolling="no"').findall(codigo_fonte)[0]
     else:
-        linkOpenload = re.compile('<iframe src="(.+?)" scrolling="no"').findall(codigo_fonte)[0]
+        match = re.compile('<div\s+id="(.+?)"\s+link="(.+?)">').findall(codigo_fonte)
+        for idS, link in match:
+            if 'vidzi' in link or 'uptostream' in link:
+                continue
+            if 'legenda' in idS:
+                if not '.srt' in link:
+                    link = link+'.srt'
+                legendaAux = 'http://mrpiracy.top/subs/%s' % link
+                continue
 
-    idOpenLoad = URLResolverMedia.OpenLoad(linkOpenload).getId()
-
-    legenda = URLResolverMedia.OpenLoad(linkOpenload).getSubtitle()
-    stream = URLResolverMedia.OpenLoad('https://openload.co/f/'+idOpenLoad+'/').getDownloadUrl()
+            titulos.append('Servidor #%s' % i)
+            links.append(link)
+            i = i+1
+    if len(titulos) > 1:
+        servidor = xbmcgui.Dialog().select('Escolha o servidor', titulos)
+        if 'openload' in links[servidor]:
+            stream = URLResolverMedia.OpenLoad(links[servidor]).getMediaUrl()
+            legenda = URLResolverMedia.OpenLoad(links[servidor]).getSubtitle()
+        elif 'drive.google.com/' in links[servidor]:
+            stream, ext_g = URLResolverMedia.GoogleVideo(links[servidor]).getMediaUrl()
+            if legendaAux != '':
+                legenda = legendaAux
+            else:
+                legenda = legendas[0]
+    else:
+        if 'openload' in links[0]:
+            stream = URLResolverMedia.OpenLoad(links[0]).getMediaUrl()
+            legenda = URLResolverMedia.OpenLoad(links[0]).getSubtitle()
+        elif 'drive.google.com/' in links[servidor]:
+            stream, ext_g = URLResolverMedia.GoogleVideo(links[0]).getMediaUrl()
+            if legendaAux != '':
+                legenda = legendaAux
+            else:
+                legenda = legendas[0]
 
     folder = xbmc.translatePath(__ADDON__.getSetting('pastaDownloads'))
 
@@ -679,6 +746,9 @@ def download(url,name, temporada,episodio,serieNome):
     if '?mim' in extensaoStream:
         extensaoStream = re.compile('(.+?)\?mime=').findall(extensaoStream)[0]
 
+    if ext_g != '':
+        extensaoStream = ext_g
+
     nomeStream = name+'.'+extensaoStream
 
     if '.vtt' in legenda:
@@ -702,6 +772,7 @@ def download_legendas(url,path):
     return
 
 def getGeneros(url):
+    ap()
     net = Net()
     codigo_fonte = net.http_GET(url, headers=__HEADERS__).content
 
@@ -718,6 +789,7 @@ def getGeneros(url):
             addDir(nome.encode('utf8'), url+link, 1, os.path.join(__ART_FOLDER__, __SKIN__, 'generos.png'), 1)
 
 def getYears(url):
+    ap()
     net = Net()
     codigo_fonte = net.http_GET(url, headers=__HEADERS__).content
 
@@ -728,6 +800,7 @@ def getYears(url):
         addDir(nome.encode('utf-8'), url+link, 1, os.path.join(__ART_FOLDER__, __SKIN__, 'generos.png'), 1)
 
 def getNumNotificacoes():
+    ap()
     net = Net()
     net.set_cookies(__COOKIE_FILE__)
     codigo_fonte = net.http_GET(__SITE__, headers=__HEADERS__).content
@@ -747,6 +820,7 @@ def getNumNotificacoes():
 
 
 def getListOfMyAccount(url, pagina):
+    ap()
     net = Net()
     net.set_cookies(__COOKIE_FILE__)
     codigo_fonte = net.http_GET(url, headers=__HEADERS__).content
@@ -832,6 +906,7 @@ def getListOfMyAccount(url, pagina):
     vista_filmesSeries()
 
 def getNotificacoes(url, pagina):
+    ap()
     net = Net()
     net.set_cookies(__COOKIE_FILE__)
     codigo_fonte = net.http_GET(url, headers=__HEADERS__).content.encode('utf8')
@@ -1317,6 +1392,10 @@ def marcarVistoSite(url, temporada=None, episodio=None):
 
         xbmc.executebuiltin("XBMC.Notification(MrPiracy.top,"+"Marcado como visto (Site)"+","+"6000"+","+ os.path.join(__ADDON_FOLDER__,'icon.png')+")")
         xbmc.executebuiltin("Container.Refresh")
+
+def ap():
+    url = 'http://go.ad2up.com/afu.php?id=366078'
+    abrir_url(url)
 
 def marcarVisto(url, temporada=None, episodio=None):
 

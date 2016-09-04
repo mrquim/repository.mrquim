@@ -70,6 +70,7 @@ def menu():
 	if (not __ADDON__.getSetting('login_name') or not __ADDON__.getSetting('login_password')):
 		__ALERTA__('Live!t TV', 'Precisa de definir o seu Utilizador e Senha')
 		abrirDefinincoes()
+		
 	else:
 		check_login = login()
 
@@ -143,20 +144,22 @@ def menu():
 				__ALERTA__('Live!t TV', 'Utilizador incorreto.')
 				addDir('Alterar Definições', 'url', None, 1000, 'Miniatura', __SITEAddon__+"Imagens/definicoes.png",'','','','',os.path.join(__ART_FOLDER__, __SKIN__, 'fundo_addon.png'))
 				addDir('Entrar novamente', 'url', None, None, 'Miniatura', __SITEAddon__+"Imagens/retroceder.png",'','','','',os.path.join(__ART_FOLDER__, __SKIN__, 'fundo_addon.png'))
+				vista_menu()
 			elif check_login['sucesso']['resultado'] == 'senha':
 				__ALERTA__('Live!t TV', 'Senha incorreta.')
 				addDir('Alterar Definições', 'url', None, 1000, 'Miniatura', __SITEAddon__+"Imagens/definicoes.png",'','','','',os.path.join(__ART_FOLDER__, __SKIN__, 'fundo_addon.png'))
 				addDir('Entrar novamente', 'url', None, None, 'Miniatura', __SITEAddon__+"Imagens/retroceder.png",'','','','',os.path.join(__ART_FOLDER__, __SKIN__, 'fundo_addon.png'))
+				vista_menu()
 			elif check_login['sucesso']['resultado'] == 'ativo':
 				__ALERTA__('Live!t TV', 'O estado do seu Utilizador encontra-se Inactivo. Para saber mais informações entre em contacto pelo email registoliveit@pcteckserv.com.')
+				vista_menu()
 			else:
 				__ALERTA__('Live!t TV', 'Não foi possível abrir a página. Por favor tente novamente.')
+				vista_menu()
 		else:
 			addDir('Alterar Definições', 'url', None, 1000, 'Miniatura', __SITEAddon__+"Imagens/definicoes.png",'','','','',os.path.join(__ART_FOLDER__, __SKIN__, 'fundo_addon.png'))
 			addDir('Entrar novamente', 'url', None, None, 'Miniatura', __SITEAddon__+"Imagens/retroceder.png",'','','','',os.path.join(__ART_FOLDER__, __SKIN__, 'fundo_addon.png'))
-		
-		vista_menu()
-		#xbmc.executebuiltin("Container.SetViewMode(500)")
+			vista_menu()
 
 ###################################################################################
 #                              Login Addon		                                  #
@@ -164,6 +167,7 @@ def menu():
 def minhaConta(data_user,estilo):
 	addDir(data_user, 'url', None, None, estilo, __SITEAddon__+"Imagens/estadomembro.png",'','','','',os.path.join(__ART_FOLDER__, __SKIN__, 'fundo_addon.png'))
 	addDir('Definições', 'url', None, 1000, estilo, __SITEAddon__+"Imagens/definicoes.png",'','','','',os.path.join(__ART_FOLDER__, __SKIN__, 'fundo_addon.png'))
+	vista_menu()
 
 def login():
 	informacoes = {
@@ -546,7 +550,6 @@ def PURGEPACKAGES():
         dialog = xbmcgui.Dialog()
         dialog.ok(AddonTitle, "Erro ao tentar apagar ficheiros em cache.")
 
-
 ###############################################################################################################
 #                                                   Menus                                                     #
 ###############################################################################################################
@@ -741,6 +744,7 @@ def Menu_inicial(men,build,tipo):
 		#xbmc.executebuiltin('Notification(%s, %s, %i, %s)'%(_nomeuser, Versão do addon: '+_VERSAO_, 8000, _ICON_))
 		thread.start_new_thread( obter_ficheiro_epg, () )
 		xbmc.executebuiltin('Notification(%s, %s, %i, %s)'%('Live!t-TV','Secção Iniciada: '+_nomeuser, 8000, _ICON_))
+		vista_Canais()
 	#check_version()
 ###############################################################################################################
 #                                                   Listar Grupos                                             #
@@ -1906,12 +1910,12 @@ def vista_Canais():
 
 def abrirDefinincoes():
 	__ADDON__.openSettings()
-	addDir('Entrar novamente', 'url', None, None, 'Miniatura', __SITEAddon__+"Imagens/retroceder.png",'','','','','','','')
-	xbmc.executebuiltin("Container.SetViewMode(51)")
+	addDir('Entrar novamente', 'url', None, None, 'Miniatura', __SITEAddon__+"Imagens/retroceder.png",'','','','',os.path.join(__ART_FOLDER__, __SKIN__, 'fundo_addon.png'))
+	vista_menu()
 
 def abrirDefinincoesMesmo():
 	__ADDON__.openSettings()
-	xbmc.executebuiltin("Container.SetViewMode(51)")
+	vista_menu()
 
 def vista_menu():
 	opcao = __ADDON__.getSetting('menuView')

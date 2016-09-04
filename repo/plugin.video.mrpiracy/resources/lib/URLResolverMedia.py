@@ -20,8 +20,9 @@ import json, re, xbmc, urllib, xbmcgui, os, sys, pprint, urlparse, urllib2, base
 from t0mm0.common.net import Net
 from bs4 import BeautifulSoup
 import jsunpacker
-import AADecoder
+from AADecoder import AADecoder
 from png import Reader as PNGReader
+from HTMLParser import HTMLParser
 
 class GoogleVideo():
 	def __init__(self, url):
@@ -72,7 +73,7 @@ class GoogleVideo():
 				videos.append(streamUrl)
 			i+=1
 		qualidade = xbmcgui.Dialog().select('Escolha a qualidade', qualidades)
-		return videos[qualidade]
+		return videos[qualidade], qualidades[qualidade].split('p ')[-1]
 
 
 class UpToStream():
@@ -82,7 +83,10 @@ class UpToStream():
 		self.headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:43.0) Gecko/20100101 Firefox/43.0', 'Accept-Charset': 'utf-8;q=0.7,*;q=0.7'}
 
 	def getId(self):
-		return re.compile('http\:\/\/uptostream\.com\/(.+)').findall(self.url)[0]
+		if 'iframe' in self.url:
+			return re.compile('http\:\/\/uptostream\.com\/iframe\/(.+)').findall(self.url)[0]
+		else:
+			return re.compile('http\:\/\/uptostream\.com\/(.+)').findall(self.url)[0]
 
 	def getMediaUrl(self):
 		sourceCode = self.net.http_GET(self.url, headers=self.headers).content
@@ -109,117 +113,62 @@ class OpenLoad():
 		self.messageOk = xbmcgui.Dialog().ok
 		self.site = 'https://openload.co'
 		#self.headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:43.0) Gecko/20100101 Firefox/43.0', 'Accept-Charset': 'utf-8;q=0.7,*;q=0.7'}
-		self.headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
-       'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-       'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
-       'Accept-Encoding': 'none',
-       'Accept-Language': 'en-US,en;q=0.8',
-       'Connection': 'keep-alive'}
+		self.headers = {
+			'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:39.0) Gecko/20100101 Firefox/39.0',
+			'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+			'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+			'Accept-Encoding': 'none',
+			'Accept-Language': 'en-US,en;q=0.8',
+			'Referer': url}
 
-	def parserOPENLOADIO(self, baseUrl):
-	    print("parserOPENLOADIO baseUrl[%r]" % baseUrl)
+	def parserOPENLOADIO(self, url):
+		#try:
+		req = urllib2.Request(url, headers=self.headers)
+		response = urllib2.urlopen(req)
+		html = response.read()
+		response.close()
+		try:
+			html = html.encode('utf-8')
+		except:
+			pass
+		hiddenurl = HTMLParser().unescape(re.search('hiddenurl">(.+?)<\/span>', html, re.IGNORECASE).group(1))
+		decodes = [AADecoder(match.group(1)).decode() for match in re.finditer('<script[^>]+>(ﾟωﾟﾉ[^<]+)<', html, re.DOTALL)]
+		"""if not decodes:
+			raise ResolverError('No Encoded Section Found. Deleted?')"""
+		magic_number = 0
+		for decode in decodes:
+			match = re.search('charCodeAt\(\d+\)\s*\+\s*(\d+)\)', decode, re.DOTALL | re.I)
+			if match:
+				magic_number = match.group(1)
+				break
 
+		xbmc.log("ERRO 1", xbmc.LOGDEBUG)
+		s = []
+		for idx, i in enumerate(hiddenurl):
+			j = ord(i)
+			if (j >= 33 & j <= 126):
+				j = 33 + ((j + 14) % 94)
+			if idx == len(hiddenurl) - 1:
+				j += int(magic_number)
+			s.append(chr(j))
+		res = ''.join(s)
 
-	    HTTP_HEADER = {
-	        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
-	        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-	        'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
-	        'Accept-Encoding': 'none',
-	        'Accept-Language': 'en-US,en;q=0.8',
-	        'Referer': baseUrl}  # 'Connection': 'keep-alive'
-
-	    req = urllib2.Request(baseUrl, headers=HTTP_HEADER)
-	    response = urllib2.urlopen(req)
-	    data = response.read()
-	    response.close()
-
-	    # If you want to use the code for openload please at least put the info from were you take it:
-	    # for example: "Code take from plugin IPTVPlayer: "https://gitlab.com/iptvplayer-for-e2/iptvplayer-for-e2/"
-	    # It will be very nice if you send also email to me samsamsam@o2.pl and inform were this code will be used
-
-	    # get image data
-	    imageData = re.search('''<img[^>]*?id="linkimg"[^>]*?src="([^"]+?)"''', data, re.IGNORECASE).group(1)
-	    #common.log_utils.log_notice('openload resolve : 1.1 %s' % imageData)
-
-	    imageData = base64.b64decode(imageData.split('base64,')[-1])
-	    x, y, pixel, meta = PNGReader(bytes=imageData).read()
-	    #common.log_utils.log_notice('openload resolve : 1.2 %s' % pixel)
-
-	    imageData = None
-	    imageStr = ''
-	    try:
-	        for item in pixel:
-	            for p in item:
-	                imageStr += chr(p)
-	    except:
-	        pass
-
-	    # split image data
-	    imageTabs = []
-	    i = -1
-	    for idx in range(len(imageStr)):
-	        if imageStr[idx] == '\0':
-	            break
-	        if 0 == (idx % (12 * 20)):
-	            imageTabs.append([])
-	            i += 1
-	            j = -1
-	        if 0 == (idx % (20)):
-	            imageTabs[i].append([])
-	            j += 1
-	        imageTabs[i][j].append(imageStr[idx])
-
-	    # get signature data
-	    #sts, data = self.cm.getPage('https://openload.co/assets/js/obfuscator/numbers.js', {'header': HTTP_HEADER})
-	    req = urllib2.Request('https://openload.co/assets/js/obfuscator/n.js', headers=HTTP_HEADER)
-	    response = urllib2.urlopen(req)
-	    data = response.read()
-	    response.close()
-	    signStr = re.search('''['"]([^"^']+?)['"]''', data, re.IGNORECASE).group(1)
-
-	    # split signature data
-	    signTabs = []
-	    i = -1
-	    for idx in range(len(signStr)):
-	        if signStr[idx] == '\0':
-	            break
-	        if 0 == (idx % (11 * 26)):
-	            signTabs.append([])
-	            i += 1
-	            j = -1
-	        if 0 == (idx % (26)):
-	            signTabs[i].append([])
-	            j += 1
-	        signTabs[i][j].append(signStr[idx])
-
-	    # get link data
-	    linkData = {}
-	    for i in [2, 3, 5, 7]:
-	        linkData[i] = []
-	        tmp = ord('c')
-	        for j in range(len(signTabs[i])):
-	            for k in range(len(signTabs[i][j])):
-	                if tmp > 122:
-	                    tmp = ord('b')
-	                if signTabs[i][j][k] == chr(int(math.floor(tmp))):
-	                    if len(linkData[i]) > j:
-	                        continue
-	                    tmp += 2.5;
-	                    if k < len(imageTabs[i][j]):
-	                        linkData[i].append(imageTabs[i][j][k])
-	    res = []
-	    for idx in linkData:
-	        res.append(''.join(linkData[idx]).replace(',', ''))
-
-	    res = res[3] + '~' + res[1] + '~' + res[2] + '~' + res[0]
-	    videoUrl = 'https://openload.co/stream/{0}?mime=true'.format(res)
-	    dtext = videoUrl.replace('https', 'http')
-	    request = urllib2.Request(dtext, None, HTTP_HEADER)
-	    response = urllib2.urlopen(request)
-	    url = response.geturl()
-	    response.close()
-	    #url += '|' + urllib.urlencode({'Referer': url, 'User-Agent': common.IOS_USER_AGENT})
-	    return url
+		videoUrl = 'https://openload.co/stream/{0}?mime=true'.format(res)
+		xbmc.log("ERRO 2" + videoUrl, xbmc.LOGDEBUG)
+		dtext = videoUrl.replace('https', 'http')
+		headers = {'User-Agent': self.headers['User-Agent']}
+		req = urllib2.Request(dtext, None, headers)
+		res = urllib2.urlopen(req)
+		videourl = res.geturl()
+		res.close()
+		#if 'pigeons.mp4' in videourl.lower():
+			#raise ResolverError('Openload.co resolve failed')
+		return videourl
+		"""except Exception as e:
+			self.messageOk('MrPiracy.top', 'Ocorreu um erro a obter o link. Escolha outro servidor.')
+		except ResolverError:
+			xbmc.log("ERRO", xbmc.LOGDEBUG)
+			self.messageOk('MrPiracy.top', 'Ocorreu um erro a obter o link. Escolha outro servidor.')"""
 
 	def getId(self):
 		#return self.url.split('/')[-1]
