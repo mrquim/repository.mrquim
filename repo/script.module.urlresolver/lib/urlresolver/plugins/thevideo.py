@@ -50,29 +50,12 @@ class TheVideoResolver(UrlResolver):
             raise ResolverError('Unable to locate links')
 
     def __auth_ip(self, media_id):
-        vt = self.__check_auth(media_id)
-        if vt: return vt
-        
         header = 'TheVideo.me Stream Authorization'
         line1 = 'To play this video, authorization is required'
         line2 = 'Visit the link below to authorize the devices on your network:'
         line3 = '[B][COLOR blue]https://thevideo.me/pair[/COLOR][/B] then "Activate Streaming"'
-        with common.kodi.ProgressDialog(header, line1=line1, line2=line2, line3=line3) as pd:
-            pd.update(100)
-            start = time.time()
-            expires = time_left = 60  # give user 1 minute
-            interval = 10  # check url every 10 seconds
-            while time_left > 0:
-                for _ in range(INTERVALS):
-                    common.kodi.sleep(interval * 1000 / INTERVALS)
-                    if pd.is_canceled(): return
-                    time_left = expires - int(time.time() - start)
-                    if time_left < 0: time_left = 0
-                    progress = time_left * 100 / expires
-                    pd.update(progress)
-
-                vt = self.__check_auth(media_id)
-                if vt: return vt
+        with common.kodi.CountdownDialog(header, line1, line2, line3) as cd:
+            return cd.start(self.__check_auth, [media_id])
         
     def __check_auth(self, media_id):
         common.log_utils.log('Checking Auth: %s' % (media_id))

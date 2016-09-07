@@ -41,5 +41,4 @@ class PlayedtoResolver(UrlResolver):
         raise ResolverError('File Not Found or removed')
     
     def get_url(self, host, media_id):
-        return 'http://playedto.me/%s' % media_id
-        # return 'http://playedto.me/embed-%s.html' % media_id
+        return 'http://playedto.me/embed-%s.html' % media_id

@@ -40,7 +40,7 @@ class FlashxResolver(UrlResolver):
         aff = re.search("'aff', '(.*?)'", html).group(1)
         headers = { 'Referer': web_url,
                     'Cookie': '__cfduid=' + cfduid + '; lang=1'}
-        surl = re.search('src="(.*?\?c=' + file_id + ')',html).group(1)
+        surl = re.search('src="(.*?' + file_id + ')',html).group(1)
         dummy = self.net.http_GET(url=surl, headers=headers).content
         headers = { 'Referer': web_url,
                     'Cookie': '__cfduid=' + cfduid + '; lang=1; file_id=' + file_id + '; aff=' + aff }

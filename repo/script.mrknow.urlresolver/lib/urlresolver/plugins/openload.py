@@ -60,18 +60,18 @@ class OpenLoadResolver(UrlResolver):
 
             if not m:
                 raise Exception("Video link encrypted data is not available.")
-            decodes = [AADecoder(match.group(1)).decode() for match in re.finditer('<script[^>]+>(ﾟωﾟﾉ=[^<]+)<', html, re.DOTALL)]
+            decodes = [AADecoder(match.group(1)).decode() for match in re.finditer('(ﾟωﾟﾉ=[^<]+)<', html, re.DOTALL)]
             if not decodes:
                 #raise ResolverError('No Encoded Section Found. Deleted?')
                 print html
                 print("---")
-                print re.search("<script[^>]+>(ﾟωﾟﾉ[^<]+)<", html).group(0)
+                print re.search("(ﾟωﾟﾉ[^<]+)<", html).group(0)
                 print("---")
 
                 print("No Encoded Section Found. Deleted?")
                 exit()
 
-            magic_number = 0
+            magic_number = 3
             for decode in decodes:
                 match = re.search('charCodeAt\(\d+\)\s*\+\s*(\d+)\)', decode, re.DOTALL | re.I)
                 if match:

@@ -20,6 +20,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import re
 import urllib2
+from lib.aa_decoder import AADecoder
+from lib.jjdecode import JJDecoder
 from HTMLParser import HTMLParser
 from urlresolver import common
 from urlresolver.resolver import ResolverError
@@ -37,17 +39,46 @@ def get_media_url(url):
             'Referer': url}  # 'Connection': 'keep-alive'
 
         html = net.http_GET(url, headers=HTTP_HEADER).content
+        try: html = html.encode('utf-8')
+        except: pass
+        match = re.search('hiddenurl">(.+?)<\/span>', html, re.IGNORECASE)
+        if not match:
+            raise ResolverError('Stream Url Not Found. Deleted?')
+        
+        hiddenurl = HTMLParser().unescape(match.group(1))
+        
+        decodes = []
+        for match in re.finditer('<script[^>]*>(.*?)</script>', html, re.DOTALL):
+            encoded = match.group(1)
+            match = re.search("(ﾟωﾟﾉ.*?('_');)", encoded, re.DOTALL)
+            if match:
+                decodes.append(AADecoder(match.group(1)).decode())
+                
+            match = re.search('(.=~\[\].*\(\);)', encoded, re.DOTALL)
+            if match:
+                decodes.append(JJDecoder(match.group(1)).decode())
+            
+        if not decodes:
+            raise ResolverError('No Encoded Section Found. Deleted?')
+        
+        magic_number = 0
+        for decode in decodes:
+            match = re.search('charCodeAt\(\d+\)\s*\+\s*(\d+)\)', decode, re.DOTALL | re.I)
+            if match:
+                magic_number = match.group(1)
+                break
 
-        hiddenurl = HTMLParser().unescape(re.search('hiddenurl">(.+?)<\/span>', html, re.IGNORECASE).group(1))
-    
         s = []
-        for i in hiddenurl:
+        for idx, i in enumerate(hiddenurl):
             j = ord(i)
             if (j >= 33 & j <= 126):
-                s.append(chr(33 + ((j + 14) % 94)))
-            else:
-                s.append(chr(j))
+                j = 33 + ((j + 14) % 94)
+                
+            if idx == len(hiddenurl) - 1:
+                j += int(magic_number)
+            s.append(chr(j))
         res = ''.join(s)
+        
         videoUrl = 'https://openload.co/stream/{0}?mime=true'.format(res)
         dtext = videoUrl.replace('https', 'http')
         headers = {'User-Agent': HTTP_HEADER['User-Agent']}
@@ -55,6 +86,9 @@ def get_media_url(url):
         res = urllib2.urlopen(req)
         videourl = res.geturl()
         res.close()
+        if 'pigeons.mp4' in videourl.lower():
+            raise ResolverError('Openload.co resolve failed')
+        
         return videourl
     except Exception as e:
         common.log_utils.log_debug('Exception during openload resolve parse: %s' % e)

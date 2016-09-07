@@ -131,14 +131,11 @@
 		<setting id="IndavideoResolver_priority" type="number" label="Priority" default="100"/>
 		<setting id="IndavideoResolver_enabled" type="bool" label="Enabled" default="true"/>
 		<setting id="IndavideoResolver_auto_pick" type="bool" label="Automatically pick best quality" default="false" visible="true"/>
-		<setting label="ishared.eu" type="lsep"/>
-		<setting id="IsharedResolver_priority" type="number" label="Priority" default="100"/>
-		<setting id="IsharedResolver_enabled" type="bool" label="Enabled" default="true"/>
-	</category>
-	<category label="Resolvers 2">
 		<setting label="jetload" type="lsep"/>
 		<setting id="JetloadResolver_priority" type="number" label="Priority" default="100"/>
 		<setting id="JetloadResolver_enabled" type="bool" label="Enabled" default="true"/>
+	</category>
+	<category label="Resolvers 2">
 		<setting label="KingFiles" type="lsep"/>
 		<setting id="KingFilesResolver_priority" type="number" label="Priority" default="100"/>
 		<setting id="KingFilesResolver_enabled" type="bool" label="Enabled" default="true"/>
@@ -283,9 +280,6 @@
 		<setting id="TwitchResolver_priority" type="number" label="Priority" default="100"/>
 		<setting id="TwitchResolver_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="This plugin calls the Twitch Add-on, change settings there." type="lsep" />
-		<setting label="up2stream" type="lsep"/>
-		<setting id="Up2StreamResolver_priority" type="number" label="Priority" default="100"/>
-		<setting id="Up2StreamResolver_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="upload.af" type="lsep"/>
 		<setting id="UploadAfResolver_priority" type="number" label="Priority" default="100"/>
 		<setting id="UploadAfResolver_enabled" type="bool" label="Enabled" default="true"/>
@@ -295,11 +289,11 @@
 		<setting label="uploadx" type="lsep"/>
 		<setting id="UploadXResolver_priority" type="number" label="Priority" default="100"/>
 		<setting id="UploadXResolver_enabled" type="bool" label="Enabled" default="true"/>
-	</category>
-	<category label="Resolvers 4">
 		<setting label="uptobox" type="lsep"/>
 		<setting id="UpToBoxResolver_priority" type="number" label="Priority" default="100"/>
 		<setting id="UpToBoxResolver_enabled" type="bool" label="Enabled" default="true"/>
+	</category>
+	<category label="Resolvers 4">
 		<setting label="userscloud" type="lsep"/>
 		<setting id="UsersCloudResolver_priority" type="number" label="Priority" default="100"/>
 		<setting id="UsersCloudResolver_enabled" type="bool" label="Enabled" default="true"/>
@@ -315,12 +309,6 @@
 		<setting label="veoh" type="lsep"/>
 		<setting id="VeohResolver_priority" type="number" label="Priority" default="100"/>
 		<setting id="VeohResolver_enabled" type="bool" label="Enabled" default="true"/>
-		<setting label="vid.ag" type="lsep"/>
-		<setting id="VidAgResolver_priority" type="number" label="Priority" default="100"/>
-		<setting id="VidAgResolver_enabled" type="bool" label="Enabled" default="true"/>
-		<setting label="vid.gg" type="lsep"/>
-		<setting id="VidggResolver_priority" type="number" label="Priority" default="100"/>
-		<setting id="VidggResolver_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="vid.me" type="lsep"/>
 		<setting id="VidMeResolver_priority" type="number" label="Priority" default="100"/>
 		<setting id="VidMeResolver_enabled" type="bool" label="Enabled" default="true"/>
@@ -375,8 +363,6 @@
 		<setting id="VimeoResolver_priority" type="number" label="Priority" default="100"/>
 		<setting id="VimeoResolver_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="Video Quality" id="VimeoResolver_quality" type="enum" values="High|Medium|Low" default="0" />
-	</category>
-	<category label="Resolvers 5">
 		<setting label="vivosx" type="lsep"/>
 		<setting id="VivosxResolver_priority" type="number" label="Priority" default="100"/>
 		<setting id="VivosxResolver_enabled" type="bool" label="Enabled" default="true"/>
@@ -384,6 +370,8 @@
 		<setting id="VKResolver_priority" type="number" label="Priority" default="100"/>
 		<setting id="VKResolver_enabled" type="bool" label="Enabled" default="true"/>
 		<setting id="VKResolver_auto_pick" type="bool" label="Automatically pick best quality" default="false" visible="true"/>
+	</category>
+	<category label="Resolvers 5">
 		<setting label="VKPass.com" type="lsep"/>
 		<setting id="VKPassResolver_priority" type="number" label="Priority" default="100"/>
 		<setting id="VKPassResolver_enabled" type="bool" label="Enabled" default="true"/>
