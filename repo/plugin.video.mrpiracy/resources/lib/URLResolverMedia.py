@@ -21,6 +21,7 @@ from t0mm0.common.net import Net
 from bs4 import BeautifulSoup
 import jsunpacker
 from AADecoder import AADecoder
+from JJDecoder import JJDecoder
 from png import Reader as PNGReader
 from HTMLParser import HTMLParser
 
@@ -122,53 +123,59 @@ class OpenLoad():
 			'Referer': url}
 
 	def parserOPENLOADIO(self, url):
-		#try:
-		req = urllib2.Request(url, headers=self.headers)
-		response = urllib2.urlopen(req)
-		html = response.read()
-		response.close()
 		try:
-			html = html.encode('utf-8')
-		except:
-			pass
-		hiddenurl = HTMLParser().unescape(re.search('hiddenurl">(.+?)<\/span>', html, re.IGNORECASE).group(1))
-		decodes = [AADecoder(match.group(1)).decode() for match in re.finditer('<script[^>]+>(ﾟωﾟﾉ[^<]+)<', html, re.DOTALL)]
-		"""if not decodes:
-			raise ResolverError('No Encoded Section Found. Deleted?')"""
-		magic_number = 0
-		for decode in decodes:
-			match = re.search('charCodeAt\(\d+\)\s*\+\s*(\d+)\)', decode, re.DOTALL | re.I)
-			if match:
-				magic_number = match.group(1)
-				break
+			req = urllib2.Request(url, headers=self.headers)
+			response = urllib2.urlopen(req)
+			html = response.read()
+			response.close()
+			try:
+				html = html.encode('utf-8')
+			except:
+				pass
 
-		xbmc.log("ERRO 1", xbmc.LOGDEBUG)
-		s = []
-		for idx, i in enumerate(hiddenurl):
-			j = ord(i)
-			if (j >= 33 & j <= 126):
-				j = 33 + ((j + 14) % 94)
-			if idx == len(hiddenurl) - 1:
-				j += int(magic_number)
-			s.append(chr(j))
-		res = ''.join(s)
-
-		videoUrl = 'https://openload.co/stream/{0}?mime=true'.format(res)
-		xbmc.log("ERRO 2" + videoUrl, xbmc.LOGDEBUG)
-		dtext = videoUrl.replace('https', 'http')
-		headers = {'User-Agent': self.headers['User-Agent']}
-		req = urllib2.Request(dtext, None, headers)
-		res = urllib2.urlopen(req)
-		videourl = res.geturl()
-		res.close()
-		#if 'pigeons.mp4' in videourl.lower():
-			#raise ResolverError('Openload.co resolve failed')
-		return videourl
-		"""except Exception as e:
+			match = re.search('hiddenurl">(.+?)<\/span>', html, re.IGNORECASE)
+			hiddenurl = HTMLParser().unescape(match.group(1))
+			decodes = []
+			for match in re.finditer('<script[^>]*>(.*?)</script>', html, re.DOTALL):
+				encoded = match.group(1)
+				match = re.search("(ﾟωﾟﾉ.*?('_');)", encoded, re.DOTALL)
+				if match:
+					decodes.append(AADecoder(match.group(1)).decode())
+				match = re.search('(.=~\[\].*\(\);)', encoded, re.DOTALL)
+				if match:
+					decodes.append(JJDecoder(match.group(1)).decode())
+			magic_number = 0
+			if not decodes:
+				raise ResolverError('No Encoded Section Found. Deleted?')
+			for decode in decodes:
+				match = re.search('charCodeAt\(\d+\)\s*\+\s*(\d+)\)', decode, re.DOTALL | re.I)
+				if match:
+					magic_number = match.group(1)
+				else:
+					magic_number = 3
+			s = []
+			for idx, i in enumerate(hiddenurl):
+				j = ord(i)
+				if (j >= 33 & j <= 126):
+					j = 33 + ((j + 14) % 94)
+				if idx == len(hiddenurl) - 1:
+					j += int(magic_number)
+				s.append(chr(j))
+			res = ''.join(s)
+			videoUrl = 'https://openload.co/stream/{0}?mime=true'.format(res)
+			dtext = videoUrl.replace('https', 'http')
+			headers = {'User-Agent': self.headers['User-Agent']}
+			req = urllib2.Request(dtext, None, headers)
+			res = urllib2.urlopen(req)
+			videourl = res.geturl()
+			res.close()
+			if 'pigeons.mp4' in videourl.lower():
+				raise ResolverError('Openload.co resolve failed')
+			return videourl
+		except Exception as e:
 			self.messageOk('MrPiracy.top', 'Ocorreu um erro a obter o link. Escolha outro servidor.')
 		except ResolverError:
-			xbmc.log("ERRO", xbmc.LOGDEBUG)
-			self.messageOk('MrPiracy.top', 'Ocorreu um erro a obter o link. Escolha outro servidor.')"""
+			self.messageOk('MrPiracy.top', 'Ocorreu um erro a obter o link. Escolha outro servidor.')
 
 	def getId(self):
 		#return self.url.split('/')[-1]

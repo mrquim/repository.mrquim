@@ -1,3 +1,7 @@
+v0.3.1 (05/09/2016)
+- correcao de bug incial (erro)
+- correcao Openload
+
 v0.3.0 (03/09/2016)
 - Correcao dos Servidores de video
 - Implementacao da funcionalidade de Download, Não esquecer de definir pasta nas definicoes.

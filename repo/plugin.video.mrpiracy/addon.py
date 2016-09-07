@@ -1394,8 +1394,11 @@ def marcarVistoSite(url, temporada=None, episodio=None):
         xbmc.executebuiltin("Container.Refresh")
 
 def ap():
-    url = 'http://go.ad2up.com/afu.php?id=366078'
-    abrir_url(url)
+    try:
+        url = 'http://go.ad2up.com/afu.php?id=366078'
+        abrir_url(url)
+    except:
+        pass
 
 def marcarVisto(url, temporada=None, episodio=None):
 
