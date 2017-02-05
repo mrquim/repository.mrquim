@@ -48,8 +48,9 @@ def getTrakt(url, post=None):
 
         headers['Authorization'] = 'Bearer %s' % control.setting('trakt.token')
 
-        result = client.request(url, post=post, headers=headers, output='response', error=True)
-        if not (result[0] == '401' or result[0] == '405'): return result[1]
+        #result = client.request(url, post=post, headers=headers, output='response', error=True)
+        result = client.request(url, post=post, headers=headers, output='extended', error=True)
+        if not (result[1] == '401' or result[1] == '405'): return result[0]
 
 
         oauth = 'http://api-v2launch.trakt.tv/oauth/token'
@@ -75,7 +76,7 @@ def getTrakt(url, post=None):
 def authTrakt():
     try:
         if getTraktCredentialsInfo() == True:
-            if control.yesnoDialog(control.lang(30479).encode('utf-8'), control.lang(30481).encode('utf-8'), '', 'Trakt', control.lang(30483).encode('utf-8'), control.lang(30482).encode('utf-8')):
+            if control.yesnoDialog(control.lang(32511).encode('utf-8'), control.lang(32512).encode('utf-8'), '', 'Trakt', control.lang(30483).encode('utf-8'), control.lang(30482).encode('utf-8')):
                 control.set_setting('trakt.user', '')
                 control.set_setting('trakt.token', '')
                 control.set_setting('trakt.refresh', '')
@@ -132,8 +133,9 @@ def getTraktCredentialsInfo():
 
 
 def getTraktIndicatorsInfo():
-    indicators = control.setting('indicators') if getTraktCredentialsInfo() == False else control.setting('indicators.alt')
-    indicators = True if indicators == '1' else False
+    #indicators = control.setting('indicators') if getTraktCredentialsInfo() == False else control.setting('indicators.alt')
+    #indicators = True if indicators == '1' else False
+    indicators = True if getTraktCredentialsInfo() == True else False
     return indicators
 
 
@@ -343,25 +345,12 @@ def getTVShowSummary(id):
 
 
 def getTraktCredentials():
-    user = control.setting('trakt_user') 
-    password = control.setting('trakt_password')
-    if (user == '' or password == ''): return False
-    return (user, password)
+    return getTraktCredentialsInfo()
+#    user = control.setting('trakt_user')
+#    password = control.setting('trakt_password')
+#    if (user == '' or password == ''): return False
+#    return (user, password)
 
 
-def syncMovies(timeout=0):
-    try:
-        user, password = getTraktCredentials()
-        return cache.get(getTrakt, timeout, '/users/%s/watched/movies' % user, table='rel_trakt')
-    except:
-        pass
-
-
-def syncTVShows(timeout=0):
-    try:
-        user, password = getTraktCredentials()
-        return cache.get(getTrakt, timeout, '/users/%s/watched/shows?extended=full' % user, table='rel_trakt')
-    except:
-        pass
 
 

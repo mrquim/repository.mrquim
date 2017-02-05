@@ -20,6 +20,8 @@
 
 
 import re,urllib,urlparse,json,base64,time, random,string
+import hashlib
+
 
 from resources.lib.libraries import cleantitle
 from resources.lib.libraries import client
@@ -32,25 +34,32 @@ from resources.lib import resolvers
 
 class source:
     def __init__(self):
-        self.base_link = 'http://www.putlocker.systems'
-        #self.search_link = '/api/v1/cautare/apr'
-        self.search_link = '/api/v1/cautare/upd'
+        self.base_link = 'http://flixanity.watch'
+        self.sitemap = '/sitemap.xml'
+
+        self.social_lock = '0A6ru35yevokjaqbb8'
+        #http://api.flixanity.watch/api/v1/0A6ru35yevokjaqbb8
+        #http://api.flixanity.watch/api/v1/0A6ru35yevokjaqbb8
+        self.search_link = 'http://api.flixanity.watch/api/v1/'+ self.social_lock
+        #http://flixanity.watch/ajax/jne.php
 
 
     def get_movie(self, imdb, title, year):
         try:
             tk = cache.get(self.putlocker_token, 8)
-            st = self.putlocker_set() ; rt = self.putlocker_rt(tk + st)
+            set = self.putlocker_set()
+            rt = self.putlocker_rt(tk + set)
+            sl = self.putlocker_sl()
             tm = int(time.time() * 1000)
             headers = {'X-Requested-With': 'XMLHttpRequest'}
 
-            url = urlparse.urljoin(self.base_link, self.search_link)
+            url = self.search_link
 
-            post = {'q': title.lower(), 'limit': '20', 'timestamp': tm, 'verifiedCheck': tk, 'sl': st, 'rt': rt}
+            post = {'q': title.lower(), 'limit': '20', 'timestamp': tm, 'verifiedCheck': tk, 'set': set, 'rt': rt, 'sl': sl}
             print("POST",post)
             post = urllib.urlencode(post)
 
-            r = client.request(url, post=post, headers=headers, output='cookie2')
+            r = client.request(url, post=post, headers=headers, output='')
             print("R",r)
             r = json.loads(r)
 
@@ -66,23 +75,32 @@ class source:
             url = url.encode('utf-8')
             print("U",url)
             return url
+
         except:
             return
 
 
     def get_show(self, imdb, tvdb, tvshowtitle, year):
         try:
+            """
+            url = {'imdb': imdb, 'tvdb': tvdb, 'tvshowtitle': tvshowtitle, 'year': year}
+            url = urllib.urlencode(url)
+            return url
+        except:
+            return None
+            """
             tk = cache.get(self.putlocker_token, 8)
-
-            st = self.putlocker_set() ; rt = self.putlocker_rt(tk + st)
+            set = self.putlocker_set()
+            rt = self.putlocker_rt(tk + set)
+            sl = self.putlocker_sl()
 
             tm = int(time.time() * 1000)
 
             headers = {'X-Requested-With': 'XMLHttpRequest'}
 
-            url = urlparse.urljoin(self.base_link, self.search_link)
+            url = self.search_link
 
-            post = {'q': tvshowtitle.lower(), 'limit': '100', 'timestamp': tm, 'verifiedCheck': tk, 'sl': st, 'rt': rt}
+            post = {'q': tvshowtitle.lower(), 'limit': '100', 'timestamp': tm, 'verifiedCheck': tk, 'set': set, 'rt': rt, 'sl': sl}
             post = urllib.urlencode(post)
 
             r = client.request(url, post=post, headers=headers)
@@ -99,6 +117,7 @@ class source:
             url = re.findall('(?://.+?|)(/.+)', r)[0]
             url = client.replaceHTMLCodes(url)
             url = url.encode('utf-8')
+            print(">>>",url)
             return url
         except:
             return
@@ -108,12 +127,25 @@ class source:
         try:
             if url == None: return
 
-            r = '%s/season/%01d/episode/%01d' % (url, int(season), int(episode))
+            #url = urlparse.parse_qs(url)
+            #url = dict([(i, url[i][0]) if url[i] else (i, '') for i in url])
+            #tvshowtitle =  cleantitle.query10(url['tvshowtitle'])
+            tvshowtitle =  url.split('/')[-1]
 
-            url = re.findall('(?://.+?|)(/.+)', r)[0]
-            url = client.replaceHTMLCodes(url)
-            url = url.encode('utf-8')
-            return url
+
+            r = '/tv-show/%s/season/%01d/episode/%01d' % (tvshowtitle, int(season), int(episode))
+            #y = '/tv-show/%s/season/%01d' % (tvshowtitle, int(season))
+
+            control.log('AAAA y >>>>>>   %s' % r)
+            #result = client.request(urlparse.urljoin(self.base_link, y))
+            #print "ResUlt get_episode",result
+            #result = client.parseDOM(result,'span', attrs={'class':'dat'})[0]
+            #if url['year'] == str(result.strip()):
+            #    url = r.encode('utf-8')
+            #    control.log('>>>>>>  Putlocker URL  %s' % url)
+            #    return url
+
+            return r
         except:
             return
 
@@ -128,6 +160,9 @@ class source:
     def putlocker_set(self):
         return ''.join([random.choice(string.ascii_letters) for _ in xrange(25)])
 
+    def putlocker_sl(self):
+        return hashlib.md5(base64.encodestring('0A6ru35yyi5yn4THYpJqy0X82tE95bt')+self.social_lock).hexdigest()
+
     def putlocker_rt(self, s, shift=13):
         s2 = ''
         for c in s:
@@ -139,7 +174,7 @@ class source:
         return s2
 
     def get_sources(self, url, hosthdDict, hostDict, locDict):
-        print(">>>>", url)
+        print("GetRes>>>>", url)
 
         try:
             sources = []
@@ -147,18 +182,22 @@ class source:
             if url == None: return sources
 
             url = urlparse.urljoin(self.base_link, url)
-            result, headers, content, cookie = client.request(url, output='extended')
-            print("C",cookie)
+            r = client.request(url, output='extended')
+            cookie = r[4] ; headers = r[3] ; result = r[0]
 
-            auth = re.findall('__utmx=(.+)', cookie)[0].split(';')[0]
-            auth = 'Bearer %s' % urllib.unquote_plus(auth)
+
+            try:
+                auth = re.findall('__utmx=(.+)', cookie)[0].split(';')[0]
+                auth = 'Bearer %s' % urllib.unquote_plus(auth)
+            except:
+                auth = 'Bearer false'
 
             headers['Authorization'] = auth
             headers['X-Requested-With'] = 'XMLHttpRequest'
             headers['Referer'] = url
             headers['Accept'] = 'application/json, text/javascript, */*; q=0.01'
-            print('AUTH',headers)
-            u = '/ajax/embeds.php'
+            #u = '/ajax/embeds.php'
+            u = '/ajax/jne.php'
             u = urlparse.urljoin(self.base_link, u)
 
             action = 'getEpisodeEmb' if '/episode/' in url else 'getMovieEmb'
@@ -172,9 +211,7 @@ class source:
             post = {'action': action, 'idEl': idEl, 'token': token, 'elid': elid}
             post = urllib.urlencode(post)
 
-            print("Post",post)
-
-            r = client.request(u, post=post, headers=headers, output='cookie2')
+            r = client.request(u, post=post, headers=headers, output='')
             print('PUTLOCKER RESP %s' % r)
             r = str(json.loads(r))
             r = client.parseDOM(r, 'iframe', ret='.+?') + client.parseDOM(r, 'IFRAME', ret='.+?')
@@ -186,21 +223,20 @@ class source:
                 except: pass
 
             links += [{'source': 'openload.co', 'quality': 'SD', 'url': i} for i in r if 'openload.co' in i]
+            links += [{'source': 'vidto.me', 'quality': 'SD', 'url': i} for i in r if 'vidto.me' in i]
+            links += [{'source': 'thevideo.me', 'quality': 'SD', 'url': i} for i in r if 'thevideo.me' in i]
 
-            links += [{'source': 'videomega.tv', 'quality': 'SD', 'url': i} for i in r if 'videomega.tv' in i]
-
-
-            for i in links: sources.append({'source': i['source'], 'quality': i['quality'], 'provider': 'Putlocker', 'url': i['url']})
+            for i in links:
+                sources.append({'source': i['source'], 'quality': i['quality'], 'provider': 'Putlocker', 'url': i['url']})
 
             return sources
-        except:
+        except Exception as e:
+            control.log('ERROR putlocker %s' % e)
             return sources
 
     def resolve(self, url):
         try:
-            control.log('@#@ PUT %s' % url)
-            if 'openload.co' in url or 'videomega.tv' in url:
-                control.log('@#@ PUT resolving ')
+            if 'openload.co' in url or 'vidto.me' in url or 'thevideo.me' in url :
                 url = resolvers.request(url)
             return url
         except:

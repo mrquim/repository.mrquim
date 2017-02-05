@@ -24,6 +24,8 @@ import time
 
 
 from resources.lib.libraries import control
+from resources.lib.libraries import ntptime
+
 
 
 artPath = control.artPath()
@@ -87,7 +89,9 @@ class navigator:
             self.addDirectoryItem(30005, 'movieWidget', 'moviesAdded.jpg', 'DefaultRecentlyAddedMovies.png')
 
         if (traktMode == True and not control.setting('tv_alt_widget') == '0') or (traktMode == False and not control.setting('tv_widget') == '0'):
-            self.addDirectoryItem(30006, 'tvWidget', 'calendarsAdded.jpg', 'DefaultRecentlyAddedEpisodes.png')
+            #self.addDirectoryItem(30006, 'tvWidget', 'calendarsAdded.jpg', 'DefaultRecentlyAddedEpisodes.png')
+            self.addDirectoryItem(30006, 'calendar&url=added', 'calendarsAdded.jpg', 'DefaultRecentlyAddedEpisodes.png')
+
 
         if not control.setting('calendar_widget') == '0':
             self.addDirectoryItem(30007, 'calendars', 'calendar.jpg', 'DefaultRecentlyAddedEpisodes.png')
@@ -98,9 +102,17 @@ class navigator:
 
         self.endDirectory()
 
+        if ntptime.checkDate():
+            control.log('Error date time setup')
+            msg = control.lang(32020).encode('utf-8')
+            msg1 ='Go to settings, set your correct date and time'.encode('utf-8')
+            msg = 'You have to set your clock in your tv box.'.encode('utf-8')
+            control.dialog.ok(control.addonInfo('name'),'',msg, msg1 )
+
+
         from resources.lib.libraries import cache
         from resources.lib.libraries import changelog
-        cache.get(changelog.get, 600000000, control.addonInfo('version'), table='changelog')
+        #cache.get(changelog.get, 600000000, control.addonInfo('version'), table='changelog')
 
 
     def movies(self):
@@ -191,18 +203,17 @@ class navigator:
 
     def tools(self):
         self.addDirectoryItem(30111, 'openSettings&query=0.0', 'settings.jpg', 'DefaultAddonProgram.png')
-        self.addDirectoryItem(30112, 'openSettings&query=6.1', 'settings.jpg', 'DefaultAddonProgram.png')
+        self.addDirectoryItem(30112, 'openSettings&query=5.1', 'settings.jpg', 'DefaultAddonProgram.png')
         self.addDirectoryItem(30113, 'openSettings&query=1.0', 'settings.jpg', 'DefaultAddonProgram.png')
-        self.addDirectoryItem(30114, 'openSettings&query=9.0', 'settings.jpg', 'DefaultAddonProgram.png')
+        self.addDirectoryItem(30114, 'openSettings&query=8.0', 'settings.jpg', 'DefaultAddonProgram.png')
         self.addDirectoryItem(30115, 'openSettings&query=2.0', 'settings.jpg', 'DefaultAddonProgram.png')
         self.addDirectoryItem(30116, 'openSettings&query=3.0', 'settings.jpg', 'DefaultAddonProgram.png')
         self.addDirectoryItem(30117, 'openSettings&query=4.0', 'settings.jpg', 'DefaultAddonProgram.png')
-        self.addDirectoryItem(30118, 'openSettings&query=5.0', 'settings.jpg', 'DefaultAddonProgram.png')
         self.addDirectoryItem(30119, 'clearSources', 'cache.jpg', 'DefaultAddonProgram.png')
         self.addDirectoryItem(30120, 'clearCache', 'cache.jpg', 'DefaultAddonProgram.png')
-        self.addDirectoryItem(30122, 'openSettings&query=8.0', 'settings.jpg', 'DefaultAddonProgram.png')
+        self.addDirectoryItem(30122, 'openSettings&query=7.0', 'settings.jpg', 'DefaultAddonProgram.png')
         self.addDirectoryItem(30121, 'libtoolNavigator', 'tools.jpg', 'DefaultAddonProgram.png')
-        #self.addDirectoryItem(30141, 'openSettings&query=10.0', 'tools.jpg', 'DefaultAddonProgram.png')
+        self.addDirectoryItem(30141, 'loguploader', 'tools.jpg', 'DefaultAddonProgram.png')
 
         self.endDirectory()
 

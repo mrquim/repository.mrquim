@@ -28,6 +28,7 @@ from resources.lib.libraries import client
 from resources.lib.resolvers import hugefiles
 from resources.lib.resolvers import uploadrocket
 from resources.lib.resolvers import uptobox
+from resources.lib.resolvers import control
 from resources.lib import resolvers
 
 
@@ -62,7 +63,6 @@ class source:
 
 
     def get_sources(self, url, hosthdDict, hostDict, locDict):
-        return
         try:
             self.sources = []
 
@@ -73,6 +73,7 @@ class source:
             query = self.base_link + self.search_link % urllib.quote_plus(query)
 
             result = client.request(query)
+            print result,query
 
             result = client.parseDOM(result, 'table', attrs = {'class': 'posts_table'})
 
@@ -129,7 +130,8 @@ class source:
 
 
             return self.sources
-        except:
+        except Exception as e:
+            control.log('ERROR tvre %s' % e)
             return self.sources
 
 

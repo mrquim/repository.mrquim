@@ -19,12 +19,11 @@
 '''
 
 
-import re,urlparse,time, urllib
+import re,urlparse,datetime, urllib,zipfile
+import os,base64,StringIO,time
 
 from resources.lib.libraries import client
-from resources.lib.libraries import client2
 from resources.lib.libraries import cleantitle
-
 from resources.lib.libraries import workers
 from resources.lib.libraries import control
 from resources.lib.resolvers import cloudzilla
@@ -33,41 +32,24 @@ from resources.lib.resolvers import uptobox
 from resources.lib.resolvers import zstream
 from resources.lib.resolvers import videomega
 
+try:
+    from sqlite3 import dbapi2 as database
+except:
+    from pysqlite2 import dbapi2 as database
 
 from resources.lib import resolvers
 
 
 class source:
     def __init__(self):
-        self.base_link = 'http://oneclickwatch.ws'
-        self.search_link = '/?s=%s'
-        self.title = ''
+        self.data_link = 'aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL21ya25vdy9kYXRhYmFzZS9tYXN0ZXIvb25lY2xpY2sxLnppcA=='
+        self.sources = []
 
     def get_movie(self, imdb, title, year):
         try:
-            query = self.search_link % urllib.quote_plus(title +' '+year)
-            query = urlparse.urljoin(self.base_link, query)
-            control.log('@ONECLICKWA %s' % query)
-            result = client.request(self.base_link)
-            control.log('Result %s' % result)
-
-            result = client.request(query, headers={'Referer':self.base_link})
-            control.log('Result %s' % result)
-            years = ['%s' % str(year), '%s' % str(int(year) + 1), '%s' % str(int(year) - 1)]
-            result = client.parseDOM(result, 'h2', attrs={'class': 'title'})
-            result = [(client.parseDOM(i, 'a', ret='href')[0], client.parseDOM(i, 'a')[0]) for i in result]
-            #print('R',result)
-            result = [i for i in result if cleantitle.movie(title.lower()) in cleantitle.movie(i[1]).lower()]
-            #print('R',result)
-            result = [i for i in result if any(x in i[1] for x in years)]
-            #print('R',result)
-            result2 = [i for i in result if '1080' in i[1]]
-            #print('R',result)
-            result3 = [i for i in result if '720' in i[1].lower()]
-            #print('R',result)
-            if len(result3) > 0: result = result3
-            if len(result2) > 0: result = result2
-            url = result[0][0]
+            url = '%s %s' % (title, year)
+            url = client.replaceHTMLCodes(url)
+            url = url.encode('utf-8')
             return url
         except:
             return
@@ -76,7 +58,7 @@ class source:
     def get_show(self, imdb, tvdb, tvshowtitle, year):
         try:
             url = tvshowtitle
-            url = client.cleanHTMLCodes(url)
+            url = client.replaceHTMLCodes(url)
             url = url.encode('utf-8')
             return url
         except:
@@ -86,52 +68,101 @@ class source:
     def get_episode(self, url, imdb, tvdb, title, date, season, episode):
         try:
             if url == None: return
-            mytitile = url.lower()
+
             url = '%s S%02dE%02d' % (url, int(season), int(episode))
             url = client.replaceHTMLCodes(url)
             url = url.encode('utf-8')
-            url = self.search_link % urllib.quote_plus(url)
-            query = urlparse.urljoin(self.base_link, url)
-            result = client2.http_get(query)
-            result = client.parseDOM(result, 'h2', attrs={'class': 'title'})
-            result = [(client.parseDOM(i, 'a', ret='href')[0], client.parseDOM(i, 'a')[0]) for i in result]
-            result = [i for i in result if mytitile in i[1].lower()]
-            result2 = [i for i in result if '1080' in i[1].lower()]
-            result3 = [i for i in result if '720' in i[1].lower()]
-            if len(result3) > 0: result = result3
-            if len(result2) > 0: result = result2
-            url=result[0][0]
             return url
         except:
             return
 
 
+
     def get_sources(self, url, hosthdDict, hostDict, locDict):
         try:
-            self.sources =[]
+            self.sources = []
+            sources = []
             mylinks = []
-            result = client2.http_get(url)
-            mytitle = re.compile('<title>(.*?)</title>', re.DOTALL).findall(result)[0]
-            if any(word in mytitle.lower() for word in ['camrip', 'tsrip', 'hdcam', 'hdts', 'dvdcam', 'dvdts', 'cam', 'ts']):
-                quality = 'CAM'
-            elif '1080p' in mytitle:
-                quality = '1080p'
-            elif '720p' in mytitle:
-                quality = 'HD'
+            mysources=[]
+
+            if url == None: return sources
+            data = os.path.join(control.dataPath, 'oneclick1.db')
+
+            download = True
+
+            try: download = abs(datetime.datetime.fromtimestamp(os.path.getmtime(data)) - (datetime.datetime.now())) > datetime.timedelta(days=7)
+            except: pass
+
+            if download == True:
+                result = client.request(base64.b64decode(self.data_link))
+                print(len(result))
+                control.log(">>>>>>>>>>>>>>> ONEC Downloading" )
+                zip = zipfile.ZipFile(StringIO.StringIO(result))
+                zip.extractall(control.dataPath)
+                zip.close()
+
+            dbcon = database.connect(data)
+            dbcur = dbcon.cursor()
+            #control.log(">>>>>>>>>>>>>>> ONEC content "  )
+
+            content = re.compile('(.+?)\sS\d*E\d*$').findall(url)
+            #control.log(">>>>>>>>>>>>>>> ONEC aaa content %s" % len(content))
+
+            if len(content) == 0:
+                title, year = re.compile('(.+?) (\d{4})$').findall(url)[0]
+                title = cleantitle.movie(title)
+
+                dbcur.execute("SELECT * FROM movies WHERE title like '%"+title+"%' and title like '%"+year+"%'" )
+                result = dbcur.fetchall()
+                for i in result:
+                    print(i[0])
+                    mysources.append(i[0])
+
             else:
-                quality = 'SD'
-            links = client.parseDOM(result, 'a', attrs={'rel': 'nofollow'})
-            links = [i for i in links if i.startswith('http')]
-            for a in links:
-                mylinks.append([a,quality])
+                #control.log(">>>>>>>>>>>>>>> ONEC %ELSE ")
+
+                tvshowtitle, season, episode = re.compile('(.+?)\sS(\d*)E(\d*)$').findall(url)[0]
+                tvshowtitle = cleantitle.movie(tvshowtitle)
+                myses = 's%se%s' % (season,episode)
+                control.log(">>>>>>>>>>>>>>> ONEC %s season |%s|" % (tvshowtitle,myses))
+                mysql = "SELECT * FROM movies WHERE title like '%"+tvshowtitle+"%' and title like '%"+myses+"%'"
+                #mysql = "SELECT * FROM movies WHERE title like '%" + tvshowtitle + "%'"
+
+                #control.log(">>>>>>>>>>>>>>> ONEC SQL  |%s|" % (mysql))
+                dbcur.execute(mysql)
+                result = dbcur.fetchall()
+
+                for i in result:
+                    mysources.append(i[0])
+                    #control.log(">>>>>>>>>>>>>>> ONEC result %s" % (i[0]))
+
+
+
+            mylinks = []
+            for myurl in mysources:
+                result = client.request(myurl,mobile=True)
+                mytitle = re.compile('<title>(.*?)</title>', re.DOTALL).findall(result)[0]
+                if any(word in mytitle.lower() for word in ['camrip', 'tsrip', 'hdcam', 'hdts', 'dvdcam', 'dvdts', 'cam', 'ts']):
+                    quality = 'CAM'
+                elif '1080' in mytitle:
+                    quality = '1080p'
+                elif '720p' in mytitle:
+                    quality = 'HD'
+                else:
+                    quality = 'SD'
+                links = client.parseDOM(result, 'a', attrs={'rel': 'nofollow'})
+                links = [i for i in links if i.startswith('http')]
+                for a in links:
+                    #control.log(">>>>>>>>>>>>>>> ONE CHECK  %s" % (a))
+                    mylinks.append([a,quality])
 
             threads = []
             for i in mylinks: threads.append(workers.Thread(self.check, i))
             [i.start() for i in threads]
-            for i in range(0, 10 * 2):
+            for i in range(0, 10 * 4):
                 is_alive = [x.is_alive() for x in threads]
                 if all(x == False for x in is_alive): break
-                time.sleep(1)
+                time.sleep(2)
             return self.sources
         except:
             return self.sources
@@ -139,6 +170,7 @@ class source:
 
     def check(self, i):
         try:
+            #control.log(">>>>>>>>>>>>>>> ONE CHECK  %s" % (i[0]))
             url = client.replaceHTMLCodes(i[0])
             url = url.encode('utf-8')
 

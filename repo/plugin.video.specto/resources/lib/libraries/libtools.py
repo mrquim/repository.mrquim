@@ -90,11 +90,13 @@ class libmovies:
         from resources.lib.indexers import movies
         items = movies.movies().get(url, idx=False)
         if items == None: items = []
+        for i in items:
+            control.log('## ITEMS %s' % i['title'])
 
         for i in items:
             try:
                 if xbmc.abortRequested == True: return sys.exit()
-                self.add(i['name'], i['title'], i['year'], i['imdb'], i['tmdb'], range=True)
+                self.add('%s (%s)' % (i['title'], i['year']), i['title'], i['year'], i['imdb'], i['tmdb'], range=True)
             except:
                 pass
 
@@ -452,6 +454,9 @@ class libepisodes:
 
 
     def service(self):
+        try: control.fix_metahandler()
+        except: pass
+
         try:
             control.makeFile(control.dataPath)
             dbcon = database.connect(control.libcacheFile)
@@ -473,7 +478,7 @@ class libepisodes:
         try: control.window.setProperty(self.property, serviceProperty)
         except: return
 
-        while (not xbmc.abortRequested):
+        while not xbmc.abortRequested:
             try:
                 serviceProperty = control.window.getProperty(self.property)
 

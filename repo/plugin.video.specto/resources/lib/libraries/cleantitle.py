@@ -48,6 +48,21 @@ def query2(title):
     title = title.replace('\'', '').replace('-','')
     return title
 
+def query10(title):
+    if title == None: return
+    title = title.replace('\'', '').replace(':','').replace('.','').replace(' ','-').lower()
+    return title
+
+def geturl(title):
+    if title == None: return
+    title = title.lower()
+    title = title.translate(None, ':*?"\'\.<>|&!,')
+    title = title.replace('/', '-')
+    title = title.replace(' ', '+')
+    title = title.replace('--', '-')
+    title = title.replace('\'', '-')
+    return title
+
 def normalize(title):
     try:
         try: return title.decode('ascii').encode("utf-8")
