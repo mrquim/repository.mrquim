@@ -1,0 +1,33 @@
+[B]1.2.3[/B]
+- Added More Web Channel Networks
+
+[B]1.2.2[/B]
+- Added More UK TV Networks
+
+
+[B]1.1.7[/B]
+- Added Sections From What The Fork?
+- Code Cosmetics
+
+[B]1.0.9[/B]
+- Removed Broken Scrapers
+- Fixed Some Scrapers
+
+[B]1.0.5[/B]
+- Fixed Putlocker
+- Fixed Genre Images
+- Removed MetalliQ Block Code
+
+[B]1.0.3[/B]
+- Removed Code
+- Updated Artwork (Compressed Images)
+
+[B]1.0.2[/B]
+- Fixed Lists
+
+[B]1.0.1[/B]
+- Added Lists
+- Removed Dead Scrapers
+
+[B]1.0.0[/B]
+- Initial version
