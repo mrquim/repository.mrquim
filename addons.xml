@@ -310,7 +310,7 @@ Plugin by @koderdude</description>
 </addon>
 
 <addon id="program.mrspeedtest"
-       name="Mr. Speed Tester"
+       name="Mr. Quim Speed Tester"
        version="0.0.3"
        provider-name="Mr. Quim">
   <requires>
@@ -321,8 +321,8 @@ Plugin by @koderdude</description>
         <provides>executable</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">Mr. Speed Tester</summary>
-    <description lang="en">This is a clone of ARNU Box Speed Tester. Now you can know how much speed your internet provider gives to you.</description>
+    <summary lang="en">Mr. Quim Speed Tester</summary>
+    <description lang="en">This is a clone of ARNU Box Speed Tester. No you can know how much speed your internet provider gives to you.</description>
     <platform>all</platform>
   </extension>
 </addon>

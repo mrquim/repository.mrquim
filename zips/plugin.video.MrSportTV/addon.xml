@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.MrSportTV" name="Mr. Sport TV (Portugal) - Descontinuado!" version="2.0.8" provider-name="Mr. Quim">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.beautifulsoup" version="3.2.1"/>
+    <import addon="script.module.simple.downloader" version="0.9.4"/>
+    <import addon="script.module.beautifulsoup4" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.httplib2" />
+    <import addon="script.module.youtube.dl" optional="true"/>
+    <import addon="plugin.video.youtube" />
+	<import addon="program.plexus" />
+    <import addon="script.module.urlresolver" optional="true"/>
+    <import addon="script.module.simplejson" /> 
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary>Canais Sport TV Online (Add-on Descontinuado)</summary>
+    <description>ADD-ON DESCONTINUADO!
+	Os canais/este add-on são gratuitos.
+	Não transmito qualquer dos canais aqui disponibilizados!
+	São todos retirados da Internet!
+	Todos os canais necessitam do add-on PLEXUS</description>
+  </extension>
+</addon>
