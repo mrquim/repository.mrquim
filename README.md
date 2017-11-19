@@ -1,4 +1,4 @@
-Mr. Quim-kodi-repo
+Mr. Quim - Repositório do Kodi
 =========================
 
 	-Repositório de add-ons criados pelo Mr. Quim e nem só.
