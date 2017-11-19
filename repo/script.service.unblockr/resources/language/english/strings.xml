@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-   <strings>
-       <string id="32001">Unblockr Private Key (from user profile)</string>
-       <string id="32011">Enter Secure Key</string>
-       <string id="32012">How many seconds between refreshes (min 60)</string>
-   </strings>

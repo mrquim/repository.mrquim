@@ -1,6 +1,0 @@
-Versão 1.1
-Mudança na cor da fanart e do icon.
-Feito um Repositório para alojar o addon.
-
-Versão 1.0
-Versão Inicial

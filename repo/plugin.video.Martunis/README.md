@@ -1,2 +1,0 @@
-# Martunis
-Here Martunis List

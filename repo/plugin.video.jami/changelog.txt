@@ -1,5 +1,0 @@
-V5.1
-Resolvido o problema de encode para os utilizadores do Android
-
-V5.0
-Nova versão do Jami com alteração de estrutura de addon e com o tema Pokemon 
