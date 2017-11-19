@@ -1,5 +1,0 @@
-
-[B][COLOR=FF56ADDA]0.0.3 - 17SEP15[/COLOR][/B]
-• Fix issue causing speedtest to only run once and then fail.
-• Fix issue with results not displaying correctly on all displays
-• Translated to Portuguese (Portugal)
