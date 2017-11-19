@@ -1,0 +1,29 @@
+[B]Version 1.0.8[/B]
+Bug Fixed
+
+[B]Version 1.0.7[/B]
+English version of disclaimer included.
+
+[B]Version 1.0.6[/B]
+Final Version 1.0.6
+
+[B]Version 1.0.5[/B]
+- Some fixes applied.
+- Repository Fan Art changed.
+- Repository description updated.
+
+[B]Version 1.0.4[/B]
+- Repository logo changed.
+
+[B]Version 1.0.3[/B]
+- GitHub link updated.
+
+[B]Version 1.0.2[/B]
+- Bugs fixed
+- added some add-ons  from different repo for consolidation.
+
+[B]Version 1.0.1[/B]
+- Repository test
+
+[B]Version 1.0.0[/B]
+- Initial repository add-on
