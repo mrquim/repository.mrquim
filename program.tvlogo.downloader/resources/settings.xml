@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+	<category label="General">
+		<setting id="logo-folder" type="folder" label="Download Folder" default=""/>
+		<setting id="hide_log" type="bool" label="Hide log notification" default="false"/>
+		<setting id="search_nonhd" type="bool" label="Search for non-hd logos if hd not available" default="true"/>
+		<setting id="ignore_words" type="text" label="List of comma separated words to be ignored" default="" visible="true" />
+	</category>
+	<category label="Automatic">
+		<setting id="auto_if_100" type="bool" label="Download automatically if name matches 100%" default="true"/>
+		<setting id="auto_if_multiple" type="bool" label="Download automatically the logo with the best match" default="false"/>
+		<setting id="minimum_ratio" label="Mininum ratio to consider a logo for download" type="slider" default="95" range="50,100" option="int" visible="eq(-1,true)"/>
+		<setting id="display_warning" type="bool" label="display warning hidden setting" default="true" visible="False"/>
+	</category>
+	<category label="Post-Processing">
+		<setting id="resize_logos" type="bool" label="Resize logos after downloading (original logos are 800x450px" default="false"/>
+		<setting id="resize_ratio" label="Percentage of the original for resize" type="slider" default="100" range="20,10,100" option="int" enable="eq(-1,true)"/>
+	</category>
+</settings>
