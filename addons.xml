@@ -1,78 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
-<addon id="plugin.video.MrSportTV" name="Mr. Sport TV (Portugal) - Descontinuado!" version="2.0.8" provider-name="Mr. Quim">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-    <import addon="script.module.beautifulsoup" version="3.2.1"/>
-    <import addon="script.module.simple.downloader" version="0.9.4"/>
-    <import addon="script.module.beautifulsoup4" />
-    <import addon="script.module.requests" />
-    <import addon="script.module.httplib2" />
-    <import addon="script.module.youtube.dl" optional="true"/>
-    <import addon="plugin.video.youtube" />
-	<import addon="program.plexus" />
-    <import addon="script.module.urlresolver" optional="true"/>
-    <import addon="script.module.simplejson" />
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <summary>Canais Sport TV Online (Add-on Descontinuado)</summary>
-    <description>ADD-ON DESCONTINUADO!
-	Os canais/este add-on são gratuitos.
-	Não transmito qualquer dos canais aqui disponibilizados!
-	São todos retirados da Internet!
-	Todos os canais necessitam do add-on PLEXUS</description>
-  </extension>
-</addon>
-
-<addon id="program.mrspeedtest"
-       name="Mr. Speed Tester"
-       version="0.0.3"
-       provider-name="Mr. Quim">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-  </requires>
-<extension point="xbmc.python.pluginsource"
-             library="default.py">
-        <provides>executable</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">Mr. Speed Tester</summary>
-    <description lang="en">This is a clone of ARNU Box Speed Tester. Now you can know how much speed your internet provider gives to you.</description>
-    <platform>all</platform>
-  </extension>
-</addon>
-
-<addon id="repository.mrquim" name="Mr. Quim repository" version="1.0.7" provider-name="Mr. Quim">
-	<extension point="xbmc.addon.repository" name="Mr. Quim Add-on Repository">
-		<info compressed="false">http://raw.github.com/mrquim/repository.mrquim/master/addons.xml</info>
-		<checksum>http://raw.github.com/mrquim/repository.mrquim/master/addons.xml.md5</checksum>
-		<datadir zip="true">http://raw.github.com/mrquim/repository.mrquim/master/repo/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Mr. Quim Repository</summary>
-        <description lang="en">This repository is for you to have all the addons created by me, updated automatically.
-		In this repository you will also find other repositories and add-ons.
-		All repositories and add-ons that are here are add-ons developed by third parties to use on the software Kodi (Not Official Add-ons), as Kodi be a OpenSource project as soon not have any connection with the Kodi.tv.
-		</description>
-		<summary lang="pt">Mr. Quim Repository</summary>
-        <description lang="pt">Este repositório serve para que tenhas todos os add-ons criados por mim, actualizados de forma automática.
-		Neste repositório irás encontrar também outros repositórios e add-ons.
-		Todos os repositórios e add-ons que se encontram aqui são add-ons desenvolvidos por terceiros para usar no programa Kodi (Add-ons Não Oficiais), visto o Kodi ser um projecto OpenSource, logo não têm qualquer ligação com o Kodi.tv.</description>
-		<disclaimer lang="en"></disclaimer>
-		<language></language>
-		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-		<website>http://www.JoaquimdeOliveira.eu</website>
-		<email>misterquim.com@gmail.com</email>
-		<source>https://github.com/mrquim/repository.mrquim</source>
-	</extension>
-</addon>
-</addons>
-
 <addon id="discave.repo" name="DiscaveHB Repositorio" version="0.0.5" provider-name="Discave">
 	<extension point="xbmc.addon.repository" name="Discave Repositorio">
 		<info compressed="false">http://raw.github.com/discave/discave.repo/master/addons.xml</info>
@@ -97,7 +24,7 @@
 		<summary lang="en">Live!t TV</summary>
 		<description lang="en">Repositorio para todos os membros do grupo Live!t TV.</description>
 		<language>pt</language>
-		<disclaimer lang="en">Como desenvolvedores do addon, nada temos a haver com os links disponibilizados. 
+		<disclaimer lang="en">Como desenvolvedores do addon, nada temos a haver com os links disponibilizados.
 		Limitimo-nos a ler o seu conteudo disponibilizado e converter em addon.</disclaimer>
 		<platform>all</platform>
 	</extension>
@@ -126,7 +53,7 @@
         <source></source>
         <email></email>
     </extension>
-	
+
 </addon>
 
 <addon id="plugin.video.bbts" name="BBTS" version="0.1.6" provider-name="[COLOR yellowgreen]B[/COLOR][COLOR dodgerblue]B[/COLOR][COLOR white]T[/COLOR][COLOR orangered]S[/COLOR] IpTV">
@@ -207,7 +134,7 @@ Plugin by @koderdude</description>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
     </extension>
-    
+
 
     <extension point="xbmc.addon.metadata">
         <summary>f4mTester</summary>
@@ -233,7 +160,7 @@ Plugin by @koderdude</description>
 	Espero que gostem e disfrutem.
 	Realizado por: Administrador Live!t.
 	Sempre Atualizado 24 horas por dia.
-	
+
 	Os programadores deste addon nada tem a ver com os links disponibilizados.
 	Limitamo-nos a ler o seu conteudo dos links e disponibiliza-lo.
 
@@ -279,6 +206,34 @@ Plugin by @koderdude</description>
  </extension>
 </addon>
 
+<addon id="plugin.video.MrSportTV" name="Mr. Sport TV (Portugal) - Descontinuado!" version="2.0.8" provider-name="Mr. Quim">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.beautifulsoup" version="3.2.1"/>
+    <import addon="script.module.simple.downloader" version="0.9.4"/>
+    <import addon="script.module.beautifulsoup4" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.httplib2" />
+    <import addon="script.module.youtube.dl" optional="true"/>
+    <import addon="plugin.video.youtube" />
+	<import addon="program.plexus" />
+    <import addon="script.module.urlresolver" optional="true"/>
+    <import addon="script.module.simplejson" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary>Canais Sport TV Online (Add-on Descontinuado)</summary>
+    <description>ADD-ON DESCONTINUADO!
+	Os canais/este add-on são gratuitos.
+	Não transmito qualquer dos canais aqui disponibilizados!
+	São todos retirados da Internet!
+	Todos os canais necessitam do add-on PLEXUS</description>
+  </extension>
+</addon>
+
 <addon id="plugin.video.p2psport"
 	name="P2P Sport"
 	version="0.1.4"
@@ -290,18 +245,18 @@ Plugin by @koderdude</description>
     <import addon="script.module.beautifulsoup" version="3.2.1"/>
     <import addon="script.module.mechanize" version="0.2.6"/>
 
-    
-    
+
+
   </requires>
   <extension point="xbmc.python.pluginsource" library="default.py">
     <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
     <summary>Watch p2p sports in Kodi</summary>
-    
+
     <platform>all</platform>
     <forum>forums.tvaddons.ag</forum>
-    
+
   </extension>
 </addon>
 
@@ -354,6 +309,24 @@ Plugin by @koderdude</description>
 	</extension>
 </addon>
 
+<addon id="program.mrspeedtest"
+       name="Mr. Speed Tester"
+       version="0.0.3"
+       provider-name="Mr. Quim">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+<extension point="xbmc.python.pluginsource"
+             library="default.py">
+        <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Mr. Speed Tester</summary>
+    <description lang="en">This is a clone of ARNU Box Speed Tester. Now you can know how much speed your internet provider gives to you.</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="program.plexus"
        name="Plexus"
        version="0.1.6.a"
@@ -366,7 +339,7 @@ Plugin by @koderdude</description>
             library="default.py">
         <provides>executable</provides>
   </extension>
-  
+
   <extension point="xbmc.addon.metadata">
     <summary>SopCast and AceStream for Kodi</summary>
     <description lang="en">Plexus - Any complex structure containing an intricate network of parts. Plexus brings native peer-to-peer support (AceStream and SopCast) for Kodi Entertainment Center for several platforms.[CR][CR]Documentation: (missing)</description>
@@ -378,3 +351,64 @@ Plugin by @koderdude</description>
     <platform>all</platform>
   </extension>
 </addon>
+
+<addon id="program.tvlogo.downloader" version="0.0.11" name="TVLogo Downloader" provider-name="enen92">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.pil" />"
+  </requires>
+  <extension point="xbmc.python.script" library="default.py">
+    <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Download TV Logos for Kodi PVR</summary>
+    <description lang="en">This script lets you download logos for your tv stations from thelogodb.com.</description>
+    <language></language>
+    <platform>all</platform>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <forum>http://forum.kodi.tv/showthread.php?tid=233068</forum>
+    <website>http://www.thelogodb.com/</website>
+    <source>https://github.com/enen92/script.tvlogo.downloader</source>
+  </extension>
+</addon>
+
+<addon id="repository.mrpiracy" name="MrPiracy.top Repositório" version="1.0.2" provider-name="MrPiracy.top">
+	<extension point="xbmc.addon.repository" name="MrPiracy Repository">
+		<info compressed="false">http://mrpiracy.top/kodi/repository.mrpiracy/addons.xml</info>
+		<checksum>http://mrpiracy.top/kodi//repository.mrpiracy/addons.xml.md5</checksum>
+		<datadir zip="true">http://mrpiracy.top/kodi/repository.mrpiracy/repo/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>MrPiracy.top Repositório</summary>
+		<description>Addon Description</description>
+		<disclaimer></disclaimer>
+		<platform>all</platform>
+	</extension>
+</addon>
+
+<addon id="repository.mrquim" name="Mr. Quim repository" version="1.0.8" provider-name="Mr. Quim">
+	<extension point="xbmc.addon.repository" name="Mr. Quim Add-on Repository">
+		<info compressed="false">http://raw.github.com/mrquim/repository.mrquim/master/addons.xml</info>
+		<checksum>http://raw.github.com/mrquim/repository.mrquim/master/addons.xml.md5</checksum>
+		<datadir zip="true">http://raw.github.com/mrquim/repository.mrquim/master/repo/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Mr. Quim Repository</summary>
+        <description lang="en">This repository is for you to have all the addons created by me, updated automatically.
+		In this repository you will also find other repositories and add-ons.
+		All repositories and add-ons that are here are add-ons developed by third parties to use on the software Kodi (Not Official Add-ons), as Kodi be a OpenSource project as soon not have any connection with the Kodi.tv.
+		</description>
+		<summary lang="pt">Mr. Quim Repository</summary>
+        <description lang="pt">Este repositório serve para que tenhas todos os add-ons criados por mim, actualizados de forma automática.
+		Neste repositório irás encontrar também outros repositórios e add-ons.
+		Todos os repositórios e add-ons que se encontram aqui são add-ons desenvolvidos por terceiros para usar no programa Kodi (Add-ons Não Oficiais), visto o Kodi ser um projecto OpenSource, logo não têm qualquer ligação com o Kodi.tv.</description>
+		<disclaimer lang="en"></disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<website>http://www.JoaquimdeOliveira.eu</website>
+		<email>misterquim.com@gmail.com</email>
+		<source>https://github.com/mrquim/repository.mrquim</source>
+	</extension>
+</addon>
+</addons>

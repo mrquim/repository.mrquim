@@ -1,3 +1,6 @@
+[B]Version 1.0.8[/B]
+Bug Fixed
+
 [B]Version 1.0.7[/B]
 English version of disclaimer included.
 
