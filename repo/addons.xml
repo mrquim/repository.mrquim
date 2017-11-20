@@ -372,6 +372,20 @@ Plugin by @koderdude</description>
   </extension>
 </addon>
 
+<addon id="repo.bg.plugins" name="Bg Add-ons" version="1.0.0" provider-name="kodi.dev.one@gmail.com">
+	<extension point="xbmc.addon.repository" name="Bg Add-ons">
+		<info compressed="false">https://github.com/kodi1/kodi1.github.io/raw/master/repo/addons.xml</info>
+		<checksum>https://github.com/kodi1/kodi1.github.io/raw/master/repo/addons.xml.md5</checksum>
+		<datadir zip="true">https://github.com/kodi1/kodi1.github.io/raw/master/repo/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Bg Add-on Repository</summary>
+		<description>Some plug-ins for KODI</description>
+		<disclaimer></disclaimer>
+		<platform>all</platform>
+	</extension>
+</addon>
+
 <addon id="repository.ike" name="[COLOR red][B]Ike.Repo[/B][/COLOR]" version="2.1" provider-name="[COLOR lime][B]IKE[/B][/COLOR]">
 	<extension point="xbmc.addon.repository" name="repository.ike">
 		<info compressed="false">http://raw.github.com/ikesuncat/repository.ike/master/addons.xml</info>
@@ -386,11 +400,11 @@ Plugin by @koderdude</description>
 	</extension>
 </addon>
 
-<addon id="repository.mrpiracy" name="MrPiracy.top Repositório" version="1.0.2" provider-name="MrPiracy.top">
+<addon id="repository.mrpiracy" name="MrPiracy.top Repositório" version="1.0.3" provider-name="MrPiracy.top">
 	<extension point="xbmc.addon.repository" name="MrPiracy Repository">
-		<info compressed="false">http://mrpiracy.top/kodi/repository.mrpiracy/addons.xml</info>
-		<checksum>http://mrpiracy.top/kodi//repository.mrpiracy/addons.xml.md5</checksum>
-		<datadir zip="true">http://mrpiracy.top/kodi/repository.mrpiracy/repo/</datadir>
+		<info compressed="false">http://raw.github.com/mrpiracyPT/repository.mrpiracy/master/addons.xml</info>
+		<checksum>http://raw.github.com/mrpiracyPT/repository.mrpiracy/master/addons.xml.md5</checksum>
+		<datadir zip="true">http://raw.github.com/mrpiracyPT/repository.mrpiracy/master/repo/</datadir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<summary>MrPiracy.top Repositório</summary>
@@ -424,5 +438,74 @@ Plugin by @koderdude</description>
 		<email>misterquim.com@gmail.com</email>
 		<source>https://github.com/mrquim/repository.mrquim</source>
 	</extension>
+</addon>
+
+<addon id="repository.soulless" name="Soulless Repo" version="1.0.7" provider-name="Soulless">
+	<extension point="xbmc.addon.repository" name="Soulless Repo">
+	<dir>
+			<info compressed="false">https://raw.githubusercontent.com/noobsandnerds/modules4all/master/zips/addons.xml</info>
+			<checksum>https://raw.githubusercontent.com/noobsandnerds/modules4all/master/zips/addons.xml.md5</checksum>
+			<datadir zip="true">https://raw.githubusercontent.com/noobsandnerds/modules4all/master/zips/</datadir>
+	</dir>
+		<info compressed="false">http://soullessbuilds.com/add-ons/addons.xml</info>
+		<checksum>http://soullessbuilds.com/add-ons/addons.xml.md5</checksum>
+		<datadir zip="true">http://soullessbuilds.com/add-ons/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Soulless Repo</summary>
+		<description>Download and install All Things Soulless</description>
+		<platform>all</platform>
+	</extension>
+</addon>
+
+<addon id="repository.xbmchub" name="TVADDONS.CO Add-on Repository" version="3.0.0" provider-name="tvaddons">
+	<extension point="xbmc.addon.repository" name="TVADDONS.CO Add-on Repository">
+	<dir>
+		<info compressed="false">https://github.com/tvaddonsco/tva-resolvers-repo/raw/master/addons.xml</info>
+		<checksum>https://github.com/tvaddonsco/tva-resolvers-repo/raw/master/addons.xml.md5</checksum>
+		<datadir zip="true">https://github.com/tvaddonsco/tva-resolvers-repo/raw/master/zips/</datadir>
+	</dir>
+
+    <dir>
+		<info compressed="false">https://github.com/tvaddonsco/tva-release-repo/raw/master/addons.xml</info>
+		<checksum>https://github.com/tvaddonsco/tva-release-repo/raw/master/addons.xml.md5</checksum>
+		<datadir zip="true">https://github.com/tvaddonsco/tva-release-repo/raw/master/</datadir>
+    </dir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Unofficial Kodi Addons from TVADDONS.CO</summary>
+		<description>Unofficial Kodi Addons from the TVADDONS.CO Add-on Repository. Please visit www.tvaddons.co for support!
+
+Kodi is a registered trademark of the XBMC Foundation. We are not connected to or in any other way affiliated with Kodi, Team Kodi, or the XBMC Foundation.</description>
+         <disclaimer>TVADDONS.CO did not make all the add-ons in this repository and is not responsible for their content.</disclaimer>
+		<platform>all</platform>
+                <forum>https://www.tvaddons.co/forums</forum>
+                <website>https://www.tvaddons.co</website>
+	</extension>
+</addon>
+
+<addon id="tvsupertuga.repository" name="[COLOR cyan]TV[/COLOR][COLOR red]supertuga[/COLOR].[COLOR limegreen]Repository[/COLOR]" version="0.0.8" provider-name="TVsupertuga">
+    <extension point="xbmc.addon.repository" name="TVsupertuga Repository">
+        <dir>
+            <info compressed="false">http://tvsupertuga.xyz/tvsupertuga.repository/addons.xml</info>
+            <checksum>http://tvsupertuga.xyz/tvsupertuga.repository/addons.xml.md5</checksum>
+            <datadir zip="true">http://tvsupertuga.xyz/tvsupertuga.repository/instal/</datadir>
+        </dir>
+        <dir>
+            <info compressed="false">https://raw.githubusercontent.com/PROJECTOTEAM/base/master/baseaddons.repository/addons.xml</info>
+            <checksum>https://raw.githubusercontent.com/PROJECTOTEAM/base/master/baseaddons.repository/addons.xml.md5</checksum>
+            <datadir zip="true">https://raw.githubusercontent.com/PROJECTOTEAM/base/master/baseaddons.repository/instal/</datadir>
+        </dir>
+        <info compressed="false">https://raw.githubusercontent.com/repotvsupertuga/tvsupertuga.repository/master/addons.xml</info>
+        <checksum>https://raw.githubusercontent.com/repotvsupertuga/tvsupertuga.repository/master/addons.xml.md5</checksum>
+        <datadir zip="true">https://raw.githubusercontent.com/repotvsupertuga/tvsupertuga.repository/instal/</datadir>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+		<summary lang="pt">TVsupertuga </summary>
+		<description lang="pt">rdftgyhu</description>
+		<forum>http://tvsupertuga.forum-gratuito.com/</forum>
+		<website>https://www.facebook.com/TVsupertuga.PT/</website>
+        <platform>all</platform>
+    </extension>
 </addon>
 </addons>

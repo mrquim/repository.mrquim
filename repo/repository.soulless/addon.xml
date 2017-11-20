@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="repository.soulless" name="Soulless Repo" version="1.0.7" provider-name="Soulless">
+	<extension point="xbmc.addon.repository" name="Soulless Repo">
+	<dir>
+			<info compressed="false">https://raw.githubusercontent.com/noobsandnerds/modules4all/master/zips/addons.xml</info>
+			<checksum>https://raw.githubusercontent.com/noobsandnerds/modules4all/master/zips/addons.xml.md5</checksum>
+			<datadir zip="true">https://raw.githubusercontent.com/noobsandnerds/modules4all/master/zips/</datadir>
+	</dir>	
+		<info compressed="false">http://soullessbuilds.com/add-ons/addons.xml</info>
+		<checksum>http://soullessbuilds.com/add-ons/addons.xml.md5</checksum>
+		<datadir zip="true">http://soullessbuilds.com/add-ons/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Soulless Repo</summary>
+		<description>Download and install All Things Soulless</description>
+		<platform>all</platform>
+	</extension>
+</addon>
+
