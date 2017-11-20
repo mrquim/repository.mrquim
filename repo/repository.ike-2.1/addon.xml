@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="repository.ike" name="[COLOR red][B]Ike.Repo[/B][/COLOR]" version="2.1" provider-name="[COLOR lime][B]IKE[/B][/COLOR]">
+	<extension point="xbmc.addon.repository" name="repository.ike">
+		<info compressed="false">http://raw.github.com/ikesuncat/repository.ike/master/addons.xml</info>
+		<checksum>http://raw.github.com/ikesuncat/repository.ike/master/addons.xml.md5</checksum>
+		<datadir zip="true">http://raw.github.com/ikesuncat/repository.ike/master/repo/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>[COLOR blue][B]Ike.Repo[/B][/COLOR]</summary>
+		<description>[COLOR red][B]Ike.Repo[/B][/COLOR]</description>
+		<disclaimer></disclaimer>
+		<platform>all</platform>
+	</extension>
+</addon>
