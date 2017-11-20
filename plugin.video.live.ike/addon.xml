@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.live.ike"
+       name="[COLOR gold][B]IKE[/B][/COLOR]"
+       version="4.0.0"
+       provider-name="[COLOR red][B]IKE [COLOR gold]SANTOS[/B][/COLOR]">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.beautifulsoup" version="3.2.1"/>
+	<import addon="repository.kodil" version="1.2"/>
+	<import addon="repository.xbmchub" version="3.0.0"/>
+	<import addon="repository.colossus" version="999.999.1"/>
+    <import addon="repository.noobsandnerds" version="2.2"/>
+	<import addon="script.module.simple.downloader" version="0.9.4"/>
+    <import addon="script.module.beautifulsoup4" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.httplib2" />
+    <import addon="script.module.liveresolver" version="0.1.24" optional="true"/>
+    <import addon="script.module.youtube.dl" optional="true"/>
+    <import addon="plugin.video.youtube" optional="true" />
+    <import addon="script.module.urlresolver" optional="true"/>
+    <import addon="script.module.simplejson" />    
+     <import addon="script.module.livestreamer" optional="true"/>
+     
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>video</provides>
+  </extension>
+  
+     <extension point="xbmc.addon.repository" name="repository.ike">
+		<info compressed="false">http://raw.github.com/ikesuncat/repository.ike/master/addons.xml</info>
+		<checksum>http://raw.github.com/ikesuncat/repository.ike/master/addons.xml.md5</checksum>
+		<datadir zip="true">http://raw.github.com/ikesuncat/repository.ike/master/repo/</datadir>
+	</extension>
+	
+  <extension point="xbmc.addon.metadata">
+    <summary>[COLOR green][B]Ike Addon- Addon Gratis e sem Donativos[/B][/COLOR]</summary>
+    <description>
+        [COLOR lime][B]Addon Ike : Todos os links disponibilizados no Addon estao disponiveis 
+em procura livre na internet..
+Canal do Youtube ;Procurar Por Ike Santos
+ Enjoy !![/B][/COLOR]
+        
+    </description>
+    <platform>all</platform>
+  </extension>
+</addon>

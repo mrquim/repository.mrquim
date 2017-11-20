@@ -168,6 +168,86 @@ Plugin by @koderdude</description>
     </extension>
 </addon>
 
+<addon id="plugin.video.live.ike"
+       name="[COLOR gold][B]IKE[/B][/COLOR]"
+       version="4.0.0"
+       provider-name="[COLOR red][B]IKE [COLOR gold]SANTOS[/B][/COLOR]">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.beautifulsoup" version="3.2.1"/>
+	<import addon="repository.kodil" version="1.2"/>
+	<import addon="repository.xbmchub" version="3.0.0"/>
+	<import addon="repository.colossus" version="999.999.1"/>
+    <import addon="repository.noobsandnerds" version="2.2"/>
+	<import addon="script.module.simple.downloader" version="0.9.4"/>
+    <import addon="script.module.beautifulsoup4" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.httplib2" />
+    <import addon="script.module.liveresolver" version="0.1.24" optional="true"/>
+    <import addon="script.module.youtube.dl" optional="true"/>
+    <import addon="plugin.video.youtube" optional="true" />
+    <import addon="script.module.urlresolver" optional="true"/>
+    <import addon="script.module.simplejson" />
+     <import addon="script.module.livestreamer" optional="true"/>
+
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>video</provides>
+  </extension>
+
+     <extension point="xbmc.addon.repository" name="repository.ike">
+		<info compressed="false">http://raw.github.com/ikesuncat/repository.ike/master/addons.xml</info>
+		<checksum>http://raw.github.com/ikesuncat/repository.ike/master/addons.xml.md5</checksum>
+		<datadir zip="true">http://raw.github.com/ikesuncat/repository.ike/master/repo/</datadir>
+	</extension>
+
+  <extension point="xbmc.addon.metadata">
+    <summary>[COLOR green][B]Ike Addon- Addon Gratis e sem Donativos[/B][/COLOR]</summary>
+    <description>
+        [COLOR lime][B]Addon Ike : Todos os links disponibilizados no Addon estao disponiveis
+em procura livre na internet..
+Canal do Youtube ;Procurar Por Ike Santos
+ Enjoy !![/B][/COLOR]
+
+    </description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.live.magellan"
+       name="[COLOR yellow]Magellan[/COLOR]"
+       version="2.7.4"
+       provider-name="[COLOR orange][B]IKE[/B][/COLOR]">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.beautifulsoup" version="3.2.1"/>
+    <import addon="script.module.simple.downloader" version="0.9.4"/>
+    <import addon="script.module.beautifulsoup4" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.httplib2" />
+    <import addon="script.module.liveresolver" version="0.1.24" optional="true"/>
+    <import addon="script.module.youtube.dl" optional="true"/>
+    <import addon="plugin.video.youtube" optional="true" />
+    <import addon="script.module.urlresolver" optional="true"/>
+    <import addon="script.module.simplejson" />
+     <import addon="script.module.livestreamer" optional="true"/>
+     <import addon="script.module.pyamf" optional="true"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>[COLOR blue]Magellan Addon- shamelessly forked from livestreamspro[/COLOR]</summary>
+    <description>
+       [COLOR pink]Addon Magellan : Todos os links disponibilizados no Addon estao disponiveis
+em procura livre na internet.. Enjoy !![/COLOR]
+
+
+    </description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="plugin.video.LiveTV" name="Live!t" provider-name="Live!t" version="8.6.2">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
@@ -334,6 +414,31 @@ Plugin by @koderdude</description>
 	</extension>
 </addon>
 
+<addon id="plugin.video.tvgolo"
+       name="OKGoals"
+       version="1.0.6"
+       provider-name="fightnight">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+		<import addon="script.module.urlresolver"  version="1.0.5"/>
+		<import addon="script.module.requests"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+		<language>pt</language>
+		<platform>all</platform>
+		<source>https://github.com/fightnight/fightnight-addons/tree/master/plugin.video.tvgolo</source>
+		<summary lang="en">OKGoals addon for Kodi</summary>
+		<summary lang="pt">OKGoals addon para o Kodi</summary>
+		<description lang="en">The best goals from OKGoals.com on Kodi.</description>
+		<description lang="pt">Os melhor golos do OKGoals.com para o Kodi.</description>
+		<disclaimer lang="en">Independent and opensource addon not endorsed by OKGoals.</disclaimer>
+		<disclaimer lang="pt">Addon independente e opensource não afliado com OKGoals.</disclaimer>
+    </extension>
+</addon>
+
 <addon id="program.mrspeedtest"
        name="Mr. Quim Speed Tester"
        version="0.0.3"
@@ -411,6 +516,24 @@ Plugin by @koderdude</description>
 	</extension>
 </addon>
 
+<addon id="repository.colossus" name="[COLOR gold]Colossus Repository[/COLOR]" version="999.999.6" provider-name="Colossal">
+    <extension point="xbmc.addon.repository" name="[COLOR gold]Colossus Repository[/COLOR]">
+    <dir>
+        <info compressed="false">https://raw.githubusercontent.com/Colossal1/repository.colossus.common/master/addons.xml</info>
+        <checksum>https://raw.githubusercontent.com/Colossal1/repository.colossus.common/master/addons.xml.md5</checksum>
+        <datadir zip="true">https://raw.githubusercontent.com/Colossal1/repository.colossus.common/master/</datadir>
+    </dir>
+        <info compressed="false">https://raw.githubusercontent.com/Colossal1/repository.colossus/master/addons.xml</info>
+        <checksum>https://raw.githubusercontent.com/Colossal1/repository.colossus/master/addons.xml.md5</checksum>
+        <datadir zip="true">https://raw.githubusercontent.com/Colossal1/repository.colossus/master/</datadir>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>Home Of 3rd Party Addons</summary>
+        <description></description>
+        <platform>all</platform>
+    </extension>
+</addon>
+
 <addon id="repository.exodus" name="Exodus repository" version="4.0.0" provider-name="Exodus">
 	<extension point="xbmc.addon.repository" name="Exodus repository">
 	<dir>
@@ -456,6 +579,20 @@ Plugin by @koderdude</description>
 		<disclaimer></disclaimer>
 		<platform>all</platform>
 	</extension>
+</addon>
+
+<addon id="repository.kodil" name="[COLOR blue]Kodisrael[/COLOR][COLOR white]Repository[/COLOR]" version="1.2" provider-name="kodil">
+    <extension point="xbmc.addon.repository" name=".Kodisrael  Repository ">
+        <info compressed="false">https://raw.githubusercontent.com/kodil/kodil/master/addons.xml</info>
+        <checksum>http://www.lvtvv.com/addons.xml.md5</checksum>
+        <datadir zip="true">https://raw.githubusercontent.com/kodil/kodil/master/repo</datadir>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>kodisrael repository</summary>
+        <description>kodisrael repository - the most extensive repository in israel </description>
+        <description></description>
+        <platform>all</platform>
+    </extension>
 </addon>
 
 <addon id="repository.mrpiracy" name="MrPiracy.top Repositório" version="1.0.3" provider-name="MrPiracy.top">
@@ -640,6 +777,49 @@ Kodi is a registered trademark of the XBMC Foundation. We are not connected to o
 	</extension>
 </addon>
 
+<addon id="script.module.garepobg"
+       name="garepobg"
+       version="0.1.4"
+       provider-name="kodi1">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.requests" version="1.1.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary></summary>
+    <description></description>
+    <license></license>
+    <platform>all</platform>
+    <forum>http://forum.kodi.tv/showthread.php?tid=195322</forum>
+    <website>https://github.com/kodi1/script.module.garepobg</website>
+  </extension>
+</addon>
+
+<addon id="script.module.html5lib"
+       name="html5lib-python"
+       version="0.999.0"
+       provider-name="html5lib">
+  <requires>
+    <import addon="xbmc.python"
+    		version="2.1.0"/>
+    <import addon="script.module.six"
+                      version="1.4.1"
+                     optional="false"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary>Standards-compliant library for parsing and serializing HTML documents and fragments in Python.</summary>
+    <description>html5lib is a pure-python library for parsing HTML. It is designed to conform to the WHATWG HTML specification, as is implemented by all major web browsers.</description>
+    <platform>all</platform>
+    <license>MIT</license>
+    <source>https://github.com/html5lib/html5lib-python.git</source>
+    <website>https://github.com/html5lib/html5lib-python</website>
+  </extension>
+</addon>
+
 <addon id="script.module.liveresolver"
      name="LiveResolver"
      version="0.1.49"
@@ -776,6 +956,31 @@ Kodi is a registered trademark of the XBMC Foundation. We are not connected to o
     <summary lang="en"></summary>
     <disclaimer lang="en">[COLOR cyan][B]][[/B]NT3L[B]][[/B]G3NC[B]][[/B][/COLOR] [COLOR ghostwhite]Powered![/COLOR]</disclaimer>
   </extension>
+</addon>
+
+<addon id="service.subtitles.unacs"
+       name="subsunacs/subsab"
+       version="0.0.15h"
+       provider-name="kodi1">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.beautifulsoup4" version="4.3.2"/>
+    <import addon="script.module.requests" version="1.1.0"/>
+    <import addon="script.module.garepobg" version="0.1.0"/>
+    <import addon="script.module.html5lib" version="0.999.0" optional="false"/>
+    <import addon="script.module.simplejson" version="3.3.0"/>
+  </requires>
+  <extension point="xbmc.subtitle.module"
+             library="service.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Bulgarian Subtitle Service</summary>
+    <description lang="en">Subtitles from subs.sab.bz and subsunacs.net. Thanks to josdion and jconxtc</description>
+    <language>en</language>
+    <platform>all</platform>
+    <forum>http://forum.kodi.tv/showthread.php?tid=195322</forum>
+    <website>https://github.com/kodi1/service.subtitles.unacs</website>
+    <email></email>
+    </extension>
 </addon>
 
 <addon id="tvsupertuga.repository" name="[COLOR cyan]TV[/COLOR][COLOR red]supertuga[/COLOR].[COLOR limegreen]Repository[/COLOR]" version="0.0.8" provider-name="TVsupertuga">

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="repository.kodil" name="[COLOR blue]Kodisrael[/COLOR][COLOR white]Repository[/COLOR]" version="1.2" provider-name="kodil">
+    <extension point="xbmc.addon.repository" name=".Kodisrael  Repository ">
+        <info compressed="false">https://raw.githubusercontent.com/kodil/kodil/master/addons.xml</info>
+        <checksum>http://www.lvtvv.com/addons.xml.md5</checksum>
+        <datadir zip="true">https://raw.githubusercontent.com/kodil/kodil/master/repo</datadir>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>kodisrael repository</summary>
+        <description>kodisrael repository - the most extensive repository in israel </description>
+        <description></description>
+        <platform>all</platform>
+    </extension>
+</addon>

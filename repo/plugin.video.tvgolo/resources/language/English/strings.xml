@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<strings>
+    <string id="30000">OKGoals</string>
+    <string id="30001">Previous Weeks</string>
+    <string id="30002">Search Matches</string>
+    <string id="30003">Page</string>
+    <string id="30004">unavailable</string>
+    <string id="30005">No compatible servers available.</string>
+    <string id="30006">Choose video</string>
+    <string id="30007">Unavailable or removed video.</string>
+    <string id="30008">Search Match</string>
+    <string id="30009">The search only includes matches from the last month.</string>
+	<string id="30010">Lastest Goals</string>
+	<string id="30011">Lastest Goals from Portuguese League</string>
+	<string id="30012">Lastest Goals by League</string>
+	<string id="30013">Previous Seasons</string>
+	<string id="30014">Quality</string>
+	<string id="30015">Doesn't include Portuguese League.</string>
+</strings>

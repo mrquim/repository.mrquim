@@ -1,0 +1,1 @@
+[{"url": "https://raw.githubusercontent.com/ikesuncat/listas/master/Addon.xml", "fanart": ".\\fanart.jpg", "title": "Ike"}]
