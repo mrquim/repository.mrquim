@@ -56,6 +56,26 @@
 
 </addon>
 
+<addon id="plugin.program.autocompletion" name="AutoCompletion for virtual keyboard" version="1.0.1" provider-name="Philipp Temminghoff (phil65)">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0" />
+        <import addon="script.module.simplejson" version="3.3.0"/>
+        <import addon="script.module.autocompletion" version="1.0.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="plugin.py" />
+    <extension point="xbmc.python.script"       library="default.py">
+        <provides>executable</provides>
+    </extension>
+
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">AutoCompletion for the virtual keyboard (needs skin support)</summary>
+        <description lang="en">AutoCompletion for the virtual keyboard (needs skin support)</description>
+        <platform>all</platform>
+        <license>GNU GENERAL PUBLIC LICENSE Version 2.1, February 1999</license>
+        <source>https://github.com/phil65/plugin.program.autocompletion</source>
+    </extension>
+</addon>
+
 <addon id="plugin.program.indigo" version="3.0.2" name="Indigo" author="tvaddons">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
@@ -820,6 +840,31 @@ Kodi is a registered trademark of the XBMC Foundation. We are not connected to o
 	</extension>
 </addon>
 
+<addon id="resource.images.studios.white" name="Studio Icons - White" version="0.0.10" provider-name="Team Kodi">
+	<extension point="kodi.resource.images" compile="true" type="studios" />
+	<requires>
+		<import addon="kodi.resource" version="1.0.0"/>
+	</requires>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">White Studio Icons</summary>
+		<description lang="en">White Studio Icons</description>
+		<platform>all</platform>
+		<license>Creative Commons Attribution-Share Alike 3.0 United States</license>
+	</extension>
+</addon>
+
+<addon id="resource.images.weathericons.white" name="Weather Icons - White" version="0.0.6" provider-name="Team Kodi">
+	<extension point="kodi.resource.images" compile="true" type="weather" />
+	<requires>
+		<import addon="kodi.resource" version="1.0.0"/>
+	</requires>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">White Weather Icons</summary>
+		<description lang="en">White Weather Icons</description>
+		<platform>all</platform>
+	</extension>
+</addon>
+
 <addon id="script.exodus.artwork" version="1.0.7" name="Exodus Artwork" provider-name="Exodus">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
@@ -842,6 +887,213 @@ Kodi is a registered trademark of the XBMC Foundation. We are not connected to o
 		<description>Metadata for Exodus are maintained separately to make distribution of the the addon itself easier/faster.</description>
 		<platform>all</platform>
 	</extension>
+</addon>
+
+<addon id="script.extendedinfo" name="ExtendedInfo Script" version="5.6.0" provider-name="phil65 (Philipp Temminghoff)">
+	<requires>
+		<import addon="xbmc.python" version="2.25.0"/>
+		<import addon="resource.images.studios.white" version="0.0.5"/>
+		<import addon="script.module.kodi65" version="1.0.0"/>
+		<import addon="script.module.routing" version="0.1.0"/>
+		<!-- 		<import addon="script.module.buggalo" version="1.1.6"/>-->
+	</requires>
+	<extension point="xbmc.python.script" library="default.py">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.python.pluginsource" library="plugin.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<language/>
+		<summary lang="en">ExtendedInfo Script</summary>
+		<description lang="en">This script offers various possibilities to display online content inside skins as well as a complete MovieDB browser including info dialogs for various media types. Used services are themoviedb.org, theaudiodb.org, Trakt.TV, omdbapi.com and a lot more. Needs skin implementation for lot of functions.</description>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</license>
+		<forum>http://forum.kodi.tv/showthread.php?tid=160558</forum>
+		<source>https://github.com/phil65/script.extendedinfo</source>
+		<email>phil65@kodi.tv</email>
+		<news>Fix support for Kodi L* nightlies[CR]Browser window improvements[CR]Fixes for TADB/LastFM</news>
+		<assets>
+			<icon>resources/icon.png</icon>
+			<fanart>resources/fanart.jpg</fanart>
+			<screenshot>resources/screenshot-01.jpg</screenshot>
+			<screenshot>resources/screenshot-02.jpg</screenshot>
+			<screenshot>resources/screenshot-03.jpg</screenshot>
+			<screenshot>resources/screenshot-04.jpg</screenshot>
+			<screenshot>resources/screenshot-05.jpg</screenshot>
+		</assets>
+	</extension>
+</addon>
+
+<addon id="script.globalsearch" name="Global Search" version="7.4.7" provider-name="ronie">
+	<requires>
+		<import addon="xbmc.python" version="2.25.0"/>
+	</requires>
+	<extension point="xbmc.python.script" library="default.py">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="bg">Търси в библиотеката Ви.</summary>
+		<summary lang="ca">Cerca a la teva biblioteca.</summary>
+		<summary lang="cs">Hledej v knihovně</summary>
+		<summary lang="de">Durchsuchen Sie Ihre Bibliothek.</summary>
+		<summary lang="el">Αναζήτηση στη Συλλογή σας.</summary>
+		<summary lang="en">Search your library.</summary>
+		<summary lang="en_NZ">Search your library.</summary>
+		<summary lang="en_US">Search your library.</summary>
+		<summary lang="es">Busca tu biblioteca.</summary>
+		<summary lang="fr">Chercher dans la médiathèque.</summary>
+		<summary lang="fr_CA">Chercher dans votre bibliothèque</summary>
+		<summary lang="gl">Buscar a súa biblioteca.</summary>
+		<summary lang="he">חיפוש בספריית המדיה.</summary>
+		<summary lang="hr">Pretražite svoju zbirku.</summary>
+		<summary lang="hu">Keresés a médiatárban</summary>
+		<summary lang="id">Cari pustaka Anda.</summary>
+		<summary lang="it">Ricerca nella la tua libreria.</summary>
+		<summary lang="ko">라이브러리 찾기</summary>
+		<summary lang="lt">Ieškoti bibliotekoje.</summary>
+		<summary lang="nl">Zoek in je bibliotheek.</summary>
+		<summary lang="no">Søk i biblioteket ditt</summary>
+		<summary lang="pl">Przeszukaj swoją bibliotekę</summary>
+		<summary lang="pt">Faça buscas na sua biblioteca.</summary>
+		<summary lang="pt_BR">Pesquise sua coleção.</summary>
+		<summary lang="ro">Căutați în mediateca dumneavoastră.</summary>
+		<summary lang="ru">Поиск в вашей медиатеке.</summary>
+		<summary lang="sl">Iščite v svoji knjižnici.</summary>
+		<summary lang="sv">Sök i ditt bibliotek.</summary>
+		<summary lang="tr">Kitaplığını ara</summary>
+		<summary lang="zh">资料库搜索</summary>
+		<description lang="bg">Добавката може да намери всеки елемент във вашата видео и музикална библиотека.</description>
+		<description lang="ca">Aquest complement pot trobat qualsevol article en la teva biblioteca de vídeo i música</description>
+		<description lang="cs">Tento dopněk dokáže najít libovolnou položku ve vaší audio a video knihovně.</description>
+		<description lang="de">Dieses Add-on kann jeden Eintrag in Ihrer Video- und Musikbibliothek finden.</description>
+		<description lang="el">Αυτό το πρόσθετο μπορεί να βρει κάθε αντικείμενο στις συλλογές σας.</description>
+		<description lang="en">This addon can find any item in your video and music library.</description>
+		<description lang="en_NZ">This addon can find any item in your video and music library.</description>
+		<description lang="en_US">This addon can find any item in your video and music library.</description>
+		<description lang="es">Este complemento puede encontrar cualquier elemento en tu biblioteca de vídeo y música.</description>
+		<description lang="fr">Cette extension peut trouver tout élément dans la vidéothèque et l'audiothèque.</description>
+		<description lang="fr_CA">Cet addiciel peut trouver tout élément dans votre vidéothèque et dans votre audiothèque.</description>
+		<description lang="gl">Este complemento pode atopar calquera elemento na súa biblioteca de medios.</description>
+		<description lang="he">הרחבה זו יכולה למצוא כל פריט בספריות הווידאו והמוזיקה.</description>
+		<description lang="hr">Ovaj dodatak može pronaći svaku stavku u vašoj videoteci ili fonoteci.</description>
+		<description lang="hu">Ez a kiegészítő bármely elemet megtalálja a videó és audió médiatárban.</description>
+		<description lang="id">Addon ini dapat mencari item apa saja di pustaka video dan musik Anda.</description>
+		<description lang="it">Questo addon può trovare ogni elemento nella tua libreria video ed in quella musicale.</description>
+		<description lang="ko">비디오와 음악 라이브러리의 모든 항목을 검색합니다.</description>
+		<description lang="lt">Šis priedas gali rasti bet kokį elementą jūsų vaizdo ir garso bibliotekoje.</description>
+		<description lang="nl">Deze addon kan elk item in je video- en muziekbibliotheken vinden.</description>
+		<description lang="no">Dette tillegget kan finne hva som helst i ditt film eller musikk bibliotek.</description>
+		<description lang="pl">Ten plugin może odnaleźć dowolną pozycję w twojej bibliotece wideo oraz muzycznej.</description>
+		<description lang="pt">Este addon pode encontrar qualquer item na sua biblioteca de vídeos e de músicas.</description>
+		<description lang="pt_BR">Este addon pode encontrar qualquer item na sua coleção de vídeos e música.</description>
+		<description lang="ro">Acest supliment poate găsi orice element în mediateca dumneavoastră video și audio.</description>
+		<description lang="ru">Это дополнение поможет найти любую запись в вашей медиатеке.</description>
+		<description lang="sl">Ta dodatek lahko poišče katerokoli podatek v vaši knjižnici filmov in glasbe.</description>
+		<description lang="sv">Detta tillägg kan hitta vilket objekt som helst i ditt video och musikbibliotek.</description>
+		<description lang="tr">Bu eklenti video ve müzik kitaplığınızdaki herhangi bir öğeyi bulabilir.</description>
+		<description lang="zh">此插件搜索你的视频和音乐资料库项目。</description>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
+		<forum>http://forum.kodi.tv/showthread.php?tid=109301</forum>
+		<website></website>
+		<email></email>
+		<source>https://github.com/ronie/script.globalsearch/</source>
+	</extension>
+</addon>
+
+<addon id="script.image.resource.select" name="Image Resource Select Addon" version="2.0.2" provider-name="ronie">
+	<requires>
+		<import addon="xbmc.python" version="2.25.0"/>
+	</requires>
+	<extension point="xbmc.python.library" library="default.py"/>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Image resource selection addon</summary>
+		<description lang="en">Script for skinners to let users select an image resource addon.</description>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
+		<forum>http://forum.kodi.tv/showthread.php?tid=239558</forum>
+		<website></website>
+		<email></email>
+		<source>https://github.com/ronie/script.image.resource.select</source>
+	</extension>
+</addon>
+
+<addon id="script.module.addon.signals"
+	name="Addon Signals"
+	version="0.0.1"
+	provider-name="Rick Phillips (ruuk)">
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Inter-addon signalling</summary>
+		<description lang="en">Provides signal/slot mechanism for inter-addon communication</description>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE Version 2.1, February 1999</license>
+		<source>https://github.com/ruuk/script.module.addon.signals</source>
+	</extension>
+</addon>
+
+<addon id="script.module.arrow"
+       name="arrow"
+       version="0.10.0"
+       provider-name="crsmithdev, Razzeee">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+	<import addon="script.module.dateutil" version="2.4.2"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary>Arrow: better dates and times for Python</summary>
+    <description>Packed for Kodi from https://github.com/crsmithdev/arrow</description>
+    <platform>all</platform>
+    <language></language>
+    <license>Apache2</license>
+    <forum></forum>
+    <website>http://crsmithdev.com/arrow/</website>
+    <source>https://github.com/Razzeee/script.module.arrow</source>
+    <email>beenje AT gmail.com</email>
+  </extension>
+</addon>
+
+<addon id="script.module.autocompletion" name="AutoCompletion library" version="1.1.2" provider-name="Philipp Temminghoff (phil65)">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0" />
+        <import addon="script.module.simplejson" version="3.3.0"/>
+    </requires>
+    <extension point="xbmc.python.module" library="lib" />
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">Module providing some AutoCompletion functions</summary>
+        <description lang="en">Module providing some AutoCompletion functions</description>
+        <platform>all</platform>
+        <license>GNU GENERAL PUBLIC LICENSE Version 2.1, February 1999</license>
+        <source>https://github.com/phil65/script.module.autocompletion</source>
+    </extension>
+</addon>
+
+<addon id="script.module.dateutil"
+       name="dateutil"
+       version="2.5.3"
+       provider-name="Gustavo Niemeyer, Tomi Pieviläinen, Yaron de Leeuw, Razzeee">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.six" version="1.9.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary>dateutil - powerful extensions to datetime</summary>
+    <description>Packed for Kodi from https://github.com/dateutil/dateutil</description>
+    <platform>all</platform>
+    <language></language>
+    <license>Revised BSD License</license>
+    <forum></forum>
+    <website>https://dateutil.readthedocs.org/en/latest/</website>
+    <source>https://github.com/Razzeee/script.module.dateutil</source>
+    <email></email>
+  </extension>
 </addon>
 
 <addon id="script.module.exodus" name="Exodus Module" version="1.00.025" provider-name="Exodus">
@@ -917,6 +1169,25 @@ Kodi is a registered trademark of the XBMC Foundation. We are not connected to o
   </extension>
 </addon>
 
+<addon id="script.module.kodi65" name="Kodi65 Library" version="1.2.1" provider-name="Philipp Temminghoff (phil65)">
+	<requires>
+		<import addon="xbmc.python" version="2.25.0"/>
+		<import addon="script.module.youtube.dl" version="14.519.1"/>
+		<import addon="script.module.pil" version="1.1.7"/>
+		<import addon="script.module.autocompletion" version="1.0.0"/>
+		<import addon="script.module.requests" version="2.9.1"/>
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Helper module</summary>
+		<description lang="en">Helper module for all kind of stuff</description>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE Version 2.1, February 1999</license>
+		<source>https://github.com/phil65/script.module.kodi65</source>
+		<news>Adjust to latest core changes, bugfixes, API extensions</news>
+	</extension>
+</addon>
+
 <addon id="script.module.liveresolver"
      name="LiveResolver"
      version="0.1.49"
@@ -964,6 +1235,33 @@ Kodi is a registered trademark of the XBMC Foundation. We are not connected to o
   </extension>
 </addon>
 
+<addon id="script.module.metadatautils"
+       name="Metadata and Artwork module"
+       version="1.0.8"
+       provider-name="marcelveldt">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="script.module.requests" version="2.3.0"/>
+        <import addon="script.module.beautifulsoup" version="3.0.8" />
+        <import addon="script.module.thetvdb" version="0.0.1" />
+        <import addon="script.module.musicbrainz" version="0.0.1" />
+        <import addon="script.module.simplecache" version="1.0.0"/>
+        <import addon="script.module.arrow" version="0.6.0"/>
+    </requires>
+    <extension point="xbmc.python.module" library="lib" />
+    <extension point="xbmc.addon.metadata">
+        <summary>Metadata and artwork from common sources like TMDB, IMDB, TADB and fanart.tv </summary>
+        <description>
+            The metadata and artwork module for Kodi provides rich metadata, including artwork for
+            various metatypes by scraping (and caching) this information from sites like TMDB, musicbrainz and fanart.tv.[CR][CR]
+            This product uses the TMDb API but is not endorsed or certified by TMDb
+        </description>
+        <license>Apache 2.0</license>
+        <source>https://github.com/marcelveldt/script.module.metadatautils</source>
+        <platform>all</platform>
+    </extension>
+</addon>
+
 <addon id="script.module.metahandler"
      name="metahandler"
      version="3.0.2"
@@ -986,6 +1284,24 @@ Kodi is a registered trademark of the XBMC Foundation. We are not connected to o
     <website></website>
     <email></email>
     <source></source>
+  </extension>
+</addon>
+
+<addon id="script.module.musicbrainz"
+       name="Musicbrainz NGS webservice python bindings"
+       version="0.6.0"
+       provider-name="marcelveldt">
+  <requires>
+  <import addon="xbmc.python" version="2.24.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary>Python bindings for Musicbrainz' NGS webservice</summary>
+    <description>Kodi module library for the Python bindings for Musicbrainz' NGS webservice developed by alastair.</description>
+    <license>GNU GENERAL PUBLIC LICENSE Version 2</license>
+    <source>https://github.com/marcelveldt/script.module.musicbrainz</source>
+    <platform>all</platform>
   </extension>
 </addon>
 
@@ -1033,6 +1349,20 @@ Kodi is a registered trademark of the XBMC Foundation. We are not connected to o
         </extension>
 </addon>
 
+<addon id="script.module.routing" name="Plugin routing" version="0.2.0" provider-name="takoi">
+    <requires>
+        <import addon="xbmc.python" version="2.14.0"/>
+    </requires>
+    <extension point="xbmc.python.module" library="lib" />
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">Routing module for plugins</summary>
+        <description lang="en">Provides plugin URL routing and pattern matching</description>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+        <platform>all</platform>
+        <source>https://github.com/tamland/kodi-plugin-routing</source>
+    </extension>
+</addon>
+
 <addon id="script.module.schism.common" name="Elysium Common Libraries" version="2017.06.08" provider-name="Elysium">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0" />
@@ -1047,6 +1377,20 @@ Kodi is a registered trademark of the XBMC Foundation. We are not connected to o
 		<description lang="en">Collection of modules used by Elysium</description>
 		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
 	</extension>
+</addon>
+
+<addon id="script.module.simplecache" name="Simple Cache Module" version="1.0.14" provider-name="marcelveldt">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+    </requires>
+    <extension point="xbmc.python.module" library="lib" />
+    <extension point="xbmc.addon.metadata">
+        <summary>Provides a simple file- and memory based cache for Kodi addons</summary>
+        <description>Provides a simple file- and memory based cache for Kodi addons</description>
+        <license>Apache 2.0</license>
+        <source>https://github.com/marcelveldt/script.module.simplecache</source>
+        <platform>all</platform>
+    </extension>
 </addon>
 
 <addon id="script.module.singledispatch"
@@ -1066,6 +1410,44 @@ Kodi is a registered trademark of the XBMC Foundation. We are not connected to o
     <source>https://pypi.python.org/pypi/singledispatch#downloads</source>
     <website>http://docs.python.org/3/library/functools.html#functools.singledispatch</website>
   </extension>
+</addon>
+
+<addon id="script.module.thetvdb"
+       name="The TVDB API v2"
+       version="1.0.12"
+       provider-name="marcelveldt">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="script.module.requests" version="2.3.0"/>
+        <import addon="script.module.simplejson" version="3.3.0"/>
+        <import addon="script.module.simplecache" version="1.0.0"/>
+        <import addon="script.module.arrow" version="0.6.0"/>
+    </requires>
+    <extension point="xbmc.python.module" library="lib" />
+    <extension point="xbmc.addon.metadata">
+        <summary>TheTVDB API v2 python module for Kodi</summary>
+        <description>TheTVDB API v2 python module for Kodi</description>
+        <license>Apache 2.0</license>
+        <source>https://github.com/marcelveldt/script.module.thetvdb</source>
+        <platform>all</platform>
+    </extension>
+</addon>
+
+<addon id="script.module.unidecode" name="unidecode" version="0.4.16" provider-name="Tomaz Solc (Tomaz.solc@tablix.org)">
+	<requires>
+		<import addon="xbmc.python" version="2.1.0"/>
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<language></language>
+		<summary lang="en">ASCII transliterations of Unicode text by Sean M. Burke and Tomaz Solc</summary>
+		<description lang="en">ASCII transliterations of Unicode text by Sean M. Burke and Tomaz Solc</description>
+		<disclaimer lang="en">Code taken from https://pypi.python.org/pypi/Unidecode</disclaimer>
+		<license>GNU General Public License v.2</license>
+		<website>https://pypi.python.org/pypi/Unidecode</website>
+		<source>https://pypi.python.org/pypi/Unidecode</source>
+	</extension>
 </addon>
 
 <addon id="script.poseidon.artwork" version="1.0.5" name="Poseidon Artwork" provider-name="Soulless">
