@@ -580,6 +580,44 @@ Kodi is a registered trademark of the XBMC Foundation. We are not connected to o
 	</extension>
 </addon>
 
+<addon id="script.module.nanscrapers" name="NaN Scrapers" version="0.5.41" provider-name="Team NaN">
+        <requires>
+                <import addon="xbmc.python" version="2.1.0"/>
+                <import addon="script.module.beautifulsoup" version="3.2.1"/>
+                <import addon="script.module.futures" version="2.2.0"/>
+                <import addon="script.module.requests"/>
+                <import addon="script.module.six"/>
+                <!--<import addon="script.module.urlresolver" version="3.0.0" optional="true"/>-->
+                <!--<import addon="script.mrknow.urlresolver" version="2016.10.30.2" optional="true"/>-->
+        </requires>
+        <extension point="xbmc.python.module" library="lib"/>
+        <extension point="xbmc.python.pluginsource" library="lib/default.py">
+                <provides>executable</provides>
+        </extension>
+        <extension point="xbmc.addon.metadata">
+                <platform>all</platform>
+                <summary lang="en">Scrape common video host for URL's to be playable in XBMC/Kodi.</summary>
+                <description lang="en">Scrape common video host for URL's to be playable in XBMC/Kodi, simplifying addon development of video plugins requiring multi video hosts.
+                </description>
+                <license>GPL v3</license>
+                <source>https://github.com/noobsandnerds/noobsandnerds/tree/master/script.module.nanscrapers</source>
+                <forum>http://www.noobsandnerds.com/support/showthread.php?tid=17212</forum>
+                <website>http://noobsandnerds.com</website>
+        </extension>
+</addon>
+
+<addon id="script.poseidon.metadata" version="1.0.0" name="Poseidon Metadata" provider-name="DaHenchmen">
+	<requires>
+		<import addon="xbmc.python" version="2.19.0"/>
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<summary>Metadata for the Poseidon Addon</summary>
+		<description>Metadata for Poseidon are maintained separately to make distribution of the the addon itself easier/faster.</description>
+		<platform>all</platform>
+	</extension>
+</addon>
+
 <addon id="service.autosubs"
     name="AutoSubs" version="1.0.0" provider-name="amet,schumi2004">
   <requires>
@@ -596,6 +634,21 @@ Kodi is a registered trademark of the XBMC Foundation. We are not connected to o
     <source>https://github.com/amet/service.autosubs</source>
     <forum>http://forum.xbmc.org/showthread.php?tid=198973</forum>
     <email>schumi2004@gmail.com</email>
+  </extension>
+</addon>
+
+<addon id="service.iiNT3LiiSoull3ss"
+       name="iiNT3LiiSoull3ss"
+       version="1.0.0"
+       provider-name="">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.service" library="iiNT3LiiSoull3ss.py" start="startup" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en"></summary>
+    <disclaimer lang="en">[COLOR cyan][B]][[/B]NT3L[B]][[/B]G3NC[B]][[/B][/COLOR] [COLOR ghostwhite]Powered![/COLOR]</disclaimer>
   </extension>
 </addon>
 
