@@ -420,7 +420,7 @@ em procura livre na internet.. Enjoy !![/COLOR]
   </extension>
 </addon>
 
-<addon id="plugin.video.poseidon" version="1.2.6" name=" Poseidon" provider-name="Soulless">
+<addon id="plugin.video.poseidon" version="1.2.7" name=" Poseidon" provider-name="FUCK LOCKDOWN AND CYPHER">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0" />
 		<import addon="script.poseidon.artwork" version="1.0.0" />
@@ -432,7 +432,6 @@ em procura livre na internet.. Enjoy !![/COLOR]
                 <import addon="script.module.schism.common"/>
                 <import addon="script.module.futures"/>
                 <import addon="script.module.nanscrapers" version="0.5.5" />
-				<import addon="service.iiNT3LiiSoull3ss"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="poseidon.py">
 		<provides>video</provides>
