@@ -1863,6 +1863,24 @@ Kodi is a registered trademark of the XBMC Foundation. We are not connected to o
     </extension>
 </addon>
 
+<addon id="script.mrquim.speedtest"
+       name="Mr. Quim Speed Tester"
+       version="2.0.0"
+       provider-name="Mr. Quim">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.python.script"
+             library="default.py">
+        <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Mr. Quim Internet Speed Tester</summary>
+    <description lang="en">This is a fork of ARNU Box Speed Tester. No you can know how much speed your internet provider gives to you.</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="script.poseidon.artwork" version="1.0.5" name="Poseidon Artwork" provider-name="Soulless">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
