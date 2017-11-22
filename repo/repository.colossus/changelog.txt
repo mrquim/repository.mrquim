@@ -1,23 +1,4 @@
-------------------------
-Colossal Repo 999.999.6 (17-Jul-17)
-------------------------
+Colossus STOPPED:
+ http://koditips.com/colossus-repo-gone-urlresolver-offline/ (Colossal ABANDONED (t)his repo)
 
-- Fixed Repo Name
-
-------------------------
-Colossal Repo 999.999.5 (16-Jul-17)
-------------------------
-
-- Removed additional backup repos
-
-------------------------
-Colossal Repo 999.999.3 (16-Jul-17)
-------------------------
-
-- Added additional backup repos
-
-------------------------
-Colossal Repo 999.999.2 (14-Jul-17)
-------------------------
-
-- Moved to GitHub
+**You should uninstall all broken/stopped/unused REPOs
