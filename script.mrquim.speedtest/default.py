@@ -850,7 +850,7 @@ class i11iI11iIiIi ( xbmcgui . WindowDialog ) :
  def __init__ ( self ) :
   self . imgControl = xbmcgui . ControlImage ( 340 , 210 , 600 , 270 , 'https://www.speedtest.net/result/%s.png' % O00o0o0000o0o )
   self . addControl ( self . imgControl )
-  self . button0 = xbmcgui . ControlButton ( int ( 340 + 505 ) , int ( 210 + 206 ) , 80 , 50 , "[B]Close[/B]" )
+  self . button0 = xbmcgui . ControlButton ( int ( 340 + 505 ) , int ( 210 + 206 ) , 80 , 50 , "[B]FECHAR[/B]" )
   self . addControl ( self . button0 )
   self . setFocus ( self . button0 )
   if 78 - 78: OoooooooOO . OoO0O00 + OOO0O - i1IIi
@@ -1036,7 +1036,7 @@ class oO ( xbmcgui . Window ) :
   self . addControl ( self . dlul_prog_textbox )
   if 11 - 11: o0oOoO00o - oooO0oo0oOOOO + II111iiii - iIii1I11I1II1
   if 7 - 7: I11iii11IIi - i111I / II111iiii * II1Ii1iI1i . o0oOoO00o * o0oOoO00o
-  self . button_run = xbmcgui . ControlButton ( iiIIIiIi1IIi , ii11i , oooO0 , iiIIiii , "[B]Run Speedtest[/B]" , focusTexture = self . image_button_run , noFocusTexture = self . image_button_run , alignment = 2 | 4 , textColor = '0xFF000000' , focusedColor = '0xFF000000' , shadowColor = '0xFFCCCCCC' , disabledColor = '0xFF000000' )
+  self . button_run = xbmcgui . ControlButton ( iiIIIiIi1IIi , ii11i , oooO0 , iiIIiii , "[B]Iniciar Teste de Velocidade de Internet[/B]" , focusTexture = self . image_button_run , noFocusTexture = self . image_button_run , alignment = 2 | 4 , textColor = '0xFF000000' , focusedColor = '0xFF000000' , shadowColor = '0xFFCCCCCC' , disabledColor = '0xFF000000' )
   self . addControl ( self . button_run )
   self . setFocus ( self . button_run )
   self . button_run_glow . setVisible ( True )
@@ -1596,7 +1596,7 @@ class oO ( xbmcgui . Window ) :
    oOOo00O0OOOo = open ( self . image_result , 'w+' )
    oOOo00O0OOOo . write ( OooO0oOo )
    oOOo00O0OOOo . close ( )
-   oo0 . append ( 'Results saved: %s' % self . image_result )
+   oo0 . append ( 'Resultados guardados: %s' % self . image_result )
    self . update_textbox ( oo0 )
    if 31 - 31: i111I % ooO0oo0oO0 * i111I
    if 45 - 45: i1IIi . I1IiiI + ooO0oo0oO0 - OoooooooOO % OOO0O
@@ -2341,7 +2341,7 @@ class oO0ooOO ( xbmcgui . WindowXMLDialog ) :
  def speedtest ( self , list = False , mini = None , server = None , share = False , simple = False , src = None , timeout = 10 , units = ( 'bit' , 8 ) , version = False ) :
   self . imgPing . setVisible ( True )
   self . imgPing_glow . setVisible ( True )
-  oo0 = [ 'Running Speed Tester - Brought to you by http://www.arnubox.com' ]
+  oo0 = [ 'Running Speed Tester - Brought to you by http://www.JoaquimdeOliveira.eu' ]
   if 29 - 29: O0 . o0ooo
   if 66 - 66: oooO0oo0oOOOO * iIii1I11I1II1 % iIii1I11I1II1 * I11iii11IIi - OOO0O - I11iii11IIi
   if 70 - 70: o0ooo + oooO0oo0oOOOO

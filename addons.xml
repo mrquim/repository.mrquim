@@ -635,24 +635,6 @@ em procura livre na internet.. Enjoy !![/COLOR]
     </extension>
 </addon>
 
-<addon id="program.mrspeedtest"
-       name="Mr. Quim Speed Tester"
-       version="0.0.3"
-       provider-name="Mr. Quim">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-  </requires>
-<extension point="xbmc.python.pluginsource"
-             library="default.py">
-        <provides>executable</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">Mr. Quim Speed Tester</summary>
-    <description lang="en">This is a clone of ARNU Box Speed Tester. No you can know how much speed your internet provider gives to you.</description>
-    <platform>all</platform>
-  </extension>
-</addon>
-
 <addon id="program.plexus"
        name="Plexus"
        version="0.1.6.a"
@@ -1865,7 +1847,7 @@ Kodi is a registered trademark of the XBMC Foundation. We are not connected to o
 
 <addon id="script.mrquim.speedtest"
        name="Mr. Quim Speed Tester"
-       version="2.0.0"
+       version="2.1.0"
        provider-name="Mr. Quim">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
