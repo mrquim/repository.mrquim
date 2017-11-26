@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+    <controls>
+        <control type="group">
+            <description>Window size and position</description>
+            <animation effect="slide" start="-1920" end="0" time="500" tween="cubic" easing="out">WindowOpen</animation>
+            <animation effect="slide" start="0" end="-1920" time="500" tween="cubic" easing="in">WindowClose</animation>
+            <width>1100</width>
+            <height>1080</height>
+            <centerleft>960</centerleft>
+            <centertop>540</centertop>
+
+            <control type="image">
+                <description>Background image</description>
+                <width>1100</width>
+                <texture colordiffuse="f6111111">white.png</texture>
+                    <!--
+                    <bordertexture colordiffuse="ffb2afa8">white.png</bordertexture>
+                    <colordiffuse>f0111111</colordiffuse>
+                    <bordersize>2</bordersize>
+                    -->
+            </control>
+
+            <control type="group">
+                <description>Bottom panel</description>
+                <top>940</top>
+	            <control type="image">
+	                <description>Separator</description>
+	                <top>0</top>
+	                <texture colordiffuse="99555555">white.png</texture>
+	            </control>
+                <control type="textbox" id="200">
+                    <description>Info area</description>
+                    <left>40</left>
+                    <top>25</top>
+                    <height>130</height>
+                    <width>1030</width>
+                    <textcolor>ff87bde1</textcolor>
+                </control>
+            </control>
+
+            <control type="group">
+                <description>Left panel</description>
+                <width>680</width>
+
+                <control type="image">
+                    <description>OpenELEC logo</description>
+                    <top>20</top>
+                    <left>60</left>
+                    <texture>logotype.png</texture>
+                    <aspectratio>keep</aspectratio>
+                    <height>152</height>
+                    <width>482</width>
+                </control>
+
+                <control type="label" id="100">
+                    <description>Build type label</description>
+                    <top>150</top>
+                    <right>50</right>
+                    <align>right</align>
+                    <aligny>top</aligny>
+                    <textcolor>ff87bde1</textcolor>
+                </control>
+
+                <control type="grouplist" id="300">
+                    <description>Toolbar</description>
+                    <top>190</top>
+                    <left>60</left>
+                    <itemgap>30</itemgap>
+                    <orientation>horizontal</orientation>
+                    <ondown>10</ondown>
+                    <onright>20</onright>
+
+                    <control type="button" id="30">
+                        <description>Settings button</description>
+                        <width>48</width>
+                        <height>48</height>
+                        <texturefocus colordiffuse="ff87bde1">settings.png</texturefocus>
+                        <texturenofocus colordiffuse="ff555555">settings.png</texturenofocus>
+                    </control>
+
+                    <control type="button" id="40">
+                        <description>History button</description>
+                        <width>48</width>
+                        <height>48</height>
+                        <texturefocus colordiffuse="ff87bde1">history.png</texturefocus>
+                        <texturenofocus colordiffuse="ff555555">history.png</texturenofocus>
+                    </control>
+
+                    <control type="button" id="50">
+                        <description>Cancel button</description>
+                        <width>48</width>
+                        <height>48</height>
+                        <texturefocus colordiffuse="ff87bde1">cancel.png</texturefocus>
+                        <texturenofocus colordiffuse="ff555555">cancel.png</texturenofocus>
+                    </control>
+                </control>
+                
+                <control type="group">
+                    <description>Source selection</description>
+                    <left>0</left>
+                    <top>280</top>
+        
+                    <control type="list" id="10">
+                        <left>0</left>
+                        <top>25</top>
+                        <width>680</width>
+                        <height>585</height>
+                        <onright>20</onright>
+                        <onup>300</onup>
+                        <itemlayout height="65" width="680">
+                            <control type="image">
+                                <visible>StringCompare(ListItem.Label2, selected)</visible>
+                                <texture border="5">white.png</texture>
+                                <colordiffuse>f02b2b2b</colordiffuse>
+                            </control>
+                            <control type="label">
+                                <visible>StringCompare(ListItem.Label2, selected)</visible>
+                                <width>680</width>
+                                <left>50</left>
+                                <aligny>center</aligny>
+                                <textcolor>ffffffff</textcolor>
+                                <info>ListItem.Label</info>
+                            </control>
+                            <control type="label">
+                                <visible>!StringCompare(ListItem.Label2, selected)</visible>
+                                <width>680</width>
+                                <left>50</left>
+                                <aligny>center</aligny>
+                                <textcolor>d0b2afa8</textcolor>
+                                <info>ListItem.Label</info>
+                            </control>
+                        </itemlayout>
+                        <focusedlayout height="65" width="680">
+                            <control type="group">
+                                <animation effect="slide" start="0,35" end="0,0" time="200" reversible="false" tween="back" easing="out" condition="Container(10).OnPrevious">Focus</animation>
+                                <animation effect="slide" start="0,-35" end="0,0" time="200" reversible="false" tween="back" easing="out" condition="Container(10).OnNext">Focus</animation>
+                                
+                                <control type="image">
+                                    <visible>!Control.HasFocus(10) + StringCompare(ListItem.Label2, selected)</visible>
+                                    <texture border="5">white.png</texture>
+                                    <colordiffuse>f02b2b2b</colordiffuse>
+                                </control>
+                                
+                                <control type="image">
+                                    <visible>Control.HasFocus(10) + StringCompare(ListItem.Label2, selected)</visible>
+                                    <texture border="5">white.png</texture>
+                                    <colordiffuse>502b2b2b</colordiffuse>
+                                </control>
+                                    
+                                <control type="image">
+                                    <!-- #88bde1 -->
+                                    <visible>Control.HasFocus(10)</visible>
+                                    <texture border="12">highlight.png</texture>
+                                </control>
+                                
+                                <control type="label">
+                                    <visible>!StringCompare(ListItem.Label2, selected)</visible>
+                                    <width>680</width>
+                                    <left>50</left>
+                                    <aligny>center</aligny>
+                                    <textcolor>f0b2afa8</textcolor>
+                                    <info>ListItem.Label</info>
+                                </control>
+                                
+                                <control type="label">
+                                    <visible>StringCompare(ListItem.Label2, selected)</visible>
+                                    <width>680</width>
+                                    <left>50</left>
+                                    <aligny>center</aligny>
+                                    <textcolor>ffffffff</textcolor>
+                                    <info>ListItem.Label</info>
+                                </control>
+                            </control>
+                        </focusedlayout>
+                    </control>
+                </control>
+
+                <control type="group">
+                    <description>Right panel</description>
+                    <left>680</left>
+                    <height>940</height>
+                    <width>420</width>
+
+                    <control type="image">
+                        <texture border="5">white.png</texture>
+                        <colordiffuse>f02b2b2b</colordiffuse>
+                    </control>
+
+                    <control type="scrollbar" id="600">
+                        <left>412</left>
+                        <height>940</height>
+                        <texturesliderbackground colordiffuse="ff999999">white.png</texturesliderbackground>
+                        <texturesliderbar colordiffuse="ffffffff">white.png</texturesliderbar>
+                        <showonepage>false</showonepage>
+                    </control>
+
+                    <control type="list" id="20">
+                        <description>Build list</description>
+                        <left>0</left>
+                        <top>45</top>
+                        <height>845</height>
+                        <pagecontrol>600</pagecontrol>
+                        <onleft>10</onleft>
+                        <itemlayout height="65" width="420">
+
+                            <control type="label">
+                                <left>0</left>
+                                <width>190</width>
+                                <aligny>center</aligny>
+                                <align>center</align>
+                                <textcolor>ffb2afa8</textcolor>
+                                <info>ListItem.Label</info>
+                            </control>
+
+                            <control type="label">
+                                <right>100</right>
+                                <aligny>center</aligny>
+                                <align>right</align>
+                                <textcolor>ffb2afa8</textcolor>
+                                <info>ListItem.Label2</info>
+                            </control>
+
+                            <control type="image">
+                                <left>340</left>
+                                <top>10</top>
+                                <height>48</height>
+                                <width>48</width>
+                                <info>ListItem.Icon</info>
+                            </control>
+                        </itemlayout>
+                        <focusedlayout height="65" width="420">
+                            <control type="group">
+                                <animation effect="slide" start="0,35" end="0,0" time="200" reversible="false" tween="back" easing="out" condition="Container(20).OnPrevious">Focus</animation>
+                                <animation effect="slide" start="0,-35" end="0,0" time="200" reversible="false" tween="back" easing="out" condition="Container(20).OnNext">Focus</animation>
+
+                                <control type="label">
+                                    <visible>Control.HasFocus(20)</visible>
+                                    <left>0</left>
+                                    <width>190</width>
+                                    <aligny>center</aligny>
+                                    <align>center</align>
+                                    <textcolor>ffffffff</textcolor>
+                                    <info>ListItem.Label</info>
+                                </control>
+                                
+                                <control type="label">
+                                    <visible>!Control.HasFocus(20)</visible>
+                                    <left>0</left>
+                                    <width>190</width>
+                                    <aligny>center</aligny>
+                                    <align>center</align>
+                                    <textcolor>ffb2afa8</textcolor>
+                                    <info>ListItem.Label</info>
+                                </control>
+
+                                <control type="label">
+                                    <visible>Control.HasFocus(20)</visible>
+                                    <right>100</right>
+                                    <aligny>center</aligny>
+                                    <align>right</align>
+                                    <textcolor>ffffffff</textcolor>
+                                    <info>ListItem.Label2</info>
+                                </control>
+
+                                <control type="label">
+                                    <visible>!Control.HasFocus(20)</visible>
+                                    <right>100</right>
+                                    <aligny>center</aligny>
+                                    <align>right</align>
+                                    <textcolor>ffb2afa8</textcolor>
+                                    <info>ListItem.Label2</info>
+                                </control>
+                               
+                                <control type="image">
+                                    <left>340</left>
+                                    <top>10</top>
+                                    <height>48</height>
+                                    <width>48</width>
+                                    <info>ListItem.Icon</info>
+                                </control>
+
+                                <control type="image">
+                                    <!-- #88bde1 -->
+                                    <visible>Control.HasFocus(20)</visible>
+                                    <texture border="12">highlight.png</texture>
+                                </control>
+                            </control>
+                        </focusedlayout>
+                    </control>
+                </control>
+            </control>
+        </control>  
+    </controls>
+</window>

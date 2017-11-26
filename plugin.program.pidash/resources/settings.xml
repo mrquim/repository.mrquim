@@ -1,0 +1,18 @@
+<settings>
+    <category>
+        <setting id="RecordPath" type ="folder" label="30001" default="/tmp/" />
+        <setting id="RecordMode" type ="bool" label="30030" default="false" />
+        <setting id="RecordTime" type ="enum" label="30033" default="0" values="5|10|15|30|60" visible="eq(-1,true)" />
+        <setting id="YCorrection" type ="number" default="0" visible="false" />
+        <setting id="Zoom" type ="number" default="1" visible="false" />
+        <setting id="LiveviewControls" type ="bool" label="30028" default="true" />
+        <setting id="RearcamMode" type ="bool" label="30029" default="false" />
+        <setting id="RearcamOverlay" type ="bool" label="30034" default="true" />
+    </category>
+    <category label="30035">
+        <setting id="AWBMode" type ="enum" label="30003" default="1" lvalues="30005|30006|30007|30008|30009|30010|30011|30012|30013|30014" />
+        <setting id="EXPMode" type ="enum" label="30004" default="1" lvalues="30015|30016|30017|30018|30019|30020|30021|30022|30023|30024|30025|30026|30027" />
+        <setting id="Rotation" type ="enum" label="30002" default="0" values="0|90|180|270" />
+        <setting id="HFlip" type ="bool" label="30036" default="false" />
+    </category>
+</settings>

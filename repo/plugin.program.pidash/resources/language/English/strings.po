@@ -1,0 +1,213 @@
+# Kodi Media Center language file
+# Addon Name: Pi-Dashcam
+# Addon id: plugin.program.pidash
+# Addon Provider: Marc Hillesheim
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "PiDash server not available"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Storage location"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Picture rotation"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Whitebalance"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Exposure Mode"
+msgstr ""
+
+msgctxt "#30005"
+msgid "off"
+msgstr ""
+
+msgctxt "#30006"
+msgid "auto"
+msgstr ""
+
+msgctxt "#30007"
+msgid "sunlight"
+msgstr ""
+
+msgctxt "#30008"
+msgid "cloudy"
+msgstr ""
+
+msgctxt "#30009"
+msgid "shade"
+msgstr ""
+
+msgctxt "#30010"
+msgid "tungston"
+msgstr ""
+
+msgctxt "#30011"
+msgid "fluorescent"
+msgstr ""
+
+msgctxt "#30012"
+msgid "incandescent"
+msgstr ""
+
+msgctxt "#30013"
+msgid "flash"
+msgstr ""
+
+msgctxt "#30014"
+msgid "horizon"
+msgstr ""
+
+msgctxt "#30015"
+msgid "off"
+msgstr ""
+
+msgctxt "#30016"
+msgid "auto"
+msgstr ""
+
+msgctxt "#30017"
+msgid "night"
+msgstr ""
+
+msgctxt "#30018"
+msgid "nightpreview"
+msgstr ""
+
+msgctxt "#30019"
+msgid "backlight"
+msgstr ""
+
+msgctxt "#30020"
+msgid "spotlight"
+msgstr ""
+
+msgctxt "#30021"
+msgid "sports"
+msgstr ""
+
+msgctxt "#30022"
+msgid "snow"
+msgstr ""
+
+msgctxt "#30023"
+msgid "beach"
+msgstr ""
+
+msgctxt "#30024"
+msgid "verylong"
+msgstr ""
+
+msgctxt "#30025"
+msgid "fixedfps"
+msgstr ""
+
+msgctxt "#30026"
+msgid "antishake"
+msgstr ""
+
+msgctxt "#30027"
+msgid "fireworks"
+msgstr ""
+
+msgctxt "#30028"
+msgid "Show Liveview Controls"
+msgstr ""
+
+msgctxt "#30029"
+msgid "Use as rearcam"
+msgstr ""
+
+msgctxt "#30030"
+msgid "Loop Recording Mode"
+msgstr ""
+
+msgctxt "#30031"
+msgid "Warning"
+msgstr ""
+
+msgctxt "#30032"
+msgid "Recordpath was not available!\nReset to /tmp"
+msgstr ""
+
+msgctxt "#30033"
+msgid "Recording time in loop mode (minutes)"
+msgstr ""
+
+msgctxt "#30034"
+msgid "Show scale in rearcam mode"
+msgstr ""
+
+msgctxt "#30035"
+msgid "Image Settings"
+msgstr ""
+
+msgctxt "#30036"
+msgid "Horizontal flip"
+msgstr ""
+
+msgctxt "#30100"
+msgid "Versioncheck Failed"
+msgstr ""
+
+msgctxt "#30101"
+msgid "Package python-picamera is missing!\nDo you want to install it now?"
+msgstr ""
+
+msgctxt "#30102"
+msgid "Package python-picamera must be v1.11 or greater!"
+msgstr ""
+
+msgctxt "#30103"
+msgid "Installed Version of python-picamera:"
+msgstr ""
+
+msgctxt "#30104"
+msgid "Installation Error!"
+msgstr ""
+
+msgctxt "#30105"
+msgid "Please install manually with following command:\nsudo apt-get install python-picamera"
+msgstr ""
+
+msgctxt "#30106"
+msgid "Installation Successfull"
+msgstr ""
+
+msgctxt "#30107"
+msgid "Autoinstall python-picamera via apt"
+msgstr ""
+
+msgctxt "#30108"
+msgid "Python-picamera is now installed in version "
+msgstr ""
+
+msgctxt "#30109"
+msgid "Notice"
+msgstr ""
+
+msgctxt "#30110"
+msgid "The Server and the PiDashcam-Addon won't work without this package!"
+msgstr ""
+
+msgctxt "#30111"
+msgid "The Server Died!"
+msgstr ""

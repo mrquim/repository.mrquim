@@ -1,0 +1,231 @@
+# script.facebook.watching.now language file
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+#: Settings
+msgctxt "#32002"
+msgid "First site to search link"
+msgstr ""
+
+#: Settings
+msgctxt "#32003"
+msgid "Second site to search link"
+msgstr ""
+
+#: Settings
+msgctxt "#32004"
+msgid "Third site to search link"
+msgstr ""
+
+#: Settings
+msgctxt "#32005"
+msgid "Privacy settings of shared post"
+msgstr ""
+
+#: Settings
+msgctxt "#32006"
+msgid "Display Share button after playback starts"
+msgstr ""
+
+#: Settings
+msgctxt "#32007"
+msgid "Auto close share button"
+msgstr ""
+
+#: Settings
+msgctxt "#32010"
+msgid "Disabled"
+msgstr ""
+
+#: Settings
+msgctxt "#32011"
+msgid "TMDb"
+msgstr ""
+
+#: Settings
+msgctxt "#32012"
+msgid "IMDB"
+msgstr ""
+
+#: Settings
+msgctxt "#32013"
+msgid "Filmweb"
+msgstr ""
+
+#: Settings
+msgctxt "#32017"
+msgid "Notification"
+msgstr ""
+
+#: Settings
+msgctxt "#32018"
+msgid "Debuging"
+msgstr ""
+
+#: Settings
+msgctxt "#32020"
+msgid "Only me"
+msgstr ""
+
+#: Settings
+msgctxt "#32021"
+msgid "Friends"
+msgstr ""
+
+#: Settings
+msgctxt "#32022"
+msgid "Friends of friends"
+msgstr ""
+
+#: Settings
+msgctxt "#32023"
+msgid "Everyone"
+msgstr ""
+
+#: XML
+msgctxt "#32100"
+msgid "Share on Facebook"
+msgstr ""
+
+#: GUI
+msgctxt "#32110"
+msgid "Can\'t find link to movie"
+msgstr ""
+
+#: GUI
+msgctxt "#32111"
+msgid "Re-auth user needed"
+msgstr ""
+
+#: GUI
+msgctxt "#32112"
+msgid "Error authorization"
+msgstr ""
+
+#: GUI
+msgctxt "#32113"
+msgid "Error sharing"
+msgstr ""
+
+#: GUI
+msgctxt "#32114"
+msgid "Shared on Facebook"
+msgstr ""
+
+#: GUI
+msgctxt "#32115"
+msgid "MENU"
+msgstr ""
+
+#: GUI
+msgctxt "#32116"
+msgid "Add user"
+msgstr ""
+
+#: GUI
+msgctxt "#32117"
+msgid "Delete user"
+msgstr ""
+
+#: GUI
+msgctxt "#32118"
+msgid "Re-authenticate"
+msgstr ""
+
+#: GUI
+msgctxt "#32119"
+msgid "User exist"
+msgstr ""
+
+#: GUI
+msgctxt "#32120"
+msgid "Added"
+msgstr ""
+
+#: GUI
+msgctxt "#32121"
+msgid "No users"
+msgstr ""
+
+#: GUI
+msgctxt "#32122"
+msgid "USERS"
+msgstr ""
+
+#: GUI
+msgctxt "#32123"
+msgid "DELETE USERS"
+msgstr ""
+
+#: GUI
+msgctxt "#32124"
+msgid "Ary you sure to delete user"
+msgstr ""
+
+#: GUI
+msgctxt "#32125"
+msgid "User"
+msgstr ""
+
+#: GUI
+msgctxt "#32126"
+msgid "deleted"
+msgstr ""
+
+#: GUI
+msgctxt "#32127"
+msgid "No users to authenticate"
+msgstr ""
+
+#: GUI
+msgctxt "#32128"
+msgid "not exist"
+msgstr ""
+
+#: GUI
+msgctxt "#32129"
+msgid "re-authorized"
+msgstr ""
+
+#: GUI
+msgctxt "#32130"
+msgid "AUTHENTICATE"
+msgstr ""
+
+#: GUI
+msgctxt "#32131"
+msgid "Intialize"
+msgstr ""
+
+#: GUI
+msgctxt "#32132"
+msgid "Error intialize"
+msgstr ""
+
+#: GUI
+msgctxt "#32133"
+msgid "Authentication for Facebook"
+msgstr ""
+
+#: GUI
+msgctxt "#32134"
+msgid "Go to"
+msgstr ""
+
+#: GUI
+msgctxt "#32135"
+msgid "and type"
+msgstr ""
+
+#: GUI
+msgctxt "#32136"
+msgid "Waiting"
+msgstr ""
+
+#: GUI
+msgctxt "#32137"
+msgid "Not authenticated"
+msgstr ""

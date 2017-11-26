@@ -1,0 +1,231 @@
+# script.facebook.watching.now language file
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pl\n"
+
+#: Settings
+msgctxt "#32002"
+msgid "First site to search link"
+msgstr "Pierwsza strona do wyszukania linka"
+
+#: Settings
+msgctxt "#32003"
+msgid "Second site to search link"
+msgstr "Druga strona do wyszukania linka"
+
+#: Settings
+msgctxt "#32004"
+msgid "Third site to search link"
+msgstr "Trzecia strona do wyszukania linka"
+
+#: Settings
+msgctxt "#32005"
+msgid "Privacy settings of shared post"
+msgstr "Ustawienia prywatności dla publikowanego postu"
+
+#: Settings
+msgctxt "#32006"
+msgid "Display Share button after playback starts"
+msgstr "Wyświetl przycisk udostępnienia po rozpoczęciu odtwarzania"
+
+#: Settings
+msgctxt "#32007"
+msgid "Auto close share button"
+msgstr "Automatycznie zamknij przycisk udostępnienia"
+
+#: Settings
+msgctxt "#32010"
+msgid "Disabled"
+msgstr "Wyłączone"
+
+#: Settings
+msgctxt "#32011"
+msgid "TMDb"
+msgstr TMDb""
+
+#: Settings
+msgctxt "#32012"
+msgid "IMDB"
+msgstr "IMDB"
+
+#: Settings
+msgctxt "#32013"
+msgid "Filmweb"
+msgstr "Filmweb"
+
+#: Settings
+msgctxt "#32017"
+msgid "Notification"
+msgstr "Powiadomienia"
+
+#: Settings
+msgctxt "#32018"
+msgid "Debuging"
+msgstr "Debugowanie"
+
+#: Settings
+msgctxt "#32020"
+msgid "Only me"
+msgstr "Tylko ja"
+
+#: Settings
+msgctxt "#32021"
+msgid "Friends"
+msgstr "Znajomi"
+
+#: Settings
+msgctxt "#32022"
+msgid "Friends of friends"
+msgstr "Znajomi znajomych"
+
+#: Settings
+msgctxt "#32023"
+msgid "Everyone"
+msgstr "Wszyscy"
+
+#: XML
+msgctxt "#32100"
+msgid "Share on Facebook"
+msgstr "Udostępnij na Facebooku"
+
+#: GUI
+msgctxt "#32110"
+msgid "Can\'t find link to movie"
+msgstr "Nie mogę znaleźć linka"
+
+#: GUI
+msgctxt "#32111"
+msgid "Re-auth user needed"
+msgstr "Ptrzebna ponowna autoryzacja użytkownika"
+
+#: GUI
+msgctxt "#32112"
+msgid "Error authorization"
+msgstr "Błąd autoryzacji"
+
+#: GUI
+msgctxt "#32113"
+msgid "Error sharing"
+msgstr "Błąd udostępniania"
+
+#: GUI
+msgctxt "#32114"
+msgid "Shared on Facebook"
+msgstr "Udostępniono na Facebooku"
+
+#: GUI
+msgctxt "#32115"
+msgid "MENU"
+msgstr "MENU"
+
+#: GUI
+msgctxt "#32116"
+msgid "Add user"
+msgstr "Dodaj użytkownika"
+
+#: GUI
+msgctxt "#32117"
+msgid "Delete user"
+msgstr "Usuń użytkownika"
+
+#: GUI
+msgctxt "#32118"
+msgid "Re-authenticate"
+msgstr "Ponownie autoryzuj"
+
+#: GUI
+msgctxt "#32119"
+msgid "User exist"
+msgstr "Użytkownik istnieje"
+
+#: GUI
+msgctxt "#32120"
+msgid "Added"
+msgstr "Dodano"
+
+#: GUI
+msgctxt "#32121"
+msgid "No users"
+msgstr "Brak użytkowników"
+
+#: GUI
+msgctxt "#32122"
+msgid "USERS"
+msgstr "UŻYTKOWNICY"
+
+#: GUI
+msgctxt "#32123"
+msgid "DELETE USERS"
+msgstr "USUŃ UŻYTKOWNIKA"
+
+#: GUI
+msgctxt "#32124"
+msgid "Ary you sure to delete user"
+msgstr "Jesteś pewien, że chcesz usunąć użytkownika"
+
+#: GUI
+msgctxt "#32125"
+msgid "User"
+msgstr "Użytkownik"
+
+#: GUI
+msgctxt "#32126"
+msgid "deleted"
+msgstr "usunięty"
+
+#: GUI
+msgctxt "#32127"
+msgid "No users to authenticate"
+msgstr "Brak użytkowników do autoryzacji"
+
+#: GUI
+msgctxt "#32128"
+msgid "not exist"
+msgstr "nie istnieje"
+
+#: GUI
+msgctxt "#32129"
+msgid "re-authorized"
+msgstr "ponownie autoryzowany"
+
+#: GUI
+msgctxt "#32130"
+msgid "AUTHENTICATE"
+msgstr "AUTORYZACJA"
+
+#: GUI
+msgctxt "#32131"
+msgid "Intialize"
+msgstr "Inicjowanie"
+
+#: GUI
+msgctxt "#32132"
+msgid "Błąd inicjowania"
+msgstr ""
+
+#: GUI
+msgctxt "#32133"
+msgid "Authentication for Facebook"
+msgstr "Autoryzacja dla Facebooka"
+
+#: GUI
+msgctxt "#32134"
+msgid "Go to"
+msgstr "Idź do"
+
+#: GUI
+msgctxt "#32135"
+msgid "and type"
+msgstr "i wpisz"
+
+#: GUI
+msgctxt "#32136"
+msgid "Waiting"
+msgstr "Oczekiwanie"
+
+#: GUI
+msgctxt "#32137"
+msgid "Not authenticated"
+msgstr "Nie zautoryzowano"

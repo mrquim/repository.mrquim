@@ -1,0 +1,213 @@
+# Kodi Media Center language file
+# Addon Name: Pi-Dashcam
+# Addon id: plugin.program.pidash
+# Addon Provider: Marc Hillesheim
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "PiDash server not available"
+msgstr "PiDash-Server nicht verfügbar"
+
+msgctxt "#30001"
+msgid "Storage location"
+msgstr "Speicherpfad"
+
+msgctxt "#30002"
+msgid "Picture rotation"
+msgstr "Bilddrehung"
+
+msgctxt "#30003"
+msgid "Whitebalance"
+msgstr "Weissabgleich"
+
+msgctxt "#30004"
+msgid "Exposure Mode"
+msgstr "Belichtungsmodus"
+
+msgctxt "#30005"
+msgid "off"
+msgstr "Aus"
+
+msgctxt "#30006"
+msgid "auto"
+msgstr "Automatisch"
+
+msgctxt "#30007"
+msgid "sunlight"
+msgstr "Sonnenlicht"
+
+msgctxt "#30008"
+msgid "cloudy"
+msgstr "Bewölkt"
+
+msgctxt "#30009"
+msgid "shade"
+msgstr "Schatten"
+
+msgctxt "#30010"
+msgid "tungston"
+msgstr "Glühbirne"
+
+msgctxt "#30011"
+msgid "fluorescent"
+msgstr "Fluoreszierend"
+
+msgctxt "#30012"
+msgid "incandescent"
+msgstr "Glühend"
+
+msgctxt "#30013"
+msgid "flash"
+msgstr "Blitzlicht"
+
+msgctxt "#30014"
+msgid "horizon"
+msgstr "Horizont"
+
+msgctxt "#30015"
+msgid "off"
+msgstr "Aus"
+
+msgctxt "#30016"
+msgid "auto"
+msgstr "Automatisch"
+
+msgctxt "#30017"
+msgid "night"
+msgstr "Nacht"
+
+msgctxt "#30018"
+msgid "nightpreview"
+msgstr "Nacht (Vorschau)"
+
+msgctxt "#30019"
+msgid "backlight"
+msgstr "Hintergrundlicht"
+
+msgctxt "#30020"
+msgid "spotlight"
+msgstr "Scheinwerfer"
+
+msgctxt "#30021"
+msgid "sports"
+msgstr "Sport"
+
+msgctxt "#30022"
+msgid "snow"
+msgstr "Schnee"
+
+msgctxt "#30023"
+msgid "beach"
+msgstr "Strand"
+
+msgctxt "#30024"
+msgid "verylong"
+msgstr "Sehr lang"
+
+msgctxt "#30025"
+msgid "fixedfps"
+msgstr "Feste FPS"
+
+msgctxt "#30026"
+msgid "antishake"
+msgstr "Stabilisierung"
+
+msgctxt "#30027"
+msgid "fireworks"
+msgstr "Feuerwerk"
+
+msgctxt "#30028"
+msgid "Show Liveview Controls"
+msgstr "Zeige Livebild-Kontrollen"
+
+msgctxt "#30029"
+msgid "Use as rearcam"
+msgstr "Benutzung als Rückfahrkamera"
+
+msgctxt "#30030"
+msgid "Loop Recording Mode"
+msgstr "Aufnahme in Schleife"
+
+msgctxt "#30031"
+msgid "Warning"
+msgstr "Warnung"
+
+msgctxt "#30032"
+msgid "Recordpath was not available!\nReset to /tmp"
+msgstr "Aufnahmepfad war nicht verfügbar!\nZurückgesetzt auf /tmp"
+
+msgctxt "#30033"
+msgid "Recording time in loop mode (minutes)"
+msgstr "Aufnahmezeit in der Schleife (Minuten)"
+
+msgctxt "#30034"
+msgid "Show scale in rearcam mode"
+msgstr "Zeige Skala in Rückfahrkamera"
+
+msgctxt "#30035"
+msgid "Image Settings"
+msgstr "Bildeinstellungen"
+
+msgctxt "#30036"
+msgid "Horizontal flip"
+msgstr "Horizontal spiegeln"
+
+msgctxt "#30100"
+msgid "Versioncheck Failed"
+msgstr "Versionsprüfung fehlgeschlagen!"
+
+msgctxt "#30101"
+msgid "Package python-picamera is missing!\nDo you want to install it now?"
+msgstr "Das Paket python-picamera fehlt!\nWollen Sie es jetzt installieren?"
+
+msgctxt "#30102"
+msgid "Package python-picamera must be v1.11 or greater!"
+msgstr "Das Paket python-picamera muss mindestens in der Version\n1.11 installiert sein!"
+
+msgctxt "#30103"
+msgid "Installed Version of python-picamera:"
+msgstr "Installierte Version von python-picamera:"
+
+msgctxt "#30104"
+msgid "Installation Error!"
+msgstr "Installationsfehler!"
+
+msgctxt "#30105"
+msgid "Please install manually with following command:\nsudo apt-get install python-picamera"
+msgstr "Bitte manuell installieren mit folgendem Befehl:\nsudo apt-get install python-picamera"
+
+msgctxt "#30106"
+msgid "Installation Successfull"
+msgstr "Installation war erfolgreich"
+
+msgctxt "#30107"
+msgid "Autoinstall python-picamera via apt"
+msgstr "Python-picamera automatisch via apt installieren"
+
+msgctxt "#30108"
+msgid "Python-picamera is now installed in version "
+msgstr "Python-picamera ist jetzt in folgender Version installiert: "
+
+msgctxt "#30109"
+msgid "Notice"
+msgstr "Hinweis"
+
+msgctxt "#30110"
+msgid "The Server and the PiDashcam-Addon won't work without this package!"
+msgstr "Der Server und das Pi-Dashcam-Addon werden ohne dieses\nPaket nicht funktionieren!"
+
+msgctxt "#30111"
+msgid "The Server Died!"
+msgstr "Der Server ist abgestürzt!"

@@ -1,0 +1,326 @@
+<window id="1200">
+	<defaultcontrol always="true">9000</defaultcontrol>
+	<controls>
+	    <include>Window_OpenClose_Animation_Zoom</include>
+	    <include condition="substring(Window(10000).Property(Pidash.Rearcam),false)">CommonBackground</include>
+	    <control type="image">
+		    <posx>0</posx>
+		    <posy>0</posy>
+		    <width>1280</width>
+		    <height>720</height>
+		    <texture>pidashdefault.jpg</texture>
+		    <visible>substring(Window(10000).Property(Pidash.Rearcam),true)</visible>
+	    </control>
+
+	    <control type="image">
+		    <include>Window_OpenClose_Animation_Slide_Down</include>
+		    <posx>0</posx>
+		    <posy>0</posy>
+		    <width>ScreenWidth</width>
+		    <height>80</height>
+		    <texture>pidash_topbar.png</texture>
+		    <visible>substring(Window(10000).Property(Pidash.Rearcam),false)</visible>
+	    </control>
+
+	    <control type="group">
+		<visible>substring(Window(10000).Property(Pidash.Rearcam),false)</visible>
+		<control type="image">		
+			<include>Window_OpenClose_Animation_Slide_Down</include>
+			<include>VisibleFadeEffect</include>
+			<posx>450</posx>
+		        <posy>0</posy>
+			<width>375</width>
+			<height>75</height>
+			<aligny>center</aligny>
+			<align>center</align>
+			<texture>pidash_ceas.png</texture>
+		</control>
+		<control type="label">
+			<include>Window_OpenClose_Animation_Slide_Down</include>
+			<description>time label</description>
+			<posx>255</posx>
+			<posy>0</posy>
+			<width>350</width>
+			<height>67</height>
+			<aligny>center</aligny>
+			<align>center</align>
+			<font>font50_title</font>
+			<textcolor>white</textcolor>
+			<label>$INFO[System.Time]</label>
+			<include>VisibleFadeEffect</include>
+			<include>16x9_xPos_Relocation</include>
+		</control>
+	    </control>	
+	    <control type="image">
+		    <visible>substring(Window(10000).Property(Pidash.Rearcam),false)</visible>
+		    <include>Window_OpenClose_Animation_Slide_Up</include>
+		    <posx>0</posx>
+		    <posy>630</posy>
+		    <width>ScreenWidth</width>
+		    <height>90</height>
+		    <texture>pidash_bottombar.png</texture>
+	    </control>
+	    <control type="button" id="1203">
+		    <description>Dummy Focus Button</description>
+		    <posx>-1</posx>
+		    <posy>-1</posy>
+		    <width>1</width>
+		    <height>1</height>
+		    <font>-</font>
+		    <texturenofocus border="5">pidash_overlay.png</texturenofocus>
+		    <texturefocus border="5">pidash_overlay.png</texturefocus>
+	    </control>
+
+	    <control type="group">
+		<include>Window_OpenClose_Animation_Slide_Down</include>
+		<posx>0</posx>
+		<posy>0</posy>
+		<include>VisibleFadeEffect</include>
+		<visible>substring(Window(10000).Property(Pidash.Rearcam),false)</visible>
+		<control type="button" id="1201">
+			<description>Home Button</description>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>75</width>
+			<height>75</height>
+			<font>-</font>
+			<texturenofocus border="5">pidash_floor_button_t.png</texturenofocus>
+			<texturefocus border="5">pidash_floor_buttonFO.png</texturefocus>
+			<onclick>ActivateWindow(Home)</onclick>
+		</control>
+		<control type="image">
+			<description>Home Button Image</description>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>70</width>
+			<height>70</height>
+			<texture>pidash_icon_home.png</texture>
+		</control>
+
+		<control type="label">
+			<description>Test</description>
+			<posx>100</posx>
+			<posy>0</posy>
+			<width>300</width>
+			<font>font30_title</font>
+			<height>80</height>
+			<aligny>center</aligny>
+			<label>Pi-Dashcam</label>
+		</control>
+	    </control>
+
+	    <control type="group">
+		<include>Window_OpenClose_Animation_Slide_Up</include>
+		<posx>170r</posx>
+		<posy>86r</posy>
+		<include>VisibleFadeEffect</include>
+		<visible>substring(Window(10000).Property(Pidash.Rearcam),false)</visible>
+		<control type="button" id="1207">
+			<description>List Button</description>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>82</width>
+			<height>82</height>
+			<font>-</font>
+			<texturenofocus border="5">pidash_floor_button_t.png</texturenofocus>
+			<texturefocus border="5">pidash_floor_buttonFO.png</texturefocus>
+			<onclick>ActivateWindow(Video,$INFO[Window(10000).Property(PiDash.RecordPath)])</onclick>
+		</control>
+		<control type="image">
+			<description>List Button Image</description>
+			<posx>10</posx>
+			<posy>8</posy>
+			<width>64</width>
+			<height>64</height>
+			<texture>pidash_icon_view_w.png</texture>
+		</control>
+		<control type="button" id="1202">
+			<description>Back Button</description>
+			<posx>86</posx>
+			<posy>0</posy>
+			<width>82</width>
+			<height>82</height>
+			<font>-</font>
+			<texturenofocus border="5">pidash_floor_button_t.png</texturenofocus>
+			<texturefocus border="5">pidash_floor_buttonFO.png</texturefocus>
+			<onclick>ParentDir</onclick>
+		</control>
+		<control type="image">
+			<description>Back Button Image</description>
+			<posx>96</posx>
+			<posy>8</posy>
+			<width>64</width>
+			<height>64</height>
+			<texture>pidash_icon_back_w.png</texture>
+		</control>
+	    </control>
+
+	    <control type="group">
+		<include>Window_OpenClose_Animation_Slide_Up</include>
+		<posx>550</posx>
+		<posy>86r</posy>
+		<include>VisibleFadeEffect</include>
+		<visible>substring(Window(10000).Property(Pidash.Rearcam),false)</visible>
+		<control type="button" id="1205">
+			<description>Record Button</description>
+			<visible>!substring(Window(10000).Property(PiDash.Record),true)</visible>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>82</width>
+			<height>82</height>
+			<font>-</font>
+			<texturenofocus border="5">pidash_icon_record.png</texturenofocus>
+			<texturefocus border="5">pidash_icon_record_p.png</texturefocus>
+		</control>
+		<control type="button" id="1205">
+			<description>Record Button</description>
+			<visible>substring(Window(10000).Property(PiDash.Record),true)</visible>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>82</width>
+			<height>82</height>
+			<font>-</font>
+			<texturenofocus border="5">pidash_icon_record_r.png</texturenofocus>
+			<texturefocus border="5">pidash_icon_record_r_p.png</texturefocus>
+		</control>
+		<control type="button" id="1206">
+			<description>Stop Button</description>
+			<posx>90</posx>
+			<posy>0</posy>
+			<width>82</width>
+			<height>82</height>
+			<texturenofocus border="5">pidash_icon_stop.png</texturenofocus>
+			<texturefocus border="5">pidash_icon_stop_p.png</texturefocus>
+		</control>
+		<control type="button" id="1215">
+			<description>Save Button</description>
+			<visible>substring(Window(10000).Property(RecordMode),true)</visible>
+			<posx>270</posx>
+			<posy>0</posy>
+			<width>82</width>
+			<height>82</height>
+			<texturenofocus border="5">pidash_icon_save.png</texturenofocus>
+			<texturefocus border="5">pidash_icon_save_p.png</texturefocus>
+		</control>
+
+
+	    </control>
+
+	    <control type="group">
+		<include>Window_OpenClose_Animation_Slide_Down</include>
+		<posx>200r</posx>
+		<posy>0</posy>
+		<include>VisibleFadeEffect</include>
+		<visible>substring(Window(10000).Property(Pidash.Rearcam),false)</visible>
+	        <control type="label">
+		    <description>Free Storage Info</description>
+		    <posx>0</posx>
+		    <posy>0</posy>
+		    <width>200</width>
+		    <height>82</height>
+		    <font>font50_title</font>
+		    <align>left</align>
+		    <aligny>center</aligny>
+		    <label>$INFO[Window(10000).Property(PiDash.StorageFree)]</label>
+		</control>
+	    </control>
+
+	    <control type="group">
+		<include>Window_OpenClose_Animation_Slide_Up</include>
+		<posx>0</posx>
+		<posy>86r</posy>
+		<include>VisibleFadeEffect</include>
+		<visible>substring(Window(10000).Property(Pidash.Rearcam),false)</visible>
+		<control type="button" id="1210">
+			<description>Settings Button</description>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>82</width>
+			<height>82</height>
+			<font>-</font>
+			<texturenofocus border="5">pidash_floor_button_t.png</texturenofocus>
+			<texturefocus border="5">pidash_floor_buttonFO.png</texturefocus>
+		</control>
+		<control type="image">
+			<description>Settings Button Image</description>
+			<posx>8</posx>
+			<posy>8</posy>
+			<width>64</width>
+			<height>64</height>
+			<texture>pidash_icon_settings_w.png</texture>
+		</control>
+	    </control>
+
+	    <control type="group">
+		<include>Window_OpenClose_Animation_Slide_Up</include>
+		<posx>200</posx>
+		<posy>86r</posy>
+		<visible>substring(Window(10000).Property(Pidash.Rearcam),false)</visible>
+		<include>VisibleFadeEffect</include>
+		<control type="button" id="1211">
+			<description>Liveview Up Button</description>
+			<visible>substring(Window(10000).Property(LiveviewControls),true)</visible>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>82</width>
+			<height>82</height>
+			<font>-</font>
+			<texturenofocus border="5">pidash_liveview_up.png</texturenofocus>
+			<texturefocus border="5">pidash_liveview_up_p.png</texturefocus>
+		</control>
+		<control type="button" id="1212">
+			<description>Liveview Down Button</description>
+			<visible>substring(Window(10000).Property(LiveviewControls),true)</visible>
+			<posx>86</posx>
+			<posy>0</posy>
+			<width>82</width>
+			<height>82</height>
+			<font>-</font>
+			<texturenofocus border="5">pidash_liveview_down.png</texturenofocus>
+			<texturefocus border="5">pidash_liveview_down_p.png</texturefocus>
+		</control>
+	    </control>
+
+	    <control type="group">
+		<include>Window_OpenClose_Animation_Slide_Up</include>
+		<posx>368r</posx>
+		<posy>86r</posy>
+		<include>VisibleFadeEffect</include>
+		<visible>substring(Window(10000).Property(Pidash.Rearcam),false)</visible>
+		<control type="button" id="1213">
+			<description>Liveview Up Button</description>
+			<visible>substring(Window(10000).Property(LiveviewControls),true)</visible>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>82</width>
+			<height>82</height>
+			<font>-</font>
+			<texturenofocus border="5">pidash_liveview_zoom_plus.png</texturenofocus>
+			<texturefocus border="5">pidash_liveview_zoom_plus_p.png</texturefocus>
+		</control>
+		<control type="button" id="1214">
+			<description>Liveview Down Button</description>
+			<visible>substring(Window(10000).Property(LiveviewControls),true)</visible>
+			<posx>86</posx>
+			<posy>0</posy>
+			<width>82</width>
+			<height>82</height>
+			<font>-</font>
+			<texturenofocus border="5">pidash_liveview_zoom_minus.png</texturenofocus>
+			<texturefocus border="5">pidash_liveview_zoom_minus_p.png</texturefocus>
+		</control>
+	    </control>
+	    <control type="button" id="1202">
+		<visible>substring(Window(10000).Property(Pidash.Rearcam),true)</visible>
+		<description>XXL Back Button in rearcam mode</description>
+		<posx>0</posx>
+		<posy>0</posy>
+		<width>1280</width>
+		<height>720</height>
+		<font>-</font>
+		<texturenofocus border="5">pidash_overlay.png</texturenofocus>
+		<texturefocus border="5">pidash_overlay.png</texturefocus>
+		<onclick>ParentDir</onclick>
+	    </control>
+	</controls>
+</window>
