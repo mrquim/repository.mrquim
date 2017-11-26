@@ -325,6 +325,35 @@ Plugin by @koderdude</description>
     </extension>
 </addon>
 
+<addon id="plugin.video.hltv" version="0.3.0" name="HLTV" provider-name="Jin">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="inputstream.adaptive" version="2.0.18"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="addon.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <news>
+- use inputstream adaptive for hls/dash playback
+- fix archive parser
+- dont treat matches as folder
+- fix twitch resolver for certain channels
+        </news>
+        <summary lang="de_DE">CS:GO Live und auf Abruf</summary>
+        <description lang="de_DE">Video Addon für hltv.org</description>
+        <disclaimer lang="de_DE">Inoffizielles Addon - Benutzung auf eigene Gefahr</disclaimer>
+        <summary lang="en_GB">CS:GO Live and On Demand</summary>
+        <description lang="en_GB">Video Addon for hltv.org</description>
+        <disclaimer lang="en_GB">Unofficial Addon - Use at your own risk</disclaimer>
+        <platform>all</platform>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <website>https://www.hltv.org</website>
+        <email>[jin] at [xyz] dot [de]</email>
+        <source>https://github.com/kodinerds/repo/tree/master/plugin.video.hltv</source>
+    </extension>
+</addon>
+
 <addon id="plugin.video.live.ike"
        name="[COLOR gold][B]IKE[/B][/COLOR]"
        version="4.0.0"
@@ -700,25 +729,41 @@ em procura livre na internet.. Enjoy !![/COLOR]
 	</extension>
 </addon>
 
-<addon id="plugin.video.spotitube" name="Youtube Music" version="1.0.8" provider-name="AddonScriptorDE">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-        <import addon="plugin.video.youtube" version="3.0.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video audio</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="en">Play music videos via Youtube</summary>
-        <language></language>
-        <description lang="en">Play music videos via Youtube</description>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <source>https://github.com/AddonScriptorDE/plugin.video.spotitube</source>
-        <forum>http://forum.xbmc.org/showthread.php?tid=</forum>
-        <email>AddonScriptorDE at yahoo dot de</email>
-        <website></website>
-    </extension>
+<addon id="plugin.video.spotitube" name="Youtube Music" version="2.0.8" provider-name="LORE/realvito">
+	<requires>
+		<import addon="xbmc.python" version="2.14.0"/>
+		<import addon="script.module.simplejson" optional="true"/>
+		<import addon="plugin.video.youtube" version="5.2.1"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video audio</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Musik über Youtube abspielen</summary>
+		<summary lang="en">Play Music via Youtube</summary>
+		<description lang="de">@realvito[CR]Musik aus verschiedenen Quellen z.B. Billboard, iTunes, Spotify etc. auswählen und über Youtube abspielen.[CR][CR]Für mehr Informationen zu allen Neuerungen siehe - CHANGELOG.[CR]     TEST IT AND LIKE IT</description>
+		<description lang="en">@realvito[CR]Choose Music from different sources e.g. Billboard, iTunes, Spotify etc. and play it via Youtube.[CR][CR]For more information about all new features see - CHANGELOG.[CR]     TEST IT AND LIKE IT</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>http://www.kodinerds.net/index.php/Thread/47087-Release-YoutubeMusic-patched/</forum>
+		<website></website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.spotitube</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>[B][COLOR orangered]Version 2.0.8  (27.10.2017)[/COLOR][/B] by realvito[CR]
+- fixed: Billboard - a few Links were changed
+- fixed: Billboard - text errors and some folders are empty in "Billboard-Archive-Videos"
+- fixed: Hypem - all clicked folders are empty
+- * Hypem - NO Video-Images at the time/because they were removed completely *
+- changed: Deezer-Search - apiURL and increase Searchlimit to "100" in settings
+		</news>
+	</extension>
 </addon>
 
 <addon id="plugin.video.tvgolo"
@@ -860,6 +905,23 @@ em procura livre na internet.. Enjoy !![/COLOR]
 	</extension>
 </addon>
 
+<addon id="repository.hawkeyexp_v17" name="Hawkeyexp's Repo (v17)" version="1.0.0" provider-name="Marc Hillesheim">
+    <requires>
+	<import addon="xbmc.gui" version="5.12.0"/>
+    </requires>
+    <extension point="xbmc.addon.repository" name="Hawkeyexp's Repo">
+	<info compressed="true">https://raw.githubusercontent.com/hawkeyexp/Kodi-Repository-Nextgen/master/krypton/addons.xml</info>
+	<checksum>https://raw.githubusercontent.com/hawkeyexp/Kodi-Repository-Nextgen/master/krypton/addons.xml.md5</checksum>
+	<datadir zip="true">https://raw.githubusercontent.com/hawkeyexp/Kodi-Repository-Nextgen/master/krypton/</datadir>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+	<summary>Hawkeyexp's Repo</summary>
+	<summary lang="en">Hawkeyexp's Repo</summary>
+	<description>Repository from Hawkeyexp</description>
+	<platform>all</platform>
+    </extension>
+</addon>
+
 <addon id="repository.ike" name="[COLOR red][B]Ike.Repo[/B][/COLOR]" version="2.1" provider-name="[COLOR lime][B]IKE[/B][/COLOR]">
 	<extension point="xbmc.addon.repository" name="repository.ike">
 		<info compressed="false">http://raw.github.com/ikesuncat/repository.ike/master/addons.xml</info>
@@ -886,6 +948,36 @@ em procura livre na internet.. Enjoy !![/COLOR]
         <description></description>
         <platform>all</platform>
     </extension>
+</addon>
+
+<addon id="repository.kodinerds" name="kodinerds.net Add-ons" version="6.0.0" provider-name="L0RE">
+	<extension point="xbmc.addon.repository" name="L0RE">
+		<info compressed="true">https://raw.githubusercontent.com/kodinerds/repo/master/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/kodinerds/repo/master/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/repo/master/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Official Repository of Kodinerds</summary>
+		<summary lang="de">Offizielles Repository der Kodinerds</summary>
+		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
+		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
+		<disclaimer></disclaimer>
+		<platform>all</platform>
+	</extension>
+</addon>
+
+<addon id="repository.leopold" name="Leopold's Add-ons" version="3.0.0" provider-name="Leopold">
+  <extension point="xbmc.addon.repository" name="Leopold's Repository">
+    <info compressed="false">https://raw.github.com/LS80/repository.leopold/master/addons.xml</info>
+    <checksum>https://raw.github.com/LS80/repository.leopold/master/addons.xml.md5</checksum>
+    <datadir zip="true">https://raw.github.com/LS80/repository.leopold/master</datadir>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>Leopold's add-ons</summary>
+    <description>Download and install add-ons from Leopold's repository. Most of the add-ons in this repository are created and maintained by Leopold. Some add-ons are provided by others and merely hosted here for convenience.</description>
+    <platform>all</platform>
+    <website>http://ls80.github.io/repository.leopold/</website>
+  </extension>
 </addon>
 
 <addon id="repository.mrpiracy" name="MrPiracy.top Repositório" version="1.0.3" provider-name="MrPiracy.top">
@@ -984,6 +1076,23 @@ em procura livre na internet.. Enjoy !![/COLOR]
                 <description>Visit www.noobsandnerds.com and become a part of our great family, you get to choose what The Community Portal holds!</description>
                 <platform>all</platform>
         </extension>
+</addon>
+
+<addon id="repository.regss" name="Regss Add-ons" version="1.2.1" provider-name="Regss">
+    <extension point="xbmc.addon.repository" name="Regss Add-ons">
+		<info compressed="true">https://raw.github.com/Regss/xbmc-regss-repository/master/addons.xml</info>
+		<checksum>https://raw.github.com/Regss/xbmc-regss-repository/master/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.github.com/Regss/xbmc-regss-repository/master/repo</datadir>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>Regss Add-ons repository</summary>
+        <summary lang="pl">Regss - repozytorium dodatków</summary>
+        <description>Download Regss Add-ons</description>
+        <description lang="pl">Pobieraj i instaluj dodatki z repozytorium Regss'a</description>
+        <disclaimer> - </disclaimer>
+        <disclaimer lang="pl"> - </disclaimer>
+        <platform>all</platform>
+    </extension>
 </addon>
 
 <addon id="repository.Rising.Tides" name="[COLOR red][B]R[/B][/COLOR][COLOR white][B]ising[/B][/COLOR] [COLOR pink][B]T[/B][/COLOR][COLOR white][B]ides[/B][/COLOR] Repository" version="0.3" provider-name="[COLOR turquoise][B]@mullafabz[/B][/COLOR]">

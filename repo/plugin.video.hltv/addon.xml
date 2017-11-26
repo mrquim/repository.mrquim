@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.hltv" version="0.3.0" name="HLTV" provider-name="Jin">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="inputstream.adaptive" version="2.0.18"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="addon.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <news>
+- use inputstream adaptive for hls/dash playback
+- fix archive parser
+- dont treat matches as folder
+- fix twitch resolver for certain channels
+        </news>
+        <summary lang="de_DE">CS:GO Live und auf Abruf</summary>
+        <description lang="de_DE">Video Addon für hltv.org</description>
+        <disclaimer lang="de_DE">Inoffizielles Addon - Benutzung auf eigene Gefahr</disclaimer>
+        <summary lang="en_GB">CS:GO Live and On Demand</summary>
+        <description lang="en_GB">Video Addon for hltv.org</description>
+        <disclaimer lang="en_GB">Unofficial Addon - Use at your own risk</disclaimer>
+        <platform>all</platform>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <website>https://www.hltv.org</website>
+        <email>[jin] at [xyz] dot [de]</email>
+        <source>https://github.com/kodinerds/repo/tree/master/plugin.video.hltv</source>
+    </extension>
+</addon>
