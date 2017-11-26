@@ -1,0 +1,233 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<addons><addon id="script.openelec.devupdate" name="OpenELEC Dev Update" provider-name="Leopold" version="2.18.4">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0" />
+    <import addon="os.openelec.tv" optional="false" version="2.0" />
+    <import addon="script.module.beautifulsoup" optional="false" version="3.2.0" />
+    <import addon="script.module.requests2" optional="false" version="2.2.1" />
+    <import addon="script.xbmcbackup" optional="false" version="0.4.3" />
+  </requires>
+  <extension library="default.py" point="xbmc.python.script" />
+  <extension library="service.py" point="xbmc.service" start="startup" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary>Unofficial OpenELEC development build updater</summary>
+    <description>This XBMC add-on downloads and extracts OpenELEC update files ready to be installed on the next reboot. Based on the source specified in the settings all builds for the relevant architecture will be displayed in a list.</description>
+    <disclaimer>Development builds often have major bugs and crashes can happen quite often. Always backup your userdata folder when installing development builds.</disclaimer>
+    <forum>http://openelec.tv/forum/128-addons/49855</forum>
+    <website>http://ls80.github.io/script.openelec.devupdate</website>
+    <source>http://github.com/LS80/script.openelec.devupdate.git</source>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+  </extension>
+</addon><addon id="script.ipcam" name="IP Cam" provider-name="Leopold" version="0.0.1">
+  <requires>
+    <import addon="xbmc.python" version="2.13.0" />
+  </requires>
+  <extension library="default.py" point="xbmc.python.script" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">IP camera video feed</summary>
+    <description lang="en">Show the video feed from an IP camera with media resume.</description>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+  </extension>
+</addon><addon id="plugin.image.nasavisibleearth" name="NASA Visible Earth Images" provider-name="Leopold" version="0.0.1">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0" />
+    <import addon="script.module.xbmcswift2" optional="false" version="2.4.0" />
+    <import addon="script.module.beautifulsoup4" optional="false" version="4.3.1" />
+  </requires>
+  <extension library="addon.py" point="xbmc.python.pluginsource">
+    <provides>image</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <language>en</language>
+    <summary>A catalog of NASA images and animations of our home planet</summary>
+    <description>The Visible Earth is part of the EOS Project Science Office located at NASA Goddard Space Flight Center.</description>
+    <source>https://github.com/LS80/plugin.audio.nasavisibleearth.git</source>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+  </extension>
+</addon><addon id="plugin.video.ecbtv" name="ECB TV" provider-name="Leopold" version="0.0.1">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0" />
+    <import addon="script.module.xbmcswift2" optional="false" version="2.4.0" />
+    <import addon="script.module.beautifulsoup4" optional="false" version="4.3.1" />
+    <import addon="script.module.requests2" optional="false" version="2.2.1" />
+  </requires>
+  <extension library="addon.py" point="xbmc.python.pluginsource">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <language>en</language>
+    <summary>Watch videos from ECB TV</summary>
+    <description>This video plugin provides access to the videos from the official site of the England and Wales Cricket Board.</description>
+    <website>http://www.ecbtv.co.uk</website>
+    <source>https://github.com/LS80/plugin.video.ecbtv.git</source>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+  </extension>
+</addon><addon id="script.openelec.rpi.config" name="OpenELEC RPi Config" provider-name="Leopold" version="0.15.0">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0" />
+    <import addon="os.openelec.tv" optional="false" version="2.0" />
+  </requires>
+  <extension library="service.py" point="xbmc.service" start="startup" />
+  <extension library="default.py" point="xbmc.python.script" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary>Unofficial Raspberry Pi configuration add-on for OpenELEC</summary>
+    <description>This XBMC add-on for OpenELEC allows Raspberry Pi settings such as overclocking to be configured without having to manually edit /flash/config.txt.</description>
+    <disclaimer>This add-on has the potential to void the warranty of your Raspberry Pi. Use at your own risk!</disclaimer>
+    <forum>http://openelec.tv/forum/124-raspberry-pi/68533</forum>
+    <website>http://ls80.github.io/script.openelec.rpi.config</website>
+    <source>http://github.com/LS80/script.openelec.rpi.config</source>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+  </extension>
+</addon><addon id="plugin.video.kermodeandmayo" name="Kermode and Mayo's Film Review" provider-name="Leopold" version="0.0.1">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0" />
+    <import addon="script.module.xbmcswift2" optional="false" version="2.4.0" />
+    <import addon="script.module.beautifulsoup4" optional="false" version="4.3.2" />
+    <import addon="script.module.requests2" optional="false" version="2.2.1" />
+  </requires>
+  <extension library="addon.py" point="xbmc.python.pluginsource">
+    <provides>video audio</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <language>en</language>
+    <summary language="en">Mark Kermode joins Simon Mayo to give his verdict on the week's movies</summary>
+    <description language="en">This plugin provides access to the full episode podcasts and video clips from Kermode and Mayo's Film Review at bbc.co.uk. The videos contain film reviews or interviews which are broadcast live on Fridays at 2pm on BBC Radio 5 live.
+
+Outspoken, opinionated and never lost for words, Mark Kermode is the UK's leading film critic. Feted as one of the finest film reviewers of his generation as well as for his impeccably-coiffured quiff, Mark Kermode presents the film review on Radio 5 live with Simon Mayo in a broadcast partnership that has lasted nearly 20 years.</description>
+    <website>http://www.bbc.co.uk/programmes/b00lvdrj</website>
+    <source>https://github.com/LS80/plugin.video.kermodeandmayo.git</source>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+  </extension>
+</addon><addon id="plugin.video.hd-streaming" name="HD Streaming" provider-name="HD Streaming" version="0.0.10">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0" />
+  </requires>
+  <extension library="default.py" point="xbmc.python.pluginsource">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">HD Streaming</summary>
+    <description lang="en">HD Streaming video plugin for XBMC Gotham</description>
+    <platform>all</platform>
+    <license>GPL 2.0</license>
+  </extension>
+  <extension name="HD-Streaming Add-on repository" point="xbmc.addon.repository">
+    <info compressed="false">http://hd-streaming.tv/repo/addons.xml</info>
+    <checksum>http://hd-streaming.tv/repo/addons.xml.md5</checksum>
+    <datadir zip="false">http://hd-streaming.tv/repo</datadir>
+  </extension>
+</addon><addon id="script.foscam" name="Foscam HD" provider-name="Leopold" version="0.0.15">
+  <requires>
+    <import addon="xbmc.python" version="2.13.0" />
+    <import addon="script.module.requests2" optional="false" version="2.2.1" />
+  </requires>
+  <extension library="default.py" point="xbmc.python.script" />
+  <extension library="service.py" point="xbmc.service" start="startup" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">Video feed with image controls from a Foscam HD camera</summary>
+    <description lang="en">This script shows the main video feed from a Foscam HD camera such as the FI9821W, with controls for pan and tilt, and mirror/flip. An image preview will appear when motion is detected, and pressing select will open the video feed.</description>
+    <disclaimer>This add-on is not affiliated with Foscam.</disclaimer>
+    <forum>http://forum.xbmc.org</forum>
+    <website>http://foscam.us/megapixel-ip-cameras-2/foscam-fi9821w-megapixel-wireless-ip-camera.html</website>
+    <source>http://github.com/LS80/script.foscam.git</source>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+  </extension>
+</addon><addon id="plugin.video.iplayer" name="iPlayer" provider-name="Alastair, BuZz, Dink" version="2.5.4">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0" />
+        <import addon="script.module.elementtree" />
+    </requires>
+    <extension library="default.py" point="xbmc.python.pluginsource">
+        <provides>video audio</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">Watch TV and listen to radio from the BBC's iPlayer website</summary>
+        <description lang="en">
+            This XBMC plugin enables (UK only) the playing of TV and Radio catchup content from the BBC IPlayer website. Live radio and TV feeds are also supported.
+        </description>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <email>buzz at exotica org uk</email>
+        <website>http://code.google.com/p/xbmc-iplayerv2/</website>
+        <source>http://code.google.com/p/xbmc-iplayerv2/source/checkout</source>
+    </extension>
+</addon><addon id="xbmc.repo.leopold" name="Leopold's Add-ons" provider-name="Leopold" version="2.1.0">
+  <extension name="Leopold's Repository" point="xbmc.addon.repository">
+    <info compressed="false">https://raw.github.com/LS80/xbmc.repo.leopold/master/addons.xml</info>
+    <checksum>https://raw.github.com/LS80/xbmc.repo.leopold/master/addons.xml.md5</checksum>
+    <datadir zip="true">https://raw.github.com/LS80/xbmc.repo.leopold/master</datadir>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>Leopold's add-ons</summary>
+    <description>Download and install add-ons from Leopold's repository. Most of the add-ons in this repository are created and maintained by Leopold. Some add-ons are provided by others and merely hosted here for convenience.</description>
+    <platform>all</platform>
+    <website>http://ls80.github.io/xbmc.repo.leopold/</website>
+  </extension>
+</addon><addon id="plugin.audio.mp3tales" name="MP3 Tales" provider-name="Leopold" version="1.4.0">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0" />
+    <import addon="script.module.xbmcswift2" optional="false" version="2.4.0" />
+    <import addon="script.module.beautifulsoup4" optional="false" version="4.3.1" />
+    <import addon="script.module.requests2" optional="false" version="2.2.1" />
+  </requires>
+  <extension library="addon.py" point="xbmc.python.pluginsource">
+    <provides>audio</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">MP3 Tales</summary>
+    <summary lang="ru">Аудиосказки</summary>
+    <description lang="en">This plugin provides access to mp3 audio books from mp3tales.info</description>
+    <description lang="ru">Этот плагин предоставляет доступ к mp3 аудиокнигам на mp3tales.info</description>
+    <language>ru</language>
+    <website>http://mp3tales.info/tales</website>
+    <source>https://github.com/LS80/plugin.audio.mp3tales.git</source>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+  </extension>
+</addon><addon id="plugin.video.spurs-tv" name="Spurs TV" provider-name="Leopold" version="0.0.4">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0" />
+    <import addon="script.module.xbmcswift2" optional="false" version="2.4.0" />
+    <import addon="script.module.beautifulsoup4" optional="false" version="4.3.1" />
+    <import addon="script.module.html5lib" optional="false" version="0.999.0" />
+    <import addon="script.module.requests2" optional="false" version="2.2.1" />
+  </requires>
+  <extension library="addon.py" point="xbmc.python.pluginsource">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <language>en</language>
+    <summary>Watch videos from Spurs TV Online</summary>
+    <description>This video plugin provides access to the latest Tottenham Hotspur highlights, exclusive interviews, and more.</description>
+    <website>http://www.tottenhamhotspur.com/spurs-tv/</website>
+    <source>https://github.com/LS80/plugin.video.spurs-tv.git</source>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+  </extension>
+</addon><addon id="plugin.image.spacetelescope" name="Hubble Space Telescope Images" provider-name="Leopold" version="0.0.1">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0" />
+    <import addon="script.module.xbmcswift2" optional="false" version="2.4.0" />
+    <import addon="script.module.beautifulsoup4" optional="false" version="4.3.1" />
+    <import addon="script.module.html5lib" optional="false" version="0.999" />
+  </requires>
+  <extension library="addon.py" point="xbmc.python.pluginsource">
+    <provides>image</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <language>en</language>
+    <summary>A catalog of images from the Hubble space telescope.</summary>
+    <description>The Hubble Space Telescope is a collaboration between ESA and NASA. It's a long-term, space-based observatory. The observations are carried out in visible, infrared and ultraviolet light. In many ways Hubble has revolutionised modern astronomy, by not only being an efficient tool for making new discoveries, but also by driving astronomical research in general.</description>
+    <source>https://github.com/LS80/plugin.image.spacetelescope.git</source>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+    <disclaimer>ESA/Hubble images, videos and web texts are released under the Creative Commons Attribution 3.0 Unported license and may on a non-exclusive basis be reproduced without fee provided they are clearly and visibly credited. More information is available at http://spacetelescope.org/copyright</disclaimer>
+  </extension>
+</addon></addons>

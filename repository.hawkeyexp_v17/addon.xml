@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="repository.hawkeyexp_v17" name="Hawkeyexp's Repo (v17)" version="1.0.0" provider-name="Marc Hillesheim">
+    <requires>
+	<import addon="xbmc.gui" version="5.12.0"/>
+    </requires>
+    <extension point="xbmc.addon.repository" name="Hawkeyexp's Repo">
+	<info compressed="true">https://raw.githubusercontent.com/hawkeyexp/Kodi-Repository-Nextgen/master/krypton/addons.xml</info>
+	<checksum>https://raw.githubusercontent.com/hawkeyexp/Kodi-Repository-Nextgen/master/krypton/addons.xml.md5</checksum>
+	<datadir zip="true">https://raw.githubusercontent.com/hawkeyexp/Kodi-Repository-Nextgen/master/krypton/</datadir>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+	<summary>Hawkeyexp's Repo</summary>
+	<summary lang="en">Hawkeyexp's Repo</summary>
+	<description>Repository from Hawkeyexp</description>
+	<platform>all</platform>
+    </extension>
+</addon>
