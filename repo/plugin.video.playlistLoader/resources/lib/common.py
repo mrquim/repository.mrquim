@@ -77,7 +77,7 @@ def ReadFile(fileName):
 def SaveFile(fileName, text):
 	try:
 		f = xbmcvfs.File(fileName, 'w')
-		result = f.write(text)
+		f.write(text)
 		f.close()
 	except:
 		return False
@@ -96,10 +96,10 @@ def ReadList(fileName):
 
 	return content
 
-def SaveList(filname, list):
+def SaveList(filname, chList):
 	try:
 		with io.open(filname, 'w', encoding='utf-8') as handle:
-			handle.write(unicode(json.dumps(list, indent=4, ensure_ascii=False)))
+			handle.write(unicode(json.dumps(chList, indent=4, ensure_ascii=False)))
 		success = True
 	except Exception as ex:
 		xbmc.log(str(ex), 3)
@@ -133,7 +133,7 @@ def plx2list(url, cache):
 	response = GetList(url, cache)
 	matches = re.compile("^background=(.*?)$",re.I+re.M+re.U+re.S).findall(response)
 	background = None if len(matches) < 1 else matches[0]
-	list = [{"background": background}]
+	chList = [{"background": background}]
 	matches = re.compile('^type(.*?)#$',re.I+re.M+re.U+re.S).findall(response)
 	for match in matches:
 		item=re.compile('^(.*?)=(.*?)$',re.I+re.M+re.U+re.S).findall("type{0}".format(match))
@@ -141,25 +141,24 @@ def plx2list(url, cache):
 		for field, value in item:
 			item_data[field.strip().lower()] = value.strip()
 		item_data['group'] = 'Main'
-		list.append(item_data)
-	return list
+		chList.append(item_data)
+	return chList
 
 def m3u2list(url, cache):
 	response = GetList(url, cache)	
-	matches=re.compile('^#EXTINF:-?[0-9]*(.*?),(.*?)\n(.*?)$',re.I+re.M+re.U+re.S).findall(response)
+	matches=re.compile('^#EXTINF:-?[0-9]*(.*?),(.*?)\n(.*?)$', re.M).findall(response)
 	li = []
 	for params, display_name, url in matches:
-		item_data = {"params": params.strip(), "display_name": display_name.strip(), "url": url.strip()}
+		item_data = {"params": params, "display_name": display_name.strip(), "url": url.strip()}
 		li.append(item_data)
-
-	list = []
+	chList = []
 	for channel in li:
 		item_data = {"display_name": channel["display_name"], "url": channel["url"]}
-		matches=re.compile(' (.+?)="(.+?)"',re.I+re.M+re.U+re.S).findall(channel["params"])
+		matches=re.compile(' (.+?)="(.+?)"').findall(channel["params"])
 		for field, value in matches:
 			item_data[field.strip().lower().replace('-', '_')] = value.strip()
-		list.append(item_data)
-	return list
+		chList.append(item_data)
+	return chList
 	
 def GetEncodeString(str):
 	try:
