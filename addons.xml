@@ -1669,6 +1669,20 @@ Kodi is a registered trademark of the XBMC Foundation. We are not connected to o
 	</extension>
 </addon>
 
+<addon id="script.kodilogemail" name=".[COLOR blue]K[/COLOR]odi Log Emailer" version="0.0.9" provider-name="Catchup4Kodi">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">.Kodi Log Emailer</summary>
+    <description lang="en">.Kodi Log Emailer</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="script.libreelec.devupdater"
        name="LibreELEC Dev Updater"
        version="5.1.2"
@@ -2308,6 +2322,30 @@ Kodi is a registered trademark of the XBMC Foundation. We are not connected to o
   </extension>
 </addon>
 
+<addon id="script.neptune.artwork" version="1.0.8" name="Neptune Rising Artwork" provider-name="Mr.Blamo">
+	<requires>
+		<import addon="xbmc.python" version="2.19.0"/>
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<summary>Themes for the Neptune Rising Addon</summary>
+		<description>Themes for Neptune Rising are maintained separately to make distribution of the the addon itself easier/faster.</description>
+		<platform>all</platform>
+	</extension>
+</addon>
+
+<addon id="script.neptune.metadata" version="1.0.4" name="Neptune Rising Metadata" provider-name="Mr.Blamo">
+	<requires>
+		<import addon="xbmc.python" version="2.19.0"/>
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<summary>Metadata for the Neptune Rising Addon</summary>
+		<description>Metadata for Neptune Rising are maintained separately to make distribution of the the addon itself easier/faster.</description>
+		<platform>all</platform>
+	</extension>
+</addon>
+
 <addon id="script.openelec.devupdate"
        name="OpenELEC Dev Update"
        version="4.39.0"
@@ -2354,6 +2392,30 @@ Kodi is a registered trademark of the XBMC Foundation. We are not connected to o
 	<extension point="xbmc.addon.metadata">
 		<summary>Metadata for the Poseidon Addon</summary>
 		<description>Metadata for Poseidon are maintained separately to make distribution of the the addon itself easier/faster.</description>
+		<platform>all</platform>
+	</extension>
+</addon>
+
+<addon id="script.rebirth.artwork" version="999.999.999.1" name="Rebirth Artwork" provider-name="Cypher">
+	<requires>
+		<import addon="xbmc.python" version="2.19.0"/>
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<summary>Themes for the Rebirth Addon</summary>
+		<description>Themes for Rebirth are maintained separately to make distribution of the the addon itself easier/faster.</description>
+		<platform>all</platform>
+	</extension>
+</addon>
+
+<addon id="script.rebirth.metadata" version="999.999.999.1" name="Rebirth Metadata" provider-name="Cypher">
+	<requires>
+		<import addon="xbmc.python" version="2.19.0"/>
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<summary>Metadata for the Rebirth Addon</summary>
+		<description>Metadata for Rebirth are maintained separately to make distribution of the the addon itself easier/faster.</description>
 		<platform>all</platform>
 	</extension>
 </addon>
