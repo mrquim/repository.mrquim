@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+    <defaultcontrol always="true">11</defaultcontrol>
+    <controls>
+        <include>Global_Overlay</include>
+
+        <control type="group">
+            <include content="Dialog_Standard_Group">
+                <param name="width" value="1536" />
+                <param name="height" value="930" />
+            </include>
+            <control type="label">
+                <label>$INFO[Container(11).ListItem.StartDate]</label>
+                <include>Dialog_Standard_Header</include>
+            </control>
+
+            <include content="Dialog_Standard_List">
+                <param name="id" value="11" />
+                <param name="itemheight" value="item_biglist_height" />
+                <param name="list_style" value="Dialog_Standard_List_Itemlayout_ChannelGuide" />
+                <param name="onup" value="11" />
+                <param name="ondown" value="11" />
+                <param name="checkmark" value="false" />
+                <param name="width" value="1136" />
+                <param name="selectpad" value="2" />
+            </include>
+
+            <control type="group">
+                <include>Dialog_Standard_Right_Group</include>
+                <control type="group">
+                    <left>30</left>
+                    <right>30</right>
+                    <top>30</top>
+                    <bottom>30</bottom>
+                    <control type="group">
+                        <bottom>0</bottom>
+                        <height>dialog_right_iconwidth</height>
+                        <control type="image">
+                            <visible>!Skin.HasSetting(PVRGuide.DisableColorDiffuse)</visible>
+                            <texture colordiffuse="dialog_fg_70">$INFO[Container(11).ListItem.Icon]</texture>
+                            <aspectratio align="center" aligny="bottom">keep</aspectratio>
+                        </control>
+                        <control type="image">
+                            <visible>Skin.HasSetting(PVRGuide.DisableColorDiffuse)</visible>
+                            <texture>$INFO[Container(11).ListItem.Icon]</texture>
+                            <aspectratio align="center" aligny="bottom">keep</aspectratio>
+                        </control>
+                    </control>
+                </control>
+                <control type="grouplist" id="8000">
+                    <onleft>61</onleft>
+                    <orientation>vertical</orientation>
+                    <itemgap>0</itemgap>
+                    <control type="button" id="8001">
+                        <label>222</label>
+                        <onclick>Close</onclick>
+                        <include>Dialog_Standard_Right_Buttons</include>
+                    </control>
+                </control>
+            </control>
+
+            <include content="Dialog_Scrollbar">
+                <param name="onleft" value="11" />
+            </include>
+        </control>
+    </controls>
+</window>

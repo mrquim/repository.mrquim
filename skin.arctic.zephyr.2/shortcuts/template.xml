@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+    <other include="vertical-main">
+        <property name="widgetAspect">Poster</property>
+        <property name="widgetName">$LOCALIZE[31105]</property>
+        <property name="widgetTarget">$VAR[Defs_Widget_Target]</property>
+        <property name="widgetPath">$INFO[Skin.String(widgetPath)]</property>
+        <controls>
+            <include content="View_Cast_Toplabel">
+                <param name="groupid" value="997500" />
+                <param name="id" value="993100" />
+                <param name="label" value="$SKINSHORTCUTS[widgetName]" />
+                <skinshortcuts>visibility</skinshortcuts>
+                <visible>Integer.IsEqual(Container(9989).NumItems,0)</visible>
+            </include>
+            <include content="Object_Widget_Spotlight">
+                <param name="controltype" value="list" />
+                <param name="id" value="993100" />
+                <param name="top" value="52" />
+                <param name="left" value="0" />
+                <param name="right" value="-30" />
+                <param name="height" value="item_cast_height" />
+                <param name="orientation" value="horizontal" />
+                <param name="labelinclude" value="Defs_Null" />
+                <param name="landscapelabelinclude" value="Defs_Null" />
+                <param name="target" value="$SKINSHORTCUTS[widgetTarget]" />
+                <param name="content" value="$SKINSHORTCUTS[widgetPath]" />
+                <param name="squarecondition" value="$PYTHON['true' if widgetAspect in 'Square' else 'false']" />
+                <param name="landscapecondition" value="$PYTHON['true' if widgetAspect in 'Landscape' else 'false']" />
+                <param name="iconcondition" value="$PYTHON['true' if widgetAspect in 'Icon' else 'false']" />
+                <autoscroll time="12000">!ControlGroup(3000).HasFocus() + System.IdleTime(1)</autoscroll>
+                <onback>301</onback>
+                <movement>6</movement>
+                <visible>Integer.IsGreater(Container(993100).NumItems,0) | Container(993100).IsUpdating</visible>
+                <skinshortcuts>visibility</skinshortcuts>
+                <visible>Integer.IsEqual(Container(9989).NumItems,0)</visible>
+            </include>
+        </controls>
+    </other>
+    
+    <submenuOther include="vertical-submenu" container="302" level="1">
+        <condition tag="property" attribute="name|list" />
+        <property name="widgetAspect" tag="property" attribute="name|widgetAspect" />
+        <property name="widgetAspect">Poster</property>
+        <property name="widgetTarget" tag="property" attribute="name|widgetTarget" />
+        <property name="widgetTarget">videos</property>
+        <property name="widgetName" tag="label" />
+        <property name="widgetName">$LOCALIZE[31105]</property>
+        <property name="widgetPath" tag="property" attribute="name|list" />
+        <property name="widgetSortby" tag="property" attribute="name|widgetSortby" />
+        <property name="widgetSortorder" tag="property" attribute="name|widgetSortorder" />
+        <property name="widgetLimit" tag="property" attribute="name|widgetLimit" />
+        <property name="widgetLimit">25</property>
+        <property name="widgetMovement" tag="property" attribute="name|widgetAspect" value="Square">4</property>
+        <property name="widgetMovement" tag="property" attribute="name|widgetAspect" value="Icon">4</property>
+        <property name="widgetMovement" tag="property" attribute="name|widgetAspect" value="Landscape">2</property>
+        <property name="widgetMovement">6</property>
+
+        <property name="mainmenuid" tag="property" attribute="name|mainmenuid" />
+
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[1]">1</property>
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[2]">2</property>
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[3]">3</property>
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[4]">4</property>
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[5]">5</property>
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[6]">6</property>
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[7]">7</property>
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[8]">8</property>
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[9]">9</property>
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[10]">10</property>
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[11]">11</property>
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[12]">12</property>
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[13]">13</property>
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[14]">14</property>
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[15]">15</property>
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[16]">16</property>
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[17]">17</property>
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[18]">18</property>
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[19]">19</property>
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[20]">20</property>
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[21]">21</property>
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[22]">22</property>
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[23]">23</property>
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[24]">24</property>
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[25]">25</property>
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[26]">26</property>
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[27]">27</property>
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[28]">28</property>
+        <property name="id" tag="property" attribute="name|id" value="$NUMBER[29]">29</property>
+        <property name="id">30</property>
+        <controls>
+            <include content="View_Cast_Toplabel">
+                <param name="groupid" value="$PYTHON[int(mainmenuid)]$PYTHON[int(id) + 7500]" />
+                <param name="id" value="$PYTHON[int(mainmenuid)]$PYTHON[int(id) + 3100]" />
+                <param name="label" value="$SKINSHORTCUTS[widgetName]" />
+                <visible>String.IsEqual(Container(301).ListItem.Property(id),$SKINSHORTCUTS[mainmenuid])</visible>
+            </include>
+            <include content="Object_Widget_Spotlight">
+                <param name="controltype" value="list" />
+                <param name="id" value="$PYTHON[int(mainmenuid)]$PYTHON[int(id) + 3100]" />
+                <param name="top" value="52" />
+                <param name="left" value="0" />
+                <param name="right" value="-30" />
+                <param name="height" value="item_cast_height" />
+                <param name="orientation" value="horizontal" />
+                <param name="labelinclude" value="Defs_Null" />
+                <param name="landscapelabelinclude" value="Defs_Null" />
+                <param name="target" value="$SKINSHORTCUTS[widgetTarget]" />
+                <param name="content" value="$SKINSHORTCUTS[widgetPath]" />
+                <param name="limit" value="$SKINSHORTCUTS[widgetLimit]" />
+                <param name="sortby" value="$SKINSHORTCUTS[widgetSortby]" />
+                <param name="sortorder" value="$SKINSHORTCUTS[widgetSortorder]" />
+                <param name="squarecondition" value="$PYTHON['true' if widgetAspect in 'Square' else 'false']" />
+                <param name="landscapecondition" value="$PYTHON['true' if widgetAspect in 'Landscape' else 'false']" />
+                <param name="iconcondition" value="$PYTHON['true' if widgetAspect in 'Icon' else 'false']" />
+                <onback>SetFocus($PYTHON[int(mainmenuid)]3101)</onback>
+                <onback>301</onback>
+                <visible>Integer.IsGreater(Container($PYTHON[int(mainmenuid)]$PYTHON[int(id) + 3100]).NumItems,0) | Container($PYTHON[int(mainmenuid)]$PYTHON[int(id) + 3100]).IsUpdating</visible>
+                <visible>String.IsEqual(Container(301).ListItem.Property(id),$SKINSHORTCUTS[mainmenuid])</visible>
+                <movement>$SKINSHORTCUTS[widgetMovement]</movement>
+            </include>
+        </controls>
+    </submenuOther>
+
+    <other include="vertical-info">
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[1]">1</property>
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[2]">2</property>
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[3]">3</property>
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[4]">4</property>
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[5]">5</property>
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[6]">6</property>
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[7]">7</property>
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[8]">8</property>
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[9]">9</property>
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[10]">10</property>
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[11]">11</property>
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[12]">12</property>
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[13]">13</property>
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[14]">14</property>
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[15]">15</property>
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[16]">16</property>
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[17]">17</property>
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[18]">18</property>
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[19]">19</property>
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[20]">20</property>
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[21]">21</property>
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[22]">22</property>
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[23]">23</property>
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[24]">24</property>
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[25]">25</property>
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[26]">26</property>
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[27]">27</property>
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[28]">28</property>
+        <property name="mainmenuid" tag="property" attribute="name|id" value="$NUMBER[29]">29</property>
+        <property name="mainmenuid">30</property>
+        <controls>
+            <include content="Home_Vertical_Info">
+                <param name="font" value="font_title" />
+                <param name="plotheight" value="160" />
+                <param name="titleheight" value="60" />
+                <param name="id" value="$PYTHON[int(mainmenuid)]3101" />
+                <skinshortcuts>visibility</skinshortcuts>
+            </include>
+        </controls>
+    </other>
+
+    <submenuOther include="spotlight-submenu" container="302">
+        <property name="widgetAspect" tag="property" attribute="name|widgetAspect" />
+        <property name="widgetTarget" tag="property" attribute="name|widgetTarget" />
+        <property name="widgetName" tag="property" attribute="name|widgetName" />
+        <property name="widgetPath" tag="property" attribute="name|widgetPath" />
+        <property name="submenuVisibility" tag="property" attribute="name|group" />
+        <property name="submenuVisibility">noMenu</property>
+        <property name="id" tag="property" attribute="name|id" />
+        <controls>
+            <include content="Object_Widget_Spotlight">
+                <param name="target" value="$SKINSHORTCUTS[widgetTarget]" />
+                <param name="content" value="$SKINSHORTCUTS[widgetPath]" />
+                <visible>String.IsEqual(Container(301).ListItem.Property(submenuVisibility),num-$SKINSHORTCUTS[submenuVisibility]) | String.IsEqual(Container(301).ListItem.Property(submenuVisibility),$SKINSHORTCUTS[submenuVisibility])</visible>
+                <visible>String.IsEqual(Container(302).ListItem.Property(id),$SKINSHORTCUTS[id])</visible>
+                <onup>302</onup>
+                <onback condition="Window.IsVisible(Home)">301</onback>
+                <ondown>noop</ondown>
+            </include>
+        </controls>
+    </submenuOther>
+    <other include="spotlight-mainmenu">
+        <property name="widgetAspect" tag="property" attribute="name|widgetAspect" />
+        <property name="widgetTarget" tag="property" attribute="name|widgetTarget" />
+        <property name="widgetName" tag="property" attribute="name|widgetName" />
+        <property name="widgetPath" tag="property" attribute="name|widgetPath" />
+        <property name="widgetTarget">$INFO[Skin.String(widgetTarget)]</property>
+        <property name="widgetPath">$INFO[Skin.String(widgetPath)]</property>
+        <controls>
+            <include content="Object_Widget_Spotlight">
+                <param name="target" value="$SKINSHORTCUTS[widgetTarget]" />
+                <param name="content" value="$SKINSHORTCUTS[widgetPath]" />
+                <skinshortcuts>visibility</skinshortcuts>
+                <onup>302</onup>
+                <onback condition="Window.IsVisible(Home)">301</onback>
+                <ondown>noop</ondown>
+                <visible>String.IsEmpty(Container(302).ListItem.Property(widgetPath))</visible>
+            </include>
+        </controls>
+    </other>
+
+    <other include="global">
+        <property name="widgetTarget" tag="property" attribute="name|widgetTarget.backgroundWidget" />
+        <property name="widgetPath" tag="property" attribute="name|widgetPath.backgroundWidget" />
+        <property name="widgetTarget">$INFO[Skin.String(widgetTarget)]</property>
+        <property name="widgetPath">$INFO[Skin.String(widgetPath)]</property>
+        <controls>
+            <control type="wraplist" id="5600">
+                <height>100</height>
+                <top>0</top>
+                <onfocus>SetProperty(SkinHelper.WidgetContainer,5600,Home)</onfocus>
+                <onup>301</onup>
+                <ondown>301</ondown>
+                <onback>301</onback>
+                <autoscroll time="12000">[Control.HasFocus(301) | Control.HasFocus(302)] + System.IdleTime(1)</autoscroll>
+                <orientation>horizontal</orientation>
+                <itemlayout />
+                <focusedlayout />
+                <content limit="25" target="$SKINSHORTCUTS[widgetTarget]">$SKINSHORTCUTS[widgetPath]</content>
+                <skinshortcuts>visibility</skinshortcuts>
+            </control>
+        </controls>
+    </other>
+</template>

@@ -64,7 +64,7 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <summary>Criar, visualizar, editar e excluir o arquivo advancedsettings.xml</summary>
-        <description>Com esta ferramenta podes criar as tuas configuracoes avancadas diretamente do XBMC ou KODI.Se não sabes o que uma configuracao faz, não o inicies!</description>
+        <description>Com esta ferramenta podes criar as tuas configuracoes avancadas diretamente do XBMC ou KODI.Se nÃ£o sabes o que uma configuracao faz, nÃ£o o inicies!</description>
         <platform>all</platform>
         <language>pt</language>
         <license>GNU GENERAL PUBLIC LICENSE</license>
@@ -191,36 +191,6 @@
 
 </addon>
 
-<addon id="plugin.video.bbts" name="BBTS" version="0.1.6" provider-name="[COLOR yellowgreen]B[/COLOR][COLOR dodgerblue]B[/COLOR][COLOR white]T[/COLOR][COLOR orangered]S[/COLOR] IpTV">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="addon.py">
-        <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">International TV and radio steams brought to you by - [COLOR yellowgreen]B[/COLOR][COLOR dodgerblue]B[/COLOR][COLOR white]T[/COLOR][COLOR orangered]S[/COLOR] The Source -</summary>
-	<summary lang="he">המקור -[COLOR yellowgreen] B[/COLOR][COLOR dodgerblue]B[/COLOR][COLOR white]T[/COLOR][COLOR orangered]S [/COLOR]- שידורי טלוויזיה ורדיו בינלאומי בחסות</summary>
-    <description lang="en">[COLOR yellowgreen]B[/COLOR][COLOR dodgerblue]B[/COLOR][COLOR white]T[/COLOR][COLOR orangered]S[/COLOR] video plugin is a collection of Live TV and Radio streams from around the world.
-
-[COLOR yellowgreen]B[/COLOR][COLOR dodgerblue]B[/COLOR][COLOR white]T[/COLOR][COLOR orangered]S[/COLOR] source is brought to you by the people and for the people. With your support, we will give back even more for all of us! Let's get started! Website :[COLOR blue][B]http://www.bbtsip.tv[/B][/COLOR]
-Plugin by @koderdude</description>
-    <description lang="he"> הוא אוסף של ערוצי טלוויזיה ורדיו [COLOR yellowgreen] B[/COLOR][COLOR dodgerblue]B[/COLOR][COLOR white]T[/COLOR][COLOR orangered]S [/COLOR]תוסף הוידאו
-בשידור חי מכל רחבי העולם.
-
-המקור הובא לכם על-ידי המשתמשים ולמען המשתמשים. עם התמיכה שלכם, אנו נחזיר בחזרה עוד יותר לכולנו! אז בואו נתחיל!
-
-לאתר אינטרנט:
-[COLOR blue][B]http://www.bbtsip.tv [/B][/COLOR]
-@koderdude תוסף על ידי</description>
-    <disclaimer lang="en">This add-on is maintained by the [COLOR yellowgreen]B[/COLOR][COLOR dodgerblue]B[/COLOR][COLOR white]T[/COLOR][COLOR orangered]S[/COLOR] community and our generator fetches indexs from multiple sources from around the web. We accept no responsibility for the following content, streams and or media. [COLOR yellowgreen]B[/COLOR][COLOR dodgerblue]B[/COLOR][COLOR white]T[/COLOR][COLOR orangered]S[/COLOR] does not host or stream any of the content displayed on this add-on.</disclaimer>
-	<disclaimer lang="he">תוסף זה מתוחזק על ידי קהילת והמחולל שלנו מביאים את האנידקסים ממקורות מרובים מרחבי האינטרנט.
-אנו לא מקבלים שום אחריות לתכנים הבאים, שידורים חיים או תוכן בכל צורה שלא יהיה.
-אנו לא מארחים או משדרים את התוכן שמוצג על-ידי התוסף.</disclaimer>
-    <platform>all</platform>
-  </extension>
-</addon>
-
 <addon id="plugin.video.castaway" name="Castaway" version="0.2.8" provider-name="natko1412">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
@@ -246,46 +216,6 @@ Plugin by @koderdude</description>
 	</extension>
 </addon>
 
-<addon id="plugin.video.covenant" version="1.1.30" name="Covenant" provider-name="Covenant">
-	<requires>
-		<import addon="xbmc.python" version="2.19.0" />
-        <import addon="repository.xvbmc" version="4.2"/>            <!--Temp.mirror -->
-		<!--    <import addon="repository.colossus" optional="true"/>   !!stopped!! -->
-		<import addon="script.module.covenant" />
-		<import addon="script.covenant.artwork" version="1.0.0" />
-		<import addon="script.covenant.metadata" version="1.0.0" />
-		<import addon="script.module.urlresolver" version="3.0.0" />
-		<import addon="script.module.requests" />
-		<import addon="script.module.metahandler" version="1.0.0" />
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="covenant.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.service" library="service.py" start="startup" />
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Covenant</summary>
-		<description lang="en">[I]A New Generation[/I][CR][CR][B]Covenant Movies and TV[/B][CR][CR]This addon does not form part of the Kodi Media Centre. Please do not seek assistance with this addon from any of the Official Kodi Support Channels.[CR][CR]The author does not host any of the content in this addon and takes no responsibility for content found.</description>
-		<description lang="hr">[I]Nova generacija[/I][CR][CR][B]Covenant Filmova i TV serija[/B][CR][CR]Ovaj dodatak ne sadrži dijelove Kodi Medijskog Centra. Ne tažite pomoć za ovaj dodatak na službenim kanalima podrške za Kodi.[CR][CR]Autor ne posjeduje bilo kakav sadržaj u ovom dodatku i ne preuzima bilo kakvu odgovornost za pronađeni sadržaj.</description>
-		<description lang="he">[I]הדור החדש[/I][CR][CR][B]Covenant סרטים וסדרות[/B][CR][CR]ההרחבה הזו אינה חלק של Kodi Media Center. אנא אל תבקש עזרה עם ההרחבה זה מכל אחד מערוצי התמיכה הרשמיים של Kodi [CR][CR]. אין למחבר תוכן בהרחבה הזו והמחבר אינו אחראי לתוכן שנמצא.</description>
-		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
-		<forum></forum>
-		<website></website>
-		<source></source>
-		<disclaimer lang="en">The author of this addon do not host any of the content which is found and have no affiliation with any of the content providers. This addon simply searches websites for content. Use at your own risk!</disclaimer>
-		<disclaimer lang="hr">Autor ovog dodatka ne posjeduje bilo kakav sadržaj koji je pronađen i nije povezan sa bilo kojim izvorom sadržaja. Ovaj dodatak samo pretražuje sadržaj na web stranicama. Koristite ga na vlastitu odgovornost!</disclaimer>
-		<disclaimer lang="he">מחבר ההרחבה זה אינו מארח את התוכן שיתכן ויימצא ואין לו זיקה לאף אחד מספקי התוכן. הרחבה רק מחפשת תוכן שקיים באתרי אינטרנט. השימוש בהרחבה הוא על אחריותך בלבד!</disclaimer>
-		<assets>
-			<icon>icon.png</icon>
-			<fanart>fanart.jpg</fanart>
-    			<screenshot>resources/screenshots/screenshot-01.jpg</screenshot>
-    			<screenshot>resources/screenshots/screenshot-02.jpg</screenshot>
-    			<screenshot>resources/screenshots/screenshot-03.jpg</screenshot>
-		</assets>
-		<news></news>
-	</extension>
-</addon>
-
 <addon id="plugin.video.exodus" version="4.1.07" name="Exodus" provider-name="Exodus">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0" />
@@ -305,12 +235,12 @@ Plugin by @koderdude</description>
 	<extension point="xbmc.service" library="service.py" start="startup" />
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en">Exodus</summary>
-		<description lang="en">Please visit [COLOR blue]www.tvaddons.co[/COLOR] for Exodus support and assistance! Kindly note that Exodus is not an official part of the media player you are running, and therefore not to be mentioned within official support channels, this addon has nothing to do with the media player itself, nor it’s intended use, it is simply a third party plugin which has been added to your system.</description>
+		<description lang="en">Please visit [COLOR blue]www.tvaddons.co[/COLOR] for Exodus support and assistance! Kindly note that Exodus is not an official part of the media player you are running, and therefore not to be mentioned within official support channels, this addon has nothing to do with the media player itself, nor itâ€™s intended use, it is simply a third party plugin which has been added to your system.</description>
 		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content provider.</disclaimer>
-		<description lang="de">Bitte besuche [COLOR blue]www.tvaddons.co[/COLOR] für Unterstützung und Fragen zu Exodus! Beachte dabei, dass Exodus nicht offizieller Teil des Media Players ist den du gerade verwendest und daher nicht von dem offiziellen Support-Kanäle abgedeckt wird, dieses Addon hat nichts zu tun mit dem Media-Player selbst, noch ist es dafür beabsichtigt, es handelt sich hierbei lediglich um ein Drittanbieter-Anwendung die dem System hinzugefügt wurde.</description>
+		<description lang="de">Bitte besuche [COLOR blue]www.tvaddons.co[/COLOR] fÃ¼r UnterstÃ¼tzung und Fragen zu Exodus! Beachte dabei, dass Exodus nicht offizieller Teil des Media Players ist den du gerade verwendest und daher nicht von dem offiziellen Support-KanÃ¤le abgedeckt wird, dieses Addon hat nichts zu tun mit dem Media-Player selbst, noch ist es dafÃ¼r beabsichtigt, es handelt sich hierbei lediglich um ein Drittanbieter-Anwendung die dem System hinzugefÃ¼gt wurde.</description>
 		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Content-Anbietern.</disclaimer>
-		<description lang="fr">SVP visitez [COLOR blue]www.tvaddons.co[/COLOR] pour avoir de l'aide sur Exodus. Prenez note qu'Exodus n'est pas une partie intégrante de votre outil de visionnement multimedia et SVP ne le mentionnez pas dans les media sociaux officiels, cet addiciel n'a rien a voir avec votre lecteur multimedia lui même, c'est simplement un addiciel qui a été ajouté à votre système.</description>
-		<disclaimer lang="fr">L'auteur n'héberge pas ou ne distribue pas le contenu qui vous est affiché avec cet addiciel. L'auteur n'a pas d'alliance avec les distributeurs de contenu.</disclaimer>
+		<description lang="fr">SVP visitez [COLOR blue]www.tvaddons.co[/COLOR] pour avoir de l'aide sur Exodus. Prenez note qu'Exodus n'est pas une partie intÃ©grante de votre outil de visionnement multimedia et SVP ne le mentionnez pas dans les media sociaux officiels, cet addiciel n'a rien a voir avec votre lecteur multimedia lui mÃªme, c'est simplement un addiciel qui a Ã©tÃ© ajoutÃ© Ã  votre systÃ¨me.</description>
+		<disclaimer lang="fr">L'auteur n'hÃ©berge pas ou ne distribue pas le contenu qui vous est affichÃ© avec cet addiciel. L'auteur n'a pas d'alliance avec les distributeurs de contenu.</disclaimer>
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
 		<forum>https://www.tvaddons.co/forums/</forum>
@@ -359,7 +289,7 @@ Plugin by @koderdude</description>
 - fix twitch resolver for certain channels
         </news>
         <summary lang="de_DE">CS:GO Live und auf Abruf</summary>
-        <description lang="de_DE">Video Addon für hltv.org</description>
+        <description lang="de_DE">Video Addon fÃ¼r hltv.org</description>
         <disclaimer lang="de_DE">Inoffizielles Addon - Benutzung auf eigene Gefahr</disclaimer>
         <summary lang="en_GB">CS:GO Live and On Demand</summary>
         <description lang="en_GB">Video Addon for hltv.org</description>
@@ -565,7 +495,7 @@ em procura livre na internet.. Enjoy !![/COLOR]
     <summary lang="en">MrPiracy</summary>
     <description lang="en">Addon site MrPiracy</description>
     <description lang="en">Filmes e series no Kodi. </description>
-    <disclaimer lang="en">Como desenvolvedor do addon, nada tenho a haver com site. O site pode ser acedido por um browser. Limito-me a ler o seu conteúdo disponibilizado e converter em addon.</disclaimer>
+    <disclaimer lang="en">Como desenvolvedor do addon, nada tenho a haver com site. O site pode ser acedido por um browser. Limito-me a ler o seu conteÃºdo disponibilizado e converter em addon.</disclaimer>
     <language></language>
     <platform>all</platform>
     <license></license>
@@ -597,9 +527,9 @@ em procura livre na internet.. Enjoy !![/COLOR]
     <platform>all</platform>
     <summary>Canais Sport TV Online (Add-on Descontinuado)</summary>
     <description>ADD-ON DESCONTINUADO!
-	Os canais/este add-on são gratuitos.
-	Não transmito qualquer dos canais aqui disponibilizados!
-	São todos retirados da Internet!
+	Os canais/este add-on sÃ£o gratuitos.
+	NÃ£o transmito qualquer dos canais aqui disponibilizados!
+	SÃ£o todos retirados da Internet!
 	Todos os canais necessitam do add-on PLEXUS</description>
   </extension>
 </addon>
@@ -652,8 +582,8 @@ em procura livre na internet.. Enjoy !![/COLOR]
   <extension point="xbmc.addon.metadata">
     <reuselanguageinvoker>true</reuselanguageinvoker>
     <summary lang="de_DE">Netflix</summary>
-    <description lang="de_DE">Addon für Netflix VOD Services</description>
-    <disclaimer lang="de_DE">Möglicherweise sind einge Teile dieses Addons in Ihrem Land illegal, Sie sollten dies unbedingt vor der Installation überprüfen.</disclaimer>
+    <description lang="de_DE">Addon fÃ¼r Netflix VOD Services</description>
+    <disclaimer lang="de_DE">MÃ¶glicherweise sind einge Teile dieses Addons in Ihrem Land illegal, Sie sollten dies unbedingt vor der Installation Ã¼berprÃ¼fen.</disclaimer>
     <summary lang="en_GB">Netflix</summary>
     <description lang="en_GB">Netflix VOD Services Addon</description>
     <disclaimer lang="en_GB">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
@@ -914,9 +844,9 @@ v0.12.9 (2018-04-16)
 		<provides>video audio</provides>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary lang="de">Musik über Youtube abspielen</summary>
+		<summary lang="de">Musik Ã¼ber Youtube abspielen</summary>
 		<summary lang="en">Play Music via Youtube</summary>
-		<description lang="de">@realvito[CR]Musik aus verschiedenen Quellen z.B. Billboard, iTunes, Spotify etc. auswählen und über Youtube abspielen.[CR][CR]Für mehr Informationen zu allen Neuerungen siehe - CHANGELOG.[CR]     TEST IT AND LIKE IT</description>
+		<description lang="de">@realvito[CR]Musik aus verschiedenen Quellen z.B. Billboard, iTunes, Spotify etc. auswÃ¤hlen und Ã¼ber Youtube abspielen.[CR][CR]FÃ¼r mehr Informationen zu allen Neuerungen siehe - CHANGELOG.[CR]     TEST IT AND LIKE IT</description>
 		<description lang="en">@realvito[CR]Choose Music from different sources e.g. Billboard, iTunes, Spotify etc. and play it via Youtube.[CR][CR]For more information about all new features see - CHANGELOG.[CR]     TEST IT AND LIKE IT</description>
 		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
 		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
@@ -962,7 +892,7 @@ v0.12.9 (2018-04-16)
 		<description lang="en">The best goals from OKGoals.com on Kodi.</description>
 		<description lang="pt">Os melhor golos do OKGoals.com para o Kodi.</description>
 		<disclaimer lang="en">Independent and opensource addon not endorsed by OKGoals.</disclaimer>
-		<disclaimer lang="pt">Addon independente e opensource não afliado com OKGoals.</disclaimer>
+		<disclaimer lang="pt">Addon independente e opensource nÃ£o afliado com OKGoals.</disclaimer>
     </extension>
 </addon>
 
@@ -982,10 +912,10 @@ v0.12.9 (2018-04-16)
   <extension point="xbmc.addon.metadata">
     <summary>SopCast and AceStream for Kodi</summary>
     <description lang="en">Plexus - Any complex structure containing an intricate network of parts. Plexus brings native peer-to-peer support (AceStream and SopCast) for Kodi Entertainment Center for several platforms.[CR][CR]Documentation: (missing)</description>
-    <description lang="pt">Plexus - Uma estrutura complexa constituída por uma rede de partes. O Plexus adiciona suporte peer-to-peer nativo (AceStream e Sopcast) ao Kodi Entertainment Center para várias plataformas.[CR][CR]Documentação: (em falta)</description>
-    <description lang="es">Plexus - Una estructura compleja conteniendo una intrincada red de partes. Plexus añade soporte nativo peer-to-peer (AceStream y SopCast) al Centro de Entretenimiento Kodi para varias plataformas.[CR][CR]Documentacion: (falta)</description>
+    <description lang="pt">Plexus - Uma estrutura complexa constituÃ­da por uma rede de partes. O Plexus adiciona suporte peer-to-peer nativo (AceStream e Sopcast) ao Kodi Entertainment Center para vÃ¡rias plataformas.[CR][CR]DocumentaÃ§Ã£o: (em falta)</description>
+    <description lang="es">Plexus - Una estructura compleja conteniendo una intrincada red de partes. Plexus aÃ±ade soporte nativo peer-to-peer (AceStream y SopCast) al Centro de Entretenimiento Kodi para varias plataformas.[CR][CR]Documentacion: (falta)</description>
 	<disclaimer lang="en">The author does not host nor distribute any of the content you may watch using this addon. The author has no part in the development of any included technologies. When seeking help in Kodi's forum please respect rules (http://kodi.wiki/view/Forum_rules).</disclaimer>
-    <disclaimer lang="pt">Os autores não alojam nem distribuem nenhum do conteúdo que poderá ser reproduzido a partir deste addon. Os autores não têm qualquer parte no desenvolvimento de qualquer uma das tecnologias. Se procurar ajuda no fórum oficial do Kodi por favor respeite as regras do fórum (http://kodi.wiki/view/Forum_rules).</disclaimer>
+    <disclaimer lang="pt">Os autores nÃ£o alojam nem distribuem nenhum do conteÃºdo que poderÃ¡ ser reproduzido a partir deste addon. Os autores nÃ£o tÃªm qualquer parte no desenvolvimento de qualquer uma das tecnologias. Se procurar ajuda no fÃ³rum oficial do Kodi por favor respeite as regras do fÃ³rum (http://kodi.wiki/view/Forum_rules).</disclaimer>
    	<disclaimer lang="es">El autor no aloja ni distribuye cualquier contenido que ud. pudiera reproducir usando este addon. El autor no tiene participacion en el desarrollo de cualquier tecnologia incluida. Cuando requiera ayuda en el foro de Kodi por favor respete las reglas (http://kodi.wiki/view/Forum_rules).</disclaimer>
     <platform>all</platform>
   </extension>
@@ -1168,7 +1098,7 @@ v0.12.9 (2018-04-16)
 		<summary lang="en">Official Repository of Kodinerds</summary>
 		<summary lang="de">Offizielles Repository der Kodinerds</summary>
 		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
-		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
+		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel SpaÃŸ!</description>
 		<disclaimer></disclaimer>
 		<platform>all</platform>
 	</extension>
@@ -1188,14 +1118,14 @@ v0.12.9 (2018-04-16)
   </extension>
 </addon>
 
-<addon id="repository.mrpiracy" name="MrPiracy.top Repositório" version="1.0.3" provider-name="MrPiracy.top">
+<addon id="repository.mrpiracy" name="MrPiracy.top RepositÃ³rio" version="1.0.3" provider-name="MrPiracy.top">
 	<extension point="xbmc.addon.repository" name="MrPiracy Repository">
 		<info compressed="false">http://raw.github.com/mrpiracyPT/repository.mrpiracy/master/addons.xml</info>
 		<checksum>http://raw.github.com/mrpiracyPT/repository.mrpiracy/master/addons.xml.md5</checksum>
 		<datadir zip="true">http://raw.github.com/mrpiracyPT/repository.mrpiracy/master/repo/</datadir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary>MrPiracy.top Repositório</summary>
+		<summary>MrPiracy.top RepositÃ³rio</summary>
 		<description>Addon Description</description>
 		<disclaimer></disclaimer>
 		<platform>all</platform>
@@ -1215,9 +1145,9 @@ v0.12.9 (2018-04-16)
 		All repositories and add-ons that are here are add-ons developed by third parties to use on the software Kodi (Not Official Add-ons), as Kodi be a OpenSource project as soon not have any connection with the Kodi.tv.
 		</description>
 		<summary lang="pt">Mr. Quim Repository</summary>
-        <description lang="pt">Este repositório serve para que tenhas todos os add-ons criados por mim, actualizados de forma automática.
-		Neste repositório irás encontrar também outros repositórios e add-ons.
-		Todos os repositórios e add-ons que se encontram aqui são add-ons desenvolvidos por terceiros para usar no programa Kodi (Add-ons Não Oficiais), visto o Kodi ser um projecto OpenSource, logo não têm qualquer ligação com o Kodi.tv.</description>
+        <description lang="pt">Este repositÃ³rio serve para que tenhas todos os add-ons criados por mim, actualizados de forma automÃ¡tica.
+		Neste repositÃ³rio irÃ¡s encontrar tambÃ©m outros repositÃ³rios e add-ons.
+		Todos os repositÃ³rios e add-ons que se encontram aqui sÃ£o add-ons desenvolvidos por terceiros para usar no programa Kodi (Add-ons NÃ£o Oficiais), visto o Kodi ser um projecto OpenSource, logo nÃ£o tÃªm qualquer ligaÃ§Ã£o com o Kodi.tv.</description>
 		<disclaimer lang="en"></disclaimer>
 		<language></language>
 		<platform>all</platform>
@@ -1236,7 +1166,7 @@ v0.12.9 (2018-04-16)
         </extension>
         <extension point="xbmc.addon.metadata">
                 <summary>The Repository for the Kodi Netflix Addon</summary>
-                <summary lang="de">Das Repository für das Kodi Netflix Addon</summary>
+                <summary lang="de">Das Repository fÃ¼r das Kodi Netflix Addon</summary>
                 <description>Provides the Netflix Addons fpr kodi.</description>
                 <description lang="de">Stellt das Kodi Netflix Addon bereit</description>
                 <disclaimer>Some parts of this Repository may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
@@ -1343,7 +1273,7 @@ v0.12.9 (2018-04-16)
     </extension>
     <extension point="xbmc.addon.metadata">
         <summary>Regss Add-ons repository</summary>
-        <summary lang="pl">Regss - repozytorium dodatków</summary>
+        <summary lang="pl">Regss - repozytorium dodatkÃ³w</summary>
         <description>Download Regss Add-ons</description>
         <description lang="pl">Pobieraj i instaluj dodatki z repozytorium Regss'a</description>
         <disclaimer> - </disclaimer>
@@ -1662,92 +1592,14 @@ Kodi is a registered trademark of the XBMC Foundation. We are not connected to o
     <extension point="xbmc.addon.metadata">
         <summary lang="en">Share watching movie on Facebook</summary>
         <description lang="en">You can share now watching movie on Facebook</description>
-        <summary lang="pl">Udostępniaj oglądane filmy na Facebooku</summary>
-        <description lang="pl">Możesz udostępnić aktualnie oglądany film na Facebooku</description>
+        <summary lang="pl">UdostÄ™pniaj oglÄ…dane filmy na Facebooku</summary>
+        <description lang="pl">MoÅ¼esz udostÄ™pniÄ‡ aktualnie oglÄ…dany film na Facebooku</description>
         <platform>all</platform>
         <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
         <forum></forum>
         <email>regss84@gmail.com</email>
         <source></source>
     </extension>
-</addon>
-
-<addon id="script.globalsearch" name="Global Search" version="7.4.7" provider-name="ronie">
-	<requires>
-		<import addon="xbmc.python" version="2.25.0"/>
-	</requires>
-	<extension point="xbmc.python.script" library="default.py">
-		<provides>executable</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="bg">Търси в библиотеката Ви.</summary>
-		<summary lang="ca">Cerca a la teva biblioteca.</summary>
-		<summary lang="cs">Hledej v knihovně</summary>
-		<summary lang="de">Durchsuchen Sie Ihre Bibliothek.</summary>
-		<summary lang="el">Αναζήτηση στη Συλλογή σας.</summary>
-		<summary lang="en">Search your library.</summary>
-		<summary lang="en_NZ">Search your library.</summary>
-		<summary lang="en_US">Search your library.</summary>
-		<summary lang="es">Busca tu biblioteca.</summary>
-		<summary lang="fr">Chercher dans la médiathèque.</summary>
-		<summary lang="fr_CA">Chercher dans votre bibliothèque</summary>
-		<summary lang="gl">Buscar a súa biblioteca.</summary>
-		<summary lang="he">חיפוש בספריית המדיה.</summary>
-		<summary lang="hr">Pretražite svoju zbirku.</summary>
-		<summary lang="hu">Keresés a médiatárban</summary>
-		<summary lang="id">Cari pustaka Anda.</summary>
-		<summary lang="it">Ricerca nella la tua libreria.</summary>
-		<summary lang="ko">라이브러리 찾기</summary>
-		<summary lang="lt">Ieškoti bibliotekoje.</summary>
-		<summary lang="nl">Zoek in je bibliotheek.</summary>
-		<summary lang="no">Søk i biblioteket ditt</summary>
-		<summary lang="pl">Przeszukaj swoją bibliotekę</summary>
-		<summary lang="pt">Faça buscas na sua biblioteca.</summary>
-		<summary lang="pt_BR">Pesquise sua coleção.</summary>
-		<summary lang="ro">Căutați în mediateca dumneavoastră.</summary>
-		<summary lang="ru">Поиск в вашей медиатеке.</summary>
-		<summary lang="sl">Iščite v svoji knjižnici.</summary>
-		<summary lang="sv">Sök i ditt bibliotek.</summary>
-		<summary lang="tr">Kitaplığını ara</summary>
-		<summary lang="zh">资料库搜索</summary>
-		<description lang="bg">Добавката може да намери всеки елемент във вашата видео и музикална библиотека.</description>
-		<description lang="ca">Aquest complement pot trobat qualsevol article en la teva biblioteca de vídeo i música</description>
-		<description lang="cs">Tento dopněk dokáže najít libovolnou položku ve vaší audio a video knihovně.</description>
-		<description lang="de">Dieses Add-on kann jeden Eintrag in Ihrer Video- und Musikbibliothek finden.</description>
-		<description lang="el">Αυτό το πρόσθετο μπορεί να βρει κάθε αντικείμενο στις συλλογές σας.</description>
-		<description lang="en">This addon can find any item in your video and music library.</description>
-		<description lang="en_NZ">This addon can find any item in your video and music library.</description>
-		<description lang="en_US">This addon can find any item in your video and music library.</description>
-		<description lang="es">Este complemento puede encontrar cualquier elemento en tu biblioteca de vídeo y música.</description>
-		<description lang="fr">Cette extension peut trouver tout élément dans la vidéothèque et l'audiothèque.</description>
-		<description lang="fr_CA">Cet addiciel peut trouver tout élément dans votre vidéothèque et dans votre audiothèque.</description>
-		<description lang="gl">Este complemento pode atopar calquera elemento na súa biblioteca de medios.</description>
-		<description lang="he">הרחבה זו יכולה למצוא כל פריט בספריות הווידאו והמוזיקה.</description>
-		<description lang="hr">Ovaj dodatak može pronaći svaku stavku u vašoj videoteci ili fonoteci.</description>
-		<description lang="hu">Ez a kiegészítő bármely elemet megtalálja a videó és audió médiatárban.</description>
-		<description lang="id">Addon ini dapat mencari item apa saja di pustaka video dan musik Anda.</description>
-		<description lang="it">Questo addon può trovare ogni elemento nella tua libreria video ed in quella musicale.</description>
-		<description lang="ko">비디오와 음악 라이브러리의 모든 항목을 검색합니다.</description>
-		<description lang="lt">Šis priedas gali rasti bet kokį elementą jūsų vaizdo ir garso bibliotekoje.</description>
-		<description lang="nl">Deze addon kan elk item in je video- en muziekbibliotheken vinden.</description>
-		<description lang="no">Dette tillegget kan finne hva som helst i ditt film eller musikk bibliotek.</description>
-		<description lang="pl">Ten plugin może odnaleźć dowolną pozycję w twojej bibliotece wideo oraz muzycznej.</description>
-		<description lang="pt">Este addon pode encontrar qualquer item na sua biblioteca de vídeos e de músicas.</description>
-		<description lang="pt_BR">Este addon pode encontrar qualquer item na sua coleção de vídeos e música.</description>
-		<description lang="ro">Acest supliment poate găsi orice element în mediateca dumneavoastră video și audio.</description>
-		<description lang="ru">Это дополнение поможет найти любую запись в вашей медиатеке.</description>
-		<description lang="sl">Ta dodatek lahko poišče katerokoli podatek v vaši knjižnici filmov in glasbe.</description>
-		<description lang="sv">Detta tillägg kan hitta vilket objekt som helst i ditt video och musikbibliotek.</description>
-		<description lang="tr">Bu eklenti video ve müzik kitaplığınızdaki herhangi bir öğeyi bulabilir.</description>
-		<description lang="zh">此插件搜索你的视频和音乐资料库项目。</description>
-		<language></language>
-		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
-		<forum>http://forum.kodi.tv/showthread.php?tid=109301</forum>
-		<website></website>
-		<email></email>
-		<source>https://github.com/ronie/script.globalsearch/</source>
-	</extension>
 </addon>
 
 <addon id="script.image.resource.select" name="Image Resource Select Addon" version="2.0.2" provider-name="ronie">
@@ -1880,7 +1732,7 @@ Kodi is a registered trademark of the XBMC Foundation. We are not connected to o
 <addon id="script.module.dateutil"
        name="dateutil"
        version="2.5.3"
-       provider-name="Gustavo Niemeyer, Tomi Pieviläinen, Yaron de Leeuw, Razzeee">
+       provider-name="Gustavo Niemeyer, Tomi PievilÃ¤inen, Yaron de Leeuw, Razzeee">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.six" version="1.9.0"/>
@@ -2247,25 +2099,6 @@ Kodi is a registered trademark of the XBMC Foundation. We are not connected to o
     </extension>
 </addon>
 
-<addon id="script.module.singledispatch"
-       name="singledispatch"
-       version="3.4.0.3"
-       provider-name="Łukasz Langa">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-  </requires>
-  <extension point="xbmc.python.module"
-             library="lib"/>
-  <extension point="xbmc.addon.metadata">
-    <summary>Single-dispatch generic functions</summary>
-    <description>This library brings functools.singledispatch from Python 3.4 to Python 2.6-3.3.</description>
-    <platform>all</platform>
-    <license>MIT</license>
-    <source>https://pypi.python.org/pypi/singledispatch#downloads</source>
-    <website>http://docs.python.org/3/library/functools.html#functools.singledispatch</website>
-  </extension>
-</addon>
-
 <addon id="script.module.thetvdb"
        name="The TVDB API v2"
        version="1.0.12"
@@ -2589,51 +2422,6 @@ Kodi is a registered trademark of the XBMC Foundation. We are not connected to o
 	</extension>
 </addon>
 
-<addon id="script.skinshortcuts" name="Skin Shortcuts" version="1.0.17" provider-name="BigNoid,marcelveldt">
-	<requires>
-		<import addon="xbmc.python" version="2.20.0"/>
-		<import addon="script.module.simplejson" version="3.3.0"/>
-		<import addon="script.module.unidecode" version="0.4.14"/>
-	</requires>
-	<extension point="xbmc.python.library" library="default.py"/>
-	<extension point="xbmc.addon.metadata">
-		<news>Template improvements and bug fixes</news>
-		<description lang="bg">Добавка за облици, която осигурява просто управление и списък с потребителски преки пътища (изисква поддръжка от облика)</description>
-		<description lang="de">Add-on für Skins für einfache Bearbeitung und Auflistung von benutzerdefinierten Verknüpfungen (erfordert Skin-Unterstützung)</description>
-		<description lang="el">Πρόσθετο για κελύφη, το οποίο παρέχει έναν απλό τρόπο διαχείρισης και κατηγοριοποίησης των συντομεύσεων του χρήστη (πρέπει να υποστηρίζεται από το κέλυφος)</description>
-		<description lang="en">Add-on for skins to provide simple managing and listing of user shortcuts (requires skin support)</description>
-		<description lang="en_NZ">Add-on for skins to provide simple managing and listing of user shortcuts (requires skin support)</description>
-		<description lang="en_US">Add-on for skins to provide simple managing and listing of user shortcuts (requires skin support)</description>
-		<description lang="es">Complemento para las pieles para proporcionar una gestión sencilla y lista de atajos de usuario (requiere que la piel lo soporte)</description>
-		<description lang="fr_CA">Addiciel pour habillages qui fournit une gestion simple et un listage des raccourcis utilisateurs (exige la prise en charge de l'habillage)</description>
-		<description lang="gl">Complemento que fornece aos temas dunha xestión sinxela dos atallos dos usuarios (require soporte do tema)</description>
-		<description lang="hr">Dodatak za presvlake koja omogućava jednostavno upravljanje i prikaz korisnikovih prečaca (zahtijeva podršku presvlake) </description>
-		<description lang="hu">Felszín kiegészítő amely könnyen kezelhetővé és listázhatóvá teszi a felhasználói parancsikonokat (Felszín támogatás szükséges)</description>
-		<description lang="is">Viðbót fyrir viðmót til að halda utan um flýtivísa og fá yfirlit yfir þá (þarfnast stuðnings frá viðmóti)</description>
-		<description lang="it">Add-on per gli skin per consentire un facile gestione ed elenco delle scorciatoie utente (richiede che lo skin lo supporti)</description>
-		<description lang="lt">Priedas teminėms išvaizdoms, kad jos turėtų galimybę paprastai tvarkyti ir atvaizduoti vartotojo  sukurtas nuorodas (reikalingas teminės išvaizdos palaikymas)</description>
-		<description lang="nl">Add-on voor skins om te voorzien in het eenvoudig beheren en sorteren van gebruikers snelkoppelingen (vereist skin ondersteuning)</description>
-		<description lang="no">Tillegg for enkel administrering og opplisting av bruker-snarveier i tema (krever støtte i tema)</description>
-		<description lang="pl">Wtyczka dla skór, która zapewnia proste zarządzanie i tworzenie list skrótów użytkownika (wymaga wsparcia skóry)</description>
-		<description lang="pt">Um add-on que permite que os temas tenham recursos simples para gerir e listar atalhos de utilizadores (é necessário suporte do tema)</description>
-		<description lang="pt_BR">Add-on para que as skins possam prover gerenciamento de lista de atalhos para o menu principal (requer suporte da skin)</description>
-		<description lang="ru">Дополнение для обложек, предоставляющее простой способ управления и список пользовательских ярлыков (требуется поддержка обложкой)</description>
-		<description lang="sv">Skinntillägg som tillhandahåller enkel hantering och översikt av användargenvägar (om skinnet stöder det)</description>
-		<description lang="zh">插件为皮肤提供了简单的管理和用户连接方式列表 (需要皮肤支持)</description>
-		<language></language>
-		<platform>all</platform>
-		<license>GNU General Public License, v2</license>
-		<forum>http://forum.xbmc.org/showthread.php?tid=178294</forum>
-		<website></website>
-		<email></email>
-		<source>https://github.com/BigNoid/script.skinshortcuts</source>
-	<assets>
-		<icon>icon.png</icon>
-		<fanart>fanart.jpg</fanart>
-	</assets>
-	</extension>
-</addon>
-
 <addon id="script.toolbox" name="ToolBox Script" version="1.1.1" provider-name="phil65">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
@@ -2655,24 +2443,6 @@ Kodi is a registered trademark of the XBMC Foundation. We are not connected to o
 	</extension>
 </addon>
 
-<addon id="script.tvaddons.debug.log" name="TVA Log Uploader" version="1.0.7" provider-name="tvaddons.ag">
-    <requires>
-        <import addon="xbmc.python" version="2.20.0"/>
-    </requires>
-    <extension point="xbmc.python.script" library="default.py">
-        <provides>executable</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <summary lang="en">Upload Debug Logs to Shareable Location</summary>
-        <description lang="en">This add-on gives you the ability to upload your Kodi error logs to a shareable location, and can also optionally email you the link to your logs. Before you get started, be sure to Toggle ON the “Enable debug logging” function under the SYSTEM -> Settings -> System -> Logging menu within Kodi.</description>
-        <language></language>
-        <platform>all</platform>
-        <website>https://www.tvaddons.ag/</website>
-        <source>https://github.com/tknorris/script.tvaddons.debug.log</source>
-        <forum>https://forums.tvaddons.ag/maintenance-tool/</forum>
-    </extension>
-</addon>
-
 <addon id="script.video.F4mProxy" name="F4mProxy" version="2.8.8" provider-name="Shani">
     <requires>
         <import addon="xbmc.python" version="2.1.0" />
@@ -2687,97 +2457,6 @@ Kodi is a registered trademark of the XBMC Foundation. We are not connected to o
         <summary lang="en">Proxy for f4m</summary>
         <description lang="en">Use this addon to play F4m v1 and v2 streams</description>
     </extension>
-</addon>
-
-<addon id="script.xbmcbackup"
-    name="Backup" version="1.1.0" provider-name="robweber">
-  <requires>
-	<!-- jarvis -->
-    <import addon="xbmc.python" version="2.24.0"/>
-    <import addon="script.module.httplib2" version="0.8.0" />
-    <import addon="script.module.oauth2client" version="4.1.2" />
-    <import addon="script.module.uritemplate" version="0.6" />
-    <import addon="script.module.yaml" version="3.11"/>
-    <import addon="script.module.googleapi" version="1.6.4" />
-	<import addon="script.module.requests" version="2.9.1" />
-  </requires>
-  <extension point="xbmc.python.script" library="default.py">
-     <provides>executable</provides>
-  </extension>
-  <extension point="xbmc.service" library="scheduler.py" start="startup" />
-  <extension point="xbmc.addon.metadata">
-    <summary lang="ar">إنسخ إحتياطياً قاعده بيانات إكس بى إم سى وملفات اﻹعدادات فى حاله وقوع إنهيار مع إمكانيه اﻹسترجاع</summary>
-    <summary lang="be">Backup and restore your XBMC database and configuration files in the event of a crash or file corruption.</summary>
-    <summary lang="bg">Добавката може да създава резервно копие на XBMC и възстановява (след това) Вашата база от данни и настройки, в случай на необходимост.</summary>
-    <summary lang="ca">Feu còpies de seguretat i restaureu la vostra base de dades de l'XBMC i dels fitxers de configuració en el cas de fallada o corrupció dels fitxers.</summary>
-    <summary lang="cs">Zálohování a obnovení XBMC databáze a konfiguračních souborů v případě chyby nebo poškození souborů.</summary>
-    <summary lang="da">Sikkerhedskopiér og genskab din XBMC database og konfigurationsfiler i tilfælde af et nedbrud eller en ødelagt fil.</summary>
-    <summary lang="de">Die XBMC Datenbank sichern und bei Dateiverlust oder Beschädigung wiederherstellen.</summary>
-    <summary lang="el">Δημιουργήστε αντίγραφα ασφαλείας της βάσης δεδομένων και των ρυθμίσεων του XBMC για την πιθανότητα σφαλμάτων ή καταστροφής αρχείων.</summary>
-    <summary lang="en">Backup and restore your Kodi database and configuration files in the event of a crash or file corruption.</summary>
-    <summary lang="en_NZ">Backup and restore your XBMC database and configuration files in the event of a crash or file corruption.</summary>
-    <summary lang="en_US">Backup and restore your XBMC database and configuration files in the event of a crash or file corruption.</summary>
-    <summary lang="es">Haz copia de seguridad de tu base de datos y configuración y recupera todo en caso de fallo.</summary>
-    <summary lang="es_MX">Respalda y restaura tu base de datos y archivos de configuración de XBMC dado el evento de un cuelgue o corrupción de archivos. </summary>
-    <summary lang="eu">XBMC datu-basea eta konfigurazio fitxategien babes-kopia egin kraskatze edo fitxategi hondamena saihesteko</summary>
-    <summary lang="fr">Sauvegarder et restaurer vos bases de données XBMC et vos fichiers de configuration en cas de crash ou de fichiers corrompus.</summary>
-    <summary lang="fr_CA">Sauvegarder et restaurer votre base de données et vos fichiers de configuration XBMC dans le cas d'un plantage ou d'une corruption de fichier.</summary>
-    <summary lang="gl">Crear copia de seguranza e restaurar a base de datos e ficheiros de configuración de XBMC no caso dun fallo ou corrupción de ficheiros.</summary>
-    <summary lang="he">גיבוי ושחזור מסד הנתונים וקבצי ההגדרות של XBMC במקרה של קריסה או קבצים פגומים.</summary>
-    <summary lang="hr">Sigurnosno kopirajte i obnovite vašu XBMC bazu podataka i datoteke podešavanja prilikom rušenja ili oštećenja datoteka.</summary>
-    <summary lang="hu">Biztonsági mentés készítése az XBMC adatbázisról és a beállítófájlokról vagy állítsa helyre azokat egy rendszerösszeomlás vagy adatvesztés után.</summary>
-    <summary lang="id">Cadangkan dan kembalikan basis data XBMC Anda beserta berkas konfigurasi apabila terjadi kerusakan atau korupsi berkas.</summary>
-    <summary lang="it">Effettua il backup o ripristina il tuo database di XBMC e i file di configurazione qualora si verifichi una chiusura imprevista o un danneggiamento dei file.</summary>
-    <summary lang="ja">システムのクラッシュやファイル破損に備えて、XBMC のデータベースや設定ファイルをバックアップ・リストアできます。</summary>
-    <summary lang="ko">XBMC 데이터베이스와 설정 파일을 백업하고 복구합니다.</summary>
-    <summary lang="lt">Atsarginė kopija katra atkuria jūsų XBMC duomenų bazę ir konfigūracijos failus avarijos ar failo sugadinimo metu.</summary>
-    <summary lang="nl">Back-up en herstel je XBMC database en configuratiebestanden in geval van een crash of bestandscorruptie.</summary>
-    <summary lang="no">Sikkerhetskopier og gjenopprett dine XBMC-databaser og -konfigurasjonsfiler i tilfelle et krasj eller filkorrupsjon.</summary>
-    <summary lang="pl">Stwórz kopię bezpieczeństwa oraz przywróć twoją bazę danych XBMC łącznie z plikami konfiguracyjnymi, w przypadku awarii lub uszkodzenia plików.</summary>
-    <summary lang="pt">Crie cópias de segurança da base de dados do XBMC e dos ficheiros de configuração. Pode restaurar o conteúdo se ocorrer um crash ou corrupção de ficheiros.</summary>
-    <summary lang="pt_BR">Faça backup e restaure o banco de dados do XBMC e seus arquivos de configuração, no caso de falha ou corrupção de arquivo.</summary>
-    <summary lang="ru">Сохраняйте и восстанавливайте базу данных и конфигурационные файлы XBMC, чтоб не допустить потерю данных в случае аварии или повреждений файлов.</summary>
-    <summary lang="sk">Zálohovanie a obnova XBMC databázy a konfiguračných súborov pre prípad havárie alebo poškodenia súboru.</summary>
-    <summary lang="sv">Ta backupp av eller återställ din XBMC-databas och konfigurationsfiler i händelse av en krash eller filkorruption.</summary>
-    <summary lang="zh">备份和恢复 XBMC 数据库和配置文件，以防范系统崩溃或文件损坏问题。</summary>
-    <description lang="ar">أسبق لك ان أضعت تخصيصاتك المفضله ورغبت لو كان بإمكانك نسخهم إحتياطياً ؟ اﻷن بات بإمكانك ذلك. يمكنك إستخراج قاعده بياناتك وقوائم التشغيل والملحقات وتخصيصاتك المفضله وغيره الى اى مصدر خارجى قابل للكتابه من قِبَل إكس بى إم سى او مباشرتاً الى نظام تخزين سحابى. يمكنك تفعيل النسخ اﻹحتياطى عند الحاجه او جدولته مُسبقاً</description>
-    <description lang="be">Ever hosed your XBMC configuration and wished you'd had a backup? Now you can with one easy click. You can export your database, playlist, thumbnails, addons and other configuration details to any source writeable by XBMC or directly to Dropbox cloud storage. Backups can be run on demand or via a scheduler. </description>
-    <description lang="bg">Някога да сте губили всички настройки, които сте правили по XBMC? А разполагахте ли с резервно копие? Е сега можете да създавате резервни копия само с едно кликване. Можете да изнасяте базата от данни, плейлистите, миниатюрите, добавките и други, на всяко място до което XBMC има права за писане или директно в Dropbox. Можете да настроите и автоматично създаване на копия през определен интервал от време.</description>
-    <description lang="ca">Alguna vegada s'ha carregat la seva configuració de l'XBMC i ha desitjat tenir una còpia de seguretat? Ara pot fer-ho amb un simple clic. Pot exportar la seva base de dades, llista de reproducció, miniatures, complements i altres detalls de la configuració a qualsevol font que pugui ser escrita per l'XBMC o directament a l'emmagatzematge en el núvol Dropbox. Les còpies de seguretat es poden executar sota demanda o per mitjà d'un planificador.</description>
-    <description lang="da">Har du prøvet at slette din XBMC opsætning, og ønsket at du havde haft sikkerhedskopi? Nu kan du få det med et enkelt klik. Du kan eksportere din database, afspilninglister, miniaturebilleder, addons og andre opsætningsdetaljer til enhver kilde, som er skrivbar for XBMC eller direkt til Dropbox cloud lager. Sikkerhedskopier kan køres manuelt eller via en tidsplan.</description>
-    <description lang="de">Jemals deine XBMC Konfiguration zerschossen und dir dann gewünscht, dass ein Backup existiert? Jetzt kannst du eine Sicherung mit nur einem Klick erzeugen. Du kannst deine Datenbanen, Playlisten, Thumbnails, Addons und andere Details zu einem Ort deiner Wahl sichern.</description>
-    <description lang="el">Σας έτυχε ποτέ να χάσετε τις ρυθμίσεις του XBMC και να εύχεστε να είχατε αντίγραφο ασφαλείας; Πλέον μπορείτε με ένα απλό κλικ. Μπορείτε να εξάγετε τη βάση δεδομένων, τις λίστες αναπαραγωγής, τις μικρογραφίες, τα πρόσθετα και άλλες λεπτομέρειες της εγκατάστασης σε οποιαδήποτε πηγή στην οποία μπορεί να γράψει το XBMC, ή απευθείας στο λογαριασμό σας στο Dropbox. Τα αντίγραφα μπορούν να γίνονται κατ' επιλογή ή μέσω προγραμματισμού.</description>
-    <description lang="en">Ever hosed your Kodi configuration and wished you'd had a backup? Now you can with one easy click. You can export your database, playlist, thumbnails, addons and other configuration details to any source writeable by XBMC or directly to Dropbox cloud storage. Backups can be run on demand or via a scheduler. </description>
-    <description lang="en_NZ">Ever hosed your XBMC configuration and wished you'd had a backup? Now you can with one easy click. You can export your database, playlist, thumbnails, addons and other configuration details to any source writeable by XBMC or directly to Dropbox cloud storage. Backups can be run on demand or via a scheduler. </description>
-    <description lang="en_US">Ever hosed your XBMC configuration and wished you'd had a backup? Now you can with one easy click. You can export your database, playlist, thumbnails, addons and other configuration details to any source writeable by Kodi or directly to Dropbox cloud storage. Backups can be run on demand or via a scheduler. </description>
-    <description lang="es">¿Alguna vez te has cargado la configuración de XBMC y habrías deseado tener una copia de seguridad? Ahora puedes tenerla con un único click. Exporta tus base de datos, listas de reproducción, miniaturas, addons y resto de configuraciones a cualquier fuente accesible por XBMC o a tu almacenamiento en Dropbox. Las copias de seguridad pueden programarse o realizarse bajo demanda.</description>
-    <description lang="es_MX">¿Alguna vez haz echado a perder tu configuración de XBMC y haz deseado tener un respaldo? Ahora puedes tenerlo con un simple click. Puedes exportar tu base de datos, listas de reproducción, miniaturas, addons y otros detalles de configuración correspondientes a cualquier fuente que pueda escribir XBMC. Los respaldos pueden ser efectuados a pedido o mediante una programación temporal</description>
-    <description lang="fr">Avez-vous déjà perdu votre configuration XBMC et espéré avoir fait une sauvegarde ? Maintenant, vous pouvez le faire en un simple click. Vous pouvez exporter vos bases de données, playlists, miniatures, addons et autres fichiers de configuration vers n'importe quel endroit accessible depuis XBMC.</description>
-    <description lang="fr_CA">Avez-vous déjà ruiné votre configuration XBMC et souhaité avoir une sauvegarde? Vous le pouvez maintenant en un seul clic. Vous pouvez exporter vos base de données, liste de lecture, imagettes, addiciels et autres détails de configurations vers n'importe quelle source inscriptible depuis XBMC ou directement vers le stockage en nuage Dropbox. Les sauvegardes peuvent être exécutées sur demande ou à l'aide d'un ordonnanceur.</description>
-    <description lang="gl">De seguro que algunha vez eliminou a configuración do XBMC e desexou ter unha copia de seguranza?. Agora pode cun só clic. Pode exportar a súa base de datos, listaxes de reprodución, miniaturas, complementos e outros detalles da configuración a calquera medio escribíbel ou directamente ao Dropbox. As copias de seguranza pódense executar baixo demanda ou programadas.</description>
-    <description lang="he">האם אי פעם נפגמו הגדרות XBMC וייחלת שהיה לך גיבוי ? כעת אתה יכול ליצור כזה בלחיצת כפתור קלילה. ניתן לייצא את בסיס הנתונים, רשימות ההשמעה, התמונות הממוזערות, הרחבות והגדרות נוספות לכל יעד שיש ל-XBMC הרשאת כתיבה לו או ישירות לשירות אחסון הענן דרופבוקס. ניתן לתזמן מראש גיבויים או להריצם ידנית.</description>
-    <description lang="hr">Jeste li ikada oštetili vaša XBMC podešavanja i poželjeli ste ih obnoviti iz sigurnosne kopije? Sada to možete jednim klikom. Možete izvesti vašu bazu podataka, popis izvođenja, minijature, dodatke i ostale pojedinosti podešavanja na svaki izvor dostupan XBMC-u ili izravno na Dropbox oblak pohrane. Sigurnosno kopiranje se može pokrenuti na zahtjev ili u planiranom vremenu.</description>
-    <description lang="hu">Sikerült már összekutyulni az XBMC beállításait és jó lett volna egy biztonsági mentés? Most megteheti egy kattintással. Exportálhatja az adatbázisait, lejátszáslistáit, könyvjelzőit, kiegészítőit és egyéb beállításokat bármely, az XBMC által írható tárhelyre vagy közvetlenül a Dropbox felhő tárolóba. A mentések kézzel vagy időzítetten indíthatóak.</description>
-    <description lang="id">Pernah membuat berantakan konfigurasi XBMC Anda dan berharap Anda punya cadangannya? Sekarang Anda dapat melakukannya dengan klik mudah. Anda dapat mengekspor basis data, daftar putar, gambar kecil, addon dan rincian konfigurasi lainnya ke sumber mana saja yang dapat ditulis oleh XBMC atau langsung ke penyimpanan awan Dropbox. Pencadangan dapat dijalankan sesuai permintaan atau terjadwal.</description>
-    <description lang="it">Hai mai distrutto la tua configurazione di XBMC ma non ne avevi una copia di backup? Ora puoi farlo con un semplice click. Puoi esportare il tuo database, le playlist, le anteprime, gli add-on ed altre configurazioni su ogni percorso accessibile da XBMC o direttamente su Dropbox. I backup si possono fare a richiesta o possono essere pianificati.</description>
-    <description lang="ja">XBMCの設定が消えてしまい、バックアップをとっておけば... と思ったことはありますか？これからは1クリックで簡単にバックアップできます。データベース、プレイリスト、サムネール、アドオン、その他設定項目を、XBMC が書き込み可能なメディアに書き出せます。Dropbox クラウドストレージにも直接書き出せます。スケジューラによる自動バックアップと、オンデマンドでのバックアップの両方が使えます。</description>
-    <description lang="ko">XBMC 설정 백업본이 있었으면 하고 원했던 적이 있습니까? 이제 한 번의 클릭으로 가능합니다. 데이터베이스, 재생목록, 썸네일, 애드온과 기타  세부 설정을 어디에나 내보내거나 직접 Dropbox 에  저장할 수 있습니다. 백업은 수동 또는 예약으로 실행할 수 있습니다.</description>
-    <description lang="lt">Kada naujinate ir konfiguruojate savo XBMC ar susimastėte, kad jums reikalinga atsarginė kopija? Dabar galite tai atlikti vienu spustelėjimu. Savo duomenų bazes, atkūrimą, miniatiūras, priedus ir kitas konfigūracijos failus galite eksportuoti iš bet kokio šaltinio. Atsarginė(-ės) kopija(-os) gali būti paleistos pareikalavus arba per tvarkaraštį.</description>
-    <description lang="nl">Ooit je XBMC configuratie verknalt en gewenst dat je een backup had? Nu kan dat met een simpele klik. Je kunt je bibliotheek, afspeellijsten, miniaturen, addons en andere configuratie optes exporteren naar elke bron die door XBMC beschrijfbaar is of direct naar een Dropbox cloud opslag. Backups kunnen op verzoek of via een rooster gedraaid worden.</description>
-    <description lang="no">Har du noen gang ødelagt XBMC-installasjonen din og ønsket at du hadde en sikkerhetskopi? Det kan du nå med et enkelt trykk. Du kan eksportere din database, spillelister, miniatyrer, utvidelser og andre konfigurasjonsdetaljer til enhver kilde som er tilgjengelig for XBMC eller til Dropbox. Du kan lage sikkerhetskopier ved behov eller med en timeplan.</description>
-    <description lang="pl">Straciłeś kiedyś swoją konfigurację XBMC i marzyłeś o kopii zapasowej? Teraz już możesz i to w prosty sposób. Możesz eksportować swoją bazę, listy odtwarzania, miniatury, wtyczki oraz wiele więcej do dowolnego źródła bezpośrednio z XBMC. Kopia bezpieczeństwa może być uruchomiona na żądanie lub wg harmonogramu.</description>
-    <description lang="pt">Já arruinou a sua configuração do XBMC e desejou ter feito uma cópia de segurança? Agora pode, com apenas um clique. Exporte a base de dados, listas de reprodução, miniaturas, add-ons e outras configurações para qualquer fonte acedível pelo XBMC. As cópias de segurança podem ser executadas manualmente ou por temporizador.</description>
-    <description lang="pt_BR">Sempre se preocupou com sua configuração do XBMC e desejou ter um backup? Agora você pode com um simples clique. Você pode exportar seu banco de dados, listas de reprodução, miniaturas, addons e outros detalhes de configuração para qualquer fonte gravável pelo XBMC ou diretamente ao armazenamento na nuvem Dropbox. Os backups podem ser executados sob demanda ou por agendamento.</description>
-    <description lang="ru">Хотите получить резервную копию настроек XBMC? Теперь можете это сделать одним щелчком мыши. Вы можете выгрузить вашу базу данных, плейлисты, эскизы, дополнения и другую нужную Вам информацию и сохранить её с помощью XBMC или выгрузить в облачное хранилище Dropbox. Резервную копию можно сделать по требованию или запускать по расписанию.</description>
-    <description lang="sk">Už ste niekedy poškodili konfiguráciu XBMC a priali si mať zálohu? Teraz môžete - na jeden klik. Môžete exportovať Vašu databázu, playlist, náhľady, doplnky a konfigurácie na ktorýkoľvek zdroj zapisovateľný XBMC. Zálohy môžu byť púšťané na požiadanie alebo plánovačom. </description>
-    <description lang="sv">Har du någonsin tappat bort din XBMC konfiguration och önskat att du hade en backup? Nu kan du enkelt med ett klick. Du kan exportera din databas, spellista, minityrer, tillägg och andra konfigurationsdetaljer till valfri källa som är skrivbar för XBMC. Backupper kan köras på begäran eller via scheman.</description>
-    <description lang="zh">你是否经常折腾你的 XBMC，因而希望能够有个备份？你可以把资料库、播放列表、缩略图、插件和其他配置细节导出到 XBMC 可以写入的任意位置。备份可以按需运行或通过计划任务执行。</description>
-    <language></language>
-    <platform>all</platform>
-    <license>The MIT License</license>
-    <forum>http://forum.xbmc.org/showthread.php?tid=129499</forum>
-    <source>https://github.com/robweber/xbmcbackup</source>
-  </extension>
 </addon>
 
 <addon id="service.autosubs"
@@ -2868,265 +2547,6 @@ Kodi is a registered trademark of the XBMC Foundation. We are not connected to o
     <email></email>
     </extension>
 </addon>
-
-<addon id="service.xbmc.versioncheck"
-       name="Version Check"
-      version="0.3.26"
-      provider-name="Team Kodi">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-    </requires>
-    <extension point="xbmc.service" library="service.py" start="login"/>
-    <extension point="xbmc.addon.metadata">
-        <summary lang="be">Kodi Version Check checks if you are running latest released version.</summary>
-        <summary lang="bg">Проверява дали ползвате най-новата версия на Kodi.</summary>
-        <summary lang="ca">Kodi Version Check comprova si està utilitzant la última versió publicada.</summary>
-        <summary lang="cs">Kontrola verze Kodi, zkontroluje, zda používáte nejnovější vydanou verzi.</summary>
-        <summary lang="da">Kodi undersøger om du benytter den nyeste version.</summary>
-        <summary lang="de">Kodi Versionsprüfung prüft, ob die neuste Version von Kodi installiert ist.</summary>
-        <summary lang="el">Ο Έλεγχος Έκδοσης Kodi εξετάζει αν έχετε την πιο πρόσφατη έκδοση του προγράμματος.</summary>
-        <summary lang="en">Kodi Version Check checks if you are running latest released version.</summary>
-        <summary lang="en_NZ">Kodi Version Check checks if you are running latest released version.</summary>
-        <summary lang="en_US">Kodi Version Check checks if you are running latest released version.</summary>
-        <summary lang="es">Kodi Version Check comprueba si está ejecutando la última versión de Kodi.</summary>
-        <summary lang="es_MX">Comprobador de Version de Kodi  comprueba si se esta ejecutando ultima version publicada.</summary>
-        <summary lang="fi">Kodi Version Check tarkistaa onko käyttämäsi uusin versio.</summary>
-        <summary lang="fr">Le contrôle de version de Kodi vérifie si la dernière version sortie est utilisée.</summary>
-        <summary lang="fr_CA">Le contrôleur de version Kodi vérifie si vous utilisez la dernière version parue.</summary>
-        <summary lang="gl">Kodi Version Check verifica se está a executar a última versión.</summary>
-        <summary lang="he">בודק גרסת Kodi מוודא אם אתה מריץ את הגרסה הרשמית האחרונה.</summary>
-        <summary lang="hr">Kodi provjeritelj inačice provjerava imate li posljednju inačicu izdanja.</summary>
-        <summary lang="hu">Az Kodi verzió ellenőrző megvizsgálja, hogy a legújabb kiadást futtatja-e.</summary>
-        <summary lang="id">Kodi Version Check mengecek apakah Anda menggunakan versi rilis terbaru.</summary>
-        <summary lang="is">Kodi Version Check athugar hvort þú sért að keyra nýjustu viðurkennda útgáfu.</summary>
-        <summary lang="it">Kodi Version Check verifica se hai l'ultima versione rilasciata</summary>
-        <summary lang="ko">Kodi Version Checks는 최신 정식 릴리즈 버전을 사용중인지 검사해줍니다.</summary>
-        <summary lang="lt">Kodi Version Check patikrina ar naudojate naujausią versiją.</summary>
-        <summary lang="nl">Kodi versie-check controleert of je de laatst beschikbare versie hebt.</summary>
-        <summary lang="no">Kodi Versjonsettersyn sjekker om du kjører den sist utgitte versjonen.</summary>
-        <summary lang="pl">Dodatek Version Check sprawdza czy używasz najnowszej wersji Kodi.</summary>
-        <summary lang="pt">O Kodi Version Check verifica se a sua versão de lançamento do Kodi está actualizada.</summary>
-        <summary lang="pt_BR">Kodi Version Check verifica se você está executando a versão mais recente.</summary>
-        <summary lang="ro">Verificare versiune Kodi verifică dacă folosiți ultima versiune lansată.</summary>
-        <summary lang="ru">Kodi Version Check проверяет если вы используете последнюю версию</summary>
-        <summary lang="sk">Kodi Kontrola verzií overuje, či používate najnovšiu vydanú verziu.</summary>
-        <summary lang="sl">Preverjanje različice Kodi preveri, če imate nameščeno nazadnje izdano različico.</summary>
-        <summary lang="sv">Kodi Version Check kontrollerar om du använder den senaste versionen.</summary>
-        <summary lang="tr">Kodi Sürüm Kontrol yayınlanmış son sürümü kullanıp kullanmadığınızı kontrol eder.</summary>
-        <summary lang="zh">Kodi 版本检查检查你使用的是否为最新发布的版本。</summary>
-        <description lang="be">Kodi Version Check only supports a number of platforms/distros as releases may differ between them. For more information visit the kodi.tv website.</description>
-        <description lang="bg">Kodi Version Check поддържа няколко платформи/дистрибуции. За повече информация посетете страницата www.kodi.tv</description>
-        <description lang="ca">Kodi Version Check només és compatible amb una sèrie de plataformes / distribucions ja que les ultimes versions poden ser diferents entre elles. Per obtenir més informació, visiteu el lloc web kodi.tv.</description>
-        <description lang="cs">Kontrola verze Kodi podporuje pouze několik platforem/distribucí a verze mezi nimi se můžou lišit. Pro více informací navštivte webové stránky kodi.tv.</description>
-        <description lang="da">Kodi kan kun undersøge for opdateringer for visse platforme/udgaver, da der kan være forskel. For mere information, besøg kodi.tv.</description>
-        <description lang="de">Kodi Versionsprüfung unterstützt nur ein paar Plattformen/Distributionen, da sich die jeweiligen Veröffentlichungen unterscheiden können. Für weitere Informationen besuchen Sie die kodi.tv-Webseite.</description>
-        <description lang="el">Ο Έλεγχος Έκδοσης Kodi υποστηρίζει μόνο ορισμένα λειτουργικά συστήματα/διανομές, καθώς οι εκδόσεις διαφέρουν για το καθένα. Για περισσότερες πληροφορίες επισκεφθείτε το kodi.tv</description>
-        <description lang="en">Kodi Version Check only supports a number of platforms/distros as releases may differ between them. For more information visit the kodi.tv website.</description>
-        <description lang="en_NZ">Kodi Version Check only supports a number of platforms/distros as releases may differ between them. For more information visit the kodi.tv website.</description>
-        <description lang="en_US">Kodi Version Check only supports a number of platforms/distros as releases may differ between them. For more information visit the kodi.tv website.</description>
-        <description lang="es">Kodi Version Check solo soporta un número limitado de plataformas/distribuciones, ya que los lanzamientos pueden diferir entre ellos. Para más información, visite la web de kodi.tv.</description>
-        <description lang="fi">Kodi Version Check tukee vain joitain alustoja/distroja koska julkaisut saattavat poiketa toisistaan. Saadaksesi lisätietoa, vieraile kodi.tv:ssä.</description>
-        <description lang="fr">Le contrôle de version de Kodi ne prend en charge qu'un certain nombre de plate-formes/distributions car les versions peuvent varier entre elles. Pour plus d'informations, consulter le site Web kodi.tv.</description>
-        <description lang="fr_CA">Le contrôleur de version Kodi ne prend en charge qu'un certain nombre de plate-formes/distributions car les versions peuvent varier entre elles. Pour plus d'informations, visitez le site Web kodi.tv.</description>
-        <description lang="gl">Kodi Version Check só soporta un número limitado de plataformas/distribucións, xa que os lanzamentos poden diferir entre eles. Para máis información visitar o sitio web de kodi.tv.</description>
-        <description lang="he">בודק גרסת Kodi תומך רק במספר פלטפורמות/הפצות מאחר שסימון הגרסאות שונה בין אחת לשניה. למידע נוסף בקר באתר kodi.tv.</description>
-        <description lang="hr">Kodi provjeritelj inačice samo podržava broj platformi/distribucija koliko to dopuštaju pojedina izdanja. Za više informacija posjetite kodi.tv web stranicu.</description>
-        <description lang="hu">Az Kodi verzió-ellenőrző csak néhány platformot / disztribúciót támogat, mert a kiadások között különbségek lehetnek. További információkért keresse fel az kodi.tv oldalt.</description>
-        <description lang="id">Kodi Version Check hanya mendukung beberapa platform/distro karena rilisnya mungkin berbeda-beda. Untuk informasi lebih lanjut kunjungi situs kodi.tv.</description>
-        <description lang="it">Kodi Version Check supporta un numero di piattaforme e distribuzioni diverse tra loro. Per più informazioni visita il sito kodi.tv</description>
-        <description lang="ko">Kodi Versio Check는 일부 플랫폼/배포본만을 지원합니다. 자세한 정보는 kodi.tv 웹사이트에서 확인하세요</description>
-        <description lang="lt">Kodi Version Check palaiko tik kelias platformas/distribucijas, nes leidimai tarp jų gali skirtis. Norėdami gauti daugiau informacijos, apsilankykite Kodi.tv puslapyje.</description>
-        <description lang="nl">Kodi versie check ondersteunt alleen een aantal platforms/distro`s omdat uitgaven verschillen tussen hen. Voor meer informatie bezoek de kodi.tv website.</description>
-        <description lang="no">Kodi Versjonsettersyn støtter kun noen plattformer/distribusjoner fordi utgivelser kan være forskjellige mellom dem. Besøk kodi.tv for mer informasjon.</description>
-        <description lang="pl">Dodatek Version Check wspiera tylko część platform i dystrybucji. Więcej informacji na stronie kodi.tv</description>
-        <description lang="pt">O Kodi Version Check suporta apenas algumas plataformas/distribuições, porque os lançamentos podem não ser sempre idênticos. Para mais informação, visite o site kodi.tv.</description>
-        <description lang="pt_BR">Verificador de versões do Kodi somente suporta algumas plataformas/distros em que os lançamentos podem diferenciar entre si. Para maiores informações visite o website kodi.tv.</description>
-        <description lang="ru">Проверка новых версий Kodi поддерживается только на ряде платформ/дистрибутивов и они могут различаться между собой. Для получения доп. информации посетите сайт kodi.tv</description>
-        <description lang="sl">Preverjanje različice Kodi podpira le nekatere platforme/distribucije, saj se izdaje med njimi lahko zelo razlikujejo. Za več informacij obiščite spletišče kodi.tv</description>
-        <description lang="sv">Kodi Version Check stöder endeast ett antal plattformar/distributioner eftersom utgivningar kan skilja mellan dessa. För mer information besök kodi.tv webplatsen.</description>
-        <description lang="tr">Kodi Sürüm Kontrol sürümler arasında değişiklik olduğu için sadece birkaç platform/dağıtım destekler. Daha fazla bilgi için kodi.tv web sitesini ziyaret edin.</description>
-        <description lang="zh">Kodi 版本检查只支持部分平台/发行版，它们之间的版本可能会有所不同。欲了解更多信息，请访问 kodi.tv 网站。</description>
-        <disclaimer lang="be">Feel free to use this script. For information visit kodi.tv</disclaimer>
-        <disclaimer lang="bg">Ползвайте скрипта свободно. За повече информация посетете www.kodi.tv</disclaimer>
-        <disclaimer lang="ca">Sigues lliure d'utilitzar aquest script. Per més informació visita kodi.tv</disclaimer>
-        <disclaimer lang="cs">Neváhejte použít tento skript. Pro více informací navštivte kodi.tv</disclaimer>
-        <disclaimer lang="da">Du er velkommen til at bruge dette script. For information, besøg kodi.tv</disclaimer>
-        <disclaimer lang="de">Zögern Sie nicht, dieses Skript zu verwenden. Für Informationen besuchen Sie kodi.tv</disclaimer>
-        <disclaimer lang="el">Χρησιμοποιήστε αυτό το script ελεύθερα. Για πληροφορίες επισκεφθείτε το kodi.tv</disclaimer>
-        <disclaimer lang="en">Feel free to use this script. For information visit kodi.tv</disclaimer>
-        <disclaimer lang="en_NZ">Feel free to use this script. For information visit kodi.tv</disclaimer>
-        <disclaimer lang="en_US">Feel free to use this script. For information visit kodi.tv</disclaimer>
-        <disclaimer lang="es">Puede usar libremente este programa. Para más información, visite kodi.tv</disclaimer>
-        <disclaimer lang="es_MX">Sientase libre de utilizar este script. Para mas información visita kodi.tv</disclaimer>
-        <disclaimer lang="fr">Utiliser ce script si désiré. Pour plus d'informations, consulter le site kodi.tv</disclaimer>
-        <disclaimer lang="fr_CA">N'hésitez pas à utiliser ce script. Pour plus d'informations visitez kodi.tv</disclaimer>
-        <disclaimer lang="gl">Síntase libre de usar este script, para máis información visitar kodi.tv.</disclaimer>
-        <disclaimer lang="he">תרגיש חופשי להשתמש בסקריפט זה. למידע נוסף בקר ב-kodi.tv</disclaimer>
-        <disclaimer lang="hr">Slobodno koristite ovu skriptu. Za više informacija posjetite kodi.tv</disclaimer>
-        <disclaimer lang="hu">Használja bátran ezt a szkriptet! Információkért keresse fel az kodi.tv oldalt!</disclaimer>
-        <disclaimer lang="id">Jangan sungkan menggunakan script ini. Untuk informasi hubungi kodi.tv</disclaimer>
-        <disclaimer lang="it">Usa liberamente lo script. Per informazioni visita kodi.tv</disclaimer>
-        <disclaimer lang="ko">이 스크립트를 자유롭게 사용하세요. 관련 정보는 kodi.tv를 방문하세요.</disclaimer>
-        <disclaimer lang="lt">Galite laisvai naudoti šį scenarijų. Apsilankykite kodi.tv, norėdami gauti daugiau informacijos.</disclaimer>
-        <disclaimer lang="nl">Gebruik dit script vrijblijvend. Voor meer informatie bezoek kodi.tv</disclaimer>
-        <disclaimer lang="no">Du har fri tillatelse til å benytte dette skriptet. Besøk kodi.tv for informasjon</disclaimer>
-        <disclaimer lang="pl">Zapraszamy do używania tego dodatku. Więcej informacji na stronie kodi.tv</disclaimer>
-        <disclaimer lang="pt">Esteja à vontade para usar este script. Para mais informação, visite kodi.tv.</disclaimer>
-        <disclaimer lang="pt_BR">Sinta-se livre para usar este script. Para maiores informações visite kodi.tv</disclaimer>
-        <disclaimer lang="ro">Simțiți-vă liberi să folosiți acest script. Pentru informații vizitați kodi.tv</disclaimer>
-        <disclaimer lang="ru">Используйте этот скрипт на свое усмотрение. Для информации посетите kodi.tv</disclaimer>
-        <disclaimer lang="sl">Izvolite uporabiti ta skript. Za dodatne informacije obiščite kodi.tv</disclaimer>
-        <disclaimer lang="sv">Använd gärna detta skript. För information, besök kodi.tv</disclaimer>
-        <disclaimer lang="tr">Bu betiği kullanmaktan çekinmeyin. Daha fazla bilgi için kodi.tv adresini ziyaret edin</disclaimer>
-        <disclaimer lang="zh">可放心使用此脚本，更多信息访问 kodi.tv</disclaimer>
-        <platform>all</platform>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <forum>http://forum.xbmc.org/showthread.php?tid=160228</forum>
-        <website>http://xbmc.org</website>
-        <email></email>
-        <source>https://github.com/XBMC-Addons/service.xbmc.versioncheck</source>
-    </extension>
-</addon>
-
-<addon
-    id="skin.arctic.zephyr"
-    version="2.3.13"
-    name="Arctic: Zephyr"
-    provider-name="jurialmunkey">
-    <requires>
-        <import addon="xbmc.gui" version="5.12.0"/>
-        <import addon="script.skinshortcuts" version="0.4.0"/>
-        <import addon="service.library.data.provider" version="0.1.0"/>
-        <import addon="script.skin.helper.service" version="0.0.1"/>
-        <import addon="script.extendedinfo" version="3.0.0"/>
-        <import addon="script.globalsearch" version="5.0.0"/>
-        <import addon="script.image.resource.select" version="0.0.5"/>
-        <import addon="script.toolbox" version="1.0.0"/>
-        <import addon="plugin.program.autocompletion" version="1.0.1"/>
-        <import addon="resource.images.weathericons.white" version="0.0.6"/>
-    </requires>
-    <extension
-    point="xbmc.gui.skin"
-    defaultthemename="Textures.xbt"
-    debugging="false"
-    effectslowdown="1">
-        <res width="1920" height="1080" aspect="16:9" default="true" folder="1080i" />
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <summary lang="de">Klar, minimalistisch, elegant, einfach, leicht</summary>
-        <summary lang="en">Clean, minimal, elegant, simple, light.</summary>
-        <summary lang="en_AU">Clean, minimal, elegant, simple, light.</summary>
-        <summary lang="en_US">Clean, minimal, elegant, simple, light.</summary>
-        <summary lang="es">Limpio, minimalista, elegante, simple, ligero.</summary>
-        <summary lang="fr">Clair, minimaliste, élégant, simple et léger.</summary>
-        <summary lang="fr_CA">Net, minimal, élégant, simple, léger.</summary>
-        <summary lang="lt">Švari, minimali, elegantiška, paprasta, lengva.</summary>
-        <summary lang="nl">Schoon, minimaal, elegant, simpel, licht.</summary>
-        <summary lang="no">Rent, minimalt, elegant, enkelt, lett.</summary>
-        <summary lang="pl">Prosta, minimalista, elegancka i lekka</summary>
-        <summary lang="pt_BR">Limpa, simplista, elegante, leve.</summary>
-        <summary lang="ro">Curat, minimalist, elegant, simplu, ușor</summary>
-        <summary lang="ru">Опрятный, минималистичный, элегантный, простой, светлый.</summary>
-        <description lang="de">Arctic: Zephyr ist die dritte Iteration des Arctic Skins von jurialmunkey und ein minimalistisches, klares und simples Interface für deine Medien mit dem gewissen Etwas.</description>
-        <description lang="en">Arctic: Zephyr is the third iteration of the Arctic skin created by jurialmunkey. Arctic focuses on being simple, clean and minimalistic with a light spin.</description>
-        <description lang="en_AU">Arctic: Zephyr is the third iteration of the Arctic skin created by jurialmunkey. Arctic focuses on being simple, clean and minimalistic with a light spin.</description>
-        <description lang="en_US">Arctic: Zephyr is the third iteration of the Arctic skin created by jurialmunkey. Arctic focuses on being simple, clean and minimalistic with a light spin.</description>
-        <description lang="es">Arctic: Zephyr es la tercera versión de Arctic skin creada por jurialmunkey. La skin Arctic se centra en ser simple, limplia y minimalista con un toque de luminosidad.</description>
-        <description lang="fr">Arctic: Zephyr est la 3ème version du skin Arctic créé par jurialmunkey. Arctic se focalise sur le fait d'être simple, claire et minimaliste.</description>
-        <description lang="fr_CA">Arctique : Zéphyr est la troisième version de l'habillage Arctique créé par jurialmunkey. Arctique se veut être simple, net et minimaliste tout en étant léger. </description>
-        <description lang="lt">Arctic: Zephyr yra trečia Arctic teminės išvaizdos, kurios autorius yra jurialmunkey, iteracija. Arctic sutelkia dėmesį ties paprastumu, švarumu ir minimalizmu su lengvu veikimu.</description>
-        <description lang="nl">Arctic: Zephyr is de derde herhaling van de arctic skin ge creëerd door jurialmunkey. Arctic focust zich op een eenvoudig zeinde, schoon en minimaal met een lichte twist.</description>
-        <description lang="no">Arctic: Zephyr er den tredje iterasjonen av Arctic skallet som ble laget av jurialmunkey. Arctic fokuserer på å være enkel, rent og minimalistisk med et snev av letthet.</description>
-        <description lang="pl">Arctic: Zephyr jest trzecią wersją oryginalnej skóry Arctic stworzonej przez jurialmunkey. Arctic skupia się na prostocie i minimalizmie z lekką dozą szaleństwa.</description>
-        <description lang="pt_BR">Arctic: Zephyr é a terceira iteração da interface Arctic criada por jurialmunkey. Arctic foi criada para ser simples, limpa e minimalistica.</description>
-        <description lang="ru">Arctic: Zephyr это третий виток обложки Arctic, созданной jurialmunkey. Arctic старается быть простой, опрятной и минималистичной.</description>
-        <platform>all</platform>
-        <license>Creative Commons Non Commercial 3.0 License</license>
-        <forum>http://forum.kodi.tv/forumdisplay.php?fid=221</forum>
-        <source>https://github.com/jurialmunkey/skin.arctic.zephyr</source>
-        <assets>
-			<icon>icon.png</icon>
-			<fanart>fanart.jpg</fanart>
-			<screenshot>resources/screenshot-01.jpg</screenshot>
-			<screenshot>resources/screenshot-02.jpg</screenshot>
-			<screenshot>resources/screenshot-03.jpg</screenshot>
-			<screenshot>resources/screenshot-04.jpg</screenshot>
-			<screenshot>resources/screenshot-05.jpg</screenshot>
-			<screenshot>resources/screenshot-06.jpg</screenshot>
-			<screenshot>resources/screenshot-07.jpg</screenshot>
-			<screenshot>resources/screenshot-08.jpg</screenshot>
-			<screenshot>resources/screenshot-09.jpg</screenshot>
-		</assets>
-    </extension>
-</addon>
-
-<addon id="superrepo.kodi.krypton.all" name="SuperRepo All [Krypton][v7]" version="0.7.04" provider-name="Bart Otten">
-                <requires>
-                <import addon="xbmc.addon" version="12.0.0"/>
-                </requires>
-                <extension point="xbmc.addon.repository" name="SuperRepo All [Krypton][v7]">
-                <info compressed="false">
-                http://xml.superrepo.org/v7/.xml/krypton/all/addons.xml
-                </info>
-                <checksum>
-                http://md5.superrepo.org/v7/.md5/krypton/all/addons.xml.md5
-                </checksum>
-                <datadir zip="true">http://redirect.superrepo.org/v7/addons/</datadir>
-                <hashes>true</hashes>
-                </extension>
-                <extension point="xbmc.addon.metadata">
-                <summary>
-                Install add-ons from the SuperRepo All Repository
-                </summary>
-                <summary lang="nl">
-                Installeer add-ons uit de SuperRepo All Repository
-                </summary>
-                <summary lang="cz">Inštalácia add-ons zo SuperRepo All Repozitár</summary>
-                <summary lang="de">
-                Installation von Addons aus dem SuperRepo All Repository
-                </summary>
-                <summary lang="pt">Instale add-ons do SuperRepo All Repositório</summary>
-                <summary lang="br">Instale add-ons do SuperRepo All Repositório</summary>
-                <description>
-                Download and install add-ons for Kodi in the category "All" using SuperRepo.[CR][CR]By using SuperRepo repositories you will be able to take advantage of our serverside dependency checking, extensive file mirror service and many more.[CR]Visit our website at https://superrepo.org/ to browse the add-ons, create personal addon bundles and install whole bundles at once![CR][CR]
-                </description>
-                <description lang="nl">
-                Download and installeer add-ons voor Kodi in de categorie "All" via SuperRepo.[CR]Door SuperRepo te installeren kunt u profiteren van onze controle van add-ons en ons uitgebreide server netwerk. Bezoek onze website op https://superrepo.org om door de add-ons te bladeren, persoonlijke add-on bundels te maken en complete bundels in 1 keer te installeren![CR][CR]
-                </description>
-                <description lang="cz">
-                Preber a inštaluj add-ons do kategórie "All" z SuperRepo.org add-on repozitár.[CR][CR]Ak si našiel add-on ktorý je poškodený alebo nefunkčný, alebo chceš pridať nový add-on, potom prosím pozri na https://superrepo.org/[CR][CR]Repozitár je udržiavaný komunitou Kodi a za pomoci SuperRepo Wiki, a tento preberá add-ons z rôznych zdrojov. Vzhľadom na to, SuperRepo nenesie žiadnu zodpovednosť za služby poskytované týmito add-ons.[CR][CR]Rozšírený repozitár vyvinul Bart Otten[CR][CR]
-                </description>
-                <description lang="de">
-                Lade und installiere Addons der Kategorie "All" aus dem SuperRepo.org Addon Repository.[CR][CR]Möchtest du ein fehlerhaftes Addon melden oder ein neues Addon vorschlagen, kannst du dies über unsere Webseite http://superrepo.org tun.[CR][CR]Das Repository wird mit Hilfe des SuperRepo Wiki durch die Kodi Community gepflegt und durch unseren Generator aus mehreren Quellen zusammengestellt. Daher übernimmt SuperRepo keinerlei Verantwortung für diesen Service.[CR][CR]Der"eXtended Reposity Generator" wird durch Bart Otten entwickelt.[CR][CR]
-                </description>
-                <description lang="pt">
-                Baixe e instale o add-ons na categoria "All" do Repositório SuperRepo.org. [CR] [CR] Se você encontrar um add-on quebrado ou não funcionando, ou você gostaria de incluir um outro, por favor visite https://superrepo.org/ [CR] [CR]O repositório é mantida pela comunidade do Kodi usando o Wiki do SuperRepo e o nosso gerador de busca de add-ons múltiplas fontes. Portanto SuperRepo não aceita qualquer responsabilidade por esse serviço.[CR][CR]O Gerador Reposity eXtended é desenvolvido por Bart Otten[CR][CR]
-                </description>
-                <description lang="br">
-                Baixe e instale o add-ons na categoria "All" do Repositório SuperRepo.org. [CR] [CR] Se você encontrar um add-on quebrado ou não funcionando, ou você gostaria de incluir um outro, por favor visite https://superrepo.org/ [CR][CR]O repositório é mantida pela comunidade do Kodi usando o Wiki do SuperRepo e o nosso gerador de busca de add-ons múltiplas fontes. Portanto SuperRepo não aceita qualquer responsabilidade por esse serviço.[CR][CR]O Gerador Reposity eXtended é desenvolvido por Bart Otten[CR][CR]
-                </description>
-                <disclaimer>
-                The SuperRepo generator fetches addons from multiple sources. Therefore SuperRepo accepts no responsibility for included addons.[CR]
-                </disclaimer>
-                <disclaimer lang="nl">
-                De SuperRepo generator verzamelt addons van verschillende bronnen. Daarom accepteert SuperRepo geen enkele verantwoordelijkheid voor de ingevoegde addons.[CR]
-                </disclaimer>
-                <disclaimer lang="cz">
-                Repozitár je udržiavaný komunitou Kodi a za pomoci SuperRepo Wiki, a tento preberá addons z rôznych zdrojov. Vzhľadom na to, SuperRepo nenesie žiadnu zodpovednosť za služby poskytované týmito addons.[CR]
-                </disclaimer>
-                <disclaimer lang="de">
-                Das Repository wird durch die Kodi Community gepflegt und durch unseren Generator aus mehreren Quellen zusammengestellt. Daher übernimmt SuperRepo keinerlei Verantwortung für die enthaltenen Addons.[CR]
-                </disclaimer>
-                <disclaimer lang="pt">
-                O repositório é mantido pela comunidade comunidade do Kodi e o nosso gerador de busca de addons de múltiplas fontes. Portanto SuperRepo aceita não se responsabiliza por addons incluídos.[CR]
-                </disclaimer>
-                <disclaimer lang="br">
-                O repositório é mantido pela comunidade comunidade do Kodi e o nosso gerador de busca de addons de múltiplas fontes. Portanto SuperRepo aceita não se responsabiliza por addons incluídos.[CR]
-                </disclaimer>
-                <platform>all</platform>
-                <website>https://superrepo.org/</website>
-                </extension>
-                </addon>
 
 <addon id="xbmc.python" version="2.25.0" provider-name="Team Kodi">
   <backwards-compatibility abi="2.1.0"/>
