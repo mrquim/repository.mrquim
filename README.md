@@ -10,4 +10,4 @@ Mr. Quim - Repositório do Kodi
 	- Este repositório não tem qualquer ligação ao Kodi.tv sendo todos os add-ons criados por terceiros.
 	
 	
-	Qualquer problema com algum add-on, por favor reportar o mesmo para misterquim.com@gmail.com
+	Qualquer problema com algum add-on, por favor manda mensagem.
